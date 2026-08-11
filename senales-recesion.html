@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>¿Cómo saber si una economía está entrando en recesión?</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+
+:root{
+  --bg:#F7F4EE;
+  --panel:#FFFFFF;
+  --panel-2:#EFEAE0;
+  --line: #E4DFD3;
+  --text:#1C1B22;
+  --text-dim:#6B6570;
+  --accent:#7A2540;
+  --accent-soft:rgba(122,37,64,0.08);
+  --green:#3E6488;
+  --green-soft:rgba(62,100,136,0.10);
+  --amber:#75707A;
+  --amber-soft:rgba(117,112,122,0.10);
+  --red:#8C2E48;
+  --red-soft:rgba(140,46,72,0.10);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{background:var(--bg); color:var(--text); font-family:'Space Grotesk',sans-serif;}
+.mono{font-family:'IBM Plex Mono',monospace;}
+.wrap{max-width:900px; margin:0 auto; padding:60px 26px 90px;}
+
+.eyebrow{font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent); display:flex; align-items:center; gap:10px; margin-bottom:20px;}
+.eyebrow::before{content:""; width:22px; height:1px; background:var(--accent);}
+
+h1{font-weight:600; font-size:clamp(28px,4.6vw,44px); line-height:1.14; margin:0 0 20px; max-width:19ch;}
+h1 span{color:var(--accent);}
+
+.lede{font-size:16px; line-height:1.7; color:var(--text-dim); max-width:66ch; margin:0 0 10px;}
+.lede strong{color:var(--text); font-weight:600;}
+.meta{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-dim); margin:26px 0 50px; padding-top:18px; border-top:1px solid var(--line);}
+
+section{margin-bottom:58px;}
+h2.st{font-size:clamp(22px,3vw,28px); font-weight:600; margin:0 0 10px; max-width:26ch;}
+.sub{font-size:14px; color:var(--text-dim); max-width:62ch; line-height:1.65; margin:0 0 28px;}
+p.body{font-size:15.5px; line-height:1.75; color:var(--text-dim); margin:0 0 18px;}
+p.body strong{color:var(--text); font-weight:600;}
+
+.example-grid{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:8px; overflow:hidden; margin-top:22px;}
+@media (max-width:680px){.example-grid{grid-template-columns:1fr;}}
+.example{background:var(--panel); padding:22px 24px;}
+.example .yr{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--accent); margin-bottom:8px;}
+.example p{font-size:13.5px; color:var(--text-dim); line-height:1.6; margin:0;}
+
+.callout{background:var(--accent-soft); border:1px solid rgba(122,37,64,0.22); border-radius:8px; padding:18px 20px; font-size:13.5px; line-height:1.7; color:#6B2338; margin:24px 0;}
+.callout .tag{font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:var(--accent); font-weight:600; display:block; margin-bottom:8px;}
+.callout b{color:#fff;}
+
+/* Gauge */
+.gauge-card{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:30px 30px 24px; text-align:center; margin-bottom:8px;}
+.gauge-card svg{max-width:340px; width:100%;}
+.gauge-score{font-family:'IBM Plex Mono',monospace; font-size:44px; font-weight:700; margin-top:-10px;}
+.gauge-label{font-size:14.5px; font-weight:600; margin-top:4px;}
+.gauge-note{font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--text-dim); margin-top:14px; max-width:52ch; margin-left:auto; margin-right:auto; line-height:1.6;}
+
+/* Cards grid */
+.cards-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:24px;}
+@media (max-width:680px){.cards-grid{grid-template-columns:1fr;}}
+.ind-card{background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:20px 22px;}
+.ind-top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:10px;}
+.ind-title{font-size:14.5px; font-weight:600;}
+.dot{width:9px;height:9px;border-radius:50%; flex-shrink:0; margin-top:5px;}
+.dot.green{background:var(--green);}
+.dot.amber{background:var(--amber);}
+.dot.red{background:var(--red);}
+.ind-reading{font-family:'IBM Plex Mono',monospace; font-size:20px; font-weight:700; margin-bottom:4px;}
+.ind-reading.green{color:var(--green);}
+.ind-reading.amber{color:var(--amber);}
+.ind-reading.red{color:var(--red);}
+.ind-date{font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--text-dim); margin-bottom:10px;}
+.ind-mech{font-size:13px; color:var(--text-dim); line-height:1.55; margin:0 0 10px;}
+.ind-card details summary{font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.05em; text-transform:uppercase; color:var(--accent); cursor:pointer; list-style:none;}
+.ind-card details summary::-webkit-details-marker{display:none;}
+.ind-card details summary::before{content:"+ "; }
+.ind-card details[open] summary::before{content:"– ";}
+.ind-detail{font-size:12.5px; color:var(--text-dim); line-height:1.6; margin-top:10px;}
+.ind-source{font-family:'IBM Plex Mono',monospace; font-size:10px; color:#6B6570; margin-top:10px;}
+
+.stress-block{background:var(--red-soft); border:1px solid rgba(140,46,72,0.25); border-radius:8px; padding:24px 26px; margin-top:24px;}
+.stress-block h3{margin:0 0 12px; font-size:16px; color:#7A2540;}
+.stress-stats{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0;}
+@media (max-width:600px){.stress-stats{grid-template-columns:1fr;}}
+.stress-stat .num{font-family:'IBM Plex Mono',monospace; font-size:26px; font-weight:700; color:#fff;}
+.stress-stat .lab{font-size:12px; color:#8A6E78; margin-top:2px;}
+
+.action-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:22px;}
+@media (max-width:680px){.action-grid{grid-template-columns:1fr;}}
+.action-card{background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:24px 26px;}
+.action-card .kicker{font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:var(--accent); margin-bottom:12px;}
+.action-card h4{margin:0 0 12px; font-size:16px;}
+.action-card ul{margin:0; padding-left:18px; font-size:13.5px; color:var(--text-dim); line-height:1.8;}
+.action-card li strong{color:var(--text);}
+.disclaimer{font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--text-dim); margin-top:16px; line-height:1.6;}
+
+.sources{background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:24px 26px; margin-top:12px;}
+.sources h3{font-size:13px; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-dim); margin:0 0 16px; font-weight:600;}
+.sources ul{margin:0; padding:0; list-style:none; columns:2; column-gap:24px;}
+@media (max-width:640px){.sources ul{columns:1;}}
+.sources li{margin-bottom:10px; break-inside:avoid;}
+.sources a{color:var(--accent); text-decoration:none; font-size:12.5px; line-height:1.5;}
+.sources a:hover{text-decoration:underline;}
+
+.footnote{margin-top:50px; padding-top:26px; border-top:1px solid var(--line); display:flex; justify-content:space-between; align-items:flex-start; gap:24px; flex-wrap:wrap;}
+.footnote p{font-size:12.5px; color:var(--text-dim); line-height:1.6; max-width:56ch; margin:0;}
+.footnote .tagf{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--accent); border:1px solid var(--accent); border-radius:4px; padding:8px 12px; white-space:nowrap;}
+
+/* --- Pase editorial --- */
+.hook-block{margin-bottom:6px;}
+.hook-line{font-size:16.5px; color:var(--text-dim); margin:0 0 4px; line-height:1.5;}
+.hook-but{color:var(--text); font-weight:600; margin-top:10px;}
+.hook-question{font-family:'IBM Plex Mono',monospace; font-size:14px; color:var(--accent); margin:16px 0 34px; padding-bottom:30px; border-bottom:1px solid var(--line);}
+
+.qmap{display:flex; gap:10px; flex-wrap:wrap; margin:0 0 26px;}
+.qmap a{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--text-dim); text-decoration:none; border:1px solid var(--line); border-radius:20px; padding:8px 14px; transition:border-color .15s, color .15s;}
+.qmap a:hover{border-color:var(--accent); color:var(--accent);}
+.qmap a b{color:var(--accent); margin-right:6px;}
+
+.top-semaphore{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:22px 24px 20px; margin-bottom:54px;}
+.ts-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px; flex-wrap:wrap; gap:6px;}
+.ts-label{font-family:'IBM Plex Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-dim);}
+.ts-reading{font-size:15px; font-weight:700;}
+.ts-bar{position:relative; display:flex; height:34px; border-radius:6px; margin-bottom:14px;}
+.ts-seg{flex:1; display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono',monospace; font-size:9px; color:rgba(255,255,255,0.85); text-transform:uppercase; letter-spacing:0.01em; text-align:center; padding:0 2px;}
+.ts-seg:first-child{border-radius:6px 0 0 6px;}
+.ts-seg:last-child{border-radius:0 6px 6px 0;}
+.ts-marker{position:absolute; top:-9px; width:0; height:0; border-left:7px solid transparent; border-right:7px solid transparent; border-top:9px solid var(--text); transform:translateX(-50%); transition:left .4s ease;}
+.ts-note{font-size:12.5px; color:var(--text-dim); line-height:1.65; margin:0;}
+.ts-note a{color:var(--accent);}
+
+.timeline{display:flex; align-items:flex-start; gap:0; position:relative; margin-top:8px; overflow-x:auto; padding:10px 4px 8px;}
+.tl-node{flex:1; min-width:96px; display:flex; flex-direction:column; align-items:center; position:relative;}
+.tl-node::before{content:""; position:absolute; top:6px; left:-50%; width:100%; height:1px; background:var(--line); z-index:0;}
+.tl-node:first-child::before{display:none;}
+.tl-dot{width:13px;height:13px; border-radius:50%; background:var(--panel-2); border:2px solid var(--text-dim); z-index:1; margin-bottom:10px;}
+.tl-node.active .tl-dot{background:var(--accent); border-color:var(--accent);}
+.tl-label{font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--text-dim); text-align:center; padding:0 4px;}
+.tl-node.active .tl-label{color:var(--accent); font-weight:600;}
+
+.chips-inline{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px;}
+.chip-sm{font-family:'IBM Plex Mono',monospace; font-size:11px; background:rgba(122,37,64,0.10); color:var(--accent); border-radius:14px; padding:5px 12px;}
+
+.status-pill{font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.04em; text-transform:uppercase; display:flex; align-items:center; gap:6px; padding:4px 10px; border-radius:12px; flex-shrink:0;}
+.status-pill.green{background:var(--green-soft); color:var(--green);}
+.status-pill.amber{background:var(--amber-soft); color:var(--amber);}
+.status-pill.red{background:var(--red-soft); color:var(--red);}
+.mini-bar{height:4px; background:var(--panel-2); border-radius:3px; overflow:hidden; margin:9px 0 12px;}
+.mini-bar-fill{height:100%; border-radius:3px;}
+.mini-bar-fill.green{background:var(--green);}
+.mini-bar-fill.amber{background:var(--amber);}
+.mini-bar-fill.red{background:var(--red);}
+
+.ep-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:4px;}
+@media (max-width:520px){.ep-grid{grid-template-columns:1fr;}}
+.ep-col{border-radius:6px; padding:14px 16px;}
+.ep-avoid{background:var(--red-soft); border:1px solid rgba(140,46,72,0.20);}
+.ep-priority{background:var(--green-soft); border:1px solid rgba(62,100,136,0.20);}
+.ep-head{font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px; font-weight:700;}
+.ep-avoid .ep-head{color:var(--red);}
+.ep-priority .ep-head{color:var(--green);}
+.ep-col ul{margin:0; padding-left:16px; font-size:12.5px; color:var(--text-dim); line-height:1.7;}
+
+.conclusion-block{background:#1E2A42; border-radius:8px; padding:30px 32px; margin:8px 0 40px;}
+.conclusion-block p{font-size:15px; line-height:1.75; color:#C7CFDC; margin:0 0 10px;}
+.conclusion-block p:last-child{margin-bottom:0;}
+.conclusion-block .cb-strong{color:#FFFFFF; font-weight:600;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hook-block">
+    <p class="hook-line">Hace unos meses, llenar el tanque costaba menos.</p>
+    <p class="hook-line">Hoy, la cuota de la tarjeta pesa más.</p>
+    <p class="hook-line">El súper cuesta más que el año pasado.</p>
+    <p class="hook-line hook-but">Y sin embargo, las noticias siguen diciendo que la economía crece.</p>
+  </div>
+  <p class="hook-question">¿Quién tiene razón — tu bolsillo, o los indicadores económicos?</p>
+
+  <div class="eyebrow">Ciclos Económicos · Señales Clásicas (EE.UU. como referencia global)</div>
+  <h1>Cómo saber si una economía está <span>entrando en recesión</span></h1>
+  <p class="lede">
+    Los indicadores oficiales no están diseñados para adelantarse a esa sensación de que algo no cuadra — están
+    diseñados para no equivocarse. Aquí están los que sí tienen historial comprobado, con lecturas reales de
+    julio de 2026.
+  </p>
+
+  <div class="qmap">
+    <a href="#panel"><b>①</b>Qué está pasando</a>
+    <a href="#contexto"><b>②</b>Por qué está pasando</a>
+    <a href="#practica"><b>③</b>Qué significa para ti</a>
+  </div>
+
+  <div class="meta">Economía aplicada · Ciclos económicos · Datos con fecha de corte: julio 2026</div>
+
+  <div class="top-semaphore">
+    <div class="ts-head">
+      <span class="ts-label">Estado actual de la economía</span>
+      <span class="ts-reading mono" id="tsReading">Calculando…</span>
+    </div>
+    <div class="ts-bar">
+      <div class="ts-seg" style="background:#3CA35A">Expansión</div>
+      <div class="ts-seg" style="background:#8BBF3F">Desaceleración</div>
+      <div class="ts-seg" style="background:#E8AC1E">Riesgo elevado</div>
+      <div class="ts-seg" style="background:#E0812E">Recesión</div>
+      <div class="ts-seg" style="background:#D64545">Crisis</div>
+      <div class="ts-marker" id="tsMarker"></div>
+    </div>
+    <p class="ts-note" id="tsNote">Cargando la lectura compuesta de los 7 indicadores…</p>
+  </div>
+
+  <section id="mito">
+    <h2 class="st">El mito de "dos trimestres seguidos"</h2>
+    <p class="sub">Es la definición que todos aprendimos, y es incompleta. En Estados Unidos, quien decide oficialmente si hubo recesión no usa esa regla.</p>
+    <p class="body">
+      El comité de fechado de ciclos económicos del <strong>NBER</strong> no usa la regla de los dos trimestres.
+      Evalúa tres criterios en conjunto — profundidad, difusión y duración — con datos mensuales, no solo el PIB trimestral.
+    </p>
+    <div class="callout">
+      <span class="tag">¿Quién declara oficialmente una recesión?</span>
+      No el presidente. No Wall Street. No el Congreso.<br>
+      <b>El National Bureau of Economic Research (NBER)</b> — un comité de economistas independiente que revisa
+      variables mensuales, no solo el PIB:
+      <div class="chips-inline">
+        <span class="chip-sm">Empleo</span><span class="chip-sm">Producción</span><span class="chip-sm">Ingreso</span><span class="chip-sm">Ventas</span>
+      </div>
+    </div>
+    <div class="example-grid">
+      <div class="example">
+        <div class="yr">2001</div>
+        <p>Hubo recesión declarada por el NBER, pero <strong style="color:var(--text)">sin dos trimestres consecutivos</strong> de PIB negativo. La caída fue lo bastante difundida y profunda en empleo e industria como para calificar de todos modos.</p>
+      </div>
+      <div class="example">
+        <div class="yr">2022</div>
+        <p>El PIB cayó dos trimestres seguidos — la regla popular se cumplió — pero el NBER <strong style="color:var(--text)">no declaró recesión</strong>, porque el empleo y el ingreso seguían creciendo con fuerza.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contexto">
+    <h2 class="st">Cómo llegamos aquí</h2>
+    <p class="sub">El contexto importa tanto como el indicador — nada de esto pasó de un mes a otro.</p>
+    <div class="timeline">
+      <div class="tl-node"><div class="tl-dot"></div><div class="tl-label">Pandemia</div></div>
+      <div class="tl-node"><div class="tl-dot"></div><div class="tl-label">Inflación</div></div>
+      <div class="tl-node"><div class="tl-dot"></div><div class="tl-label">Subidas de tasas</div></div>
+      <div class="tl-node"><div class="tl-dot"></div><div class="tl-label">Desaceleración</div></div>
+      <div class="tl-node"><div class="tl-dot"></div><div class="tl-label">Situación actual</div></div>
+      <div class="tl-node active"><div class="tl-dot"></div><div class="tl-label">¿Recesión?</div></div>
+    </div>
+  </section>
+
+  <section id="panel">
+    <h2 class="st">El panel: 7 señales, lectura de julio 2026</h2>
+    <p class="sub">Cada indicador tiene un historial distinto de anticipación y de falsos positivos. Ninguno por sí solo es suficiente — por eso se leen juntos.</p>
+    <p class="body">No todos cuentan la misma historia: algunos se adelantan meses, otros solo confirman lo que ya
+    pasó. Esto es lo que vale la pena seguir de cerca — y por qué cada uno pesa distinto.</p>
+
+    <div class="gauge-card">
+      <svg id="gaugeSvg" viewBox="0 0 300 190"></svg>
+      <div class="gauge-score mono" id="gaugeScore"></div>
+      <div class="gauge-label" id="gaugeLabel"></div>
+      <div class="gauge-note">Índice de alerta compuesto, construido para este artículo a partir de los 7 indicadores de abajo — no es una cifra oficial de ninguna institución. Ábrelo como punto de partida, no como veredicto.</div>
+    </div>
+
+    <div class="cards-grid" id="cardsGrid"></div>
+  </section>
+
+  <section>
+    <h2 class="st">Lo que el tablero oficial no mide bien</h2>
+    <p class="sub">El indicador que la mayoría de la gente siente primero casi nunca aparece en los reportes de los bancos centrales.</p>
+    <div class="stress-block">
+      <h3>🔴 Estrés financiero de los hogares — la señal roja del tablero</h3>
+      <p style="font-size:13.5px; color:#5C4650; line-height:1.65; margin:0;">
+        No es un indicador líder clásico en el sentido académico — es un termómetro del costo real de vivir hoy.
+        Y a mediados de 2026 está en su punto más tenso en más de una década.
+      </p>
+      <div class="stress-stats">
+        <div class="stress-stat"><div class="num">$4.50</div><div class="lab">promedio nacional por galón de gasolina en EE.UU. (mayo 2026), frente a $3.14 un año antes</div></div>
+        <div class="stress-stat"><div class="num">$1.25B</div><div class="lab">deuda total en tarjetas de crédito — récord histórico (1T 2026)</div></div>
+      </div>
+      <p style="font-size:13px; color:#8A6E78; line-height:1.6; margin-top:6px;">
+        Un matiz metodológico importante: el reporte de deuda de hogares de la Fed de Nueva York ubicó la morosidad de
+        90+ días en tarjetas de crédito en 13.1% — la más alta en 15-16 años. Una serie distinta, la de la Reserva
+        Federal basada en reportes bancarios, mide algo distinto (saldos con 30+ días de mora sobre el total) y muestra
+        2.9%, en descenso. No son cifras contradictorias: son dos metodologías diferentes que miden ángulos distintos
+        del mismo problema. Vale la pena leer la letra chica antes de citar cualquiera de las dos.
+      </p>
+    </div>
+  </section>
+
+  <section id="practica">
+    <h2 class="st">Qué hacer con esta información</h2>
+    <p class="sub">Dos niveles distintos: las herramientas que existen a nivel de política económica, y las decisiones que están en tus manos.</p>
+
+    <div class="action-grid">
+      <div class="action-card">
+        <div class="kicker">Nivel macro</div>
+        <h4>Las herramientas clásicas de respuesta</h4>
+        <ul>
+          <li><strong>Política monetaria</strong> — ajustar tasas de interés y liquidez (el banco central).</li>
+          <li><strong>Estabilizadores automáticos</strong> — seguro de desempleo y programas que se activan solos cuando la economía se debilita.</li>
+          <li><strong>Política fiscal discrecional</strong> — gasto o estímulo adicional decidido específicamente para el momento.</li>
+          <li><strong>Política de oferta</strong> — medidas sobre energía, comercio o producción cuando el choque viene de ese lado, no de la demanda.</li>
+        </ul>
+        <p style="font-size:11.5px; color:var(--text-dim); margin-top:12px; line-height:1.5;">Esta es la caja de herramientas estándar de cualquier libro de macroeconomía — no una posición sobre qué debería hacer un gobierno en particular hoy.</p>
+      </div>
+      <div class="action-card">
+        <div class="kicker">Nivel personal</div>
+        <h4>Lo que sí controlas</h4>
+        <div class="ep-grid">
+          <div class="ep-col ep-avoid">
+            <div class="ep-head">Evitar</div>
+            <ul>
+              <li>Nuevas deudas de consumo</li>
+              <li>Compras financiadas innecesarias</li>
+              <li>Reducir la liquidez a cero</li>
+            </ul>
+          </div>
+          <div class="ep-col ep-priority">
+            <div class="ep-head">Priorizar</div>
+            <ul>
+              <li>Fondo de emergencia (3-6 meses de gastos)</li>
+              <li>Reducir deuda de tasa variable o cara</li>
+              <li>Estabilidad laboral</li>
+              <li>Diversificar ingresos</li>
+            </ul>
+          </div>
+        </div>
+        <div class="disclaimer">Esto es educación financiera general, no asesoría personalizada — tu situación específica puede pedir algo distinto.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="conclusion-block">
+    <p>Una recesión no empieza el día que aparece en un titular.</p>
+    <p>Empieza cuando millones de personas, sin coordinarse entre sí, cambian lentamente su comportamiento: gastan
+    menos, dudan más, posponen decisiones.</p>
+    <p class="cb-strong">Seguir estos indicadores no sirve para adivinar el futuro con precisión. Sirve para tomar
+    mejores decisiones antes de que el titular llegue.</p>
+  </div>
+
+  <div class="sources">
+    <h3>Fuentes principales</h3>
+    <ul>
+      <li><a href="https://www.nber.org/research/business-cycle-dating" target="_blank">NBER — Business Cycle Dating</a></li>
+      <li><a href="https://www.congress.gov/crs-product/IF12774" target="_blank">Congress.gov CRS — Defining Recession</a></li>
+      <li><a href="https://www.bea.gov/news/2026/gdp-advance-estimate-2nd-quarter-2026" target="_blank">BEA — GDP Advance Estimate, 2T 2026</a></li>
+      <li><a href="https://www.conference-board.org/topics/us-leading-indicators/" target="_blank">The Conference Board — US Leading Indicators</a></li>
+      <li><a href="https://fred.stlouisfed.org/series/SAHMREALTIME" target="_blank">FRED — Sahm Rule Real-Time Indicator</a></li>
+      <li><a href="https://www.prnewswire.com/news-releases/manufacturing-pmi-at-53-3-june-2026-ism-manufacturing-pmi-report-302814991.html" target="_blank">ISM — Manufacturing PMI Report, junio 2026</a></li>
+      <li><a href="https://libertystreeteconomics.newyorkfed.org/2026/03/the-new-york-fed-dsge-model-forecast-march-2026/" target="_blank">NY Fed — DSGE Model Forecast</a></li>
+      <li><a href="https://www.newyorkfed.org/research/capital_markets/ycfaq" target="_blank">NY Fed — Yield Curve as Leading Indicator</a></li>
+      <li><a href="https://protectborrowers.org/american-families-hit-record-levels-of-financial-distress-as-millions-fall-behind/" target="_blank">Protect Borrowers — datos de la Fed de Nueva York sobre deuda de hogares</a></li>
+      <li><a href="https://www.cnbc.com/2026/05/12/new-york-fed-credit-card-debt-stands-at-1point25-trillion.html" target="_blank">CNBC — deuda de tarjetas y precios de gasolina (datos NY Fed / AAA)</a></li>
+    </ul>
+  </div>
+
+  <div class="footnote">
+    <p>
+      Todas las lecturas de este tablero cambian mensualmente. Este artículo es un corte de julio de 2026 — trátalo
+      como una fotografía, no como un tracker en vivo, y revisa las fuentes originales para la cifra más reciente.
+    </p>
+    <div class="tagf">Plantilla actualizable mes a mes con cada nuevo dato →</div>
+  </div>
+
+</div>
+
+<script>
+const indicators = [
+  {
+    title: "Curva de rendimientos (2s10s / 3m10y)",
+    reading: "+0.35 pp",
+    date: "10Y 4.56% / 2Y 4.21% — 10 jul 2026",
+    status: "amber",
+    mech: "Cuando las tasas de largo plazo caen por debajo de las de corto plazo, el mercado de bonos está apostando a que vienen recortes por debilidad económica.",
+    detail: "La curva 2s10s salió en positivo tras la inversión más larga registrada (jul 2022–dic 2024, 27 meses) sin que llegara una recesión en el plazo típico. Pero la 3m10y — la que usa el modelo de la Fed de NY — estuvo oscilando entre positivo y negativo durante todo el primer semestre de 2026. Señal mixta, no una luz verde limpia.",
+    source: "Advisor Perspectives / centralbank.watch"
+  },
+  {
+    title: "Sahm Rule (mercado laboral en tiempo real)",
+    reading: "0.20 pp",
+    date: "marzo 2026",
+    status: "green",
+    mech: "Se activa cuando el promedio móvil de 3 meses del desempleo sube 0.5pp o más sobre su mínimo de los últimos 12 meses. Ha acertado las 11 recesiones desde 1970.",
+    detail: "Viene bajando de forma sostenida: 0.43 en noviembre 2025 → 0.35 → 0.30 → 0.27 → 0.20 en marzo 2026. Está a menos de la mitad del umbral de 0.50 que dispara la señal, y la tendencia es de mejora, no de deterioro.",
+    source: "FRED (SAHMREALTIME)"
+  },
+  {
+    title: "ISM Manufacturing PMI",
+    reading: "53.3",
+    date: "junio 2026",
+    status: "green",
+    mech: "Por encima de 50 indica expansión del sector manufacturero; por debajo, contracción.",
+    detail: "Sexto mes consecutivo en zona de expansión, aunque desacelerando desde 54.0 en mayo. Los subíndices de nuevas órdenes y producción también crecieron más lento — vale la pena vigilar si la tendencia continúa, pero hoy sigue en territorio positivo.",
+    source: "ISM / Advisor Perspectives"
+  },
+  {
+    title: "Conference Board — Leading Economic Index",
+    reading: "99.1",
+    date: "junio 2026 (2016=100)",
+    status: "amber",
+    mech: "Combina 10 series adelantadas para anticipar giros del ciclo económico con 3 a 9 meses de antelación.",
+    detail: "Cayó 0.2% en junio, revirtiendo parte de las alzas de abril y mayo. Pero la caída del primer semestre de 2026 (-0.3%) fue mucho más suave que la del segundo semestre de 2025 (-1.1%) — la tendencia negativa se está desacelerando. El índice coincidente (CEI), que mide actividad actual, de hecho subió con las 4 componentes en positivo.",
+    source: "The Conference Board"
+  },
+  {
+    title: "Crecimiento del PIB real (EE.UU.)",
+    reading: "+1.5%",
+    date: "2T 2026, anualizado",
+    status: "amber",
+    mech: "Sigue siendo la medida más citada de actividad económica, aunque el NBER no la use en solitario.",
+    detail: "Desaceleró frente al 2.1% del primer trimestre y quedó por debajo de lo esperado por analistas (~2.0-2.1%). El consumo se aceleró a 3.2%, pero un salto en importaciones y menor gasto de gobierno restaron al total. Sigue en positivo, no en contracción.",
+    source: "BEA — Advance Estimate"
+  },
+  {
+    title: "Modelo de probabilidad de recesión (Fed de NY)",
+    reading: "19% – 36%",
+    date: "lecturas de inicios de 2026",
+    status: "amber",
+    mech: "La Fed de Nueva York publica dos modelos distintos: uno basado en la pendiente de la curva de rendimientos, otro (DSGE) basado en un modelo macroeconómico estructural.",
+    detail: "El modelo de curva de rendimiento ubicó la probabilidad a 12 meses en ~19% a comienzos de 2026 (muy por debajo del umbral histórico de 50%). El modelo DSGE, publicado directamente por la Fed de NY, dio 35.8% a 4 trimestres en marzo 2026. Que dos modelos de la misma institución difieran tanto es en sí mismo la lección: ningún modelo captura todo.",
+    source: "NY Fed (Liberty Street Economics) / RecessionPulse"
+  },
+  {
+    title: "Estrés financiero de los hogares",
+    reading: "Récord de deuda + morosidad alta",
+    date: "1T–2T 2026",
+    status: "red",
+    mech: "Gasolina y cuotas de deuda no son un indicador macro clásico — son el termómetro de cómo se siente la economía en la vida diaria.",
+    detail: "Gasolina de vuelta por encima de $4/galón en gran parte del país en medio de tensión geopolítica en Medio Oriente; deuda de tarjetas de crédito en récord histórico ($1.25 billones); morosidad de 90+ días en su nivel más alto en 15-16 años según el reporte de deuda de hogares de la Fed de NY. Este es el indicador que la mayoría de la gente sentirá primero, mucho antes de cualquier declaración oficial.",
+    source: "Fed de Nueva York / AAA / CNBC"
+  }
+];
+
+const statusVal = {green:0, amber:1, red:2};
+const statusLabel = {green:'Expansión', amber:'Precaución', red:'Alerta'};
+const statusPct = {green:22, amber:58, red:88};
+const maxScore = indicators.length * 2;
+const rawScore = indicators.reduce((s,i)=>s+statusVal[i.status],0);
+const score = Math.round(rawScore/maxScore*100);
+
+document.getElementById('cardsGrid').innerHTML = indicators.map(ind => `
+  <div class="ind-card">
+    <div class="ind-top">
+      <div class="ind-title">${ind.title}</div>
+      <div class="status-pill ${ind.status}"><span class="dot ${ind.status}"></span>${statusLabel[ind.status]}</div>
+    </div>
+    <div class="ind-reading ${ind.status}">${ind.reading}</div>
+    <div class="mini-bar"><div class="mini-bar-fill ${ind.status}" style="width:${statusPct[ind.status]}%"></div></div>
+    <div class="ind-date">${ind.date}</div>
+    <p class="ind-mech">${ind.mech}</p>
+    <details>
+      <summary>Por qué este estado</summary>
+      <div class="ind-detail">${ind.detail}</div>
+    </details>
+    <div class="ind-source">Fuente: ${ind.source}</div>
+  </div>
+`).join('');
+
+/* ---- Semáforo superior (5 niveles, feedback punto 4) ---- */
+(function(){
+  const bands = [
+    {max:20, label:'Expansión', note:'Todos los indicadores clásicos apuntan a crecimiento estable, sin señales de alerta relevantes.'},
+    {max:40, label:'Desaceleración', note:'El crecimiento se mantiene, pero varias señales empiezan a perder fuerza al mismo tiempo.'},
+    {max:60, label:'Riesgo elevado', note:'El crecimiento sigue en positivo, pero las señales mixtas se acumulan — y el estrés de los hogares ya es visible.'},
+    {max:80, label:'Recesión', note:'La mayoría de los indicadores clásicos está en territorio negativo o de fuerte alerta.'},
+    {max:101, label:'Crisis', note:'Contracción amplia y simultánea en prácticamente todos los indicadores.'}
+  ];
+  const band = bands.find(b => score < b.max);
+  document.getElementById('tsReading').textContent = score + '/100 · ' + band.label;
+  document.getElementById('tsMarker').style.left = score + '%';
+  document.getElementById('tsNote').innerHTML = band.note + ' <a href="#panel">Ver el detalle de los 7 indicadores ↓</a>';
+})();
+
+/* ---- Gauge ---- */
+(function(){
+  const cx=150, cy=160, r=120;
+  function pt(thetaDeg, radius){
+    const th = thetaDeg*Math.PI/180;
+    return [cx + radius*Math.cos(th), cy - radius*Math.sin(th)];
+  }
+  function band(t1,t2,radius,color){
+    const [x1,y1]=pt(t1,radius), [x2,y2]=pt(t2,radius);
+    return `<path d="M ${x1.toFixed(1)} ${y1.toFixed(1)} A ${radius} ${radius} 0 0 1 ${x2.toFixed(1)} ${y2.toFixed(1)}" stroke="${color}" stroke-width="16" fill="none" stroke-linecap="round"/>`;
+  }
+  const bands = band(180,120.6,r,'#3CA35A') + band(120.6,61.2,r,'#E8AC1E') + band(61.2,0,r,'#D64545');
+  const needleTheta = 180*(1-score/100);
+  const [nx,ny] = pt(needleTheta, r-26);
+  const needle = `<line x1="${cx}" y1="${cy}" x2="${nx.toFixed(1)}" y2="${ny.toFixed(1)}" stroke="var(--text)" stroke-width="3.5" stroke-linecap="round"/><circle cx="${cx}" cy="${cy}" r="7" fill="var(--text)"/>`;
+  document.getElementById('gaugeSvg').innerHTML = bands + needle +
+    `<text x="${cx-r}" y="${cy+20}" font-family="IBM Plex Mono" font-size="10" fill="var(--text-dim)">0</text>
+     <text x="${cx+r-16}" y="${cy+20}" font-family="IBM Plex Mono" font-size="10" fill="var(--text-dim)">100</text>`;
+
+  document.getElementById('gaugeScore').textContent = score + '/100';
+  let label, color;
+  if(score<34){label='Expansión estable'; color='#3CA35A';}
+  else if(score<67){label='Señales mixtas — precaución'; color='#B8860B';}
+  else {label='Alerta de recesión'; color='#D64545';}
+  const lab = document.getElementById('gaugeLabel');
+  lab.textContent = label;
+  lab.style.color = color;
+})();
+</script>
+</body>
+</html>
