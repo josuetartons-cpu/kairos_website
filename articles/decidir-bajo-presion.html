@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Decidir bajo presión — Kairos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="La habilidad no es eliminar la emoción. Es aprender a decidir mientras la emoción existe. Un ensayo de Kairos sobre pensar bajo presión.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root{
+  --bg:#F7F4EE;
+  --panel:#FFFFFF;
+  --line:#E4DFD3;
+  --text:#1C1B22;
+  --text-dim:#6B6570;
+  --accent:#7A2540;
+  --accent-soft:rgba(122,37,64,0.07);
+  --navy:#1E2A42;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{background:var(--bg); color:var(--text); font-family:'Space Grotesk',sans-serif; -webkit-font-smoothing:antialiased;}
+a{color:inherit;}
+
+/* ---------- NAV ---------- */
+.nav{border-bottom:1px solid var(--line);}
+.nav-inner{max-width:720px; margin:0 auto; padding:22px 28px; display:flex; justify-content:space-between; align-items:center;}
+.nav-brand{font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:14px; letter-spacing:0.04em; text-decoration:none; color:var(--text);}
+.nav-brand span{color:var(--accent);}
+.nav-back{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-dim); text-decoration:none;}
+.nav-back:hover{color:var(--accent);}
+
+/* ---------- ARTICLE HEADER ---------- */
+.art-wrap{max-width:680px; margin:0 auto; padding:64px 28px 0;}
+.art-eyebrow{display:inline-flex; align-items:center; gap:8px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); text-decoration:none; margin-bottom:26px;}
+.art-eyebrow:hover{text-decoration:underline;}
+h1{font-family:'Fraunces',serif; font-weight:600; font-size:clamp(30px,5vw,44px); line-height:1.16; margin:0 0 20px; letter-spacing:-0.01em;}
+.dek{font-family:'Fraunces',serif; font-style:italic; font-weight:400; font-size:clamp(18px,2.4vw,21px); color:var(--text-dim); line-height:1.5; margin:0 0 26px; max-width:36ch;}
+.art-meta{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--text-dim); padding-bottom:36px; border-bottom:1px solid var(--line); margin-bottom:50px;}
+
+/* ---------- PROSE ---------- */
+.prose{max-width:680px; margin:0 auto; padding:0 28px 10px;}
+.prose p{font-family:'Fraunces',serif; font-weight:400; font-size:19px; line-height:1.72; color:var(--text); margin:0 0 24px;}
+.prose h2{font-family:'Fraunces',serif; font-weight:600; font-size:clamp(22px,3vw,27px); margin:56px 0 22px; letter-spacing:-0.005em;}
+.prose em{color:var(--text);}
+.prose .aside{font-size:16px; color:var(--text-dim); font-style:italic;}
+
+.pull{
+  font-family:'Fraunces',serif; font-style:italic; font-weight:500; font-size:clamp(21px,3vw,26px);
+  line-height:1.45; color:var(--accent); border-left:3px solid var(--accent); padding-left:24px;
+  margin:44px 0 48px;
+}
+
+.q-block{margin:36px 0 44px;}
+.q-item{padding:20px 0; border-top:1px solid var(--line);}
+.q-item:last-child{border-bottom:1px solid var(--line);}
+.q-item .q-head{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16.5px; color:var(--text); margin-bottom:8px;}
+.q-item p{font-family:'Space Grotesk',sans-serif; font-size:14.5px; line-height:1.65; color:var(--text-dim); margin:0;}
+
+/* ---------- DIAGRAMA: espacio entre impulso y decisión ---------- */
+.pause-diagram{display:flex; flex-direction:column; align-items:center; margin:44px 0 8px; padding:38px 24px; background:var(--panel); border:1px solid var(--line); border-radius:10px;}
+.pd-node{display:flex; flex-direction:column; align-items:center; gap:9px;}
+.pd-dot{width:10px; height:10px; border-radius:50%; background:var(--text-dim);}
+.pd-end .pd-dot{background:var(--accent);}
+.pd-label{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.12em; color:var(--text-dim); text-transform:uppercase;}
+.pd-end .pd-label{color:var(--accent); font-weight:600;}
+.pd-line{width:1px; height:26px; background:var(--line);}
+.pd-pause{background:var(--accent-soft); border:1px solid rgba(122,37,64,0.15); border-radius:14px; padding:22px 30px; text-align:center; max-width:360px; width:100%;}
+.pd-pause-label{font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.12em; color:var(--accent); text-transform:uppercase; margin-bottom:14px;}
+.pd-q{font-family:'Space Grotesk',sans-serif; font-size:14.5px; color:var(--text); padding:10px 0; border-top:1px solid rgba(122,37,64,0.14);}
+.pd-q:first-of-type{border-top:none; padding-top:0;}
+.pd-caption{font-family:'Fraunces',serif; font-style:italic; font-size:15px; color:var(--text-dim); text-align:center; max-width:34ch; margin:22px auto 0;}
+
+/* ---------- KAIROS CLOSING ---------- */
+.kairos-close{background:var(--navy); border-radius:8px; padding:38px 40px; margin:56px 0 60px;}
+.kairos-close .kc-mark{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#93A0B5; margin-bottom:16px;}
+.kairos-close p{font-family:'Fraunces',serif; font-size:19px; line-height:1.6; color:#E4E7ED; margin:0; font-weight:400;}
+.kairos-close p strong{color:#fff; font-weight:600;}
+
+/* ---------- FOOTER ---------- */
+footer{background:var(--navy); padding:40px 0; margin-top:0;}
+.footer-inner{max-width:680px; margin:0 auto; padding:0 28px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;}
+.footer-inner a{font-family:'IBM Plex Mono',monospace; font-size:12px; color:#C7CFDC; text-decoration:none;}
+.footer-inner a:hover{color:#fff;}
+.footer-copy{font-family:'IBM Plex Mono',monospace; font-size:11px; color:#7C8AA0;}
+
+@media (max-width:520px){
+  .art-wrap, .prose{padding-left:22px; padding-right:22px;}
+  .kairos-close{padding:30px 26px;}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-brand">KAIRO<span>S</span></a>
+    <a href="../index.html" class="nav-back">← Volver a Kairos</a>
+  </div>
+</nav>
+
+<div class="art-wrap">
+  <a href="../index.html#pensamiento" class="art-eyebrow">Pensamiento · Cogitatio</a>
+  <h1>Decidir bajo presión: cuando nuestras emociones intentan tomar el control</h1>
+  <p class="dek">La habilidad de pensar cuando más difícil es hacerlo.</p>
+  <div class="art-meta">Agosto 2026 · 7 min de lectura</div>
+</div>
+
+<article class="prose">
+
+  <p>Hay decisiones que tomamos cuando todo parece estar bajo control. Tenemos tiempo. Tenemos información. Estamos tranquilos.</p>
+
+  <p>Pero las decisiones que realmente ponen a prueba nuestro criterio suelen aparecer en momentos completamente distintos: cuando estamos cansados, cuando tenemos hambre, cuando sentimos presión, cuando queremos una respuesta inmediata. Y es precisamente en esos momentos cuando nuestras emociones tienen más influencia sobre nosotros.</p>
+
+  <p>Durante mucho tiempo pensé que tomar buenas decisiones dependía sobre todo de tener más información: leer más, analizar más, prepararme mejor. Con el tiempo entendí que existe otra habilidad igual de importante — aprender a pensar mientras estoy sintiendo algo.</p>
+
+  <p>Porque las emociones no son el enemigo. No siempre podemos elegir lo que sentimos, pero sí podemos decidir qué hacemos con eso que sentimos. Una emoción puede darnos información sin convertirse automáticamente en una instrucción. El problema aparece cuando dejamos que una emoción tome la decisión antes de que nuestra razón pueda participar.</p>
+
+  <p class="pull">La habilidad no es eliminar la emoción. Es aprender a decidir mientras la emoción existe.</p>
+
+  <h2>Una lección aprendida con algo tan simple como la comida</h2>
+
+  <p>Una de las primeras veces que pude identificar esto fue en una situación bastante común.</p>
+
+  <p>Tenía hambre. No había almorzado, y mi cabeza solo tenía una idea clara: resolver eso lo antes posible. Terminé pidiendo KFC.</p>
+
+  <p>No fue un gran acto de disciplina, ni lo contrario — simplemente noté algo en el proceso. Antes de pedir, apareció una pregunta:</p>
+
+  <p><em>¿Estoy tomando esta decisión porque realmente es la mejor opción, o porque quiero eliminar una incomodidad lo antes posible?</em></p>
+
+  <p>La respuesta no era prohibirme la comida. Era darme cuenta de que podía sentir hambre sin que el hambre tomara la decisión automáticamente por mí. Al final pedí de todos modos — la enseñanza nunca fue "nunca pidas KFC". Fue que una emoción puede estar presente sin tener que obedecerla de inmediato.</p>
+
+  <h2>La incomodidad también puede ser una herramienta de crecimiento</h2>
+
+  <p>Esta experiencia me llevó a una reflexión más amplia. Vivimos intentando eliminar cualquier incomodidad lo más rápido posible: el hambre, la incertidumbre, la espera, la ansiedad antes de una decisión, la frustración, la presión. Queremos que se acabe ya.</p>
+
+  <p>Pero no toda incomodidad es una señal de que algo está mal. Hay una incomodidad que sí debemos evitar, porque nos hace daño. Y hay otra que simplemente forma parte de un proceso que vale la pena atravesar — la de aprender algo nuevo, construir desde cero, cambiar un hábito, decidir sin tener todas las respuestas.</p>
+
+  <p>A veces necesitamos soportar una emoción durante un tiempo suficiente para poder pensar dentro de ella. Eso no es una invitación a aguantar algo que de verdad nos está haciendo daño — es aprender a distinguir cuál es cuál antes de reaccionar.</p>
+
+  <p>La pregunta entonces no debería ser "¿cómo hago para dejar de sentir esta incomodidad?", sino "¿esta incomodidad es una señal de peligro o una señal de crecimiento?"</p>
+
+  <h2>La misma habilidad en decisiones más grandes</h2>
+
+  <p>Con práctica, esta forma de pensar deja de ser un ejercicio consciente y empieza a volverse natural. La misma habilidad que sirve para decidir qué hacer con el hambre también sirve para problemas mucho más complejos.</p>
+
+  <p>Hace algún tiempo participé en una reunión de cooperación internacional donde se discutía el financiamiento de un proyecto. Había presión por avanzar y responder rápido. Ese día había dormido mal, y en algún momento de la reunión me di cuenta de que no estaba procesando las discusiones con la atención que necesitaban.</p>
+
+  <p>Ahí apareció una decisión: responder de inmediato por la presión del momento, o detener el proceso para decidir mejor.</p>
+
+  <p>Pedí que se elaborara una ayuda de memoria de la reunión antes de avanzar — quería que quedara por escrito qué se había discutido, para poder tomar la decisión después con información organizada, y no solo desde el cansancio.</p>
+
+  <p>Esto no fue una forma de evitar la responsabilidad. Fue lo contrario: posponer una respuesta inmediata fue la decisión responsable, porque necesitaba mejores condiciones para tomarla.</p>
+
+  <h2>El tiempo también es parte de una buena decisión</h2>
+
+  <p>Vivimos en una cultura donde parece que responder rápido es sinónimo de ser eficiente. Pero en decisiones complejas, eso no siempre es cierto. A veces el tiempo es, en sí mismo, un recurso que mejora la calidad de la decisión.</p>
+
+  <p>Hay una diferencia entre procrastinar — evitar una decisión porque resulta incómoda — y reflexionar: usar deliberadamente tiempo adicional para conseguir información, ordenar las ideas y decidir mejor. Si una decisión no necesita tomarse ahora, retrasarla a propósito puede ser, en sí misma, una decisión.</p>
+
+  <p>Esto no es una defensa de posponerlo todo. El punto es reconocer cuándo la urgencia es real y cuándo simplemente queremos dejar de sentir incertidumbre.</p>
+
+  <h2>Tres preguntas, no un método</h2>
+
+  <p>Cuando siento que una emoción está por tomar el control, trato de hacerme tres preguntas. No son pasos que garanticen la decisión correcta — son, simplemente, una forma de comprarme unos segundos antes de que la emoción decida por mí.</p>
+
+  <div class="pause-diagram">
+    <div class="pd-node">
+      <div class="pd-dot"></div>
+      <div class="pd-label">Impulso</div>
+    </div>
+    <div class="pd-line"></div>
+    <div class="pd-pause">
+      <div class="pd-pause-label">La pausa</div>
+      <div class="pd-q">¿Qué estoy sintiendo?</div>
+      <div class="pd-q">¿Cuál es el problema, de verdad?</div>
+      <div class="pd-q">¿Lo defendería mañana?</div>
+    </div>
+    <div class="pd-line"></div>
+    <div class="pd-node pd-end">
+      <div class="pd-dot"></div>
+      <div class="pd-label">Decisión</div>
+    </div>
+  </div>
+  <p class="pd-caption">El espacio entre sentir y actuar — ahí vive el criterio.</p>
+
+  <div class="q-block">
+    <div class="q-item">
+      <div class="q-head">¿Qué estoy sintiendo?</div>
+      <p>No para eliminarlo — solo para reconocerlo antes de que actúe sin mi participación. ¿Estoy cansado? ¿Molesto? ¿Tengo miedo? ¿Solo busco alivio inmediato?</p>
+    </div>
+    <div class="q-item">
+      <div class="q-head">¿Cuál es realmente el problema?</div>
+      <p>A veces confundimos la incomodidad con el problema. "No puedo esperar, necesito decidir ahora" casi nunca es del todo cierto. ¿De verdad necesito decidir ya, o solo quiero dejar de sentir incertidumbre?</p>
+    </div>
+    <div class="q-item">
+      <div class="q-head">¿Podría defender esta decisión mañana?</div>
+      <p>Si alguien me preguntara por qué decidí así, ¿tendría una razón clara — o solo estaría explicando una emoción que quería satisfacer?</p>
+    </div>
+  </div>
+
+  <h2>Pensar mejor es una habilidad que se entrena</h2>
+
+  <p>La vida no suele presentar sus decisiones importantes en momentos perfectos. Muchas veces llegan cuando estamos cansados, bajo presión o enfrentando incertidumbre.</p>
+
+  <p>Por eso la madurez no consiste en eliminar nuestras emociones — eso sería imposible. Consiste en aprender cuáles debemos escuchar y cuáles debemos atravesar.</p>
+
+  <p>El hambre puede enseñarnos paciencia. La incertidumbre puede enseñarnos análisis. La presión puede enseñarnos preparación.</p>
+
+  <p>Muchas veces, detrás de una incomodidad no hay un problema que evitar. Hay una oportunidad para volvernos una versión más firme de nosotros mismos.</p>
+
+  <p>No sé si esto funciona igual para ti. Pero la próxima vez que sientas el impulso de resolver algo de inmediato, quizás valga la pena preguntarte: ¿esto necesita una respuesta ahora, o solo quiero dejar de sentir esto?</p>
+
+  <div class="kairos-close">
+    <div class="kc-mark">Kairos</div>
+    <p>En Kairos creemos que pensar mejor es una habilidad que se puede desarrollar. <strong>La economía nos ayuda a entender el mundo. La tecnología nos muestra cómo está cambiando.</strong> Pero aprender a pensar es lo que nos permite decidir qué hacer con los dos.</p>
+  </div>
+
+</article>
+
+<footer>
+  <div class="footer-inner">
+    <a href="../index.html">← Volver a Kairos</a>
+    <span class="footer-copy">© 2026 Kairos</span>
+  </div>
+</footer>
+
+</body>
+</html>
