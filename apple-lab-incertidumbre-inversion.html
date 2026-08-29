@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Apple Lab — Kairos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Los datos no nos permiten conocer el futuro. Pero sí pueden ayudarnos a hacer mejores preguntas. Un experimento de Kairos sobre invertir bajo incertidumbre.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root{
+  --bg:#F7F4EE;
+  --panel:#FFFFFF;
+  --line:#E4DFD3;
+  --text:#1C1B22;
+  --text-dim:#6B6570;
+  --accent:#7A2540;
+  --accent-soft:rgba(122,37,64,0.07);
+  --navy:#1E2A42;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{background:var(--bg); color:var(--text); font-family:'Space Grotesk',sans-serif; -webkit-font-smoothing:antialiased;}
+a{color:inherit;}
+
+/* ---------- NAV ---------- */
+.nav{border-bottom:1px solid var(--line);}
+.nav-inner{max-width:720px; margin:0 auto; padding:22px 28px; display:flex; justify-content:space-between; align-items:center;}
+.nav-brand{font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:14px; letter-spacing:0.04em; text-decoration:none; color:var(--text);}
+.nav-brand span{color:var(--accent);}
+.nav-back{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-dim); text-decoration:none;}
+.nav-back:hover{color:var(--accent);}
+
+/* ---------- ARTICLE HEADER ---------- */
+.art-wrap{max-width:680px; margin:0 auto; padding:64px 28px 0;}
+.art-eyebrow{display:inline-flex; align-items:center; gap:8px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); text-decoration:none; margin-bottom:26px;}
+.art-eyebrow:hover{text-decoration:underline;}
+h1{font-family:'Fraunces',serif; font-weight:600; font-size:clamp(28px,4.6vw,40px); line-height:1.2; margin:0 0 20px; letter-spacing:-0.01em;}
+.dek{font-family:'Fraunces',serif; font-style:italic; font-weight:400; font-size:clamp(18px,2.4vw,21px); color:var(--text-dim); line-height:1.5; margin:0 0 26px; max-width:40ch;}
+.art-meta{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--text-dim); padding-bottom:36px; border-bottom:1px solid var(--line); margin-bottom:50px;}
+
+/* ---------- PROSE ---------- */
+.prose{max-width:680px; margin:0 auto; padding:0 28px 10px;}
+.prose p{font-family:'Fraunces',serif; font-weight:400; font-size:19px; line-height:1.72; color:var(--text); margin:0 0 24px;}
+.prose h2{font-family:'Fraunces',serif; font-weight:600; font-size:clamp(22px,3vw,27px); margin:56px 0 22px; letter-spacing:-0.005em;}
+.prose strong{color:var(--text); font-weight:600;}
+.prose em{color:var(--text);}
+
+.pull{
+  font-family:'Fraunces',serif; font-style:italic; font-weight:500; font-size:clamp(21px,3vw,26px);
+  line-height:1.45; color:var(--accent); border-left:3px solid var(--accent); padding-left:24px;
+  margin:44px 0 48px;
+}
+
+/* ---------- CHIPS ---------- */
+.chip-row{display:flex; flex-wrap:wrap; gap:10px; margin:8px 0 32px;}
+.chip{font-family:'IBM Plex Mono',monospace; font-size:12.5px; background:var(--accent-soft); color:var(--accent); border-radius:16px; padding:7px 14px;}
+.flow-row{display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:8px 0 32px; font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-dim);}
+.flow-row .chip{background:var(--panel); border:1px solid var(--line); color:var(--text);}
+.flow-row .arrow{color:var(--line); font-size:13px;}
+
+/* ---------- STATS ---------- */
+.stat-row{display:flex; flex-wrap:wrap; gap:22px; margin:10px 0 32px; padding:24px 26px; background:var(--panel); border:1px solid var(--line); border-radius:8px;}
+.stat{flex:1; min-width:130px;}
+.stat .stat-num{font-family:'IBM Plex Mono',monospace; font-size:21px; font-weight:600; color:var(--accent); line-height:1.2;}
+.stat .stat-label{font-family:'Space Grotesk',sans-serif; font-size:11.5px; color:var(--text-dim); margin-top:5px; line-height:1.3;}
+
+/* ---------- KAIROS CLOSING ---------- */
+.kairos-close{background:var(--navy); border-radius:8px; padding:38px 40px; margin:56px 0 60px;}
+.kairos-close .kc-mark{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#93A0B5; margin-bottom:16px;}
+.kairos-close p{font-family:'Fraunces',serif; font-size:18px; line-height:1.6; color:#E4E7ED; margin:0 0 16px; font-weight:400;}
+.kairos-close p:last-child{margin-bottom:0;}
+.kairos-close .kc-soon{display:inline-flex; align-items:center; gap:8px; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:#93A0B5; border:1px solid rgba(147,160,181,0.35); border-radius:20px; padding:8px 16px; margin-top:4px;}
+.kairos-close .kc-soon::before{content:""; width:6px; height:6px; border-radius:50%; background:#C9A94A;}
+
+/* ---------- FOOTER ---------- */
+footer{background:var(--navy); padding:40px 0; margin-top:0;}
+.footer-inner{max-width:680px; margin:0 auto; padding:0 28px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;}
+.footer-inner a{font-family:'IBM Plex Mono',monospace; font-size:12px; color:#C7CFDC; text-decoration:none;}
+.footer-inner a:hover{color:#fff;}
+.footer-copy{font-family:'IBM Plex Mono',monospace; font-size:11px; color:#7C8AA0;}
+
+@media (max-width:520px){
+  .art-wrap, .prose{padding-left:22px; padding-right:22px;}
+  .kairos-close{padding:30px 26px;}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-brand">KAIRO<span>S</span></a>
+    <a href="../index.html" class="nav-back">← Volver a Kairos</a>
+  </div>
+</nav>
+
+<div class="art-wrap">
+  <a href="../index.html#economia" class="art-eyebrow">Economía · Oeconomia</a>
+  <h1>Apple Lab: cuando los datos no predicen el futuro, pero ayudan a tomar mejores decisiones</h1>
+  <p class="dek">Un experimento que empezó con una MacBook y terminó en Monte Carlo, backtesting y una pregunta más útil que "¿va a subir?"</p>
+  <div class="art-meta">Agosto 2026 · 14 min de lectura</div>
+</div>
+
+<article class="prose">
+
+  <h2>La ilusión de conocer el futuro</h2>
+
+  <p>Hace poco compré una MacBook. Y en algún momento até cabos: estaba comprando algo de una empresa que ya usaba todos los días. Poco después compré una acción de Apple.</p>
+
+  <p>Ahí empezó la pregunta incómoda: ¿cómo evalúo el riesgo de perder ese dinero? Podía limitarme a leer opiniones sobre Apple — hay miles. Pero decidí hacer otra cosa: usar Python y datos reales para construir un pequeño laboratorio propio.</p>
+
+  <p>Empezó siendo bastante sencillo. No intenté construir un sistema financiero sofisticado desde el primer día — el modelo fue creciendo porque cada respuesta me generaba una pregunta nueva. Así, sin planearlo del todo, terminó convirtiéndose en Apple Lab.</p>
+
+  <p>Cuando alguien piensa en invertir, normalmente busca una respuesta sencilla: "¿esta inversión va a subir o va a bajar?" Es una pregunta natural — queremos reducir la incertidumbre, algo muy humano, y saber si estamos tomando una buena decisión antes de arriesgar nuestro dinero.</p>
+
+  <p>El problema es que los mercados financieros no funcionan así. Puedes ser Warren Buffett y aun así tener una inversión con resultados negativos. Una acción puede crecer durante años y después enfrentar una caída inesperada.</p>
+
+  <p>Entonces la pregunta cambió: ¿qué datos podemos usar para entender mejor la incertidumbre detrás de una inversión? No para eliminarla — eso es imposible. No para predecir el futuro — no lo conocemos. Sino para decidir con más información.</p>
+
+  <h2>El experimento</h2>
+
+  <p>Elegimos Apple como caso de estudio — no porque exista una fórmula secreta para saber qué le ocurrirá a la empresa, sino porque representa perfectamente un problema común: una compañía reconocida, con millones de inversionistas, grandes resultados históricos, y aun así, un futuro incierto.</p>
+
+  <p>La pregunta inicial fue simple: si ya había comprado una acción de Apple, ¿qué herramientas podía usar para entender mejor el riesgo que estaba tomando?</p>
+
+  <p>La respuesta no fue construir una predicción. Fue construir un laboratorio.</p>
+
+  <h2>Primero, entender el pasado</h2>
+
+  <p>El primer paso fue conseguir datos: cerca de diez años de precios diarios de Apple, alrededor de 2,500 observaciones. Pero casi de inmediato apareció la primera lección — el precio, por sí solo, no cuenta toda la historia.</p>
+
+  <div class="stat-row">
+    <div class="stat"><div class="stat-num">≈29%</div><div class="stat-label">Volatilidad anualizada</div></div>
+    <div class="stat"><div class="stat-num">≈−2.8%</div><div class="stat-label">VaR diario al 95%</div></div>
+    <div class="stat"><div class="stat-num">−38.5%</div><div class="stat-label">Maximum drawdown</div></div>
+    <div class="stat"><div class="stat-num">−12.9%</div><div class="stat-label">Peor día registrado</div></div>
+  </div>
+
+  <p>Una gráfica puede mostrar crecimiento. Pero detrás de esa línea hubo días con caídas de más de 12% en una sola sesión, y períodos donde el precio estuvo más de un tercio por debajo de su máximo. Por eso dejamos de preguntar "¿cuánto vale Apple?" y empezamos a preguntar "¿cómo se comporta una inversión como Apple?"</p>
+
+  <p class="pull">El riesgo no es solamente perder dinero. También es entender cómo puede ocurrir esa pérdida.</p>
+
+  <h2>La primera simulación</h2>
+
+  <p>Con esos datos hicimos la primera simulación Monte Carlo: una inversión hipotética de $5,000, a cinco años, con 10,000 escenarios distintos.</p>
+
+  <div class="stat-row">
+    <div class="stat"><div class="stat-num">$17,007</div><div class="stat-label">Valor mediano final</div></div>
+    <div class="stat"><div class="stat-num">$5,767</div><div class="stat-label">Percentil 5</div></div>
+    <div class="stat"><div class="stat-num">$49,113</div><div class="stat-label">Percentil 95</div></div>
+    <div class="stat"><div class="stat-num">≈3%</div><div class="stat-label">Escenarios con pérdida</div></div>
+  </div>
+
+  <p>Bajo esos supuestos, una parte pequeña de los escenarios terminó perdiendo dinero. El resto mostró resultados muy distintos entre sí — desde apenas recuperar la inversión hasta multiplicarla varias veces. Ahí quedó clara la primera lección real: un promedio no describe una inversión. Hay que ver la distribución completa.</p>
+
+  <h2>Pero una acción representa una empresa</h2>
+
+  <p>Hasta aquí estábamos estudiando la acción. El siguiente paso fue mirar los fundamentos: las ganancias por acción (EPS) y el múltiplo que el mercado paga por ellas (P/E).</p>
+
+  <p>Con Apple cotizando cerca de $306 y un EPS de $8.72, el P/E observado rondaba 35 — un múltiplo alto. Bajo tres escenarios de P/E (20, 25 y 30), el precio implícito iba de $174 a $262, todos por debajo del precio real. Eso mostró algo importante: una empresa puede ser excelente y, al mismo tiempo, tener una acción cuyo precio ya incorpora expectativas muy elevadas.</p>
+
+  <p>Después proyectamos también el crecimiento del EPS a cinco años. En el escenario base — crecimiento de 10%, P/E de 28 — el precio estimado rondaba $393, un potencial de retorno cercano a 29%. El precio futuro depende tanto de cuánto crezcan las ganancias como de cuánto esté dispuesto a pagar el mercado por ellas.</p>
+
+  <h2>De un número a una distribución</h2>
+
+  <p>El siguiente paso fue dejar de fijar un solo número para el crecimiento del EPS y el P/E futuro, y en su lugar tratarlos como inciertos: crecimiento de 10% ± 4%, P/E de 28 ± 4, con 10,000 simulaciones.</p>
+
+  <div class="stat-row">
+    <div class="stat"><div class="stat-num">≈$391</div><div class="stat-label">Precio mediano simulado</div></div>
+    <div class="stat"><div class="stat-num">≈$263</div><div class="stat-label">Percentil 5</div></div>
+    <div class="stat"><div class="stat-num">≈$566</div><div class="stat-label">Percentil 95</div></div>
+    <div class="stat"><div class="stat-num">≈15%</div><div class="stat-label">Escenarios bajo el precio inicial</div></div>
+  </div>
+
+  <p>En lugar de decir "Apple valdrá $400", la pregunta cambió: bajo estos supuestos, el valor central de las simulaciones se ubicó alrededor de esa cifra, con un rango amplio de resultados plausibles a su alrededor.</p>
+
+  <h2>¿De dónde salían nuestros supuestos?</h2>
+
+  <p>Después apareció un problema más incómodo: ¿de dónde salían nuestros propios supuestos? ¿Por qué asumir 10% de crecimiento?</p>
+
+  <p>Miramos el crecimiento real del EPS de Apple en los últimos años: prácticamente plano en 2023 y 2024, y un salto de casi 23% en 2025. El promedio de esos tres años daba cerca de 7.4% — pero la mediana era apenas 0.33%. El crecimiento extraordinario de un solo año estaba inflando el promedio.</p>
+
+  <p>Ahí quedó una lección incómoda pero importante: el promedio no necesariamente representa el escenario típico. Y con solo tres cambios anuales, tampoco podíamos tratar esos datos como una distribución histórica completa. Un modelo no es una máquina de respuestas — es una herramienta para explorar escenarios, y el resultado depende tanto de los datos como de los supuestos que elegimos.</p>
+
+  <h2>¿Es confiable nuestro propio modelo?</h2>
+
+  <p>Y finalmente tuvimos que preguntarnos si nuestro propio modelo era confiable. Construir un modelo con datos ya conocidos es relativamente fácil. El verdadero reto es preguntarse: ¿qué habría pasado si lo hubiéramos construido antes de conocer el resultado?</p>
+
+  <p>Hicimos la prueba con una fecha de corte real: agosto de 2021, cuando Apple cotizaba a $144.54. Simulamos 10,000 escenarios posibles para los siguientes cinco años. El precio real, cerca de $306 cinco años después, terminó por encima de solamente el 9.66% de esas simulaciones — un resultado mejor de lo que el modelo, basado en el comportamiento histórico hasta ese momento, hubiera considerado típico.</p>
+
+  <p>Más adelante hicimos una prueba más rigurosa con un modelo que incorporaba factores macroeconómicos: entrenarlo con datos de 2016 a 2023, y probarlo con datos de 2024 a 2026 que el modelo nunca había visto. Un primer modelo explicaba cerca de 56% de la variación dentro de la muestra de entrenamiento — pero al enfrentarse a los datos nuevos, ese ajuste se volvió negativo. Una segunda versión, que ajustaba aún mejor el pasado, se comportó peor todavía fuera de muestra.</p>
+
+  <p class="pull">Un modelo puede parecer muy inteligente porque conoce perfectamente el pasado. El problema aparece cuando le pedimos que se enfrente a información que todavía no conoce.</p>
+
+  <p>Fue una de las lecciones más importantes de todo el experimento: el modelo también tiene incertidumbre.</p>
+
+  <h2>Apple frente a otras alternativas</h2>
+
+  <p>Después dejamos de ver a Apple como una isla. La comparamos con Microsoft, Nvidia, el S&amp;P 500 y el Nasdaq, durante el mismo período.</p>
+
+  <div class="chip-row">
+    <span class="chip">Apple +1,191%</span>
+    <span class="chip">Microsoft +937%</span>
+    <span class="chip">Nvidia +28,451%</span>
+    <span class="chip">S&amp;P 500 +287%</span>
+    <span class="chip">Nasdaq +445%</span>
+  </div>
+
+  <p>Apple no fue la que más creció — Nvidia multiplicó eso muchas veces — pero tampoco fue la más volátil ni la que más tardó en recuperarse de sus peores caídas. Su relación entre retorno y riesgo (Sharpe ≈0.98) quedó por encima del S&amp;P 500 (≈0.80) y muy cerca de Nvidia (≈1.33). La pregunta dejó de ser "¿Apple es buena?" y pasó a ser "¿qué características tiene frente a otras alternativas de inversión?"</p>
+
+  <h2>El mercado y la economía también importan</h2>
+
+  <p>El siguiente paso fue mirar de dónde vienen realmente los movimientos de Apple. Una regresión frente al S&amp;P 500 y al Nasdaq explicó cerca del 60% de esa variación — el resto quedó como algo que el modelo simplemente no explicaba.</p>
+
+  <p>Después construimos un modelo con variables macroeconómicas: tasas de interés, desempleo, inflación, el dólar. Ese modelo explicó cerca de 45% de la variación mensual. Al agregar rezagos — el efecto de esas variables con algunos meses de retraso — el ajuste dentro de la muestra mejoró, pero otras métricas de calidad del modelo empeoraron. Otra versión de la misma lección: agregar variables puede mejorar qué tan bien explicamos el pasado, sin mejorar realmente el modelo.</p>
+
+  <h2>Todo junto: el Decision Engine</h2>
+
+  <div class="flow-row">
+    <span class="chip">Riesgo histórico</span><span class="arrow">→</span>
+    <span class="chip">Monte Carlo</span><span class="arrow">→</span>
+    <span class="chip">Valuación EPS/P-E</span><span class="arrow">→</span>
+    <span class="chip">Escenarios</span><span class="arrow">→</span>
+    <span class="chip">Backtesting</span><span class="arrow">→</span>
+    <span class="chip">Comparación con otros activos</span><span class="arrow">→</span>
+    <span class="chip">Factores de mercado</span><span class="arrow">→</span>
+    <span class="chip">Macroeconomía</span>
+  </div>
+
+  <p>La versión final integró todas estas piezas en un solo sistema.</p>
+
+  <div class="stat-row">
+    <div class="stat"><div class="stat-num">≈$390</div><div class="stat-label">Monte Carlo, valor mediano</div></div>
+    <div class="stat"><div class="stat-num">≈$247</div><div class="stat-label">Percentil 5</div></div>
+    <div class="stat"><div class="stat-num">≈$580</div><div class="stat-label">Percentil 95</div></div>
+    <div class="stat"><div class="stat-num">≈18%</div><div class="stat-label">Escenarios bajo el precio inicial</div></div>
+  </div>
+
+  <p>El resultado combinado se resumió como riesgo moderado, con un potencial atractivo bajo los supuestos utilizados. Es importante ser precisos aquí: esto <strong>no significa "comprar Apple"</strong>. Significa que, bajo los datos y supuestos usados por el modelo, la inversión presentaba una determinada combinación de riesgo y potencial. La herramienta no toma la decisión por el inversionista — organiza la información necesaria para tomarla.</p>
+
+  <h2>La última prueba: ¿más datos son mejores datos?</h2>
+
+  <p>La última prueba fue quizás la más reveladora. Ampliamos el historial de Apple de unos 10 años a prácticamente toda su vida bursátil: de diciembre de 1980 a agosto de 2026 — más de 11,500 observaciones, frente a las 2,500 con las que habíamos empezado. La pregunta era simple: ¿más datos producen necesariamente un modelo mejor?</p>
+
+  <div class="stat-row">
+    <div class="stat"><div class="stat-num">29% / −39%</div><div class="stat-label">10 años — vol. / drawdown</div></div>
+    <div class="stat"><div class="stat-num">28% / −44%</div><div class="stat-label">15 años — vol. / drawdown</div></div>
+    <div class="stat"><div class="stat-num">31% / −61%</div><div class="stat-label">20 años — vol. / drawdown</div></div>
+    <div class="stat"><div class="stat-num">44% / −82%</div><div class="stat-label">Máximo histórico</div></div>
+  </div>
+
+  <p>La volatilidad histórica aumentó considerablemente al incluir los períodos más antiguos, y el drawdown máximo llegó hasta casi −82%. Pero el valor central del Monte Carlo se mantuvo prácticamente igual en las cuatro ventanas — entre $399 y $401, sin importar cuánta historia usáramos.</p>
+
+  <p>La conclusión: más datos no necesariamente significan un modelo mejor. Décadas adicionales de información también pueden traer consigo otros regímenes económicos, otras estructuras de mercado y condiciones empresariales que quizás no representen bien el entorno actual.</p>
+
+  <h2>Lo que aprendimos</h2>
+
+  <p>Los mercados financieros están llenos de incertidumbre. Los datos no la eliminan. Monte Carlo no la elimina. La econometría tampoco. El backtesting tampoco. Pero todas estas herramientas, juntas, pueden ayudarnos a hacer visible esa incertidumbre — y a tomar decisiones más informadas frente a ella.</p>
+
+  <p>La pregunta con la que empezamos fue "¿Apple va a subir?". La pregunta con la que terminamos fue otra, más útil: ¿qué resultados son plausibles, qué riesgos existen, y qué tan confiable es la información que estamos usando para decidir?</p>
+
+  <p>Esta manera de pensar cambió cómo tomo decisiones de inversión — y, en realidad, varias otras decisiones también. La incertidumbre no desaparece. Pero se puede estructurar.</p>
+
+  <p>Este experimento empezó siendo sobre una acción. Pero la misma lógica — datos, riesgo, escenarios, backtesting — no tiene por qué limitarse a Apple, ni siquiera a acciones. Podría aplicarse a otros activos, a otras decisiones, a otros tipos de incertidumbre. Es una pregunta que nos dejó abierta el propio experimento, y que probablemente sea el siguiente paso.</p>
+
+  <p class="pull">No aprendimos a predecir Apple. Aprendimos a estructurar aquello que no sabemos.</p>
+
+  <div class="kairos-close">
+    <div class="kc-mark">Kairos</div>
+    <p>En Kairos estamos construyendo una herramienta para que puedas explorar tus propias decisiones con esta misma lógica — datos, riesgo, escenarios, sin promesas de certeza.</p>
+    <div class="kc-soon">Herramienta en construcción</div>
+  </div>
+
+</article>
+
+<footer>
+  <div class="footer-inner">
+    <a href="../index.html">← Volver a Kairos</a>
+    <span class="footer-copy">© 2026 Kairos</span>
+  </div>
+</footer>
+
+</body>
+</html>
