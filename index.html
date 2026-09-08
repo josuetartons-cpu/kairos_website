@@ -101,6 +101,7 @@ section{scroll-margin-top:86px;}
 .pub-card{background:var(--panel); border:1px solid var(--line); border-radius:8px; overflow:hidden; text-decoration:none; color:var(--text); display:block; transition:border-color .15s, transform .15s;}
 .pub-card:hover{border-color:var(--accent); transform:translateY(-2px);}
 .pub-visual{height:8px; background:linear-gradient(90deg, var(--green) 0%, var(--green) 30%, var(--amber) 45%, var(--amber) 60%, var(--red) 75%, var(--red) 100%);}
+.pub-visual.ambiental{background:linear-gradient(90deg, #294F3A 0%, #477A56 45%, #8BA06B 72%, #C4A96A 100%);}
 .pub-body{padding:28px 30px 30px;}
 .pub-tag{font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:var(--accent); background:var(--accent-soft); padding:4px 10px; border-radius:12px; display:inline-block; margin-bottom:16px;}
 .pub-body h3{font-size:20px; font-weight:600; line-height:1.35; margin:0 0 12px; max-width:34ch;}
@@ -246,7 +247,7 @@ footer{background:var(--navy); color:#C7CFDC; padding:56px 0 32px; margin-top:20
 <section class="pubs" id="publicaciones">
   <div class="wrap">
     <div class="pubs-head">
-      <h2>Publicación destacada</h2>
+      <h2>Publicaciones destacadas</h2>
     </div>
     <div class="pubs-grid">
       <a href="articles/como-saber-si-una-economia-esta-en-recesion.html" class="pub-card">
@@ -261,8 +262,20 @@ footer{background:var(--navy); color:#C7CFDC; padding:56px 0 32px; margin-top:20
           </div>
         </div>
       </a>
+
+      <a href="articles/pagar-por-conservar.html" class="pub-card">
+        <div class="pub-visual ambiental"></div>
+        <div class="pub-body">
+          <span class="pub-tag">Economía ambiental · Política 1 de 10</span>
+          <h3>¿Es suficiente pagar por conservar para salvar nuestros bosques?</h3>
+          <p>Guatemala ya paga por proteger sus bosques. La pregunta es si los incentivos llegan a tiempo, se dirigen a los lugares correctos y logran cambiar decisiones.</p>
+          <div class="pub-meta">
+            <span class="pub-date">Septiembre 2026</span>
+            <span class="pub-cta">Leer publicación →</span>
+          </div>
+        </div>
+      </a>
     </div>
-    <p class="pubs-empty-note">Cuando publiquemos cinco artículos, esta sección crece a "Últimas publicaciones" en formato de grilla.</p>
   </div>
 </section>
 
@@ -316,7 +329,7 @@ footer{background:var(--navy); color:#C7CFDC; padding:56px 0 32px; margin-top:20
       </div>
       <div>
         <p>A largo plazo, la idea es que esto crezca hacia algo parecido a una escuela de pensamiento — pero eso es apenas una dirección hacia la que estamos construyendo, no algo que ya seamos.</p>
-        <p>Por ahora, Kairos es esto: una publicación, escrita con cuidado. Vienen más.</p>
+        <p>Por ahora, Kairos es una colección de publicaciones construidas con cuidado. Y seguimos sumando nuevas preguntas, datos y experimentos.</p>
       </div>
     </div>
   </div>
