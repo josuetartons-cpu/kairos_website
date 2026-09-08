@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Investigación completa · ¿Es suficiente pagar por conservar? — Kairos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Investigación técnica completa: incentivos forestales, mecanismos de compensación ambiental y el Programa de Reducción de Emisiones (PRE) en Guatemala. Documento de respaldo de la Política 1 de la serie Kairos.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+
+:root{
+  --bg:#F4F1EA;
+  --panel:#FFFFFF;
+  --panel-2:#EAE5D9;
+  --line:#DFD9CA;
+  --text:#1C1B22;
+  --text-dim:#6B6570;
+  --accent:#7A2540;
+  --accent-soft:rgba(122,37,64,0.07);
+  --navy:#1E2A42;
+  --muted:#8B8A93;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+html,body{margin:0;padding:0;}
+body{background:var(--bg); color:var(--text); font-family:'Space Grotesk',sans-serif; -webkit-font-smoothing:antialiased;}
+.mono{font-family:'IBM Plex Mono',monospace;}
+a{color:inherit;}
+section{scroll-margin-top:100px;}
+.skip-link{position:absolute; left:12px; top:-80px; z-index:100; background:var(--text); color:var(--bg); padding:10px 14px; border-radius:4px; text-decoration:none;}
+.skip-link:focus{top:12px;}
+a:focus-visible{outline:3px solid var(--accent); outline-offset:3px;}
+
+/* ---------- Barra superior académica ---------- */
+.topbar{border-bottom:1px solid var(--line); background:rgba(244,241,234,0.94); backdrop-filter:blur(6px); position:sticky; top:0; z-index:30;}
+.topbar-inner{max-width:960px; margin:0 auto; padding:14px 26px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;}
+.topbar a.brand{font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:13px; letter-spacing:0.04em; text-decoration:none; color:var(--text);}
+.topbar a.brand span{color:var(--accent);}
+.back-link{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--text-dim); text-decoration:none; border:1px solid var(--line); border-radius:20px; padding:8px 14px; transition:border-color .15s, color .15s;}
+.back-link:hover{border-color:var(--accent); color:var(--accent);}
+
+.wrap{max-width:960px; margin:0 auto; padding:56px 26px 100px;}
+.wrap-header{max-width:960px; margin:0 auto; padding:0 26px;}
+
+/* ---------- Cabecera del documento ---------- */
+.doc-tag{font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); display:flex; align-items:center; gap:10px; margin-bottom:22px;}
+.doc-tag::before{content:""; width:22px; height:1px; background:var(--accent);}
+.doc-status{font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--muted); background:var(--panel-2); border-radius:12px; padding:4px 10px; margin-left:auto;}
+
+h1.doc-title{font-family:'Fraunces',serif; font-weight:500; font-size:clamp(28px,4.2vw,42px); line-height:1.18; margin:0 0 22px; max-width:24ch; color:var(--text);}
+
+.doc-subtitle{font-size:15.5px; line-height:1.75; color:var(--text-dim); max-width:74ch; margin:0 0 26px;}
+
+.frase-guia{font-family:'Fraunces',serif; font-style:italic; font-size:clamp(17px,2vw,21px); font-weight:500; color:var(--text); border-left:3px solid var(--accent); padding-left:22px; margin:0 0 34px; max-width:64ch;}
+
+.doc-meta{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-dim); padding:18px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin-bottom:40px; display:flex; gap:22px; flex-wrap:wrap;}
+
+.abstract-box{background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:8px; padding:26px 28px; margin-bottom:34px;}
+.abstract-box h2{font-family:'IBM Plex Mono',monospace; font-size:11.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--accent); margin:0 0 14px;}
+.abstract-box p{font-size:14px; line-height:1.72; color:var(--text-dim); margin:0 0 12px; max-width:74ch;}
+.abstract-box p:last-child{margin-bottom:0;}
+.abstract-box strong{color:var(--text);}
+
+/* ---------- Índice / TOC ---------- */
+.toc{background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:26px 28px; margin-bottom:48px;}
+.toc h2{font-family:'IBM Plex Mono',monospace; font-size:11.5px; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-dim); margin:0 0 16px; font-weight:600;}
+.toc ol{margin:0; padding-left:20px; columns:2; column-gap:32px;}
+@media (max-width:700px){.toc ol{columns:1;}}
+.toc li{font-size:13.5px; line-height:2; break-inside:avoid;}
+.toc li a{color:var(--text); text-decoration:none;}
+.toc li a:hover{color:var(--accent);}
+.toc .sub-item{list-style:none; margin-left:-4px; font-size:12.5px;}
+.toc .sub-item a{color:var(--text-dim);}
+
+/* ---------- Secciones ---------- */
+.doc-section{margin-bottom:64px; padding-top:8px;}
+.doc-section > .section-label{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--accent); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:8px;}
+h2.section-title{font-family:'Fraunces',serif; font-weight:500; font-size:clamp(24px,3.2vw,32px); margin:0 0 28px; padding-bottom:16px; border-bottom:1px solid var(--line);}
+h3.sub-title{font-size:18px; font-weight:600; margin:36px 0 6px; max-width:40ch;}
+p.sub{font-size:13.5px; color:var(--text-dim); line-height:1.65; max-width:66ch; margin:0 0 18px;}
+p.body{font-size:15px; line-height:1.78; color:var(--text-dim); margin:0 0 18px; max-width:70ch;}
+p.body strong{color:var(--text); font-weight:600;}
+ul.kx-list, ol.kx-list{margin:0 0 18px; padding-left:20px; font-size:14px; color:var(--text-dim); line-height:1.8; max-width:66ch;}
+ul.kx-list li strong{color:var(--text);}
+
+.callout{background:var(--accent-soft); border:1px solid rgba(122,37,64,0.2); border-radius:8px; padding:18px 20px; font-size:14px; line-height:1.7; color:#6B2338; margin:22px 0; max-width:70ch;}
+
+/* ---------- Tablas ---------- */
+.kx-table-wrap{overflow-x:auto; margin:20px 0 30px;}
+table.kx-table{border-collapse:collapse; width:100%; min-width:480px; font-size:13px; background:var(--panel); border:1px solid var(--line); border-radius:6px; overflow:hidden;}
+table.kx-table th, table.kx-table td{text-align:left; padding:12px 16px; border-bottom:1px solid var(--line); line-height:1.55; color:var(--text-dim);}
+table.kx-table th{font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.05em; color:var(--text); background:var(--panel-2);}
+table.kx-table tr:last-child td{border-bottom:none;}
+table.kx-table td strong{color:var(--text);}
+.table-caption{font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--muted); margin:-18px 0 26px;}
+
+/* ---------- Contenedores para elementos futuros ---------- */
+.placeholder-box{border:1.5px dashed var(--line); border-radius:8px; padding:26px 26px; margin:22px 0 30px; background:rgba(255,255,255,0.35);}
+.placeholder-box .ph-tag{font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.06em; color:var(--accent); background:var(--accent-soft); padding:4px 10px; border-radius:12px; display:inline-block; margin-bottom:12px;}
+.placeholder-box h4{font-size:15px; font-weight:600; margin:0 0 8px;}
+.placeholder-box p{font-size:13px; color:var(--text-dim); line-height:1.6; margin:0;}
+.placeholder-box .ph-pending{font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--muted); margin-top:12px; display:inline-block;}
+
+.method-note{background:var(--panel-2); border-radius:8px; padding:18px 20px; margin:20px 0 30px; font-size:12.5px; color:var(--text-dim); line-height:1.65; max-width:70ch;}
+.method-note .mn-tag{font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.06em; color:var(--text); font-weight:700; display:block; margin-bottom:8px;}
+
+/* ---------- Bloques de preguntas (stress test) ---------- */
+.qa-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px; margin:24px 0;}
+@media (max-width:700px){.qa-grid{grid-template-columns:1fr;}}
+.qa-card{background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:20px 22px;}
+.qa-card h4{font-size:14px; font-weight:600; margin:0 0 10px; color:var(--accent);}
+.qa-card p, .qa-card ul{font-size:13px; color:var(--text-dim); line-height:1.65; margin:0; padding-left:0; list-style:none;}
+.qa-card ul li{margin-bottom:6px; padding-left:14px; position:relative;}
+.qa-card ul li::before{content:"–"; position:absolute; left:0; color:var(--muted);}
+
+/* ---------- Conclusión ---------- */
+.conclusion-block{background:var(--navy); border-radius:8px; padding:34px 36px; margin:16px 0 20px;}
+.conclusion-block p{font-size:15px; line-height:1.78; color:#C7CFDC; margin:0 0 12px;}
+.conclusion-block p:last-child{margin-bottom:0;}
+.conclusion-block .cb-strong{color:#FFFFFF; font-weight:600;}
+
+/* ---------- Referencias ---------- */
+.sources{background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:26px 28px; margin-top:14px;}
+.sources ol{margin:0; padding-left:20px;}
+.sources li{margin-bottom:14px; font-size:13px; color:var(--text-dim); line-height:1.6;}
+.sources a{color:var(--accent); text-decoration:none;}
+.sources a:hover{text-decoration:underline;}
+
+/* ---------- CTA de regreso ---------- */
+.back-cta{background:var(--panel-2); border-radius:10px; padding:32px 34px; text-align:center; margin:50px 0 10px;}
+.back-cta p{font-size:13.5px; color:var(--text-dim); margin:0 0 18px;}
+.btn{font-family:'IBM Plex Mono',monospace; font-size:13px; text-decoration:none; padding:13px 24px; border-radius:4px; display:inline-block; letter-spacing:0.01em; transition:opacity .15s, border-color .15s, color .15s;}
+.btn-primary{background:var(--text); color:var(--bg);}
+.btn-primary:hover{opacity:0.85;}
+.btn-secondary{border:1px solid var(--line); color:var(--text);}
+.btn-secondary:hover{border-color:var(--accent); color:var(--accent);}
+
+footer{background:var(--navy); color:#C7CFDC; padding:40px 0 26px; margin-top:10px;}
+.footer-inner{max-width:960px; margin:0 auto; padding:0 26px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:#7C8AA0;}
+.footer-inner a{color:#C7CFDC; text-decoration:none;}
+.footer-inner a:hover{color:#fff;}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+<header class="topbar">
+  <nav class="topbar-inner" aria-label="Navegación principal">
+    <a class="brand" href="../index.html">KAIRO<span>S</span></a>
+    <a class="back-link" href="pagar-por-conservar.html">← Volver a la versión sencilla</a>
+  </nav>
+</header>
+
+<main id="contenido">
+
+<div class="wrap-header">
+  <div style="padding-top:50px;"></div>
+  <div class="doc-tag">
+    Investigación técnica · Política 1 de la serie Kairos
+    <span class="doc-status">Borrador de trabajo</span>
+  </div>
+  <h1 class="doc-title">¿Es suficiente pagar por conservar para salvar nuestros bosques?</h1>
+  <p class="doc-subtitle">
+    Guatemala ha invertido durante décadas en incentivos forestales y ya recibe pagos internacionales por reducir
+    emisiones. Sin embargo, los incendios, la expansión de la frontera agropecuaria y los largos tiempos
+    administrativos plantean una pregunta incómoda: ¿estamos pagando por actividades o por resultados ambientales
+    que realmente cambian el destino del bosque?
+  </p>
+  <div class="frase-guia">No basta con hacer rentable conservar; también debemos dejar de hacer rentable destruir.</div>
+  <div class="doc-meta">
+    <span>Incentivos forestales y mecanismos de compensación ambiental</span>
+    <span>Capa editorial: investigación técnica enlazada desde la publicación pública</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section class="abstract-box" id="resumen" aria-labelledby="resumen-titulo">
+    <h2 id="resumen-titulo">Resumen y alcance</h2>
+    <p><strong>Pregunta:</strong> ¿Son suficientes los incentivos forestales y los pagos por resultados para cambiar
+    decisiones de uso del suelo en Guatemala frente a la ganadería, los incendios y otras presiones territoriales?</p>
+    <p><strong>Enfoque:</strong> Esta nota técnica combina una revisión institucional de PINFOR, PINPEP, PROBOSQUE y
+    el PRE con evidencia causal publicada sobre los incentivos forestales. Distingue ejecución administrativa de
+    impacto adicional y formula una propuesta susceptible de probarse mediante un piloto.</p>
+    <p><strong>Alcance:</strong> El documento no estima un efecto causal nuevo ni presenta todavía una evaluación de
+    costo-beneficio. Las medidas propuestas son hipótesis de política que requieren datos públicos adicionales,
+    validación jurídica y evaluación experimental o cuasiexperimental antes de recomendar su aplicación nacional.</p>
+  </section>
+
+  <!-- ===================== TABLA DE CONTENIDO ===================== -->
+  <div class="toc">
+    <h2>Índice</h2>
+    <ol>
+      <li><a href="#resumen">Resumen y alcance</a></li>
+      <li><a href="#diagnostico">1. Diagnóstico</a></li>
+      <li class="sub-item">1.1 <a href="#diag-plazo">El desfase entre acción y pago</a></li>
+      <li class="sub-item">1.2 <a href="#diag-peten">La paradoja de Petén</a></li>
+      <li class="sub-item">1.3 <a href="#diag-economico">El problema económico</a></li>
+      <li class="sub-item">1.4 <a href="#diag-arquitectura">Arquitectura de instrumentos vigentes</a></li>
+      <li><a href="#evidencia">2. Evidencia</a></li>
+      <li class="sub-item">2.1 <a href="#ev-adicionalidad">Adicionalidad</a></li>
+      <li class="sub-item">2.2 <a href="#ev-actividad">Actividad frente a resultado</a></li>
+      <li class="sub-item">2.3 <a href="#ev-ganaderia">Ganadería y costo ambiental</a></li>
+      <li><a href="#propuesta">3. Propuesta</a></li>
+      <li><a href="#piloto">4. Piloto</a></li>
+      <li><a href="#stress-test">5. Stress test</a></li>
+      <li><a href="#limitaciones">6. Limitaciones</a></li>
+      <li><a href="#referencias">7. Referencias</a></li>
+    </ol>
+  </div>
+
+  <!-- ===================== 1. DIAGNÓSTICO ===================== -->
+  <section class="doc-section" id="diagnostico">
+    <div class="section-label">01</div>
+    <h2 class="section-title">Diagnóstico</h2>
+
+    <h3 class="sub-title" id="diag-plazo">1.1 Un bosque puede desaparecer antes de que llegue el pago</h3>
+    <p class="body">
+      Un bosque puede tardar décadas en formarse y desaparecer en cuestión de días. El dinero público, en cambio, se
+      mueve con otro reloj. Guatemala cuenta con programas que incentivan la protección, restauración y manejo de
+      sus bosques, y participa en un mecanismo internacional que paga por reducciones verificadas de emisiones
+      causadas por la deforestación y la degradación forestal.
+    </p>
+    <p class="body">
+      Quien decide conservar enfrenta costos inmediatos y renuncia a usos alternativos de la tierra. El beneficio
+      ambiental se produce desde hoy, mientras que el reconocimiento económico puede llegar años después. El
+      Programa de Reducción de Emisiones de Guatemala (PRE) permite observar esta tensión: entre el periodo en que
+      ocurre la reducción, su medición, la verificación internacional y la distribución final pueden transcurrir
+      varios años.
+    </p>
+    <!-- DATO PENDIENTE ANTES DE PUBLICAR: citar el Reporte de Monitoreo del PRE y precisar, para ambos desembolsos, fecha exacta, monto, periodo contable, número de beneficiarios y etapa del Plan de Distribución de Beneficios. -->
+    <div class="callout">
+      El bosque puede desaparecer en días; el reconocimiento económico por conservarlo puede tardar años.
+    </div>
+    <p class="body">
+      Este intervalo no puede atribuirse automáticamente a una sola oficina ni describirse únicamente como
+      negligencia burocrática. Los pagos por resultados requieren medir emisiones, compararlas con una línea de
+      referencia, verificar los cálculos, transferir las reducciones y distribuir los beneficios conforme a reglas
+      acordadas. Parte de ese proceso protege la integridad ambiental del programa. El problema es otro: un
+      mecanismo puede ser técnicamente riguroso y, al mismo tiempo, perder efectividad como incentivo si el dinero
+      llega demasiado tarde para influir en la decisión que buscaba cambiar.
+    </p>
+
+    <div class="placeholder-box">
+      <span class="ph-tag">Visual 1</span>
+      <h4>La paradoja temporal</h4>
+      <p>Línea de tiempo que contraste el resultado ambiental, la medición y verificación, y el pago realizado —
+      para ambos ciclos del PRE mencionados arriba.</p>
+      <span class="ph-pending">Fechas y montos exactos pendientes del Reporte de Monitoreo del PRE</span>
+    </div>
+
+    <h3 class="sub-title" id="diag-peten">1.2 La paradoja de Petén</h3>
+    <p class="body">
+      Petén alberga la Reserva de la Biosfera Maya y una parte fundamental del patrimonio forestal guatemalteco.
+      Sin embargo, también se encuentra en el centro de una de las mayores contradicciones ambientales del país.
+      Su importancia convierte al departamento en un caso decisivo para comprender si los instrumentos vigentes
+      logran competir contra las presiones que impulsan el cambio de uso del suelo.
+    </p>
+    <!-- DATO PENDIENTE DE PUBLICACIÓN: estudio de cálculo de carbono del PRE, 2026. Confirmar si la cifra preliminar corresponde a emisiones nacionales totales, emisiones forestales, emisiones por deforestación o emisiones dentro del área contable del programa; añadir año base, periodo de monitoreo, metodología, tabla y página. No incluir la cifra en ninguna versión pública hasta que la fuente sea accesible. -->
+    <p class="body">
+      Mientras se publica ese cálculo, la evidencia institucional disponible permite sostener una versión más
+      acotada del argumento. Entre 2001 y 2016, aproximadamente 68% de la deforestación nacional ocurrió en las
+      tierras bajas del norte, región que incluye Petén, Quiché y Alta Verapaz. En el mismo diagnóstico, la
+      conversión hacia pastizales para ganadería extensiva representó alrededor de 35% de la deforestación
+      identificada en Guatemala.<sup>[1]</sup>
+    </p>
+    <p class="body">
+      El inventario nacional también muestra la dimensión del problema territorial. En 2018, el sector de uso de la
+      tierra, cambio de uso de la tierra y silvicultura representó 49.6% de las emisiones nacionales, incluyendo
+      este sector en el total. La conversión de bosque a pastizales apareció entre las categorías clave de
+      emisiones del país.<sup>[2]</sup>
+    </p>
+    <p class="body">
+      No debemos confundir estas cifras: 49.6% corresponde a un sector nacional; 68% a la concentración regional de
+      la deforestación durante un periodo; y 35% a un impulsor directo de esa pérdida. Precisamente por eso resulta
+      tan importante publicar cálculos departamentales comparables y explicar qué mide cada porcentaje.
+    </p>
+
+    <div class="placeholder-box" hidden>
+      <span class="ph-tag">Dato futuro</span>
+      <h4>Contribución departamental de Petén a las emisiones nacionales</h4>
+      <p>Contenedor reservado para la cifra departamental una vez publicado el estudio de cálculo de carbono del PRE
+      (2026), con su metodología, año base y periodo de monitoreo especificados.</p>
+      <span class="ph-pending">Pendiente de fuente pública</span>
+    </div>
+
+    <h3 class="sub-title" id="diag-economico">1.3 El problema económico: conservar compite contra transformar</h3>
+    <p class="body">
+      Los bosques producen beneficios para personas que muchas veces no pagan directamente por ellos: capturan
+      carbono, regulan el agua, protegen el suelo, conservan biodiversidad y reducen algunos riesgos climáticos. El
+      propietario o poseedor de la tierra no recibe automáticamente un ingreso por cada uno de esos servicios. En
+      cambio, transformar el terreno puede generar un beneficio privado reconocible, mientras que parte del costo de
+      esa transformación se distribuye entre el resto de la sociedad.
+    </p>
+    <p class="body">El propietario no compara únicamente el monto ofrecido. También compara:</p>
+    <ul class="kx-list">
+      <li>cuándo recibirá el dinero;</li>
+      <li>qué probabilidad existe de recibirlo;</li>
+      <li>cuánto cuesta cumplir los requisitos;</li>
+      <li>qué otra actividad podría realizar en la tierra;</li>
+      <li>qué riesgos productivos y jurídicos enfrenta;</li>
+      <li>y cuánto tiempo debe esperar para obtener ingresos.</li>
+    </ul>
+    <p class="body">
+      El desafío aumenta con el cambio climático: sequías, temperaturas más altas e incendios más frecuentes pueden
+      elevar el costo de mantener una plantación, restaurar un área degradada o proteger un bosque. En ese contexto,
+      pagar una tarifa uniforme por hectárea puede ser administrativamente cómodo, pero económicamente insuficiente.
+    </p>
+
+    <h3 class="sub-title" id="diag-arquitectura">1.4 Lo que Guatemala ya está haciendo</h3>
+    <p class="body">
+      Guatemala no parte de cero. <strong>PINFOR</strong>, vigente entre 1997 y 2016, financió plantaciones, manejo
+      y conservación forestal. Fue sucedido por <strong>PROBOSQUE</strong>, que amplió modalidades y actores
+      elegibles. <strong>PINPEP</strong> abrió una puerta para pequeños poseedores de tierras de vocación forestal o
+      agroforestal que no necesariamente cuentan con un título inscrito. El <strong>PRE</strong> opera en otro
+      nivel: es un mecanismo jurisdiccional de pagos por resultados, no una ventanilla individual por parcela.
+    </p>
+    <div class="kx-table-wrap">
+      <table class="kx-table">
+        <thead>
+          <tr><th>Instrumento</th><th>Qué remunera principalmente</th><th>Escala</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>PROBOSQUE y PINPEP</strong></td><td>Actividades forestales certificadas</td><td>Proyecto o parcela</td></tr>
+          <tr><td><strong>PRE</strong></td><td>Reducciones de emisiones verificadas</td><td>Programa jurisdiccional</td></tr>
+          <tr><td><strong>Crédito voluntario de carbono</strong></td><td>Unidad de carbono certificada</td><td>Proyecto o mercado</td></tr>
+          <tr><td><strong>PSA estricto</strong></td><td>Servicio ecosistémico acordado entre beneficiario y proveedor</td><td>Contrato o territorio</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="body">
+      Los cuatro mecanismos pueden contribuir a conservar, pero no son equivalentes. Confundirlos impide identificar
+      dónde se produce el retraso, quién asume el riesgo y qué resultado se está pagando.
+    </p>
+  </section>
+
+  <!-- ===================== 2. EVIDENCIA ===================== -->
+  <section class="doc-section" id="evidencia">
+    <div class="section-label">02</div>
+    <h2 class="section-title">Evidencia</h2>
+
+    <h3 class="sub-title" id="ev-adicionalidad">2.1 Hectáreas pagadas no siempre significan hectáreas salvadas</h3>
+    <p class="body">
+      Los informes institucionales permiten saber cuánto dinero se ejecutó, cuántos proyectos fueron certificados,
+      cuántas hectáreas ingresaron a los programas y cuántas personas participaron. Es información indispensable
+      para la rendición de cuentas, pero describe actividad administrativa: no construye por sí sola el escenario
+      contrafactual necesario para medir impacto.
+    </p>
+    <p class="body">
+      Esta diferencia recibe el nombre de <strong>adicionalidad</strong>. Un programa genera adicionalidad cuando
+      produce un resultado mejor que el que habría ocurrido en su ausencia. La evidencia causal disponible para
+      Guatemala muestra que los incentivos sí pueden modificar la cobertura forestal, pero sus efectos son
+      heterogéneos: Patrick, Butsic y Potts evaluaron más de veinte años de incentivos mediante métodos
+      cuasiexperimentales y encontraron, entre otros resultados, una reducción de la pérdida forestal asociada con
+      PINPEP y efectos positivos importantes de ciertas modalidades de restauración de PINFOR.<sup>[3]</sup>
+    </p>
+    <div class="callout">
+      La modalidad, el territorio y el riesgo previo importan. No todas las hectáreas compran el mismo resultado
+      ambiental.
+    </div>
+    <p class="body">
+      PROBOSQUE todavía necesita evaluaciones causales específicas que permitan separar con mayor precisión las
+      hectáreas intervenidas de la deforestación realmente evitada.
+    </p>
+
+    <div class="placeholder-box">
+      <span class="ph-tag">Visual 2</span>
+      <h4>Evidencia causal por modalidad</h4>
+      <p>Gráfico compacto con los principales efectos estimados para las modalidades evaluadas de PINFOR y PINPEP,
+      incluyendo intervalo de confianza cuando pueda reconstruirse correctamente desde el estudio de Patrick, Butsic
+      y Potts (2023).</p>
+      <span class="ph-pending">Pendiente de extracción de coeficientes del estudio fuente</span>
+    </div>
+
+    <h3 class="sub-title" id="ev-actividad">2.2 El problema no es sembrar: es demostrar qué sobrevivió y qué cambió</h3>
+    <p class="body">
+      Guatemala realiza jornadas de reforestación, capacitaciones y actividades de sensibilización que pueden tener
+      valor educativo. Pero una fotografía de la siembra no es todavía un resultado climático. Las jornadas
+      implementadas mediante iniciativas como Sembrando Huella permiten ilustrar la diferencia entre un producto
+      administrativo y un resultado ambiental; esta comparación no constituye por sí misma una evaluación del
+      programa.
+    </p>
+    <div class="kx-table-wrap">
+      <table class="kx-table">
+        <thead>
+          <tr><th>Lo que solemos contar</th><th>Lo que necesitamos conocer</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Árboles entregados</td><td>Árboles sobrevivientes a 12, 24 y 36 meses</td></tr>
+          <tr><td>Jornadas realizadas</td><td>Hectáreas con restauración efectiva</td></tr>
+          <tr><td>Personas capacitadas</td><td>Cambios persistentes de prácticas</td></tr>
+          <tr><td>Fotografías de siembra</td><td>Cobertura adicional observada posteriormente</td></tr>
+          <tr><td>Presupuesto ejecutado</td><td>Costo por resultado ambiental</td></tr>
+          <tr><td>Hectáreas atendidas</td><td>Deforestación realmente evitada</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="body">
+      Esta lógica debe aplicarse a todos los instrumentos, no solamente a las campañas de reforestación. Guatemala
+      mide con relativa facilidad cuánto hizo, pero todavía necesita fortalecer su capacidad para determinar cuánto
+      cambió como consecuencia de lo que hizo.
+    </p>
+
+    <h3 class="sub-title" id="ev-ganaderia">2.3 Ganadería: no se trata de castigar, sino de cambiar el incentivo</h3>
+    <p class="body">
+      No sería correcto afirmar que todos los ganaderos están exentos de impuestos; la actividad puede estar sometida
+      a distintos regímenes tributarios, incluyendo un régimen reciente aplicable al sector pecuario.<sup>[4]</sup>
+      La crítica relevante es distinta:
+    </p>
+    <div class="callout">
+      La tributación de una actividad económica no significa necesariamente que estén incorporados sus costos
+      ambientales.
+    </div>
+    <p class="body">
+      Tampoco debemos tratar a todos los productores como si fueran iguales. Por eso Kairos no propone un "impuesto
+      por vaca" uniforme, sino un mecanismo gradual de transición ganadera libre de deforestación, que incluiría
+      registro y georreferenciación progresiva, trazabilidad, asistencia técnica para sistemas silvopastoriles,
+      protección diferenciada para pequeños productores, una contribución ambiental sobre operaciones comerciales
+      asociadas con deforestación reciente, y devoluciones o incentivos para quienes conserven o restauren.
+    </p>
+  </section>
+
+  <!-- ===================== 3. PROPUESTA ===================== -->
+  <section class="doc-section" id="propuesta">
+    <div class="section-label">03</div>
+    <h2 class="section-title">Propuesta</h2>
+    <p class="body">
+      La política propuesta no consiste en reemplazar PROBOSQUE, PINPEP o el PRE. Consiste en conectarlos mejor y
+      corregir los incentivos que actualmente actúan en direcciones opuestas. Proponemos un sistema con tres
+      componentes.
+    </p>
+
+    <h3 class="sub-title">Componente 1. Incentivos forestales focalizados por riesgo y adicionalidad</h3>
+    <p class="body">
+      El pago tendría una base sencilla para conservar accesibilidad administrativa, complementada por ajustes según
+      el riesgo verificable de deforestación, el costo de oportunidad regional, la vulnerabilidad social del
+      participante, la importancia hídrica o ecológica del territorio, y la supervivencia y adicionalidad
+      demostrada.
+    </p>
+
+    <h3 class="sub-title">Componente 2. Financiamiento puente para pagos por resultados</h3>
+    <p class="body">
+      El MRV y la verificación internacional no deberían desaparecer. Un fondo rotatorio podría entregar anticipos
+      conservadores contra resultados preliminares, mantener una reserva de riesgo y liquidar el saldo después de la
+      verificación definitiva, transformando un ingreso incierto y tardío en un flujo parcialmente predecible.
+    </p>
+
+    <h3 class="sub-title">Componente 3. Programa de Acción y Evidencia Climática Territorial</h3>
+    <p class="body">
+      Guatemala necesita cerrar el ciclo entre medir, intervenir, verificar y aprender. Proponemos una unidad
+      interinstitucional que reconcilie la información del PRE, INAB, MARN, MAGA y CONAP, realice muestreos de
+      campo y auditorías aleatorias, contraste polígonos con imágenes satelitales, y publique metodologías y datos
+      reproducibles cuando la protección de datos lo permita.
+    </p>
+    <div class="kx-table-wrap">
+      <table class="kx-table">
+        <thead><tr><th>Actor</th><th>Función propuesta</th></tr></thead>
+        <tbody>
+          <tr><td><strong>MARN</strong></td><td>Coherencia con inventarios y política climática</td></tr>
+          <tr><td><strong>INAB</strong></td><td>Proyectos forestales, polígonos y ejecución técnica</td></tr>
+          <tr><td><strong>MAGA</strong></td><td>Ganadería, agricultura y transición productiva</td></tr>
+          <tr><td><strong>CONAP</strong></td><td>Áreas protegidas y biodiversidad</td></tr>
+          <tr><td><strong>Universidades</strong></td><td>Diseño metodológico y evaluación independiente</td></tr>
+          <tr><td><strong>Comunidades y municipalidades</strong></td><td>Ejecución y validación territorial</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="placeholder-box">
+      <span class="ph-tag">Visual 3</span>
+      <h4>Sistema propuesto</h4>
+      <p>Diagrama de los tres componentes — incentivos focalizados, financiamiento puente y el Programa de Acción y
+      Evidencia Climática Territorial — y su relación con los instrumentos ya existentes.</p>
+      <span class="ph-pending">Pendiente de diseño final</span>
+    </div>
+  </section>
+
+  <!-- ===================== 4. PILOTO ===================== -->
+  <section class="doc-section" id="piloto">
+    <div class="section-label">04</div>
+    <h2 class="section-title">Piloto</h2>
+    <p class="body">
+      Una política de esta complejidad no debería implementarse en todo el país sin haber sido probada. Petén ofrece
+      un territorio relevante, precisamente porque allí convergen alto valor forestal, presión ganadera, incendios,
+      áreas protegidas y emisiones asociadas con el cambio de uso del suelo. El piloto operaría durante un periodo
+      mínimo de tres a cinco años.
+    </p>
+    <div class="qa-grid">
+      <div class="qa-card">
+        <h4>Etapa 1 · Línea base</h4>
+        <ul>
+          <li>Cobertura forestal y pérdida histórica</li>
+          <li>Incidencia y severidad de incendios</li>
+          <li>Uso actual de la tierra</li>
+          <li>Inventario de unidades ganaderas</li>
+          <li>Proyectos de PINPEP y PROBOSQUE existentes</li>
+          <li>Ingresos, costos y productividad de los participantes</li>
+        </ul>
+      </div>
+      <div class="qa-card">
+        <h4>Etapa 2 · Tratamientos diferenciados</h4>
+        <ul>
+          <li>Pago convencional</li>
+          <li>Pago ajustado por riesgo</li>
+          <li>Pago ajustado más asistencia silvopastoril</li>
+          <li>Financiamiento puente</li>
+          <li>Trazabilidad y recompensas por producción libre de deforestación</li>
+        </ul>
+      </div>
+      <div class="qa-card">
+        <h4>Etapa 3 · Medición de resultados</h4>
+        <ul>
+          <li>Supervivencia forestal a 12, 24 y 36 meses</li>
+          <li>Deforestación evitada frente a áreas comparables</li>
+          <li>Toneladas de CO₂e reducidas o absorbidas</li>
+          <li>Costo por tonelada</li>
+          <li>Incendios evitados o contenidos</li>
+          <li>Fugas o desplazamiento hacia otros territorios</li>
+          <li>Tiempo entre certificación y pago</li>
+        </ul>
+      </div>
+    </div>
+    <p class="body">
+      El propósito del piloto no sería demostrar que la propuesta de Kairos tiene razón. Sería permitir que los
+      datos decidan qué componentes funcionan, cuáles deben modificarse y cuáles no justifican su costo.
+    </p>
+    <div class="method-note">
+      <span class="mn-tag">Nota metodológica</span>
+      Contenedor reservado para el diseño muestral definitivo del piloto (selección de municipios comparables,
+      criterios de asignación a tratamientos y estrategia de identificación causal) una vez definido con las
+      instituciones socias.
+    </div>
+  </section>
+
+  <!-- ===================== 5. STRESS TEST ===================== -->
+  <section class="doc-section" id="stress-test">
+    <div class="section-label">05</div>
+    <h2 class="section-title">Stress test de implementación</h2>
+    <p class="body">Antes de recomendar la política a escala nacional debemos responder, al menos, estas preguntas:</p>
+
+    <div class="qa-grid">
+      <div class="qa-card">
+        <h4>¿Cuánto podría costar?</h4>
+        <p>Todavía no existe una estimación responsable. Se necesita calcular costos de monitoreo, anticipos,
+        asistencia técnica, trazabilidad y evaluación. El piloto debe producir un costo por hectárea y por tonelada
+        reducida.</p>
+      </div>
+      <div class="qa-card">
+        <h4>¿Quién la ejecutaría?</h4>
+        <p>Las competencias ya están distribuidas entre varias instituciones. El desafío es definir una autoridad
+        coordinadora y evitar que la propuesta cree una capa adicional de trámites.</p>
+      </div>
+      <div class="qa-card">
+        <h4>¿Quién gana?</h4>
+        <p>Propietarios y comunidades que conservan áreas bajo amenaza real; productores que aumentan su
+        productividad sin ampliar pastizales; territorios que reciben inversión preventiva; y el Estado, si logra
+        comprar mayores resultados ambientales con el mismo presupuesto.</p>
+      </div>
+      <div class="qa-card">
+        <h4>¿Quién podría perder?</h4>
+        <p>Operaciones cuya rentabilidad depende de convertir bosque, intermediarios que se benefician de la falta
+        de trazabilidad, y proyectos en áreas de bajo riesgo que actualmente reciben pagos uniformes.</p>
+      </div>
+      <div class="qa-card">
+        <h4>¿Qué podría hacerla fracasar?</h4>
+        <ul>
+          <li>Catastro y tenencia inciertos</li>
+          <li>Captura de beneficios por grandes propietarios</li>
+          <li>Datos incompatibles entre instituciones</li>
+          <li>Verificación demasiado costosa</li>
+          <li>Corrupción o certificaciones débiles</li>
+          <li>Falta de continuidad presupuestaria</li>
+          <li>Penalización involuntaria de pequeños productores</li>
+          <li>Desplazamiento de la deforestación fuera del área intervenida</li>
+          <li>Resistencia política de sectores afectados</li>
+        </ul>
+      </div>
+      <div class="qa-card">
+        <h4>¿Cómo sabríamos en cinco años si funcionó?</h4>
+        <p>Solo si demuestra deforestación adicional evitada, mayor permanencia del bosque, reducción verificable de
+        emisiones, menores tiempos de pago y resultados sociales aceptables a un costo razonable. No bastaría con
+        informar cuántos expedientes fueron procesados.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 6. LIMITACIONES ===================== -->
+  <section class="doc-section" id="limitaciones">
+    <div class="section-label">06</div>
+    <h2 class="section-title">Limitaciones</h2>
+    <p class="body">
+      Este documento es un borrador de trabajo previo al diseño editorial final, y varias piezas de evidencia
+      todavía no están disponibles públicamente. En particular:
+    </p>
+    <ul class="kx-list">
+      <li>La publicación y referencia exacta del cálculo departamental que identifica la contribución de Petén a las emisiones nacionales todavía no es pública.</li>
+      <li>Las fechas, montos, beneficiarios y recorrido administrativo exactos de los pagos del PRE dependen del Reporte de Monitoreo correspondiente.</li>
+      <li>Los tarifarios vigentes de PROBOSQUE y PINPEP por modalidad, el costo de oportunidad comparable de la ganadería y otros usos del suelo en Petén, y las estadísticas territoriales de incendios están pendientes de sistematización.</li>
+      <li>PROBOSQUE todavía carece de evaluaciones causales específicas equivalentes a las disponibles para PINFOR y PINPEP.</li>
+      <li>El diseño legal y administrativo del fondo rotatorio propuesto, y la definición operativa de pequeño, mediano y gran productor, siguen siendo decisiones pendientes.</li>
+    </ul>
+    <p class="body">
+      Ninguna de estas piezas cambia el argumento central del documento, pero todas son necesarias antes de convertir
+      esta propuesta en una recomendación de política definitiva.
+    </p>
+  </section>
+
+  <!-- ===================== CONCLUSIÓN ===================== -->
+  <div class="conclusion-block">
+    <p>Guatemala ya ha decidido que conservar sus bosques merece financiamiento público. PINFOR, PINPEP y PROBOSQUE
+    construyeron una experiencia institucional que pocos países de la región poseen. El PRE añadió la posibilidad de
+    recibir recursos internacionales por resultados climáticos verificados.</p>
+    <p>El siguiente paso no es desechar esa arquitectura. Es hacerla más inteligente.</p>
+    <p class="cb-strong">Si el PRE indica que las emisiones disminuyeron, deberíamos poder explicar dónde, por qué y
+    gracias a qué intervención. Medir para cobrar es necesario; medir para aprender y actuar es indispensable.</p>
+  </div>
+
+  <!-- ===================== 7. REFERENCIAS ===================== -->
+  <section class="doc-section" id="referencias" style="margin-bottom:20px;">
+    <div class="section-label">07</div>
+    <h2 class="section-title">Referencias</h2>
+    <div class="sources">
+      <ol>
+        <li>Banco Mundial. <em>Guatemala Emission Reduction Program</em> (2019). <a href="https://documents.worldbank.org/curated/en/115171584077166322/pdf/Guatemala-Emission-Reduction-Program.pdf" target="_blank" rel="noopener noreferrer">Documento del programa</a>.</li>
+        <li>Convención Marco de las Naciones Unidas sobre el Cambio Climático. <em>Technical analysis of the first biennial update report of Guatemala</em> (2024). <a href="https://unfccc.int/sites/default/files/resource/tasr1_2023_GTM.pdf" target="_blank" rel="noopener noreferrer">Documento técnico</a>.</li>
+        <li>Patrick, E., Butsic, V. y Potts, M. D. (2023). "Using payment for ecosystem services to meet national reforestation commitments: impacts of 20+ years of forestry incentives in Guatemala". <em>Environmental Research Letters</em>, 18(10), 104030. <a href="https://doi.org/10.1088/1748-9326/acf602" target="_blank" rel="noopener noreferrer">DOI</a>.</li>
+        <li>Congreso de la República de Guatemala. Decreto 31-2024, <em>Ley para la Integración del Sector Productivo Primario y Agropecuario</em>. <a href="https://www.congreso.gob.gt/assets/uploads/info_legislativo/decretos/163c9-31-2024.pdf" target="_blank" rel="noopener noreferrer">Texto legal</a>. Véase también la <a href="https://portal.sat.gob.gt/portal/preguntas-frecuentes/decreto-31-2024-ley-para-la-integracion-del-sector-productivo-primario-y-agropecuario/" target="_blank" rel="noopener noreferrer">orientación tributaria de la SAT</a>.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ===================== REGRESO ===================== -->
+  <div class="back-cta">
+    <p>¿Prefieres la lectura de cinco minutos?</p>
+    <a class="btn btn-secondary" href="pagar-por-conservar.html">← Volver a la versión sencilla</a>
+  </div>
+
+</div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <span>© 2026 Kairos</span>
+    <a href="pagar-por-conservar.html">Versión pública →</a>
+  </div>
+</footer>
+
+</body>
+</html>

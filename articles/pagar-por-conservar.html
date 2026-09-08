@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>¿Es suficiente pagar por conservar para salvar nuestros bosques? — Kairos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Guatemala ya paga por proteger sus bosques, pero los pagos pueden llegar tarde, no siempre se dirigen a las áreas con mayor riesgo y compiten contra actividades que ofrecen dinero más rápido. Primera entrega de la serie Kairos sobre políticas ambientales.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+
+:root{
+  --bg:#F7F4EE;
+  --panel:#FFFFFF;
+  --panel-2:#EFEAE0;
+  --line: #E4DFD3;
+  --text:#1C1B22;
+  --text-dim:#6B6570;
+  --accent:#7A2540;
+  --accent-soft:rgba(122,37,64,0.08);
+  --navy:#1E2A42;
+  --green:#3E6488;
+  --green-soft:rgba(62,100,136,0.10);
+  --amber:#75707A;
+  --amber-soft:rgba(117,112,122,0.10);
+  --red:#8C2E48;
+  --red-soft:rgba(140,46,72,0.10);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+html,body{margin:0;padding:0;}
+body{background:var(--bg); color:var(--text); font-family:'Space Grotesk',sans-serif; -webkit-font-smoothing:antialiased;}
+.mono{font-family:'IBM Plex Mono',monospace;}
+a{color:inherit;}
+section{scroll-margin-top:96px;}
+.skip-link{position:absolute; left:12px; top:-80px; z-index:100; background:var(--text); color:var(--bg); padding:10px 14px; border-radius:4px; text-decoration:none;}
+.skip-link:focus{top:12px;}
+a:focus-visible{outline:3px solid var(--accent); outline-offset:3px;}
+.wrap{max-width:900px; margin:0 auto; padding:60px 26px 90px;}
+
+/* ---------- Nav mínima de retorno ---------- */
+.topbar{border-bottom:1px solid var(--line); background:rgba(247,244,238,0.92); backdrop-filter:blur(6px); position:sticky; top:0; z-index:20;}
+.topbar-inner{max-width:900px; margin:0 auto; padding:14px 26px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;}
+.topbar a.brand{font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:13px; letter-spacing:0.04em; text-decoration:none; color:var(--text);}
+.topbar a.brand span{color:var(--accent);}
+.topbar a.serieslink{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--text-dim); text-decoration:none;}
+.topbar a.serieslink:hover{color:var(--accent);}
+
+/* ---------- Cabecera ---------- */
+.eyebrow{font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent); display:flex; align-items:center; gap:10px; margin-bottom:20px;}
+.eyebrow::before{content:""; width:22px; height:1px; background:var(--accent);}
+
+h1{font-weight:600; font-size:clamp(28px,4.6vw,44px); line-height:1.14; margin:0 0 20px; max-width:22ch;}
+h1 span{color:var(--accent);}
+
+.lede{font-size:16px; line-height:1.7; color:var(--text-dim); max-width:70ch; margin:0 0 10px;}
+.lede strong{color:var(--text); font-weight:600;}
+.meta{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-dim); margin:26px 0 30px; padding-top:18px; border-top:1px solid var(--line); display:flex; gap:18px; flex-wrap:wrap;}
+
+.idea-central{background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:6px; padding:22px 24px; margin:0 0 32px;}
+.idea-central .tag{font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:var(--accent); font-weight:600; display:block; margin-bottom:10px;}
+.idea-central p{font-size:15.5px; line-height:1.7; color:var(--text); margin:0; font-weight:500;}
+
+/* ---------- Botones ---------- */
+.btn{font-family:'IBM Plex Mono',monospace; font-size:13px; text-decoration:none; padding:14px 24px; border-radius:4px; display:inline-block; letter-spacing:0.01em; transition:opacity .15s, background .15s, border-color .15s, color .15s; border:1px solid transparent; cursor:pointer;}
+.btn-primary{background:var(--text); color:var(--bg);}
+.btn-primary:hover{opacity:0.85;}
+.btn-secondary{border:1px solid var(--line); color:var(--text); background:transparent;}
+.btn-secondary:hover{border-color:var(--accent); color:var(--accent);}
+.cta-row{display:flex; gap:14px; flex-wrap:wrap; margin:0 0 40px;}
+
+/* ---------- Índice rápido ---------- */
+.qmap{display:flex; gap:10px; flex-wrap:wrap; margin:0 0 26px;}
+.qmap a{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--text-dim); text-decoration:none; border:1px solid var(--line); border-radius:20px; padding:8px 14px; transition:border-color .15s, color .15s;}
+.qmap a:hover{border-color:var(--accent); color:var(--accent);}
+.qmap a b{color:var(--accent); margin-right:6px;}
+
+/* ---------- Secciones y cuerpo ---------- */
+section{margin-bottom:56px;}
+h2.st{font-size:clamp(22px,3vw,28px); font-weight:600; margin:0 0 10px; max-width:30ch;}
+.sub{font-size:14px; color:var(--text-dim); max-width:64ch; line-height:1.65; margin:0 0 22px;}
+p.body{font-size:15.5px; line-height:1.75; color:var(--text-dim); margin:0 0 18px; max-width:70ch;}
+p.body strong{color:var(--text); font-weight:600;}
+ul.kx-list{margin:0 0 18px; padding-left:20px; font-size:14.5px; color:var(--text-dim); line-height:1.8; max-width:66ch;}
+ul.kx-list li strong{color:var(--text);}
+
+.callout{background:var(--accent-soft); border:1px solid rgba(122,37,64,0.22); border-radius:8px; padding:20px 22px; font-size:15px; line-height:1.7; color:#6B2338; margin:22px 0; font-weight:500;}
+.callout b{color:var(--accent);}
+
+.frase-guia{font-family:'Fraunces',serif; font-size:clamp(19px,2.3vw,24px); font-weight:500; color:var(--text); border-left:3px solid var(--accent); padding-left:22px; margin:30px 0;}
+
+/* ---------- Chips de programas ---------- */
+.chips-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; margin:22px 0 8px;}
+.chip-card{background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:18px 20px;}
+.chip-card .name{font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--accent); font-weight:700; margin-bottom:8px;}
+.chip-card p{font-size:13px; color:var(--text-dim); line-height:1.6; margin:0;}
+
+/* ---------- Espacios para visualizaciones ---------- */
+.viz-slot{border:1.5px dashed var(--line); border-radius:10px; padding:30px 28px; margin:26px 0 34px; background:rgba(255,255,255,0.4);}
+.viz-slot .viz-tag{font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:var(--accent); background:var(--accent-soft); padding:4px 10px; border-radius:12px; display:inline-block; margin-bottom:14px;}
+.viz-slot h4{font-size:16px; font-weight:600; margin:0 0 8px;}
+.viz-slot p{font-size:13.5px; color:var(--text-dim); line-height:1.65; margin:0 0 4px; max-width:64ch;}
+.viz-slot .viz-pending{font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--text-dim); margin-top:14px; display:inline-block; border-top:1px dashed var(--line); padding-top:10px;}
+
+.concept-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:26px 0 34px;}
+.concept-card{background:var(--panel); border:1px solid var(--line); border-radius:9px; padding:22px;}
+.concept-card h4{font-family:'IBM Plex Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.06em; margin:0 0 14px; color:var(--accent);}
+.concept-card ul{margin:0; padding-left:18px; color:var(--text-dim); font-size:13.5px; line-height:1.75;}
+.policy-flow{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:26px 0 34px; counter-reset:policy;}
+.policy-step{position:relative; background:var(--panel); border:1px solid var(--line); border-top:3px solid var(--accent); border-radius:9px; padding:22px 20px;}
+.policy-step b{display:block; color:var(--text); font-size:14px; margin-bottom:8px;}
+.policy-step p{margin:0; color:var(--text-dim); font-size:13px; line-height:1.6;}
+
+/* ---------- Bloque final ---------- */
+.conclusion-block{background:var(--navy); border-radius:8px; padding:32px 34px; margin:8px 0 40px;}
+.conclusion-block p{font-size:15.5px; line-height:1.75; color:#C7CFDC; margin:0 0 12px;}
+.conclusion-block p:last-child{margin-bottom:0;}
+.conclusion-block .cb-strong{color:#FFFFFF; font-weight:600;}
+
+.final-cta{background:var(--panel-2); border-radius:10px; padding:36px 34px; text-align:center; margin-bottom:44px;}
+.final-cta h3{font-size:clamp(19px,2.4vw,23px); font-weight:600; margin:0 0 10px;}
+.final-cta p{font-size:14px; color:var(--text-dim); margin:0 0 22px; max-width:52ch; margin-left:auto; margin-right:auto;}
+
+/* ---------- Fuentes y pie ---------- */
+.sources{background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:24px 26px; margin-top:12px;}
+.sources h3{font-size:13px; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-dim); margin:0 0 16px; font-weight:600;}
+.sources ul{margin:0; padding:0; list-style:none;}
+.sources li{margin-bottom:10px;}
+.sources a{color:var(--accent); text-decoration:none; font-size:12.5px; line-height:1.5;}
+.sources a:hover{text-decoration:underline;}
+
+.footnote{margin-top:50px; padding-top:26px; border-top:1px solid var(--line); display:flex; justify-content:space-between; align-items:flex-start; gap:24px; flex-wrap:wrap;}
+.footnote p{font-size:12.5px; color:var(--text-dim); line-height:1.6; max-width:58ch; margin:0;}
+.footnote .tagf{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--accent); border:1px solid var(--accent); border-radius:4px; padding:8px 12px; white-space:nowrap;}
+
+footer{background:var(--navy); color:#C7CFDC; padding:44px 0 28px; margin-top:10px;}
+.footer-inner{max-width:900px; margin:0 auto; padding:0 26px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:#7C8AA0;}
+.footer-inner a{color:#C7CFDC; text-decoration:none;}
+.footer-inner a:hover{color:#fff;}
+
+@media (max-width:640px){
+  .cta-row{flex-direction:column;}
+  .btn{text-align:center;}
+  .concept-grid,.policy-flow{grid-template-columns:1fr;}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+<header class="topbar">
+  <nav class="topbar-inner" aria-label="Navegación principal">
+    <a class="brand" href="../index.html">KAIRO<span>S</span></a>
+    <a class="serieslink" href="../index.html#publicaciones">Serie: 10 políticas ambientales para Guatemala</a>
+  </nav>
+</header>
+
+<main class="wrap" id="contenido">
+
+  <div class="eyebrow">Políticas ambientales para Guatemala · Política 1</div>
+
+  <h1>¿Es suficiente <span>pagar por conservar</span> para salvar nuestros bosques?</h1>
+
+  <p class="lede">
+    Guatemala ya paga por proteger sus bosques, pero los pagos pueden llegar tarde, no siempre se dirigen a las áreas
+    con mayor riesgo y compiten contra actividades que ofrecen dinero más rápido.
+  </p>
+
+  <div class="idea-central">
+    <span class="tag">En una frase</span>
+    <p>Guatemala ya paga por proteger sus bosques, pero los pagos pueden llegar tarde, no siempre se dirigen a las
+    áreas con mayor riesgo y compiten contra actividades que ofrecen dinero más rápido.</p>
+  </div>
+
+  <div class="meta">
+    <span>Serie Kairos · 10 políticas ambientales para Guatemala</span>
+    <span>Tiempo estimado de lectura: 5–6 minutos</span>
+  </div>
+
+  <div class="cta-row">
+    <a class="btn btn-primary" href="investigacion-pagos-conservacion.html">Ver investigación y metodología →</a>
+  </div>
+
+  <div class="qmap">
+    <a href="#relojes"><b>①</b>El problema</a>
+    <a href="#peten"><b>②</b>Petén</a>
+    <a href="#propuesta"><b>③</b>La propuesta Kairos</a>
+    <a href="#piloto"><b>④</b>El piloto</a>
+  </div>
+
+  <!-- ===================== SECCIÓN 1 ===================== -->
+  <section id="relojes">
+    <h2 class="st">Un bosque y una oficina utilizan relojes diferentes</h2>
+    <p class="sub">Un bosque puede tardar décadas en crecer y desaparecer en pocos días. El dinero destinado a protegerlo, en cambio, puede tardar años en llegar.</p>
+
+    <p class="body">
+      Guatemala cuenta con programas que pagan a propietarios, comunidades y pequeños poseedores por conservar,
+      restaurar o manejar bosques. Esto tiene sentido: un bosque beneficia a toda la sociedad, pero mantenerlo puede
+      tener un costo para la persona que posee o trabaja la tierra.
+    </p>
+    <p class="body">
+      El bosque captura carbono, protege fuentes de agua, conserva el suelo y alberga biodiversidad. Sin embargo,
+      estos beneficios no producen necesariamente un ingreso inmediato para quien decide no talarlo. Transformar la
+      tierra sí puede hacerlo.
+    </p>
+
+    <div class="callout">
+      Conservar produce beneficios para todos, pero el costo de conservar suele recaer sobre una persona o comunidad.
+    </div>
+
+    <p class="body">
+      Por eso existen los incentivos forestales. La pregunta no es si deberíamos eliminarlos. La pregunta es si su
+      diseño actual es suficiente frente a la velocidad de la deforestación, los incendios y el cambio climático.
+    </p>
+  </section>
+
+  <!-- ===================== SECCIÓN 2 ===================== -->
+  <section id="programas">
+    <h2 class="st">Guatemala ya paga por conservar</h2>
+    <p class="sub">El país no comienza desde cero. Durante más de veinte años ha desarrollado distintos programas forestales.</p>
+
+    <div class="chips-grid">
+      <div class="chip-card">
+        <div class="name">PINFOR</div>
+        <p>Financió plantaciones, manejo y conservación entre 1997 y 2016.</p>
+      </div>
+      <div class="chip-card">
+        <div class="name">PROBOSQUE</div>
+        <p>Continuó parte de ese trabajo y amplió las actividades y los participantes posibles.</p>
+      </div>
+      <div class="chip-card">
+        <div class="name">PINPEP</div>
+        <p>Permitió que pequeños poseedores, incluso algunos sin título de propiedad inscrito, accedieran a incentivos.</p>
+      </div>
+      <div class="chip-card">
+        <div class="name">PRE</div>
+        <p>Guatemala mide cuánto logró reducir las emisiones por deforestación y degradación, y recibe un pago tras una verificación internacional.</p>
+      </div>
+    </div>
+
+    <p class="body">
+      En PROBOSQUE y PINPEP, el INAB certifica el cumplimiento de las actividades o planes forestales antes del
+      desembolso. El PRE sigue otro proceso: las reducciones agregadas se someten a monitoreo, reporte y verificación,
+      y los beneficios se distribuyen posteriormente conforme a las reglas del programa. Aunque los instrumentos
+      cumplen funciones distintas, comparten una idea:
+    </p>
+    <div class="frase-guia">Quien ayuda a conservar un beneficio ambiental debería recibir parte de su valor.</div>
+    <p class="body">El problema aparece cuando el pago deja de competir efectivamente contra las alternativas.</p>
+  </section>
+
+  <!-- ===================== VISUALIZACIÓN 1 ===================== -->
+  <div class="viz-slot" id="viz-timeline" hidden>
+    <span class="viz-tag">Visualización 1</span>
+    <h4>Línea de tiempo del PRE</h4>
+    <p>Espacio reservado para una línea de tiempo que muestre, de forma secuencial, el resultado ambiental, su
+    medición y verificación, y el momento del pago dentro del Programa de Reducción de Emisiones.</p>
+    <span class="viz-pending">Pendiente de datos y diseño final</span>
+  </div>
+  <!-- DATO PENDIENTE: incorporar fechas, montos y referencia exacta al Reporte de Monitoreo del PRE antes de construir esta visualización. No publicar cifras hasta contar con la fuente. -->
+
+  <!-- ===================== SECCIÓN 3 ===================== -->
+  <section id="espera">
+    <h2 class="st">¿Qué sucede si el pago llega años después?</h2>
+    <p class="sub">Parte de la espera es necesaria. Antes de pagar, se debe comprobar que la reducción realmente ocurrió.</p>
+
+    <p class="body">
+      Sin medición y verificación, cualquier proyecto podría atribuirse resultados que no produjo. Pero la espera
+      también tiene un costo.
+    </p>
+    <p class="body">
+      Imaginemos a una comunidad que debe elegir hoy entre conservar un área o transformarla para obtener ingresos.
+      Un pago posible dentro de varios años no tiene el mismo valor que un ingreso disponible durante la decisión.
+      Aunque la cantidad final sea idéntica, cambian la incertidumbre, la confianza y la capacidad de pagar
+      necesidades actuales.
+    </p>
+    <div class="callout">
+      El problema no consiste solamente en <b>cuánto</b> paga el Estado. También importa <b>cuándo</b>, <b>con qué
+      certeza</b> y <b>después de cuántos trámites</b>.
+    </div>
+  </section>
+
+  <!-- ===================== SECCIÓN 4 ===================== -->
+  <section id="peten">
+    <h2 class="st">Petén muestra la contradicción</h2>
+    <p class="sub">La región alberga una enorme riqueza forestal y, al mismo tiempo, algunas de las mayores presiones de deforestación del país.</p>
+
+    <p class="body">
+      Petén alberga la Reserva de la Biosfera Maya y una parte fundamental del patrimonio forestal del país. Al
+      mismo tiempo, enfrenta algunas de las mayores presiones de deforestación y cambio de uso del suelo.
+    </p>
+    <p class="body">
+      La información oficial disponible indica que, entre 2001 y 2016, alrededor de 68% de la deforestación
+      nacional ocurrió en las tierras bajas del norte, una región que incluye Petén, Quiché y Alta Verapaz. La
+      conversión hacia pastizales para ganadería extensiva representó aproximadamente 35% de la deforestación
+      identificada en Guatemala.<sup>[1]</sup>
+    </p>
+    <!-- DATO PENDIENTE: incorporar el porcentaje departamental de la contribución de Petén a las emisiones nacionales únicamente cuando se publique el estudio de cálculo de carbono del PRE y se confirme qué emisiones, territorio y periodo representa. -->
+    <p class="body">
+      Petén permite observar el conflicto con claridad. El territorio que conserva una enorme riqueza forestal
+      también puede ofrecer ganancias privadas mediante la expansión de otras actividades. Si proteger el bosque
+      requiere trámites e incertidumbre, mientras transformarlo ofrece beneficios más inmediatos, el incentivo
+      ambiental comienza la competencia en desventaja.
+    </p>
+  </section>
+
+  <!-- ===================== VISUALIZACIÓN 2 ===================== -->
+  <div class="concept-grid" id="viz-actividad-resultado" aria-label="Comparación entre actividades y resultados ambientales">
+    <div class="concept-card">
+      <h4>Lo que solemos contar</h4>
+      <ul>
+        <li>Árboles entregados</li>
+        <li>Hectáreas certificadas</li>
+        <li>Personas capacitadas</li>
+        <li>Presupuesto ejecutado</li>
+      </ul>
+    </div>
+    <div class="concept-card">
+      <h4>Lo que necesitamos conocer</h4>
+      <ul>
+        <li>Árboles que sobrevivieron</li>
+        <li>Deforestación realmente evitada</li>
+        <li>Cambios persistentes de conducta</li>
+        <li>Costo por resultado ambiental</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===================== SECCIÓN 5 ===================== -->
+  <section id="adicionalidad">
+    <h2 class="st">Una hectárea pagada no siempre es una hectárea salvada</h2>
+    <p class="sub">Dos hectáreas del mismo tamaño pueden producir un resultado público muy distinto.</p>
+
+    <p class="body">
+      Supongamos que el Estado paga por conservar un bosque que nunca estuvo en peligro. El bosque permanece y el
+      participante cumple las reglas, pero probablemente habría ocurrido lo mismo sin el pago. Ahora imaginemos otra
+      parcela junto a una carretera, rodeada de áreas agrícolas y bajo presión para convertirse en pastizal. Si el
+      pago cambia la decisión del propietario, el programa sí evita una pérdida que probablemente habría ocurrido.
+    </p>
+    <p class="body">
+      En economía ambiental, esta diferencia se llama <strong>adicionalidad</strong>: el cambio que ocurrió gracias a
+      la política y que no habría ocurrido sin ella.
+    </p>
+    <p class="body">
+      Un estudio académico sobre más de veinte años de incentivos en Guatemala encontró que los efectos cambian
+      según el programa y la modalidad. Algunas intervenciones redujeron la pérdida de bosque y otras modalidades
+      produjeron efectos importantes de restauración.<sup>[2]</sup>
+    </p>
+    <div class="frase-guia">Funcionan de manera diferente según dónde, cómo y para qué se utilicen.</div>
+  </section>
+
+  <!-- ===================== SECCIÓN 6 ===================== -->
+  <section id="siembra">
+    <h2 class="st">Sembrar, capacitar y tomar fotografías no basta</h2>
+    <p class="sub">Contar árboles entregados o fotografías tomadas no demuestra todavía que exista un resultado climático.</p>
+
+    <p class="body">
+      Una jornada de reforestación puede ser valiosa: puede sensibilizar a una comunidad, enseñar prácticas
+      forestales y movilizar voluntarios. Para conocer su impacto real tendríamos que regresar después y preguntar:
+    </p>
+    <ul class="kx-list">
+      <li>¿Cuántos árboles sobrevivieron?</li>
+      <li>¿Aumentó realmente la cobertura forestal?</li>
+      <li>¿Se evitó la deforestación o se desplazó a otro lugar?</li>
+      <li>¿Cuánto costó cada hectárea restaurada?</li>
+      <li>¿Cuántas emisiones se redujeron?</li>
+    </ul>
+    <p class="body">
+      Las jornadas institucionales de reforestación pueden generar valor educativo, pero necesitan indicadores
+      posteriores para demostrar su impacto ambiental. Esto no significa afirmar que fracasaron. Significa reconocer
+      que una actividad y un resultado no son lo mismo.
+    </p>
+    <div class="callout">
+      Guatemala mide con facilidad cuánto hizo, pero todavía necesita conocer mejor cuánto cambió gracias a lo que
+      hizo.
+    </div>
+  </section>
+
+  <!-- ===================== SECCIÓN 7 ===================== -->
+  <section id="ganaderia">
+    <h2 class="st">¿Debemos cobrarle más a la ganadería?</h2>
+    <p class="sub">No todos los productores son iguales, y tampoco sería correcto afirmar que los ganaderos no pagan impuestos.</p>
+
+    <p class="body">
+      La ganadería es una parte importante de la economía rural. Un pequeño productor con pocas cabezas no posee la
+      misma capacidad ni genera la misma presión territorial que una gran operación comercial o una ocupación
+      ilegal dentro de un área protegida. El verdadero problema es que pagar impuestos por ventas o ingresos no
+      significa necesariamente pagar por los costos ambientales de una actividad.
+    </p>
+    <p class="body">Por eso, Kairos no propone simplemente un impuesto por cada vaca. Una alternativa más equilibrada sería una <strong>transición ganadera libre de deforestación</strong>:</p>
+    <ul class="kx-list">
+      <li>Ayudar a los productores a obtener más rendimiento en la tierra que ya utilizan.</li>
+      <li>Promover sistemas silvopastoriles que combinen árboles y ganado.</li>
+      <li>Rastrear el origen del ganado para separar producción legal de expansión reciente sobre bosque.</li>
+      <li>Proteger y asistir a pequeños productores.</li>
+      <li>Cobrar una contribución a grandes operaciones vinculadas con deforestación reciente.</li>
+      <li>Devolver o reducir esa contribución cuando se conserve bosque o se restauren áreas.</li>
+    </ul>
+    <p class="body">No se trataría de castigar la ganadería, sino de evitar que su rentabilidad dependa de seguir ampliando la frontera agropecuaria.</p>
+  </section>
+
+  <!-- ===================== SECCIÓN 8 ===================== -->
+  <section id="propuesta">
+    <h2 class="st">La propuesta Kairos</h2>
+    <p class="sub">Proponemos probar tres cambios conectados.</p>
+
+    <div class="chips-grid">
+      <div class="chip-card">
+        <div class="name">1 · Pagar estratégicamente</div>
+        <p>Considerar el riesgo real de deforestación, el costo de oportunidad del terreno, la situación económica del participante y la importancia ambiental del área.</p>
+      </div>
+      <div class="chip-card">
+        <div class="name">2 · Acercar el pago a la acción</div>
+        <p>Un fondo temporal podría entregar anticipos prudentes mientras finaliza la verificación internacional, sin dejar solas a las comunidades durante años de espera.</p>
+      </div>
+      <div class="chip-card">
+        <div class="name">3 · Medir para aprender</div>
+        <p>El PRE, el INAB, el MARN, el MAGA y el CONAP deberían conectar sus datos y comprobar en campo qué intervenciones funcionan.</p>
+      </div>
+    </div>
+
+    <div class="frase-guia">¿Qué resultado ambiental adicional compramos con este dinero?</div>
+  </section>
+
+  <!-- ===================== VISUALIZACIÓN 3 ===================== -->
+  <div class="policy-flow" id="viz-propuesta" aria-label="Tres componentes de la propuesta Kairos">
+    <div class="policy-step">
+      <b>1. Focalizar</b>
+      <p>Pagar según riesgo, adicionalidad y costo de oportunidad.</p>
+    </div>
+    <div class="policy-step">
+      <b>2. Acercar</b>
+      <p>Reducir la distancia entre la acción ambiental y el desembolso.</p>
+    </div>
+    <div class="policy-step">
+      <b>3. Aprender</b>
+      <p>Conectar información, verificación de campo y evaluación.</p>
+    </div>
+  </div>
+
+  <!-- ===================== SECCIÓN 9 ===================== -->
+  <section id="piloto">
+    <h2 class="st">Primero probar, después ampliar</h2>
+    <p class="sub">Petén podría servir para un piloto de tres a cinco años.</p>
+
+    <p class="body">
+      Distintos territorios recibirían combinaciones de pagos ajustados por riesgo, asistencia silvopastoril,
+      prevención de incendios, trazabilidad y financiamiento puente. Después compararíamos:
+    </p>
+    <ul class="kx-list">
+      <li>Pérdida de bosque.</li>
+      <li>Supervivencia de árboles.</li>
+      <li>Emisiones reducidas.</li>
+      <li>Incendios.</li>
+      <li>Ingresos de los participantes.</li>
+      <li>Costo por resultado.</li>
+      <li>Tiempo entre la certificación y el pago.</li>
+    </ul>
+    <p class="body">
+      El piloto no debería diseñarse para demostrar que la propuesta tiene razón. Debería permitir que la evidencia
+      señale qué funciona, qué debe corregirse y qué no merece ampliarse.
+    </p>
+  </section>
+
+  <!-- ===================== CONCLUSIÓN ===================== -->
+  <div class="conclusion-block">
+    <p>Entonces, ¿es suficiente pagar por conservar? No por sí solo.</p>
+    <p>Los incentivos forestales son necesarios porque conservar genera beneficios que el mercado no remunera
+    adecuadamente. Pero un pago tardío, uniforme o dirigido a un área sin riesgo puede producir menos impacto del
+    esperado.</p>
+    <p class="cb-strong">No basta con hacer rentable conservar; también debemos dejar de hacer rentable destruir.</p>
+  </div>
+
+  <!-- ===================== CTA FINAL ===================== -->
+  <div class="final-cta">
+    <h3>Para profundizar</h3>
+    <p>Esta publicación presenta el argumento de forma introductoria. La investigación completa explica la
+    clasificación de los instrumentos, la evidencia causal, el diseño institucional, los riesgos fiscales y el
+    stress test de implementación.</p>
+    <a class="btn btn-primary" href="investigacion-pagos-conservacion.html">Leer la investigación completa →</a>
+  </div>
+
+  <!-- ===================== FUENTES ===================== -->
+  <div class="sources">
+    <h3>Referencias esenciales</h3>
+    <ul>
+      <li>[1] Banco Mundial. <em>Guatemala Emission Reduction Program</em> (2019). <a href="https://documents.worldbank.org/curated/en/115171584077166322/pdf/Guatemala-Emission-Reduction-Program.pdf" target="_blank" rel="noopener noreferrer">Documento del programa</a>.</li>
+      <li>[2] Patrick, E., Butsic, V. y Potts, M. D. (2023). "Using payment for ecosystem services to meet national reforestation commitments: impacts of 20+ years of forestry incentives in Guatemala". <em>Environmental Research Letters</em>, 18(10), 104030. <a href="https://doi.org/10.1088/1748-9326/acf602" target="_blank" rel="noopener noreferrer">DOI</a>.</li>
+    </ul>
+  </div>
+
+  <div class="footnote">
+    <p>
+      Esta es una versión de trabajo en revisión editorial. Algunos datos (fechas y montos exactos de desembolso del
+      PRE, y el cálculo departamental de emisiones de Petén) están pendientes de una fuente pública antes de
+      incorporarse a esta publicación.
+    </p>
+    <div class="tagf">Política 1 de 10 · Serie ambiental Kairos</div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <span>© 2026 Kairos</span>
+    <a href="investigacion-pagos-conservacion.html">Investigación completa →</a>
+  </div>
+</footer>
+
+</body>
+</html>
