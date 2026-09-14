@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿Por qué darle dinero a los pobres no soluciona el problema? — Kairos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<style>
+  :root{
+    --paper:#F3F1E8;
+    --panel:#FBFAF5;
+    --ink:#1A2420;
+    --ink-soft:#4B554F;
+    --line:#D8D3C1;
+    --teal:#1F6F5C;
+    --teal-soft:#E4EFEA;
+    --rust:#B5502E;
+    --rust-soft:#F6E7E0;
+    --measure:38rem;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Source Serif 4", Georgia, serif;
+    font-size:19px;
+    line-height:1.65;
+  }
+  .ui{font-family:"IBM Plex Sans", -apple-system, sans-serif;}
+  .num{font-family:"IBM Plex Mono", monospace;}
+  a{color:var(--teal);}
+  h1,h2,h3{font-family:"Source Serif 4", Georgia, serif; font-weight:600; line-height:1.2; margin:0;}
+
+  header.masthead{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:1.1rem 1.5rem;
+    border-bottom:1px solid var(--line);
+    font-family:"IBM Plex Sans", sans-serif;
+    font-size:0.92rem;
+    position:sticky; top:0; background:rgba(243,241,232,0.92); backdrop-filter:blur(6px);
+    z-index:10;
+  }
+  header.masthead a{ text-decoration:none; color:var(--ink); }
+  header.masthead .brand{ font-weight:600; letter-spacing:0.01em; }
+  header.masthead .brand span{ color:var(--teal); }
+  header.masthead nav a{ color:var(--ink-soft); margin-left:1.4rem; border-bottom:1px solid transparent; }
+  header.masthead nav a:hover{ color:var(--teal); border-bottom-color:var(--teal); }
+
+  main{ max-width:52rem; margin:0 auto; padding:0 1.5rem 6rem; }
+
+  .hero{ padding:3.6rem 0 1.6rem; max-width:var(--measure); }
+  .hero .kicker{
+    font-family:"IBM Plex Sans", sans-serif; font-size:0.95rem; color:var(--ink-soft);
+    margin-bottom:1.1rem;
+  }
+  .hero h1{ font-size:2.5rem; letter-spacing:-0.01em; }
+  .hero .subtitle{
+    font-size:1.2rem; color:var(--ink-soft); margin-top:1rem; font-style:italic;
+  }
+
+  .banner{
+    background:var(--rust-soft);
+    border:1px solid #E3C4B2;
+    border-radius:3px;
+    padding:1.4rem 1.6rem;
+    margin:2rem 0 3rem;
+    max-width:var(--measure);
+  }
+  .banner h3{
+    font-family:"IBM Plex Sans", sans-serif; font-size:1rem; font-weight:600;
+    color:var(--rust); margin-bottom:0.5rem;
+  }
+  .banner p{ margin:0; font-size:1rem; color:var(--ink); }
+
+  article p{ max-width:var(--measure); margin:0 0 1.3rem; }
+  article > .lede{ font-size:1.15rem; }
+
+  section.entry{ margin:3.6rem 0; }
+  .entry-head{ display:flex; align-items:baseline; gap:1rem; max-width:var(--measure); margin-bottom:1.1rem; }
+  .entry-head .n{
+    font-family:"IBM Plex Mono", monospace; font-size:1rem; color:var(--teal);
+    border:1px solid var(--teal); border-radius:50%;
+    width:2rem; height:2rem; min-width:2rem;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .entry-head h2{ font-size:1.5rem; }
+
+  .stat-row{
+    display:flex; flex-wrap:wrap; gap:0.9rem;
+    margin:1.6rem 0 1.8rem;
+  }
+  .stat-card{
+    background:var(--panel); border:1px solid var(--line); border-radius:3px;
+    padding:1rem 1.2rem; flex:1 1 170px; min-width:150px;
+  }
+  .stat-card .label{ font-family:"IBM Plex Sans", sans-serif; font-size:0.82rem; color:var(--ink-soft); }
+  .stat-card .value{ font-family:"IBM Plex Mono", monospace; font-size:1.5rem; color:var(--ink); margin-top:0.2rem; }
+  .stat-card .sub{ font-family:"IBM Plex Sans", sans-serif; font-size:0.78rem; color:var(--ink-soft); margin-top:0.15rem; }
+  .stat-card.good .value{ color:var(--teal); }
+  .stat-card.bad .value{ color:var(--rust); }
+
+  .callout{
+    background:var(--teal-soft); border-left:3px solid var(--teal);
+    padding:1.1rem 1.4rem; margin:1.8rem 0; max-width:var(--measure);
+    border-radius:0 3px 3px 0;
+  }
+  .callout .tag{ font-family:"IBM Plex Sans", sans-serif; font-size:0.78rem; color:var(--teal); font-weight:600; margin-bottom:0.35rem; }
+  .callout p{ margin:0; }
+
+  .eq{ margin:1.6rem 0; padding:0.6rem 0; overflow-x:auto; }
+  .eq-boxed{
+    display:inline-block; padding:0.5rem 1.1rem; border:1.5px solid var(--ink);
+    border-radius:3px; margin:0.6rem 0;
+  }
+
+  figure{ margin:2.4rem 0; max-width:100%; }
+  figure img{ width:100%; height:auto; border:1px solid var(--line); border-radius:3px; background:#fff; }
+  figcaption{
+    font-family:"IBM Plex Sans", sans-serif; font-size:0.85rem; color:var(--ink-soft);
+    margin-top:0.6rem; max-width:var(--measure);
+  }
+
+  .divider{ border:none; border-top:1px solid var(--line); margin:3.6rem 0; max-width:var(--measure); }
+
+  .conclusion{
+    background:var(--panel); border:1px solid var(--line); border-radius:3px;
+    padding:2rem 2.2rem; margin-top:1rem; max-width:var(--measure);
+  }
+  .conclusion .big{ font-size:1.4rem; margin-bottom:0.9rem; }
+
+  footer{
+    border-top:1px solid var(--line); padding:2.4rem 1.5rem;
+    font-family:"IBM Plex Sans", sans-serif; font-size:0.88rem; color:var(--ink-soft);
+  }
+  footer .footer-inner{ max-width:52rem; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; gap:1rem; }
+  footer a{ color:var(--ink-soft); }
+
+  .switch-link{
+    display:inline-block; margin-top:0.4rem; font-family:"IBM Plex Sans", sans-serif;
+    font-size:0.9rem; color:var(--teal); text-decoration:none; border-bottom:1px solid var(--teal);
+  }
+
+  @media (max-width:640px){
+    body{ font-size:17px; }
+    .hero h1{ font-size:1.9rem; }
+    header.masthead nav a{ margin-left:0.9rem; font-size:0.85rem; }
+    .conclusion{ padding:1.5rem 1.3rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <a class="brand" href="../index.html">Kairos <span>Laboratorio</span></a>
+  <nav>
+    <a href="por-que-el-dinero-no-basta-tecnico.html">Versión técnica →</a>
+  </nav>
+</header>
+
+<main>
+
+  <div class="hero">
+    <p class="kicker ui">Publicación de Kairos Laboratorio, primer experimento de la serie Optimization Lab.</p>
+    <h1>¿Por qué darle dinero a los pobres no soluciona el problema?</h1>
+    <p class="subtitle">Un experimento con 100,000 hogares sobre dinero, focalización, información e incentivos.</p>
+  </div>
+
+  <div class="banner">
+    <h3 class="ui">Antes de empezar: esto es un experimento sintético</h3>
+    <p>Los 100,000 hogares, la línea de pobreza de Q2,000, el presupuesto de Q20 millones y los parámetros de comportamiento que vas a leer son piezas de un modelo construido para pensar con claridad sobre el problema. No son estadísticas oficiales de Guatemala ni una estimación de cuánto costaría eliminar la pobreza en el país. Ningún resultado de este artículo debe leerse como un dato real.</p>
+  </div>
+
+  <article>
+    <p class="lede">Si una persona es pobre porque no tiene suficiente dinero, la pregunta parece resolverse sola: ¿por qué el gobierno no simplemente le da el dinero que le falta? La intuición es difícil de rebatir. Y sin embargo, cualquier ministerio de finanzas del mundo sabe que la política de transferencias monetarias es una de las decisiones más difíciles de diseñar bien.</p>
+
+    <p>Este artículo no argumenta que dar dinero sea inútil. De hecho, el experimento que vas a leer demuestra que las transferencias pueden funcionar extraordinariamente bien. La tesis es otra: <strong>dar dinero reduce la pobreza monetaria, pero no resuelve por sí solo el problema de diseñar una política contra la pobreza.</strong> También hay que decidir a quién transferir, cuánto, con qué información, bajo qué objetivo, y frente a qué incentivos. Construimos una economía artificial para ver, paso a paso, por qué cada una de esas decisiones importa.</p>
+
+    <hr class="divider">
+
+    <section class="entry">
+      <div class="entry-head">
+        <span class="n">1</span>
+        <h2>Construimos una economía artificial</h2>
+      </div>
+      <p>Empezamos con 100,000 hogares sintéticos, cada uno con un ingreso generado por el modelo. Trazamos una línea de pobreza experimental en <strong>Q2,000</strong>: quien gana menos que eso, dentro de esta economía artificial, es pobre.</p>
+
+      <div class="stat-row">
+        <div class="stat-card bad"><div class="label ui">Pobreza inicial</div><div class="value">29.97%</div><div class="sub ui">29,971 hogares</div></div>
+        <div class="stat-card bad"><div class="label ui">Brecha agregada inicial</div><div class="value">Q20.23M</div><div class="sub ui">Q20,232,300.65</div></div>
+      </div>
+
+      <p>Cada hogar pobre tiene una <em>brecha</em>: la distancia entre lo que gana y la línea de Q2,000. Un hogar que gana Q1,700 tiene una brecha de Q300; uno que gana Q2,000 o más, brecha cero. Esa idea se escribe así:</p>
+      <div class="eq" data-tex="G_i = \max(0,\, z - y_i)"></div>
+      <p>Sumar esa brecha en los 29,971 hogares pobres da el número que abre el experimento: hacen falta Q20,232,300.65 para que, en teoría, nadie en esta economía artificial quede por debajo de la línea.</p>
+    </section>
+
+    <section class="entry">
+      <div class="entry-head">
+        <span class="n">2</span>
+        <h2>Cuatro gobiernos reciben Q20 millones</h2>
+      </div>
+      <p>Le dimos el mismo presupuesto, Q20 millones, a cuatro estrategias distintas de reparto. Cada una representa una forma razonable de pensar la política pública.</p>
+
+      <div class="stat-row">
+        <div class="stat-card"><div class="label ui">A — Universal</div><div class="value">25.31%</div><div class="sub ui">4,662 hogares salen · Q200 por hogar</div></div>
+        <div class="stat-card"><div class="label ui">B — Q1,000 a los más pobres</div><div class="value">17.35%</div><div class="sub ui">12,623 hogares salen</div></div>
+        <div class="stat-card good"><div class="label ui">C — brecha mínima primero</div><div class="value">0.13%</div><div class="sub ui">29,837 hogares salen</div></div>
+        <div class="stat-card good"><div class="label ui">D — pobreza profunda primero</div><div class="value">3.26%</div><div class="sub ui">26,707 hogares salen</div></div>
+      </div>
+
+      <p><strong>A</strong> reparte Q200 a cada uno de los 100,000 hogares, pobres o no. <strong>B</strong> entrega Q1,000 a los hogares más pobres hasta agotar el presupuesto. <strong>C</strong> prioriza a quienes necesitan menos dinero para cruzar la línea — la forma más barata de "graduar" a un hogar de la pobreza. <strong>D</strong> hace lo contrario: atiende primero a quienes tienen la brecha más profunda.</p>
+
+      <figure>
+        <img src="assets/subsidios/01_pobreza_final_gobiernos.png" alt="Gráfica de barras: pobreza final por estrategia de gobierno con presupuesto de Q20 millones">
+        <figcaption>Pobreza final por estrategia, con el mismo presupuesto de Q20 millones. Kairos Optimization Lab #1.</figcaption>
+      </figure>
+
+      <div class="callout">
+        <div class="tag ui">Hallazgo</div>
+        <p>C y D dejan una brecha agregada casi idéntica (Q233,786.52 contra Q232,300.65), pero un número de hogares pobres muy distinto (0.13% contra 3.26%). Repartir el mismo dinero de dos maneras "óptimas" puede producir resultados muy diferentes según qué estemos midiendo. "Óptimo" depende de qué queremos optimizar.</p>
+      </div>
+    </section>
+
+    <section class="entry">
+      <div class="entry-head">
+        <span class="n">3</span>
+        <h2>Quitamos el primer superpoder: información perfecta</h2>
+      </div>
+      <p>Hasta aquí, el gobierno del experimento conocía el ingreso exacto de cada hogar. Ningún gobierno real tiene ese privilegio: los datos de ingreso se declaran, se estiman, se infieren de encuestas. Introdujimos un error de medición experimental, de manera que el gobierno observa un ingreso estimado en vez del real:</p>
+      <div class="eq" data-tex="\hat{y}_i = y_i + \epsilon_i"></div>
+      <p>Con un error de σ = Q500, el mismo algoritmo de "brecha mínima primero" que casi eliminaba la pobreza en el escenario C deja de funcionar tan bien:</p>
+
+      <div class="stat-row">
+        <div class="stat-card bad"><div class="label ui">Falsos positivos</div><div class="value">4,402</div></div>
+        <div class="stat-card bad"><div class="label ui">Falsos negativos</div><div class="value">4,694</div></div>
+        <div class="stat-card bad"><div class="label ui">Leakage</div><div class="value">15.58%</div><div class="sub ui">del beneficio a hogares no objetivo</div></div>
+        <div class="stat-card bad"><div class="label ui">Pobreza final</div><div class="value">16.48%</div><div class="sub ui">brecha restante ≈ Q6.39M</div></div>
+      </div>
+
+      <p>El algoritmo no cambió. Lo que cambió es que ahora observa imperfectamente a la población que quiere ayudar, y eso basta para que un diseño casi perfecto se convierta en uno mediocre.</p>
+
+      <div class="callout">
+        <div class="tag ui">Nota metodológica</div>
+        <p>Los escenarios de información imperfecta y comportamiento estratégico se evalúan por separado. No representan perturbaciones acumulativas del mismo modelo: la sección siguiente parte de nuevo del algoritmo C con información perfecta, y le agrega conducta estratégica en el reporte, no el error de medición de esta sección.</p>
+      </div>
+    </section>
+
+    <section class="entry">
+      <div class="entry-head">
+        <span class="n">4</span>
+        <h2>Las personas reaccionan a las reglas</h2>
+      </div>
+      <p>Le dimos a cada hogar sintético tres opciones frente al formulario de la transferencia: decir la verdad, ocultar Q250 de su ingreso reportado, u ocultar Q500. Con una probabilidad de auditoría de 10%, una sanción de 2 veces lo ocultado, y un costo fijo de Q25 por intentar manipular el reporte, el resultado fue:</p>
+
+      <div class="stat-row">
+        <div class="stat-card bad"><div class="label ui">Hogares que manipulan su reporte</div><div class="value">38.38%</div></div>
+      </div>
+
+      <div class="callout">
+        <div class="tag ui">Importante</div>
+        <p>Esto no significa que el 38.38% de los guatemaltecos mentiría en un programa social real. Es el comportamiento óptimo que resulta de las reglas específicas de esta economía artificial: una auditoría baja, una sanción moderada y un costo de manipular casi nulo. Cambia las reglas, y cambia la conducta.</p>
+      </div>
+    </section>
+
+    <section class="entry">
+      <div class="entry-head">
+        <span class="n">5</span>
+        <h2>Diseñamos incentivos</h2>
+      </div>
+      <p>Si la gente responde a las reglas, entonces las reglas se pueden diseñar para que decir la verdad sea lo racional. Para que a un hogar no le convenga ocultar Q500, el costo esperado de intentarlo debe superar el beneficio:</p>
+      <div class="eq" data-tex="500 \le 25 + pF(500)"></div>
+      <p>Despejando, la condición se reduce a un umbral simple sobre el producto de la probabilidad de auditoría (p) y la sanción (F):</p>
+      <div class="eq"><span class="eq-boxed" data-tex="pF \ge 0.95"></span></div>
+      <p>La simulación confirmó la frontera exacta. Con distintas sanciones, esto se traduce en distintos niveles mínimos de auditoría para que nadie tenga incentivo a mentir:</p>
+
+      <div class="stat-row">
+        <div class="stat-card"><div class="label ui">Sanción 2×</div><div class="value">47.5%</div><div class="sub ui">auditoría mínima</div></div>
+        <div class="stat-card"><div class="label ui">Sanción 3×</div><div class="value">31.67%</div></div>
+        <div class="stat-card"><div class="label ui">Sanción 5×</div><div class="value">19%</div></div>
+        <div class="stat-card"><div class="label ui">Sanción 10×</div><div class="value">9.5%</div></div>
+      </div>
+      <p>Entre más dura la sanción, menos auditoría hace falta para lograr el mismo efecto disuasivo.</p>
+    </section>
+
+    <section class="entry">
+      <div class="entry-head">
+        <span class="n">6</span>
+        <h2>Auditar tampoco es gratis</h2>
+      </div>
+      <p>Cada auditoría cuesta Q100 en el experimento. El presupuesto total ya no es solo transferencias: también hay que pagar la fiscalización.</p>
+      <div class="eq" data-tex="B = \text{transferencias} + \text{fiscalización}"></div>
+      <p>Con una auditoría del 9.5% y una sanción de 10 veces —el punto justo donde nadie tiene incentivo a mentir— el costo de fiscalizar y el dinero que queda para transferir se reparten así:</p>
+
+      <div class="stat-row">
+        <div class="stat-card"><div class="label ui">Costo de auditoría</div><div class="value">≈Q950K</div></div>
+        <div class="stat-card"><div class="label ui">Queda para transferencias</div><div class="value">≈Q19.05M</div></div>
+        <div class="stat-card good"><div class="label ui">Manipulación</div><div class="value">0%</div></div>
+        <div class="stat-card good"><div class="label ui">Pobreza final (media Monte Carlo)</div><div class="value">0.58%</div></div>
+      </div>
+
+      <figure>
+        <img src="assets/subsidios/04_informacion_incentivos.png" alt="Gráfica de barras: resultados bajo distintas fricciones de información e incentivos, pobreza final media en 50 simulaciones">
+        <figcaption>Resultados bajo distintas fricciones de información e incentivos: pobreza final media en 50 simulaciones, según el mecanismo. Kairos Optimization Lab #1.</figcaption>
+      </figure>
+
+      <p>Esta es, quizás, la imagen que resume el experimento entero: son cuatro pruebas separadas del mismo algoritmo base, no cuatro pasos de una misma corrida. Con información perfecta e ilimitada (C perfecto), el algoritmo casi elimina la pobreza. Sometido únicamente a error de medición (C imperfecto), se estanca cerca de 16%. Sometido únicamente a manipulación estratégica del reporte, sin corregirla (estratégico), se queda en 10.6%. Y un mecanismo diseñado para eliminar el incentivo a manipular —auditoría y sanción calibradas, con su costo incluido— recupera casi todo el terreno, con manipulación cero.</p>
+    </section>
+
+    <section class="entry">
+      <div class="entry-head">
+        <span class="n">7</span>
+        <h2>¿Fue suerte?</h2>
+      </div>
+      <p>Para saber si estos resultados eran un golpe de suerte de una sola población sintética, repetimos el experimento completo sobre 50 poblaciones independientes de 100,000 hogares cada una: 5 millones de hogares sintéticos generados a lo largo de 50 simulaciones.</p>
+
+      <figure>
+        <img src="assets/subsidios/03_monte_carlo_robustez.png" alt="Gráfica de puntos con barras de error: robustez de los resultados en 50 poblaciones sintéticas">
+        <figcaption>Media y rango mínimo–máximo de la pobreza final en 50 poblaciones sintéticas, por escenario. Kairos Optimization Lab #1.</figcaption>
+      </figure>
+
+      <p>Los promedios confirman el patrón: <span class="num">A 25.05%</span>, <span class="num">B 16.98%</span>, <span class="num">C (perfecto) 0.03%</span>, <span class="num">D 1.15%</span>, <span class="num">C imperfecto 16.25%</span>, <span class="num">estratégico 10.62%</span>, <span class="num">mecanismo compatible 0.58%</span>, con manipulación en el mecanismo compatible de <span class="num">0.00%</span> en promedio. No fue suerte.</p>
+    </section>
+
+    <section class="entry">
+      <div class="entry-head">
+        <span class="n">8</span>
+        <h2>¿Qué ocurre si cambia el presupuesto?</h2>
+      </div>
+      <p>Repetimos las cuatro estrategias con presupuestos de Q10, Q15, Q20, Q25 y Q30 millones.</p>
+
+      <figure>
+        <img src="assets/subsidios/02_sensibilidad_presupuesto.png" alt="Gráfica de líneas: sensibilidad de la pobreza final al tamaño del presupuesto de transferencias">
+        <figcaption>Sensibilidad de la pobreza final al presupuesto de transferencias, por estrategia. Kairos Optimization Lab #1.</figcaption>
+      </figure>
+
+      <div class="callout">
+        <div class="tag ui">Hallazgo</div>
+        <p>A partir de Q25 millones, C y D dejan de gastar más: ambas se estabilizan en Q20,232,300.65, exactamente la brecha agregada completa de esta población sintética. Una vez cerrada la brecha, seguir aumentando el presupuesto no reduce nada más dentro del objetivo modelado — la reducción marginal adicional es cero. A continúa gastando todo el presupuesto porque reparte entre los 100,000 hogares. B también termina saturándose: con Q30 millones solo ejecuta Q29.971 millones, equivalentes a Q1,000 para cada uno de los 29,971 hogares inicialmente pobres. C y D se saturan antes porque dejan de gastar una vez cerrada toda la brecha monetaria.</p>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section class="entry">
+      <div class="entry-head">
+        <span class="n">9</span>
+        <h2>Conclusión</h2>
+      </div>
+      <div class="conclusion">
+        <p class="big">Sí, dar dinero funciona.</p>
+        <p>En este experimento, entregado bien —con buena focalización, buena información y buenos incentivos— el mismo presupuesto que apenas movía la aguja en un reparto universal terminó por cerrar casi toda la brecha de pobreza. Pero la pregunta difícil nunca fue si dar dinero funciona. Es esta:</p>
+        <p class="big">¿A quién, cuánto, con qué información, bajo qué objetivo y frente a qué incentivos?</p>
+        <div class="eq" data-tex="\text{política contra la pobreza} = \text{dinero} + \text{información} + \text{objetivos} + \text{incentivos} + \text{restricciones}"></div>
+        <p>Ninguna de esas piezas sobra. Y ninguna, por sí sola, sustituye a las demás.</p>
+      </div>
+    </section>
+
+  </article>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="ui" style="font-weight:600; color:var(--ink);">Kairos Laboratorio</div>
+      <div class="ui">Optimization Lab #1 · Experimento sintético con fines educativos.</div>
+      <a class="switch-link" href="por-que-el-dinero-no-basta-tecnico.html">Leer la versión técnica completa →</a>
+    </div>
+    <div class="ui">
+      Una futura investigación de Kairos aplicará este marco a datos reales de Guatemala.
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.eq[data-tex]').forEach(function(el){
+    katex.render(el.getAttribute('data-tex'), el, { displayMode: true, throwOnError: false });
+  });
+  document.querySelectorAll('.eq-boxed[data-tex]').forEach(function(el){
+    katex.render(el.getAttribute('data-tex'), el, { displayMode: false, throwOnError: false });
+  });
+</script>
+
+</body>
+</html>

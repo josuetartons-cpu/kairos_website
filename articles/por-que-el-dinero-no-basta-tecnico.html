@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kairos Laboratorio — Nota técnica: focalización, información e incentivos en transferencias monetarias</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<style>
+  :root{
+    --paper:#F3F1E8;
+    --panel:#FBFAF5;
+    --ink:#1A2420;
+    --ink-soft:#4B554F;
+    --line:#D8D3C1;
+    --teal:#1F6F5C;
+    --teal-soft:#E4EFEA;
+    --rust:#B5502E;
+    --rust-soft:#F6E7E0;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:"IBM Plex Sans", -apple-system, sans-serif;
+    font-size:16.5px; line-height:1.62;
+  }
+  .serif{font-family:"Source Serif 4", Georgia, serif;}
+  .num{font-family:"IBM Plex Mono", monospace;}
+  a{color:var(--teal);}
+  h1,h2,h3,h4{font-family:"Source Serif 4", Georgia, serif; font-weight:600; line-height:1.25; margin:0 0 0.7rem;}
+
+  header.masthead{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:1rem 1.5rem; border-bottom:1px solid var(--line);
+    font-size:0.92rem; position:sticky; top:0; z-index:20;
+    background:rgba(243,241,232,0.94); backdrop-filter:blur(6px);
+  }
+  header.masthead a{ text-decoration:none; color:var(--ink); }
+  header.masthead .brand{ font-weight:600; }
+  header.masthead .brand span{ color:var(--teal); }
+  header.masthead nav a{ color:var(--ink-soft); margin-left:1.4rem; border-bottom:1px solid transparent; }
+  header.masthead nav a:hover{ color:var(--teal); border-bottom-color:var(--teal); }
+
+  .layout{
+    max-width:1180px; margin:0 auto; padding:0 1.5rem 6rem;
+    display:grid; grid-template-columns:230px minmax(0,1fr); gap:3rem;
+  }
+
+  aside.toc{ position:sticky; top:4.2rem; align-self:start; padding-top:2.6rem; }
+  aside.toc ol{ list-style:none; margin:0; padding:0; counter-reset:toc; border-left:1px solid var(--line); }
+  aside.toc li{ counter-increment:toc; margin:0; }
+  aside.toc a{
+    display:block; padding:0.42rem 0 0.42rem 0.9rem; margin-left:-1px;
+    border-left:2px solid transparent; color:var(--ink-soft); text-decoration:none; font-size:0.86rem;
+  }
+  aside.toc a:hover{ color:var(--teal); border-left-color:var(--teal); }
+  aside.toc a::before{ content: counter(toc) "  "; font-family:"IBM Plex Mono", monospace; color:var(--ink-soft); font-size:0.78rem; }
+
+  main{ min-width:0; padding-top:2.6rem; }
+
+  .hero .kicker{ font-size:0.92rem; color:var(--ink-soft); margin-bottom:0.9rem; }
+  .hero h1.serif{ font-size:2.1rem; letter-spacing:-0.01em; max-width:42rem; }
+  .hero .subtitle{ font-size:1.05rem; color:var(--ink-soft); margin-top:0.8rem; max-width:42rem; }
+
+  .banner{
+    background:var(--rust-soft); border:1px solid #E3C4B2; border-radius:3px;
+    padding:1.3rem 1.5rem; margin:1.8rem 0 2.6rem; max-width:44rem;
+  }
+  .banner h3{ font-size:0.98rem; color:var(--rust); margin-bottom:0.4rem; }
+  .banner p{ margin:0; font-size:0.96rem; }
+
+  section.chapter{ margin:3.4rem 0; scroll-margin-top:4.4rem; padding-top:0.4rem; border-top:1px solid var(--line); }
+  section.chapter:first-of-type{ border-top:none; }
+  section.chapter h2{ font-size:1.5rem; margin-bottom:1rem; }
+  section.chapter h4{ font-size:1.02rem; margin-top:1.6rem; }
+  section.chapter p{ max-width:44rem; margin:0 0 1rem; }
+  section.chapter > .full{ max-width:100%; }
+
+  table{ border-collapse:collapse; width:100%; margin:1.2rem 0 1.8rem; font-size:0.9rem; background:var(--panel); }
+  caption{ text-align:left; font-size:0.82rem; color:var(--ink-soft); margin-bottom:0.4rem; caption-side:top; }
+  th,td{ border:1px solid var(--line); padding:0.5rem 0.7rem; text-align:right; }
+  th{ background:#EFEBDD; font-weight:600; text-align:right; }
+  td:first-child, th:first-child{ text-align:left; }
+  tbody tr:hover{ background:#F1EFE3; }
+  .tw{ overflow-x:auto; }
+
+  .eq{ margin:1.3rem 0; padding:0.4rem 0; overflow-x:auto; max-width:100%; }
+  .eq-boxed{ display:inline-block; padding:0.45rem 1rem; border:1.5px solid var(--ink); border-radius:3px; margin:0.5rem 0; }
+
+  .param-grid{
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:0.7rem; margin:1.4rem 0 2rem;
+  }
+  .param-card{ background:var(--panel); border:1px solid var(--line); border-radius:3px; padding:0.8rem 1rem; }
+  .param-card .k{ font-size:0.78rem; color:var(--ink-soft); }
+  .param-card .v{ font-family:"IBM Plex Mono", monospace; font-size:1.05rem; margin-top:0.15rem; }
+
+  .callout{
+    background:var(--teal-soft); border-left:3px solid var(--teal);
+    padding:1rem 1.3rem; margin:1.6rem 0; max-width:44rem; border-radius:0 3px 3px 0;
+  }
+  .callout .tag{ font-size:0.76rem; color:var(--teal); font-weight:600; margin-bottom:0.3rem; }
+  .callout p{ margin:0; max-width:none; }
+
+  figure{ margin:2rem 0; max-width:52rem; }
+  figure img{ width:100%; height:auto; border:1px solid var(--line); border-radius:3px; background:#fff; }
+  figcaption{ font-size:0.82rem; color:var(--ink-soft); margin-top:0.5rem; }
+
+  ul.limits{ max-width:44rem; padding-left:1.2rem; }
+  ul.limits li{ margin-bottom:0.5rem; }
+
+  footer{
+    border-top:1px solid var(--line); padding:2.2rem 1.5rem;
+    font-size:0.86rem; color:var(--ink-soft);
+  }
+  footer .footer-inner{ max-width:1180px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; gap:1rem; }
+  footer a{ color:var(--ink-soft); }
+  .switch-link{ display:inline-block; margin-top:0.4rem; font-size:0.9rem; color:var(--teal); text-decoration:none; border-bottom:1px solid var(--teal); }
+
+  details.toc-mobile{ display:none; }
+
+  @media (max-width:900px){
+    .layout{ grid-template-columns:1fr; }
+    aside.toc{ display:none; }
+    details.toc-mobile{
+      display:block; position:static; margin:1.6rem 0 0; background:var(--panel);
+      border:1px solid var(--line); border-radius:3px; padding:0.7rem 1rem;
+    }
+    details.toc-mobile summary{ font-weight:600; cursor:pointer; font-size:0.92rem; }
+    details.toc-mobile ol{ list-style:none; counter-reset:toc2; padding-left:0; margin:0.7rem 0 0; }
+    details.toc-mobile li{ counter-increment:toc2; padding:0.3rem 0; font-size:0.88rem; }
+    details.toc-mobile a{ color:var(--ink-soft); text-decoration:none; }
+    details.toc-mobile a::before{ content: counter(toc2) ". "; font-family:"IBM Plex Mono", monospace; }
+    main{ padding-top:0; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <a class="brand" href="../index.html">Kairos <span>Laboratorio</span></a>
+  <nav>
+    <a href="por-que-el-dinero-no-basta.html">← Versión sencilla</a>
+  </nav>
+</header>
+
+<div class="layout">
+
+  <aside class="toc">
+    <ol>
+      <li><a href="#parametros">Parámetros del experimento</a></li>
+      <li><a href="#medicion">Medición de la pobreza</a></li>
+      <li><a href="#resultados-base">Resultados base</a></li>
+      <li><a href="#informacion">Información imperfecta</a></li>
+      <li><a href="#estrategico">Modelo estratégico</a></li>
+      <li><a href="#compatibilidad">Compatibilidad de incentivos</a></li>
+      <li><a href="#presupuesto-fiscalizacion">Costo de fiscalización</a></li>
+      <li><a href="#monte-carlo">Monte Carlo</a></li>
+      <li><a href="#sensibilidad">Sensibilidad presupuestaria</a></li>
+      <li><a href="#limitaciones">Limitaciones</a></li>
+      <li><a href="#proximo-paso">Próximo paso</a></li>
+    </ol>
+  </aside>
+
+  <main>
+
+    <div class="hero">
+      <p class="kicker">Kairos Laboratorio · Optimization Lab #1 — nota técnica</p>
+      <h1 class="serif">¿Por qué darle dinero a los pobres no soluciona el problema?</h1>
+      <p class="subtitle">Metodología, ecuaciones, algoritmos, resultados, sensibilidad, Monte Carlo, teoría de juegos, supuestos y límites del experimento. Documento de acompañamiento a la versión divulgativa.</p>
+    </div>
+
+    <div class="banner">
+      <h3>Experimento sintético, no una estimación de Guatemala</h3>
+      <p>Toda cifra en este documento proviene de una población de 100,000 hogares generados por el modelo, no de una encuesta ni de un registro administrativo real. La línea de Q2,000, el presupuesto de Q20 millones y los parámetros de comportamiento son elecciones de diseño experimental. Ningún resultado debe extrapolarse causalmente a la pobreza real de Guatemala; la sección de <a href="#limitaciones">limitaciones</a> detalla por qué.</p>
+    </div>
+
+    <details class="toc-mobile">
+      <summary>Contenido de esta nota</summary>
+      <ol>
+        <li><a href="#parametros">Parámetros del experimento</a></li>
+        <li><a href="#medicion">Medición de la pobreza</a></li>
+        <li><a href="#resultados-base">Resultados base</a></li>
+        <li><a href="#informacion">Información imperfecta</a></li>
+        <li><a href="#estrategico">Modelo estratégico</a></li>
+        <li><a href="#compatibilidad">Compatibilidad de incentivos</a></li>
+        <li><a href="#presupuesto-fiscalizacion">Costo de fiscalización</a></li>
+        <li><a href="#monte-carlo">Monte Carlo</a></li>
+        <li><a href="#sensibilidad">Sensibilidad presupuestaria</a></li>
+        <li><a href="#limitaciones">Limitaciones</a></li>
+        <li><a href="#proximo-paso">Próximo paso</a></li>
+      </ol>
+    </details>
+
+    <section class="chapter" id="parametros">
+      <h2>1. Parámetros del experimento</h2>
+      <p>Todos los resultados de este documento se derivan de la siguiente configuración base. Las secciones de sensibilidad y Monte Carlo indican explícitamente cuándo un parámetro se mueve respecto a esta tabla.</p>
+      <div class="param-grid">
+        <div class="param-card"><div class="k">Hogares (N)</div><div class="v">100,000</div></div>
+        <div class="param-card"><div class="k">Semilla base</div><div class="v">42</div></div>
+        <div class="param-card"><div class="k">Línea experimental (z)</div><div class="v">Q2,000</div></div>
+        <div class="param-card"><div class="k">Presupuesto base</div><div class="v">Q20,000,000</div></div>
+        <div class="param-card"><div class="k">Transferencia B</div><div class="v">Q1,000</div></div>
+        <div class="param-card"><div class="k">Error principal (σ)</div><div class="v">Q500</div></div>
+        <div class="param-card"><div class="k">Auditoría estratégica base</div><div class="v">10%</div></div>
+        <div class="param-card"><div class="k">Sanción base</div><div class="v">2×</div></div>
+        <div class="param-card"><div class="k">Costo fijo de manipular</div><div class="v">Q25</div></div>
+        <div class="param-card"><div class="k">Costo de auditoría</div><div class="v">Q100 / hogar auditado</div></div>
+      </div>
+    </section>
+
+    <section class="chapter" id="medicion">
+      <h2>2. Medición de la pobreza</h2>
+      <p>La brecha individual de un hogar <span class="num">i</span> con ingreso <span class="num">y_i</span>, frente a una línea <span class="num">z</span>, se define como:</p>
+      <div class="eq" data-tex="G_i = \max(0,\, z - y_i)"></div>
+      <p>Sobre esa definición construimos las tres medidas Foster–Greer–Thorbecke, estándar en la literatura de pobreza:</p>
+      <div class="eq" data-tex="FGT_\alpha = \frac{1}{N}\sum_{i=1}^{N} \left(\frac{G_i}{z}\right)^{\alpha} \cdot \mathbb{1}[y_i < z]"></div>
+      <p><strong>FGT0</strong> (α=0) es el headcount: la proporción de hogares pobres. <strong>FGT1</strong> (α=1) es la brecha promedio normalizada, sensible a cuánto le falta a cada hogar. <strong>FGT2</strong> (α=2) pondera al cuadrado la brecha relativa, y por tanto es sensible a la <em>desigualdad entre los pobres</em>: penaliza más fuerte a quienes están muy por debajo de la línea.</p>
+    </section>
+
+    <section class="chapter" id="resultados-base">
+      <h2>3. Resultados base: cuatro estrategias, un presupuesto</h2>
+      <p>Baseline (sin transferencia): FGT0 = 0.2997, FGT1 = 0.1012, FGT2 = 0.0476 — equivalente a 29,971 hogares pobres y una brecha agregada de Q20,232,300.65.</p>
+
+      <div class="tw">
+      <table>
+        <caption>Medidas FGT y resultados operativos por estrategia, presupuesto Q20,000,000. Fuente: resultados_base.csv</caption>
+        <thead>
+          <tr><th>Estrategia</th><th>FGT0</th><th>FGT1</th><th>FGT2</th><th>Hogares que salen</th><th>Brecha restante (Q)</th><th>Gasto (Q)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>A — Universal</td><td class="num">0.2531</td><td class="num">0.0735</td><td class="num">0.0302</td><td class="num">4,662</td><td class="num">14,700,179.40</td><td class="num">20,000,000.00</td></tr>
+          <tr><td>B — Q1,000 a los más pobres</td><td class="num">0.1735</td><td class="num">0.0202</td><td class="num">0.0034</td><td class="num">12,623</td><td class="num">4,030,672.00</td><td class="num">20,000,000.00</td></tr>
+          <tr><td>C — brecha mínima primero</td><td class="num">0.0013</td><td class="num">0.0012</td><td class="num">0.0010</td><td class="num">29,837</td><td class="num">233,786.52</td><td class="num">19,998,514.12</td></tr>
+          <tr><td>D — pobreza profunda primero</td><td class="num">0.0326</td><td class="num">0.0012</td><td class="num">0.0001</td><td class="num">26,707</td><td class="num">232,300.65</td><td class="num">20,000,000.00</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <figure>
+        <img src="assets/subsidios/01_pobreza_final_gobiernos.png" alt="Pobreza final por estrategia de gobierno, presupuesto Q20 millones">
+        <figcaption>FGT0 (headcount) final por estrategia. Kairos Optimization Lab #1.</figcaption>
+      </figure>
+
+      <h4>La propiedad degenerada de minimizar la brecha agregada lineal</h4>
+      <p>Mientras un hogar siga por debajo de la línea, cada quetzal que recibe reduce la brecha agregada en aproximadamente un quetzal, sin importar si ese hogar estaba a Q10 o a Q1,900 de cruzarla. Esa linealidad explica por qué C y D pueden llegar a un FGT1 casi idéntico (0.0012 en ambos) pese a construirse con criterios de priorización opuestos: C ordena por brecha mínima (maximiza el número de hogares que cruzan la línea con el menor gasto posible, optimizando FGT0), mientras D ordena por brecha máxima (un criterio distributivo que prioriza a los más pobres entre los pobres). El resultado es que D obtiene un FGT2 considerablemente menor (0.0001 contra 0.0010): al concentrarse en las brechas más profundas, D reduce mejor la desigualdad remanente entre quienes siguen pobres, aunque deje a más hogares por debajo de la línea que C.</p>
+
+      <div class="callout">
+        <div class="tag">Implicación de diseño</div>
+        <p>No existe una "estrategia óptima" única. C es preferible si el objetivo de política es el headcount (cuántos hogares cruzan la línea). En este experimento, D produjo un FGT2 considerablemente menor que C y representa una estrategia distributiva orientada a priorizar las brechas más profundas, aunque no demostramos que sea la solución óptima global para minimizar esa medida. Elegir entre ambas es una decisión de objetivo, no un problema técnico que la optimización resuelva por sí sola.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="informacion">
+      <h2>4. Información imperfecta</h2>
+      <p>Sustituimos el ingreso observado por una versión con error de medición gaussiano:</p>
+      <div class="eq" data-tex="\hat{y}_i = y_i + \epsilon_i, \qquad \epsilon_i \sim \mathcal{N}(0,\sigma^2)"></div>
+      <p>El gobierno aplica el algoritmo de brecha mínima (C) sobre <span class="num">ŷ_i</span> en vez de <span class="num">y_i</span>. Esto genera errores de inclusión (falsos positivos: hogares no pobres que reciben transferencia) y de exclusión (falsos negativos: hogares pobres que quedan fuera), y una fracción del presupuesto que se "filtra" (<em>leakage</em>) hacia hogares que no eran el objetivo.</p>
+
+      <div class="tw">
+      <table>
+        <caption>Sensibilidad del algoritmo C a la magnitud del error de medición σ</caption>
+        <thead><tr><th>σ (Q)</th><th>Pobreza final (FGT0)</th><th>Leakage</th></tr></thead>
+        <tbody>
+          <tr><td>0</td><td class="num">0.13%</td><td class="num">0%</td></tr>
+          <tr><td>100</td><td class="num">15.21%</td><td class="num">3.02%</td></tr>
+          <tr><td>250</td><td class="num">15.51%</td><td class="num">7.58%</td></tr>
+          <tr><td>500</td><td class="num">16.48%</td><td class="num">15.58%</td></tr>
+          <tr><td>750</td><td class="num">17.78%</td><td class="num">23.16%</td></tr>
+          <tr><td>1000</td><td class="num">19.13%</td><td class="num">30.42%</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p>Al σ de referencia (Q500): 4,402 falsos positivos, 4,694 falsos negativos, leakage de 15.58%, pobreza final de 16.48% y una brecha restante aproximada de Q6.39 millones. El salto entre σ=0 y σ=100 es el más brusco de toda la tabla: basta un error de medición modesto para que un algoritmo casi perfecto se degrade a un nivel de pobreza similar al de la estrategia B con información perfecta. La curva se aplana después: duplicar el error de σ500 a σ1000 empeora la pobreza final en poco más de 2.6 puntos porcentuales, muy por debajo del salto inicial.</p>
+
+      <div class="callout">
+        <div class="tag">Nota metodológica</div>
+        <p>Los escenarios de información imperfecta (esta sección) y comportamiento estratégico (sección siguiente) se evalúan por separado, como <em>stress tests</em> independientes del mecanismo base con información perfecta. No representan perturbaciones acumulativas del mismo modelo: el modelo estratégico no parte del ingreso con error de medición ε_i, sino del ingreso reportado bajo la regla de auditoría y sanción publicada.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="estrategico">
+      <h2>5. Modelo estratégico</h2>
+      <p>Cada hogar elige cuánto ingreso ocultar en su reporte para maximizar su utilidad esperada:</p>
+      <div class="eq" data-tex="U_i = Y_i + T_i(\hat{Y}_i) - C_i(\hat{Y}_i, Y_i)"></div>
+      <p>donde la acción disponible es un ocultamiento discreto:</p>
+      <div class="eq" data-tex="a_i \in \{0,\ 250,\ 500\}"></div>
+      <p>El costo esperado de manipular combina el costo fijo de intentarlo con el valor esperado de la sanción si la auditoría detecta la manipulación: con probabilidad de auditoría <span class="num">p</span> y sanción <span class="num">F</span> veces lo ocultado, el costo esperado de ocultar una cantidad <span class="num">a</span> es <span class="num">25 + pFa</span> cuando <span class="num">a &gt; 0</span>.</p>
+
+      <p>Con los parámetros base (p = 10%, F = 2), la distribución de decisiones fue:</p>
+      <div class="tw">
+      <table>
+        <caption>Decisión de reporte de los 100,000 hogares, p=10%, F=2×</caption>
+        <thead><tr><th>Decisión</th><th>Hogares</th></tr></thead>
+        <tbody>
+          <tr><td>Honestos</td><td class="num">61,623</td></tr>
+          <tr><td>Ocultan Q250</td><td class="num">125</td></tr>
+          <tr><td>Ocultan Q500</td><td class="num">38,252</td></tr>
+          <tr><td>Total que manipula</td><td class="num">38,377 (38.38%)</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p>Bajo esta conducta estratégica, el algoritmo de asignación (aplicado sobre los ingresos reportados, no los reales) produjo: pobreza final de 10.85%, 19,116 hogares que cruzan la línea, una brecha restante de Q12,441,168.04, y un gasto de aproximadamente Q19,998,798.87 — prácticamente el presupuesto completo.</p>
+
+      <p>Descomponer ese gasto muestra dónde se pierde eficacia: de los cerca de Q20 millones desembolsados, solo Q7.791 millones reducen efectivamente la brecha inicial. Otros Q9.558 millones son sobretransferencia a hogares que ya eran pobres antes de manipular su reporte (reciben más de lo que su brecha real requería), y Q2.650 millones llegan a hogares que no eran pobres en absoluto antes de manipular su ingreso reportado.</p>
+
+      <div class="callout">
+        <div class="tag">Lectura del resultado</div>
+        <p>El presupuesto se gasta casi en su totalidad, pero una fracción sustancial (≈61% de lo desembolsado) no cierra brecha real: se destina a sobretransferencia o a hogares no objetivo. La conducta estratégica no reduce el gasto ejecutado; reduce su efectividad.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="compatibilidad">
+      <h2>6. Compatibilidad de incentivos</h2>
+      <p>Para que un hogar no tenga incentivo a ocultar Q500, el costo esperado de hacerlo debe ser al menos igual al beneficio:</p>
+      <div class="eq" data-tex="500 \le 25 + pF(500)"></div>
+      <p>Resolviendo para el producto <span class="num">pF</span>:</p>
+      <div class="eq"><span class="eq-boxed" data-tex="pF \ge \frac{500-25}{500} = 0.95"></span></div>
+      <p>Este umbral es una condición sobre el producto de la probabilidad de auditoría y la sanción, no sobre cada uno por separado: cualquier combinación que alcance <span class="num">pF = 0.95</span> es, en el margen, suficiente para volver la manipulación no rentable. La simulación validó la frontera exacta en los siguientes puntos:</p>
+
+      <div class="tw">
+      <table>
+        <caption>Auditoría mínima requerida para compatibilidad de incentivos, según la sanción</caption>
+        <thead><tr><th>Sanción (F)</th><th>Auditoría mínima (p)</th></tr></thead>
+        <tbody>
+          <tr><td>2×</td><td class="num">47.5%</td></tr>
+          <tr><td>3×</td><td class="num">31.67%</td></tr>
+          <tr><td>5×</td><td class="num">19%</td></tr>
+          <tr><td>10×</td><td class="num">9.5%</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p>Nótese que <span class="num">p × F ≈ 0.95</span> se mantiene aproximadamente constante en las cuatro filas, confirmando que la condición derivada algebraicamente es la que gobierna el punto de quiebre observado en la simulación.</p>
+    </section>
+
+    <section class="chapter" id="presupuesto-fiscalizacion">
+      <h2>7. Costo de fiscalización y restricción presupuestaria</h2>
+      <p>Auditar no es gratis: cada auditoría cuesta Q100 en el experimento. El presupuesto total del programa debe cubrir tanto transferencias como fiscalización:</p>
+      <div class="eq" data-tex="B = T + A"></div>
+      <p>donde <span class="num">T</span> es el monto transferido y <span class="num">A</span> el costo total de auditoría (proporción auditada × N × Q100). Esto introduce un trade-off explícito: cada punto porcentual adicional de auditoría implica auditar 1,000 hogares más, porque</p>
+      <div class="eq" data-tex="1\% \times 100{,}000 = 1{,}000"></div>
+      <div class="eq" data-tex="1{,}000 \times Q100 = Q100{,}000"></div>
+      <p>Esos Q100,000 adicionales por cada punto porcentual de auditoría ya no están disponibles para transferencias.</p>
+
+      <p>En el punto de compatibilidad de incentivos más eficiente en este experimento —auditoría de 9.5% con sanción de 10×—, el costo de fiscalización es 9,500 hogares auditados × Q100 = <strong>Q950,000</strong>, dejando aproximadamente <strong>Q19.05 millones</strong> para transferencias. Bajo este mecanismo, la manipulación cae a 0% y la pobreza final promedio (sobre 50 simulaciones) es de <strong>0.58%</strong>.</p>
+
+      <figure>
+        <img src="assets/subsidios/04_informacion_incentivos.png" alt="Resultados bajo distintas fricciones de información e incentivos: pobreza final media en 50 simulaciones por mecanismo">
+        <figcaption>Cómo cambian los resultados bajo diferentes fricciones de información e incentivos: pobreza final media (50 simulaciones) en cuatro pruebas separadas del algoritmo base — C con información perfecta, C con información imperfecta, comportamiento estratégico sin corrección, y mecanismo compatible con incentivos (auditoría 9.5%, sanción 10×). Kairos Optimization Lab #1.</figcaption>
+      </figure>
+
+      <p>El contraste entre las cuatro barras resume el argumento central del experimento, aunque no debe leerse como una secuencia: son cuatro pruebas independientes del mismo algoritmo base, cada una con una fricción distinta. La brecha entre el benchmark de información perfecta (0.03%) y el stress test de comportamiento estratégico no corregido (10.62% en promedio) se explica por el diseño de información e incentivos de cada prueba — el presupuesto y el algoritmo de focalización son idénticos en los cuatro casos, pero la fricción evaluada no se acumula de una barra a la siguiente.</p>
+    </section>
+
+    <section class="chapter" id="monte-carlo">
+      <h2>8. Monte Carlo: robustez sobre 50 poblaciones</h2>
+      <p>Repetimos el pipeline completo —generación de población, focalización, información imperfecta, conducta estratégica y mecanismo compatible— sobre 50 poblaciones sintéticas independientes de 100,000 hogares, para un total de 5,000,000 de hogares sintéticos generados a lo largo de las 50 simulaciones.</p>
+
+      <div class="tw">
+      <table>
+        <caption>Media, desviación estándar, mínimo y máximo de la pobreza final (FGT0) por escenario, n=50. Fuente: resumen_monte_carlo.csv</caption>
+        <thead><tr><th>Escenario</th><th>Media</th><th>Desv. estándar</th><th>Mínimo</th><th>Máximo</th></tr></thead>
+        <tbody>
+          <tr><td>A — Universal</td><td class="num">25.05%</td><td class="num">0.145 pp</td><td class="num">24.733%</td><td class="num">25.323%</td></tr>
+          <tr><td>B — Q1,000 más pobres</td><td class="num">16.98%</td><td class="num">0.205 pp</td><td class="num">16.618%</td><td class="num">17.355%</td></tr>
+          <tr><td>C — perfecto</td><td class="num">0.03%</td><td class="num">0.041 pp</td><td class="num">0.000%</td><td class="num">0.134%</td></tr>
+          <tr><td>D — pobreza profunda</td><td class="num">1.15%</td><td class="num">1.178 pp</td><td class="num">0.000%</td><td class="num">3.264%</td></tr>
+          <tr><td>C — imperfecto (σ=500)</td><td class="num">16.25%</td><td class="num">0.135 pp</td><td class="num">15.964%</td><td class="num">16.569%</td></tr>
+          <tr><td>Estratégico (sin corrección)</td><td class="num">10.62%</td><td class="num">0.123 pp</td><td class="num">10.356%</td><td class="num">10.855%</td></tr>
+          <tr><td>Compatible (mecanismo)</td><td class="num">0.58%</td><td class="num">0.083 pp</td><td class="num">0.427%</td><td class="num">0.728%</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <figure>
+        <img src="assets/subsidios/03_monte_carlo_robustez.png" alt="Media y rango mínimo-máximo de la pobreza final en 50 poblaciones sintéticas, por escenario">
+        <figcaption>Media y rango mínimo–máximo, 50 poblaciones sintéticas. Kairos Optimization Lab #1.</figcaption>
+      </figure>
+
+      <div class="callout">
+        <div class="tag">No ocultar la varianza</div>
+        <p>El escenario D es, con diferencia, el más variable: una desviación estándar de 1.178 puntos porcentuales, con un rango que va de 0% a 3.264% de pobreza final entre las 50 poblaciones. Esto es consistente con su diseño: al priorizar las brechas más profundas primero, D es más sensible a la forma específica de la cola inferior de la distribución de ingresos en cada población generada. C, en cambio, es notablemente estable (desviación estándar de apenas 0.041 puntos porcentuales), reflejando que ordenar por brecha mínima es un criterio robusto a la forma exacta de la distribución.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="sensibilidad">
+      <h2>9. Sensibilidad presupuestaria</h2>
+      <p>La estrategia C (brecha mínima primero) se ejecutó con presupuestos de Q10, 15, 20, 25 y 30 millones. Se reporta la tabla completa para las cuatro estrategias.</p>
+
+      <div class="tw">
+      <table>
+        <caption>Pobreza final, hogares que salen, brecha restante y gasto ejecutado, por presupuesto y estrategia. Fuente: sensibilidad_presupuesto.csv</caption>
+        <thead><tr><th>Presupuesto (Q)</th><th>Estrategia</th><th>Pobreza final</th><th>Hogares que salen</th><th>Brecha restante (Q)</th><th>Gasto (Q)</th></tr></thead>
+        <tbody>
+          <tr><td>10,000,000</td><td>A</td><td class="num">27.684%</td><td class="num">2,287</td><td class="num">17,350,406.98</td><td class="num">10,000,000.00</td></tr>
+          <tr><td>10,000,000</td><td>B</td><td class="num">27.348%</td><td class="num">2,623</td><td class="num">10,416,717.59</td><td class="num">10,000,000.00</td></tr>
+          <tr><td>10,000,000</td><td>C</td><td class="num">8.357%</td><td class="num">21,614</td><td class="num">10,233,012.21</td><td class="num">9,999,288.43</td></tr>
+          <tr><td>10,000,000</td><td>D</td><td class="num">21.859%</td><td class="num">8,112</td><td class="num">10,232,300.65</td><td class="num">10,000,000.00</td></tr>
+          <tr><td>15,000,000</td><td>A</td><td class="num">26.503%</td><td class="num">3,468</td><td class="num">15,994,684.75</td><td class="num">15,000,000.00</td></tr>
+          <tr><td>15,000,000</td><td>B</td><td class="num">22.348%</td><td class="num">7,623</td><td class="num">6,673,066.72</td><td class="num">15,000,000.00</td></tr>
+          <tr><td>15,000,000</td><td>C</td><td class="num">3.722%</td><td class="num">26,249</td><td class="num">5,233,240.88</td><td class="num">14,999,059.77</td></tr>
+          <tr><td>15,000,000</td><td>D</td><td class="num">15.682%</td><td class="num">14,289</td><td class="num">5,232,300.65</td><td class="num">15,000,000.00</td></tr>
+          <tr><td>20,000,000</td><td>A</td><td class="num">25.309%</td><td class="num">4,662</td><td class="num">14,700,179.40</td><td class="num">20,000,000.00</td></tr>
+          <tr><td>20,000,000</td><td>B</td><td class="num">17.348%</td><td class="num">12,623</td><td class="num">4,030,672.00</td><td class="num">20,000,000.00</td></tr>
+          <tr><td>20,000,000</td><td>C</td><td class="num">0.134%</td><td class="num">29,837</td><td class="num">233,786.52</td><td class="num">19,998,514.12</td></tr>
+          <tr><td>20,000,000</td><td>D</td><td class="num">3.264%</td><td class="num">26,707</td><td class="num">232,300.65</td><td class="num">20,000,000.00</td></tr>
+          <tr><td>25,000,000</td><td>A</td><td class="num">24.139%</td><td class="num">5,832</td><td class="num">13,464,024.75</td><td class="num">25,000,000.00</td></tr>
+          <tr><td>25,000,000</td><td>B</td><td class="num">12.348%</td><td class="num">17,623</td><td class="num">2,437,605.06</td><td class="num">25,000,000.00</td></tr>
+          <tr><td>25,000,000</td><td>C</td><td class="num">0.000%</td><td class="num">29,971</td><td class="num">0.00</td><td class="num">20,232,300.65</td></tr>
+          <tr><td>25,000,000</td><td>D</td><td class="num">0.000%</td><td class="num">29,971</td><td class="num">0.00</td><td class="num">20,232,300.65</td></tr>
+          <tr><td>30,000,000</td><td>A</td><td class="num">22.937%</td><td class="num">7,034</td><td class="num">12,287,349.61</td><td class="num">30,000,000.00</td></tr>
+          <tr><td>30,000,000</td><td>B</td><td class="num">7.377%</td><td class="num">22,594</td><td class="num">1,903,594.73</td><td class="num">29,971,000.00</td></tr>
+          <tr><td>30,000,000</td><td>C</td><td class="num">0.000%</td><td class="num">29,971</td><td class="num">0.00</td><td class="num">20,232,300.65</td></tr>
+          <tr><td>30,000,000</td><td>D</td><td class="num">0.000%</td><td class="num">29,971</td><td class="num">0.00</td><td class="num">20,232,300.65</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <figure>
+        <img src="assets/subsidios/02_sensibilidad_presupuesto.png" alt="Sensibilidad de la pobreza final al presupuesto de transferencias, por estrategia">
+        <figcaption>Pobreza final por presupuesto y estrategia, Q10M–Q30M. Kairos Optimization Lab #1.</figcaption>
+      </figure>
+
+      <h4>Saturación y rendimientos marginales</h4>
+      <p>C y D saturan entre Q20M y Q25M: en ambas, el gasto ejecutado a partir de Q25M se congela en Q20,232,300.65, exactamente la brecha agregada inicial de la población. Una vez que todo hogar pobre cruza la línea, ya no existe brecha que cerrar bajo el objetivo modelado, de modo que el gasto adicional disponible simplemente no se ejecuta:</p>
+      <div class="eq" data-tex="\frac{\partial\, (\text{reducción de brecha})}{\partial\, (\text{presupuesto adicional})} = 0 \quad \text{una vez cerrada la brecha agregada}"></div>
+      <p>B satura también, pero por una razón distinta: a Q30M, B ejecuta Q29,971,000.00 — exactamente Q1,000 por cada uno de los 29,971 hogares originalmente pobres — y no los Q30M completos, porque su regla ("Q1,000 a los más pobres") deja de tener a quién más transferir una vez que cubrió a todos los hogares pobres, aunque sobre presupuesto. Aun así, B nunca llega a 0% de pobreza en este rango: entregar un monto fijo de Q1,000 no alcanza para cerrar la brecha de los hogares cuya brecha original superaba esa cifra. A, por su diseño universal, nunca satura dentro de este rango de presupuestos: sigue gastando el 100% de cada incremento porque reparte entre los 100,000 hogares sin condicionar a su nivel de pobreza.</p>
+    </section>
+
+    <section class="chapter" id="limitaciones">
+      <h2>10. Limitaciones</h2>
+      <p>Esta sección es deliberadamente extensa. Ninguno de los resultados anteriores debe leerse fuera de este marco.</p>
+      <ul class="limits">
+        <li>La población y los ingresos son enteramente sintéticos, generados por el modelo; no provienen de ENCOVI, del INE ni de ningún registro administrativo.</li>
+        <li>Q2,000 no es una línea de pobreza oficial de Guatemala; es un parámetro experimental elegido por conveniencia del diseño.</li>
+        <li>Q20 millones no representa, en ninguna escala, el presupuesto que costaría eliminar la pobreza en Guatemala.</li>
+        <li>Los parámetros conductuales (probabilidad de auditoría, sanción, costo fijo de manipular, distribución de las acciones de ocultamiento) no fueron estimados empíricamente; son supuestos de diseño para ilustrar el mecanismo.</li>
+        <li>El modelo no incorpora oferta laboral: los ingresos no responden a la transferencia recibida.</li>
+        <li>El modelo no incorpora inflación ni efectos de equilibrio general sobre precios.</li>
+        <li>El modelo no incorpora informalidad de manera estructural.</li>
+        <li>El modelo no incorpora dinámica intertemporal: cada simulación es una fotografía estática, no una trayectoria de varios períodos.</li>
+        <li>El modelo no incorpora composición del hogar ni economías de escala dentro del hogar.</li>
+        <li>Las sanciones se asumen creíbles y perfectamente ejecutables; no se modela capacidad institucional limitada para hacerlas cumplir.</li>
+        <li>El costo administrativo de Q100 por auditoría es un valor experimental, no un costo real de fiscalización.</li>
+        <li>El modelo estratégico representa la mejor respuesta individual de cada hogar frente a una regla publicada — no es un equilibrio de Nash completo entre los 100,000 hogares, que podría incorporar interacciones estratégicas entre ellos.</li>
+      </ul>
+      <p>Ningún resultado de este documento debe extrapolarse causalmente a la pobreza real de Guatemala.</p>
+    </section>
+
+    <section class="chapter" id="proximo-paso">
+      <h2>11. Próximo paso</h2>
+      <p>Una futura investigación de Kairos aplicará este mismo marco —focalización, información imperfecta, conducta estratégica y compatibilidad de incentivos— a datos reales de Guatemala, utilizando fuentes oficiales y restricciones fiscales e institucionales reales. Esa estimación no se intenta en esta publicación.</p>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="serif" style="font-weight:600; color:var(--ink);">Kairos Laboratorio</div>
+      <div>Optimization Lab #1 · Nota técnica de acompañamiento.</div>
+      <a class="switch-link" href="por-que-el-dinero-no-basta.html">← Volver a la versión sencilla</a>
+    </div>
+    <div>Experimento sintético con fines educativos. No representa datos oficiales de Guatemala.</div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.eq[data-tex]').forEach(function(el){
+    katex.render(el.getAttribute('data-tex'), el, { displayMode: true, throwOnError: false });
+  });
+  document.querySelectorAll('.eq-boxed[data-tex]').forEach(function(el){
+    katex.render(el.getAttribute('data-tex'), el, { displayMode: false, throwOnError: false });
+  });
+</script>
+
+</body>
+</html>
