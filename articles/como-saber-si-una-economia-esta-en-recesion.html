@@ -172,9 +172,31 @@ p.body strong{color:var(--text); font-weight:600;}
 .conclusion-block p{font-size:15px; line-height:1.75; color:#C7CFDC; margin:0 0 10px;}
 .conclusion-block p:last-child{margin-bottom:0;}
 .conclusion-block .cb-strong{color:#FFFFFF; font-weight:600;}
+
+/* --- Integración Kairos --- */
+.article-nav{background:rgba(247,244,238,0.92); backdrop-filter:blur(6px); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:50;}
+.article-nav-inner{max-width:900px; margin:0 auto; padding:16px 26px; display:flex; justify-content:space-between; align-items:center; gap:14px;}
+.article-nav-brand{font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:14px; letter-spacing:0.04em; text-decoration:none; color:var(--text); flex-shrink:0;}
+.article-nav-brand span{color:var(--accent);}
+.article-nav-back{font-family:'IBM Plex Mono',monospace; font-size:12px; text-decoration:none; color:var(--text-dim); transition:color .15s; white-space:nowrap;}
+.article-nav-back:hover{color:var(--accent);}
+@media (max-width:480px){
+  .article-nav-inner{padding:14px 20px;}
+  .article-nav-back{font-size:11px;}
+}
+.article-category{display:inline-flex; align-items:center; gap:8px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); text-decoration:none; margin-bottom:16px;}
+.article-category:hover{text-decoration:underline;}
+.article-back{display:inline-block; margin-top:34px; font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-dim); text-decoration:none;}
+.article-back:hover{color:var(--accent);}
 </style>
 </head>
 <body>
+<nav class="article-nav">
+  <div class="article-nav-inner">
+    <a href="../index.html" class="article-nav-brand">KAIRO<span>S</span></a>
+    <a href="../index.html" class="article-nav-back">← Volver a Kairos</a>
+  </div>
+</nav>
 <div class="wrap">
 
   <div class="hook-block">
@@ -185,6 +207,7 @@ p.body strong{color:var(--text); font-weight:600;}
   </div>
   <p class="hook-question">¿Quién tiene razón — tu bolsillo, o los indicadores económicos?</p>
 
+  <a href="../index.html#economia" class="article-category">Economía · Observar</a>
   <div class="eyebrow">Ciclos Económicos · Señales Clásicas (EE.UU. como referencia global)</div>
   <h1>Cómo saber si una economía está <span>entrando en recesión</span></h1>
   <p class="lede">
@@ -351,16 +374,16 @@ p.body strong{color:var(--text); font-weight:600;}
   <div class="sources">
     <h3>Fuentes principales</h3>
     <ul>
-      <li><a href="https://www.nber.org/research/business-cycle-dating" target="_blank">NBER — Business Cycle Dating</a></li>
-      <li><a href="https://www.congress.gov/crs-product/IF12774" target="_blank">Congress.gov CRS — Defining Recession</a></li>
-      <li><a href="https://www.bea.gov/news/2026/gdp-advance-estimate-2nd-quarter-2026" target="_blank">BEA — GDP Advance Estimate, 2T 2026</a></li>
-      <li><a href="https://www.conference-board.org/topics/us-leading-indicators/" target="_blank">The Conference Board — US Leading Indicators</a></li>
-      <li><a href="https://fred.stlouisfed.org/series/SAHMREALTIME" target="_blank">FRED — Sahm Rule Real-Time Indicator</a></li>
-      <li><a href="https://www.prnewswire.com/news-releases/manufacturing-pmi-at-53-3-june-2026-ism-manufacturing-pmi-report-302814991.html" target="_blank">ISM — Manufacturing PMI Report, junio 2026</a></li>
-      <li><a href="https://libertystreeteconomics.newyorkfed.org/2026/03/the-new-york-fed-dsge-model-forecast-march-2026/" target="_blank">NY Fed — DSGE Model Forecast</a></li>
-      <li><a href="https://www.newyorkfed.org/research/capital_markets/ycfaq" target="_blank">NY Fed — Yield Curve as Leading Indicator</a></li>
-      <li><a href="https://protectborrowers.org/american-families-hit-record-levels-of-financial-distress-as-millions-fall-behind/" target="_blank">Protect Borrowers — datos de la Fed de Nueva York sobre deuda de hogares</a></li>
-      <li><a href="https://www.cnbc.com/2026/05/12/new-york-fed-credit-card-debt-stands-at-1point25-trillion.html" target="_blank">CNBC — deuda de tarjetas y precios de gasolina (datos NY Fed / AAA)</a></li>
+      <li><a href="https://www.nber.org/research/business-cycle-dating" target="_blank" rel="noopener noreferrer">NBER — Business Cycle Dating</a></li>
+      <li><a href="https://www.congress.gov/crs-product/IF12774" target="_blank" rel="noopener noreferrer">Congress.gov CRS — Defining Recession</a></li>
+      <li><a href="https://www.bea.gov/news/2026/gdp-advance-estimate-2nd-quarter-2026" target="_blank" rel="noopener noreferrer">BEA — GDP Advance Estimate, 2T 2026</a></li>
+      <li><a href="https://www.conference-board.org/topics/us-leading-indicators/" target="_blank" rel="noopener noreferrer">The Conference Board — US Leading Indicators</a></li>
+      <li><a href="https://fred.stlouisfed.org/series/SAHMREALTIME" target="_blank" rel="noopener noreferrer">FRED — Sahm Rule Real-Time Indicator</a></li>
+      <li><a href="https://www.prnewswire.com/news-releases/manufacturing-pmi-at-53-3-june-2026-ism-manufacturing-pmi-report-302814991.html" target="_blank" rel="noopener noreferrer">ISM — Manufacturing PMI Report, junio 2026</a></li>
+      <li><a href="https://libertystreeteconomics.newyorkfed.org/2026/03/the-new-york-fed-dsge-model-forecast-march-2026/" target="_blank" rel="noopener noreferrer">NY Fed — DSGE Model Forecast</a></li>
+      <li><a href="https://www.newyorkfed.org/research/capital_markets/ycfaq" target="_blank" rel="noopener noreferrer">NY Fed — Yield Curve as Leading Indicator</a></li>
+      <li><a href="https://protectborrowers.org/american-families-hit-record-levels-of-financial-distress-as-millions-fall-behind/" target="_blank" rel="noopener noreferrer">Protect Borrowers — datos de la Fed de Nueva York sobre deuda de hogares</a></li>
+      <li><a href="https://www.cnbc.com/2026/05/12/new-york-fed-credit-card-debt-stands-at-1point25-trillion.html" target="_blank" rel="noopener noreferrer">CNBC — deuda de tarjetas y precios de gasolina (datos NY Fed / AAA)</a></li>
     </ul>
   </div>
 
@@ -369,8 +392,10 @@ p.body strong{color:var(--text); font-weight:600;}
       Todas las lecturas de este tablero cambian mensualmente. Este artículo es un corte de julio de 2026 — trátalo
       como una fotografía, no como un tracker en vivo, y revisa las fuentes originales para la cifra más reciente.
     </p>
-    <div class="tagf">Plantilla actualizable mes a mes con cada nuevo dato →</div>
+    <div class="tagf">Plantilla actualizable mes a mes con cada nuevo dato</div>
   </div>
+
+  <a href="../index.html#economia" class="article-back">← Volver a Economía</a>
 
 </div>
 

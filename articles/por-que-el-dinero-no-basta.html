@@ -59,6 +59,9 @@
     font-family:"IBM Plex Sans", sans-serif; font-size:0.95rem; color:var(--ink-soft);
     margin-bottom:1.1rem;
   }
+  .kicker-link{ color:var(--teal); text-decoration:none; font-weight:600; }
+  .kicker-link:hover{ text-decoration:underline; }
+  .kicker-series{ color:var(--ink-soft); }
   .hero h1{ font-size:2.5rem; letter-spacing:-0.01em; }
   .hero .subtitle{
     font-size:1.2rem; color:var(--ink-soft); margin-top:1rem; font-style:italic;
@@ -157,7 +160,7 @@
 <body>
 
 <header class="masthead">
-  <a class="brand" href="../index.html">Kairos <span>Laboratorio</span></a>
+  <a class="brand" href="../index.html">Kairos</a>
   <nav>
     <a href="por-que-el-dinero-no-basta-tecnico.html">Versión técnica →</a>
   </nav>
@@ -166,7 +169,7 @@
 <main>
 
   <div class="hero">
-    <p class="kicker ui">Publicación de Kairos Laboratorio, primer experimento de la serie Optimization Lab.</p>
+    <p class="kicker ui"><a href="../index.html#laboratorio" class="kicker-link">Laboratorio · Experimentar</a> · <span class="kicker-series">Optimization Lab #1</span></p>
     <h1>¿Por qué darle dinero a los pobres no soluciona el problema?</h1>
     <p class="subtitle">Un experimento con 100,000 hogares sobre dinero, focalización, información e incentivos.</p>
   </div>
@@ -368,7 +371,7 @@
 <footer>
   <div class="footer-inner">
     <div>
-      <div class="ui" style="font-weight:600; color:var(--ink);">Kairos Laboratorio</div>
+      <div class="ui"><a href="../index.html#laboratorio" style="color:var(--ink); text-decoration:none; font-weight:600;">← Volver a Laboratorio</a></div>
       <div class="ui">Optimization Lab #1 · Experimento sintético con fines educativos.</div>
       <a class="switch-link" href="por-que-el-dinero-no-basta-tecnico.html">Leer la versión técnica completa →</a>
     </div>

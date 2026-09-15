@@ -114,6 +114,35 @@ section{scroll-margin-top:86px;}
 .pub-cta{color:var(--accent); font-weight:600;}
 .pubs-empty-note{font-size:12.5px; color:var(--text-dim); margin-top:20px; font-style:italic;}
 
+/* ---------- EXPLORAR KAIROS ---------- */
+.explorar{padding:70px 0; border-top:1px solid var(--line);}
+.explorar-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:46px 56px; margin-top:8px;}
+@media (max-width:760px){.explorar-grid{grid-template-columns:1fr; gap:38px;}}
+.explorar-area-head{display:flex; align-items:center; gap:16px; margin-bottom:14px;}
+.glifo-sm{width:28px; height:28px; margin-bottom:0; flex-shrink:0;}
+.explorar-area-head h3{font-size:18px; font-weight:600; margin:0 0 3px;}
+.explorar-area-head .pilar-accion{margin:0;}
+.explorar-desc{font-size:13.5px; color:var(--text-dim); line-height:1.6; margin:0 0 18px; max-width:48ch;}
+.explorar-list{list-style:none; margin:0; padding:0; border-top:1px solid var(--line);}
+.explorar-list li{border-bottom:1px solid var(--line);}
+.explorar-list a{display:block; padding:14px 2px; font-size:14.5px; font-weight:500; color:var(--text); text-decoration:none; line-height:1.45;}
+.explorar-list a:hover{color:var(--accent);}
+.explorar-empty{border-top:1px solid var(--line); padding:20px 2px 4px; font-size:13.5px; color:var(--text-dim); line-height:1.65;}
+.explorar-empty p{margin:0 0 14px;}
+.explorar-tags{display:flex; gap:10px; flex-wrap:wrap;}
+.explorar-tag{font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-dim); border:1px solid var(--line); padding:5px 10px; border-radius:12px;}
+
+/* ---------- CÓDIGO Y DATOS ---------- */
+.codigo{padding:70px 0; border-top:1px solid var(--line);}
+.codigo-head{max-width:64ch;}
+.codigo-head p{font-size:15px; color:var(--text-dim); line-height:1.7; margin:0 0 16px;}
+.codigo-sub{font-family:'Fraunces',serif; font-size:17px; font-weight:500; color:var(--text); font-style:italic;}
+.codigo-head .btn{margin-top:14px;}
+.codigo-cols{display:grid; grid-template-columns:repeat(3,1fr); gap:30px; margin-top:44px; padding-top:34px; border-top:1px solid var(--line);}
+@media (max-width:700px){.codigo-cols{grid-template-columns:1fr; gap:22px;}}
+.codigo-cols h4{font-size:15px; font-weight:600; margin:0 0 8px;}
+.codigo-cols p{font-size:12.5px; color:var(--text-dim); line-height:1.6; margin:0;}
+
 /* ---------- POR QUÉ KAIROS ---------- */
 .porque{padding:70px 0; border-top:1px solid var(--line);}
 .porque-head{max-width:56ch; margin-bottom:50px;}
@@ -170,6 +199,7 @@ footer{background:var(--navy); color:#C7CFDC; padding:56px 0 32px; margin-top:20
       <li><a href="#laboratorio">Laboratorio</a></li>
       <li><a href="#herramientas">Herramientas</a></li>
       <li><a href="#pensamiento">Pensamiento</a></li>
+      <li><a href="#codigo">Código</a></li>
       <li><a href="#sobre-kairos">Sobre Kairos</a></li>
     </ul>
   </div>
@@ -225,7 +255,7 @@ footer{background:var(--navy); color:#C7CFDC; padding:56px 0 32px; margin-top:20
       <p>Economía, laboratorio, herramientas y pensamiento no son categorías aisladas. Son cuatro movimientos de un mismo proceso: observar, experimentar, construir y reflexionar.</p>
     </div>
     <div class="pilares-grid">
-      <div class="pilar" id="economia">
+      <div class="pilar">
         <svg class="glifo" viewBox="0 0 60 60" aria-hidden="true">
           <line x1="30" y1="6" x2="30" y2="54"/>
           <line x1="14" y1="20" x2="46" y2="20"/>
@@ -236,7 +266,7 @@ footer{background:var(--navy); color:#C7CFDC; padding:56px 0 32px; margin-top:20
         <div class="pilar-accion">Observar</div>
         <p>Analizar cómo funcionan los sistemas económicos, las políticas, los mercados y los problemas reales utilizando datos, evidencia y contexto.</p>
       </div>
-      <div class="pilar" id="laboratorio">
+      <div class="pilar">
         <svg class="glifo" viewBox="0 0 60 60" aria-hidden="true">
           <line x1="30" y1="54" x2="30" y2="26"/>
           <line x1="30" y1="26" x2="14" y2="6"/>
@@ -246,7 +276,7 @@ footer{background:var(--navy); color:#C7CFDC; padding:56px 0 32px; margin-top:20
         <div class="pilar-accion">Experimentar</div>
         <p>Probar hipótesis, construir simulaciones, explorar escenarios y llevar ideas más allá de la intuición.</p>
       </div>
-      <div class="pilar" id="herramientas">
+      <div class="pilar">
         <svg class="glifo" viewBox="0 0 60 60" aria-hidden="true">
           <line x1="14" y1="6" x2="30" y2="26"/>
           <line x1="46" y1="6" x2="30" y2="26"/>
@@ -257,7 +287,7 @@ footer{background:var(--navy); color:#C7CFDC; padding:56px 0 32px; margin-top:20
         <div class="pilar-accion">Construir</div>
         <p>Transformar investigaciones y modelos en calculadoras, plantillas, sistemas y recursos utilizables para resolver problemas concretos.</p>
       </div>
-      <div class="pilar" id="pensamiento">
+      <div class="pilar">
         <svg class="glifo" viewBox="0 0 60 60" aria-hidden="true">
           <path d="M 38 10 A 22 22 0 1 1 22 10"/>
           <path d="M 22 10 C 26 14, 28 17, 26 21"/>
@@ -323,6 +353,128 @@ footer{background:var(--navy); color:#C7CFDC; padding:56px 0 32px; margin-top:20
   </div>
 </section>
 
+<section class="explorar" id="explorar-kairos">
+  <div class="wrap">
+    <div class="pilares-head">
+      <div class="eyebrow">Explorar Kairos</div>
+      <h2>Explorar Kairos</h2>
+      <p>Cada pregunta puede tomar una ruta distinta: observar un fenómeno, experimentar con una hipótesis, construir una herramienta o reflexionar sobre lo aprendido.</p>
+    </div>
+    <div class="explorar-grid">
+
+      <div class="explorar-area" id="economia">
+        <div class="explorar-area-head">
+          <svg class="glifo glifo-sm" viewBox="0 0 60 60" aria-hidden="true">
+            <line x1="30" y1="6" x2="30" y2="54"/>
+            <line x1="14" y1="20" x2="46" y2="20"/>
+            <line x1="10" y1="32" x2="50" y2="32"/>
+            <line x1="17" y1="44" x2="43" y2="44"/>
+          </svg>
+          <div>
+            <h3>Economía</h3>
+            <div class="pilar-accion">Observar</div>
+          </div>
+        </div>
+        <p class="explorar-desc">Investigaciones sobre economía, políticas públicas, mercados, desarrollo y problemas reales utilizando datos, evidencia y contexto.</p>
+        <ul class="explorar-list">
+          <li><a href="articles/como-saber-si-una-economia-esta-en-recesion.html">¿Cómo saber si una economía está entrando en recesión?</a></li>
+          <li><a href="articles/guatemala-crecimiento-emisiones.html">¿Es posible que Guatemala pueda crecer sin generar más emisiones?</a></li>
+          <li><a href="articles/pagar-por-conservar.html">¿Es suficiente pagar por conservar para salvar nuestros bosques?</a></li>
+        </ul>
+      </div>
+
+      <div class="explorar-area" id="laboratorio">
+        <div class="explorar-area-head">
+          <svg class="glifo glifo-sm" viewBox="0 0 60 60" aria-hidden="true">
+            <line x1="30" y1="54" x2="30" y2="26"/>
+            <line x1="30" y1="26" x2="14" y2="6"/>
+            <line x1="30" y1="26" x2="46" y2="6"/>
+          </svg>
+          <div>
+            <h3>Laboratorio</h3>
+            <div class="pilar-accion">Experimentar</div>
+          </div>
+        </div>
+        <p class="explorar-desc">Simulaciones, modelos, optimización y experimentos construidos para probar ideas más allá de la intuición.</p>
+        <ul class="explorar-list">
+          <li><a href="articles/apple-lab-incertidumbre-inversion.html">Apple Lab: cuando los datos no predicen el futuro, pero ayudan a tomar mejores decisiones</a></li>
+          <li><a href="articles/por-que-el-dinero-no-basta.html">¿Por qué darle dinero a los pobres no soluciona el problema? — Optimization Lab #1</a></li>
+        </ul>
+      </div>
+
+      <div class="explorar-area" id="pensamiento">
+        <div class="explorar-area-head">
+          <svg class="glifo glifo-sm" viewBox="0 0 60 60" aria-hidden="true">
+            <path d="M 38 10 A 22 22 0 1 1 22 10"/>
+            <path d="M 22 10 C 26 14, 28 17, 26 21"/>
+            <circle cx="30" cy="34" r="2.2" fill="currentColor" stroke="none"/>
+          </svg>
+          <div>
+            <h3>Pensamiento</h3>
+            <div class="pilar-accion">Reflexionar</div>
+          </div>
+        </div>
+        <p class="explorar-desc">Reflexiones sobre decisiones, incertidumbre, comportamiento y los marcos que utilizamos para interpretar el mundo.</p>
+        <ul class="explorar-list">
+          <li><a href="articles/decidir-bajo-presion.html">Decidir bajo presión: cuando nuestras emociones intentan tomar el control</a></li>
+          <li><a href="articles/querer-controlarlo-todo.html">El problema de querer controlarlo todo</a></li>
+        </ul>
+      </div>
+
+      <div class="explorar-area" id="herramientas">
+        <div class="explorar-area-head">
+          <svg class="glifo glifo-sm" viewBox="0 0 60 60" aria-hidden="true">
+            <line x1="14" y1="6" x2="30" y2="26"/>
+            <line x1="46" y1="6" x2="30" y2="26"/>
+            <line x1="30" y1="26" x2="30" y2="46"/>
+            <rect x="18" y="46" width="24" height="5" fill="currentColor" stroke="none"/>
+          </svg>
+          <div>
+            <h3>Herramientas</h3>
+            <div class="pilar-accion">Construir</div>
+          </div>
+        </div>
+        <p class="explorar-desc">Modelos, calculadoras y productos interactivos construidos a partir de investigaciones de Kairos.</p>
+        <div class="explorar-empty">
+          <p>Algunos experimentos de Kairos terminarán convertidos en herramientas que puedas utilizar directamente. Estamos construyendo las primeras.</p>
+          <div class="explorar-tags">
+            <span class="explorar-tag">Modelos interactivos</span>
+            <span class="explorar-tag">Calculadoras</span>
+            <span class="explorar-tag">Herramientas de decisión</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="codigo" id="codigo">
+  <div class="wrap">
+    <div class="codigo-head">
+      <div class="eyebrow">Reproducir</div>
+      <h2>Código y datos</h2>
+      <p>Los experimentos de Kairos no tienen por qué terminar en una gráfica. Cuando es posible, publicamos el código, la metodología y los materiales necesarios para explorar los resultados por tu cuenta.</p>
+      <p class="codigo-sub">La investigación puede leerse. El laboratorio también puede reproducirse.</p>
+      <a href="https://github.com/josuetartons-cpu" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Explorar repositorio en GitHub ↗</a>
+    </div>
+    <div class="codigo-cols">
+      <div>
+        <h4>Código</h4>
+        <p>Scripts en Python y R.</p>
+      </div>
+      <div>
+        <h4>Método</h4>
+        <p>Supuestos, ecuaciones y decisiones de modelado.</p>
+      </div>
+      <div>
+        <h4>Datos</h4>
+        <p>Fuentes y archivos reproducibles cuando sus licencias lo permiten.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="porque">
   <div class="wrap">
     <div class="porque-head">
@@ -372,8 +524,8 @@ footer{background:var(--navy); color:#C7CFDC; padding:56px 0 32px; margin-top:20
         <h2>¿Quién está detrás de esto?</h2>
       </div>
       <div>
-        <p>A largo plazo, la idea es que esto crezca hacia algo parecido a una escuela de pensamiento — pero eso es apenas una dirección hacia la que estamos construyendo, no algo que ya seamos.</p>
-        <p>Por ahora, Kairos es una colección de publicaciones construidas con cuidado. Y seguimos sumando nuevas preguntas, datos y experimentos.</p>
+        <p>Kairos es un proyecto independiente que conecta investigación aplicada, experimentación, herramientas y reflexión. La intención es convertir preguntas reales en análisis, modelos y recursos que otras personas puedan explorar, reproducir y utilizar.</p>
+        <p>No pretendemos tener todas las respuestas. Kairos es una colección creciente de publicaciones, experimentos y herramientas construidos con cuidado — y seguimos sumando nuevas preguntas, datos y código en el camino.</p>
       </div>
     </div>
   </div>
@@ -390,6 +542,7 @@ footer{background:var(--navy); color:#C7CFDC; padding:56px 0 32px; margin-top:20
         <li><a href="#sobre-kairos">Sobre nosotros</a></li>
         <li><a href="#">Contacto</a></li>
         <li><a href="#">Privacidad</a></li>
+        <li><a href="https://github.com/josuetartons-cpu" target="_blank" rel="noopener noreferrer">GitHub</a></li>
       </ul>
     </div>
     <div class="footer-bottom">
