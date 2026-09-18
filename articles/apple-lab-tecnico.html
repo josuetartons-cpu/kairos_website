@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nota técnica: medir la incertidumbre de una inversión — un experimento cuantitativo con Apple — Kairos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<style>
+  :root{
+    --paper:#F3F1E8;
+    --panel:#FBFAF5;
+    --ink:#1A2420;
+    --ink-soft:#4B554F;
+    --line:#D8D3C1;
+    --teal:#1F6F5C;
+    --teal-soft:#E4EFEA;
+    --rust:#B5502E;
+    --rust-soft:#F6E7E0;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:"IBM Plex Sans", -apple-system, sans-serif;
+    font-size:16.5px; line-height:1.62;
+  }
+  .serif{font-family:"Source Serif 4", Georgia, serif;}
+  .num{font-family:"IBM Plex Mono", monospace;}
+  a{color:var(--teal);}
+  h1,h2,h3,h4{font-family:"Source Serif 4", Georgia, serif; font-weight:600; line-height:1.25; margin:0 0 0.7rem;}
+
+  header.masthead{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:1rem 1.5rem; border-bottom:1px solid var(--line);
+    font-size:0.92rem; position:sticky; top:0; z-index:20;
+    background:rgba(243,241,232,0.94); backdrop-filter:blur(6px);
+  }
+  header.masthead a{ text-decoration:none; color:var(--ink); }
+  header.masthead .brand{ font-weight:600; }
+  header.masthead .brand span{ color:var(--teal); }
+  header.masthead nav a{ color:var(--ink-soft); margin-left:1.4rem; border-bottom:1px solid transparent; }
+  header.masthead nav a:hover{ color:var(--teal); border-bottom-color:var(--teal); }
+
+  .layout{
+    max-width:1180px; margin:0 auto; padding:0 1.5rem 6rem;
+    display:grid; grid-template-columns:230px minmax(0,1fr); gap:3rem;
+  }
+
+  aside.toc{ position:sticky; top:4.2rem; align-self:start; padding-top:2.6rem; max-height:calc(100vh - 6rem); overflow-y:auto; }
+  aside.toc ol{ list-style:none; margin:0; padding:0; counter-reset:toc; border-left:1px solid var(--line); }
+  aside.toc li{ counter-increment:toc; margin:0; }
+  aside.toc a{
+    display:block; padding:0.42rem 0 0.42rem 0.9rem; margin-left:-1px;
+    border-left:2px solid transparent; color:var(--ink-soft); text-decoration:none; font-size:0.86rem;
+  }
+  aside.toc a:hover{ color:var(--teal); border-left-color:var(--teal); }
+  aside.toc a::before{ content: counter(toc) "  "; font-family:"IBM Plex Mono", monospace; color:var(--ink-soft); font-size:0.78rem; }
+
+  main{ min-width:0; padding-top:2.6rem; }
+
+  .hero .kicker{ font-size:0.92rem; color:var(--ink-soft); margin-bottom:0.9rem; }
+  .kicker-link{ color:var(--teal); text-decoration:none; font-weight:600; }
+  .kicker-link:hover{ text-decoration:underline; }
+  .hero h1.serif{ font-size:2.1rem; letter-spacing:-0.01em; max-width:42rem; }
+  .hero .subtitle{ font-size:1.05rem; color:var(--ink-soft); margin-top:0.8rem; max-width:42rem; }
+
+  .banner{
+    background:var(--rust-soft); border:1px solid #E3C4B2; border-radius:3px;
+    padding:1.3rem 1.5rem; margin:1.8rem 0 2.6rem; max-width:44rem;
+  }
+  .banner h3{ font-size:0.98rem; color:var(--rust); margin-bottom:0.4rem; }
+  .banner p{ margin:0; font-size:0.96rem; }
+
+  section.chapter{ margin:3.4rem 0; scroll-margin-top:4.4rem; padding-top:0.4rem; border-top:1px solid var(--line); }
+  section.chapter:first-of-type{ border-top:none; }
+  section.chapter h2{ font-size:1.5rem; margin-bottom:1rem; }
+  section.chapter h4{ font-size:1.02rem; margin-top:1.6rem; }
+  section.chapter p{ max-width:44rem; margin:0 0 1rem; }
+  section.chapter > .full{ max-width:100%; }
+
+  table{ border-collapse:collapse; width:100%; margin:1.2rem 0 1.8rem; font-size:0.9rem; background:var(--panel); }
+  caption{ text-align:left; font-size:0.82rem; color:var(--ink-soft); margin-bottom:0.4rem; caption-side:top; }
+  th,td{ border:1px solid var(--line); padding:0.5rem 0.7rem; text-align:right; }
+  th{ background:#EFEBDD; font-weight:600; text-align:right; }
+  td:first-child, th:first-child{ text-align:left; }
+  tbody tr:hover{ background:#F1EFE3; }
+  .tw{ overflow-x:auto; }
+
+  .eq{ margin:1.3rem 0; padding:0.4rem 0; overflow-x:auto; max-width:100%; }
+  .eq-boxed{ display:inline-block; padding:0.45rem 1rem; border:1.5px solid var(--ink); border-radius:3px; margin:0.5rem 0; }
+
+  .param-grid{
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:0.7rem; margin:1.4rem 0 2rem;
+  }
+  .param-card{ background:var(--panel); border:1px solid var(--line); border-radius:3px; padding:0.8rem 1rem; }
+  .param-card .k{ font-size:0.78rem; color:var(--ink-soft); }
+  .param-card .v{ font-family:"IBM Plex Mono", monospace; font-size:1.05rem; margin-top:0.15rem; }
+
+  .callout{
+    background:var(--teal-soft); border-left:3px solid var(--teal);
+    padding:1rem 1.3rem; margin:1.6rem 0; max-width:44rem; border-radius:0 3px 3px 0;
+  }
+  .callout .tag{ font-size:0.76rem; color:var(--teal); font-weight:600; margin-bottom:0.3rem; }
+  .callout p{ margin:0; max-width:none; }
+  .callout p + p{ margin-top:0.7rem; }
+
+  .callout.warn{ background:var(--rust-soft); border-left-color:var(--rust); }
+  .callout.warn .tag{ color:var(--rust); }
+
+  .keyline{
+    font-family:"Source Serif 4", Georgia, serif; font-size:1.12rem; line-height:1.45;
+    border-left:3px solid var(--ink); padding:0.2rem 0 0.2rem 1.1rem;
+    margin:1.6rem 0; max-width:42rem;
+  }
+
+  figure{ margin:2rem 0; max-width:52rem; }
+  figure img{ width:100%; height:auto; border:1px solid var(--line); border-radius:3px; background:#fff; }
+  figcaption{ font-size:0.82rem; color:var(--ink-soft); margin-top:0.5rem; }
+
+  .fig-slot{
+    border:1px dashed #C7A93A; background:#FDF3D8; border-radius:3px;
+    padding:1.6rem 1.4rem; color:#7A6412;
+  }
+  .fig-slot .slot-tag{
+    font-family:"IBM Plex Mono", monospace; font-size:0.76rem; letter-spacing:0.04em;
+    text-transform:uppercase; display:block; margin-bottom:0.45rem;
+  }
+  .fig-slot .slot-title{ font-family:"Source Serif 4", Georgia, serif; font-size:1.05rem; color:var(--ink); }
+  .fig-slot .slot-note{ font-size:0.88rem; margin-top:0.5rem; }
+  .fig-slot ul{ margin:0.5rem 0 0; padding-left:1.1rem; font-size:0.88rem; }
+
+  ul.limits{ max-width:44rem; padding-left:1.2rem; }
+  ul.limits li{ margin-bottom:0.5rem; }
+
+  .findings-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:1rem; margin:1.4rem 0 2rem; max-width:none; }
+  .finding-card{ background:var(--panel); border:1px solid var(--line); border-radius:3px; padding:1.1rem 1.2rem; }
+  .finding-card .n{ font-family:"IBM Plex Mono", monospace; color:var(--teal); font-size:0.8rem; margin-bottom:0.4rem; }
+  .finding-card h4{ margin-top:0; font-size:1rem; }
+  .finding-card p{ margin:0; font-size:0.92rem; max-width:none; }
+
+  .stat-strip{ display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1rem; margin:1.6rem 0 2rem; }
+  .stat-card{ background:var(--panel); border:1px solid var(--line); border-radius:3px; padding:1rem 1.1rem; text-align:center; }
+  .stat-card .v{ font-family:"IBM Plex Mono", monospace; font-size:1.5rem; color:var(--teal); }
+  .stat-card .v.rust{ color:var(--rust); }
+  .stat-card .k{ font-size:0.8rem; color:var(--ink-soft); margin-top:0.3rem; }
+
+  .pipeline{
+    display:flex; flex-wrap:wrap; gap:0.45rem; align-items:center;
+    margin:1.4rem 0 2rem; font-family:"IBM Plex Mono", monospace; font-size:0.82rem;
+  }
+  .pipeline span{ background:var(--panel); border:1px solid var(--line); border-radius:3px; padding:0.35rem 0.6rem; }
+  .pipeline i{ color:var(--ink-soft); font-style:normal; }
+
+  .status-badge{
+    display:inline-block; font-family:"IBM Plex Mono", monospace; font-size:0.8rem;
+    background:#FDF3D8; border:1px dashed #C7A93A; color:#7A6412;
+    border-radius:3px; padding:0.35rem 0.7rem; letter-spacing:0.03em;
+  }
+
+  .var-code{ font-family:"IBM Plex Mono", monospace; font-size:0.85rem; }
+
+  .placeholder{ background:#FDF3D8; border:1px dashed #C7A93A; border-radius:3px; padding:0.15rem 0.5rem; font-size:0.85em; color:#7A6412; }
+
+  footer{
+    border-top:1px solid var(--line); padding:2.2rem 1.5rem;
+    font-size:0.86rem; color:var(--ink-soft);
+  }
+  footer .footer-inner{ max-width:1180px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; gap:1rem; }
+  footer a{ color:var(--ink-soft); }
+  .switch-link{ display:inline-block; margin-top:0.4rem; font-size:0.9rem; color:var(--teal); text-decoration:none; border-bottom:1px solid var(--teal); }
+  .code-btn{ display:inline-block; margin-top:0.9rem; font-size:0.9rem; color:var(--teal); text-decoration:none; border-bottom:1px solid var(--teal); font-weight:600; }
+
+  details.toc-mobile{ display:none; }
+
+  @media (max-width:900px){
+    .layout{ grid-template-columns:1fr; }
+    aside.toc{ display:none; }
+    details.toc-mobile{
+      display:block; position:static; margin:1.6rem 0 0; background:var(--panel);
+      border:1px solid var(--line); border-radius:3px; padding:0.7rem 1rem;
+    }
+    details.toc-mobile summary{ font-weight:600; cursor:pointer; font-size:0.92rem; }
+    details.toc-mobile ol{ list-style:none; counter-reset:toc2; padding-left:0; margin:0.7rem 0 0; }
+    details.toc-mobile li{ counter-increment:toc2; padding:0.3rem 0; font-size:0.88rem; }
+    details.toc-mobile a{ color:var(--ink-soft); text-decoration:none; }
+    details.toc-mobile a::before{ content: counter(toc2) ". "; font-family:"IBM Plex Mono", monospace; }
+    main{ padding-top:0; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <a class="brand" href="../index.html">Kairos<span> Lab</span></a>
+  <nav>
+    <a href="apple-lab-incertidumbre-inversion.html">← Volver a la publicación principal</a>
+  </nav>
+</header>
+
+<div class="layout">
+
+  <aside class="toc">
+    <ol>
+      <li><a href="#pregunta">Pregunta de investigación</a></li>
+      <li><a href="#diseno">Diseño experimental</a></li>
+      <li><a href="#datos">Datos</a></li>
+      <li><a href="#riesgo">Primer experimento: medir el riesgo</a></li>
+      <li><a href="#ventanas">El riesgo depende del pasado observado</a></li>
+      <li><a href="#valuacion">Valuación: empresa y precio</a></li>
+      <li><a href="#montecarlo">De tres escenarios a miles</a></li>
+      <li><a href="#mercado">Apple y el mercado</a></li>
+      <li><a href="#multifactor">Modelo multifactor</a></li>
+      <li><a href="#macro">Incorporando la macroeconomía</a></li>
+      <li><a href="#fuera-de-muestra">La prueba más importante</a></li>
+      <li><a href="#overfitting">Cuando un modelo mejor resulta peor</a></li>
+      <li><a href="#direccional">¿Predijimos 62–66%?</a></li>
+      <li><a href="#objetivo">El objetivo del laboratorio cambió</a></li>
+      <li><a href="#prospectivo">Una predicción que aún no conocemos</a></li>
+      <li><a href="#reproducibilidad">Reproducibilidad computacional</a></li>
+      <li><a href="#limitaciones">Limitaciones</a></li>
+      <li><a href="#aprendizajes">¿Qué aprendimos?</a></li>
+      <li><a href="#conclusion">Conclusión</a></li>
+      <li><a href="#referencias">Fuentes y referencias</a></li>
+    </ol>
+  </aside>
+
+  <main>
+
+    <div class="hero">
+      <p class="kicker"><a href="apple-lab-incertidumbre-inversion.html" class="kicker-link">Kairos Lab · Investigación aplicada</a> · Nota técnica · 2026</p>
+      <h1 class="serif">Medir la incertidumbre de una inversión: un experimento cuantitativo con Apple</h1>
+      <p class="subtitle">Riesgo, valuación, simulación Monte Carlo, factores de mercado, macroeconomía y validación fuera de muestra</p>
+    </div>
+
+    <div class="banner">
+      <h3>Experimento sobre incertidumbre, no un sistema de predicción de precios</h3>
+      <p>El objetivo de Apple Lab no es encontrar un precio futuro exacto. Es estudiar qué información puede extraerse de los datos para evaluar riesgo, escenarios y distribuciones de resultados posibles. Los <a href="#fuera-de-muestra">resultados fuera de muestra</a> y las <a href="#limitaciones">limitaciones</a> son parte central del resultado, no un apéndice.</p>
+    </div>
+
+    <p style="max-width:44rem;">Las decisiones de inversión se realizan bajo incertidumbre. Aunque actualmente existe una enorme cantidad de información histórica, financiera y macroeconómica disponible, disponer de más datos no implica necesariamente poder anticipar con precisión el comportamiento futuro de un activo. Esta investigación utiliza Apple Inc. (AAPL) como laboratorio para estudiar hasta qué punto distintas herramientas cuantitativas pueden contribuir a estructurar esa incertidumbre.</p>
+
+    <p style="max-width:44rem;">El experimento combina información histórica de mercado, métricas de riesgo, valuación fundamental, simulaciones Monte Carlo, factores de mercado, variables macroeconómicas y pruebas fuera de muestra. Los resultados revelan una distinción fundamental: un modelo puede explicar una proporción considerable del comportamiento histórico de una acción y, aun así, presentar una capacidad limitada para anticipar la magnitud de sus movimientos futuros.</p>
+
+    <p style="max-width:44rem;">En nuestro ejercicio fuera de muestra, distintos modelos identificaron correctamente la dirección mensual de los rendimientos aproximadamente 62.1% y 65.5% de las veces. Sin embargo, sus <span data-tex-inline="R^2"></span> fuera de muestra fueron negativos.</p>
+
+    <div class="callout warn">
+      <div class="tag">Cómo NO leer estos resultados</div>
+      <p>Estos resultados no significan que Apple Lab pueda predecir el precio de Apple con una precisión de 62–66%. Por el contrario, muestran que anticipar ocasionalmente la dirección y estimar correctamente la magnitud de un movimiento son problemas distintos.</p>
+    </div>
+
+    <details class="toc-mobile">
+      <summary>Contenido de esta nota</summary>
+      <ol>
+        <li><a href="#pregunta">Pregunta de investigación</a></li>
+        <li><a href="#diseno">Diseño experimental</a></li>
+        <li><a href="#datos">Datos</a></li>
+        <li><a href="#riesgo">Primer experimento: medir el riesgo</a></li>
+        <li><a href="#ventanas">El riesgo depende del pasado observado</a></li>
+        <li><a href="#valuacion">Valuación: empresa y precio</a></li>
+        <li><a href="#montecarlo">De tres escenarios a miles</a></li>
+        <li><a href="#mercado">Apple y el mercado</a></li>
+        <li><a href="#multifactor">Modelo multifactor</a></li>
+        <li><a href="#macro">Incorporando la macroeconomía</a></li>
+        <li><a href="#fuera-de-muestra">La prueba más importante</a></li>
+        <li><a href="#overfitting">Cuando un modelo mejor resulta peor</a></li>
+        <li><a href="#direccional">¿Predijimos 62–66%?</a></li>
+        <li><a href="#objetivo">El objetivo del laboratorio cambió</a></li>
+        <li><a href="#prospectivo">Una predicción que aún no conocemos</a></li>
+        <li><a href="#reproducibilidad">Reproducibilidad computacional</a></li>
+        <li><a href="#limitaciones">Limitaciones</a></li>
+        <li><a href="#aprendizajes">¿Qué aprendimos?</a></li>
+        <li><a href="#conclusion">Conclusión</a></li>
+        <li><a href="#referencias">Fuentes y referencias</a></li>
+      </ol>
+    </details>
+
+    <section class="chapter" id="pregunta">
+      <h2>1. Pregunta de investigación</h2>
+      <p>Apple Lab comenzó con una pregunta aparentemente sencilla:</p>
+      <div class="keyline">¿Hasta qué punto los datos históricos, financieros y macroeconómicos permiten reducir la incertidumbre asociada con una decisión de inversión?</div>
+      <p>De ella surgieron varias preguntas secundarias:</p>
+      <ul class="limits">
+        <li>¿Podemos cuantificar el riesgo de una inversión?</li>
+        <li>¿Podemos construir diferentes escenarios de valuación en lugar de depender de un único precio esperado?</li>
+        <li>¿Cuánto de los movimientos de Apple está relacionado con el mercado?</li>
+        <li>¿Las variables macroeconómicas proporcionan información adicional?</li>
+        <li>¿Un modelo que explica correctamente el pasado puede anticipar información futura?</li>
+        <li>¿Y qué ocurre cuando añadimos más datos, variables y complejidad?</li>
+      </ul>
+      <p>Estas preguntas terminaron transformando Apple Lab de un experimento sobre precios en un experimento sobre decisiones bajo incertidumbre.</p>
+    </section>
+
+    <section class="chapter" id="diseno">
+      <h2>2. Diseño experimental</h2>
+      <p>Apple Lab no comenzó con un algoritmo final. El modelo fue construido progresivamente mediante una secuencia de experimentos:</p>
+      <div class="pipeline">
+        <span>Datos</span><i>→</i>
+        <span>Riesgo</span><i>→</i>
+        <span>Valuación</span><i>→</i>
+        <span>Simulación</span><i>→</i>
+        <span>Mercado</span><i>→</i>
+        <span>Macroeconomía</span><i>→</i>
+        <span>Backtesting</span><i>→</i>
+        <span>Sensibilidad</span><i>→</i>
+        <span>Prueba prospectiva</span>
+      </div>
+      <p>Cada etapa buscó responder una pregunta distinta y, en algunos casos, los resultados obligaron a modificar la interpretación de etapas anteriores.</p>
+      <div class="callout">
+        <div class="tag">Por qué esto importa</div>
+        <p>El objetivo no fue construir progresivamente un modelo hasta conseguir resultados favorables, sino utilizar cada experimento para identificar qué información era útil, qué supuestos eran demasiado fuertes y dónde comenzaban a aparecer limitaciones.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="datos">
+      <h2>3. Datos</h2>
+      <p>Los experimentos utilizan diferentes ventanas temporales dependiendo de la pregunta analizada.</p>
+      <p>Para los ejercicios de sensibilidad histórica se recuperaron precios ajustados de Apple desde diciembre de 1980, alcanzando más de 11,500 observaciones diarias. Para determinados análisis contemporáneos se utilizaron ventanas más recientes, especialmente desde 2016, con el objetivo de reducir la influencia de cambios estructurales extremadamente antiguos.</p>
+      <p>También se incorporaron series correspondientes a:</p>
+      <ul class="limits">
+        <li>S&amp;P 500;</li>
+        <li>Nasdaq;</li>
+        <li>Microsoft;</li>
+        <li>Nvidia;</li>
+        <li>inflación;</li>
+        <li>desempleo;</li>
+        <li>Treasury estadounidense a 10 años;</li>
+        <li>Federal Funds Rate;</li>
+        <li>dólar estadounidense.</li>
+      </ul>
+      <p>Las series de mercado fueron analizadas principalmente a frecuencia diaria, mientras que los experimentos macroeconómicos utilizaron información mensual.</p>
+
+      <div class="fig-slot">
+        <span class="slot-tag">Tabla 1 — pendiente</span>
+        <div class="slot-title">Inventario de datos utilizados</div>
+        <div class="slot-note">Columnas sugeridas: Variable · Fuente · Frecuencia · Período · Transformación.</div>
+        <div class="slot-note">La versión final deberá documentar las fuentes primarias correspondientes y las fechas de consulta.</div>
+      </div>
+    </section>
+
+    <section class="chapter" id="riesgo">
+      <h2>4. Primer experimento: medir el riesgo</h2>
+      <p>Antes de intentar estimar un precio futuro, necesitamos definir qué significa que una inversión sea riesgosa.</p>
+      <p>Calculamos los rendimientos diarios mediante:</p>
+      <div class="eq" data-tex="r_t=\frac{P_t-P_{t-1}}{P_{t-1}}"></div>
+      <p>y posteriormente incorporamos volatilidad anualizada, Value at Risk y maximum drawdown.</p>
+      <p>En una ventana aproximada de diez años, Apple presentó una volatilidad anualizada cercana al 29% y un maximum drawdown aproximado de −38.5%.</p>
+
+      <div class="stat-strip">
+        <div class="stat-card"><div class="v">≈29%</div><div class="k">Volatilidad anualizada (10 años)</div></div>
+        <div class="stat-card"><div class="v rust">≈−38.5%</div><div class="k">Maximum drawdown (10 años)</div></div>
+      </div>
+
+      <p>El resultado introduce una primera distinción importante. Una inversión puede generar retornos elevados a largo plazo y simultáneamente experimentar pérdidas considerables durante el recorrido.</p>
+      <div class="keyline">Retorno y riesgo no pueden evaluarse independientemente.</div>
+
+      <figure>
+        <img src="assets/apple-lab-tecnico/01_aapl_price_history.png" alt="Evolución histórica del precio de AAPL">
+        <figcaption>Figura 1 — Evolución histórica del precio de AAPL</figcaption>
+      </figure>
+
+      <figure>
+        <img src="assets/apple-lab-tecnico/02_aapl_drawdown.png" alt="Drawdown histórico de AAPL">
+        <figcaption>Figura 2 — Drawdown histórico</figcaption>
+      </figure>
+
+      <figure>
+        <img src="assets/apple-lab-tecnico/03_aapl_rolling_volatility.png" alt="Volatilidad móvil de AAPL">
+        <figcaption>Figura 3 — Volatilidad móvil</figcaption>
+      </figure>
+    </section>
+
+    <section class="chapter" id="ventanas">
+      <h2>5. El riesgo depende de cuánto pasado observemos</h2>
+      <p>Una pregunta posterior fue cuánto dependían estas métricas de la ventana histórica seleccionada. Repetimos el análisis utilizando 10, 15 y 20 años de información, además del historial completo disponible.</p>
+
+      <div class="tw">
+      <table>
+        <caption>Métricas de riesgo según la ventana histórica utilizada.</caption>
+        <thead><tr><th>Ventana</th><th>Observaciones</th><th>Volatilidad anual</th><th>Maximum drawdown</th></tr></thead>
+        <tbody>
+          <tr><td>10 años</td><td class="num">2,514</td><td class="num">29.14%</td><td class="num">−38.52%</td></tr>
+          <tr><td>15 años</td><td class="num">3,772</td><td class="num">28.35%</td><td class="num">−43.80%</td></tr>
+          <tr><td>20 años</td><td class="num">5,032</td><td class="num">31.22%</td><td class="num">−60.87%</td></tr>
+          <tr><td>Historia completa</td><td class="num">11,515</td><td class="num">43.70%</td><td class="num">−81.80%</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p>La diferencia es considerable. Utilizando diez años, la volatilidad anualizada ronda el 29%. Utilizando prácticamente toda la historia bursátil de Apple, supera el 43%. El maximum drawdown también pasa de aproximadamente −39% a casi −82%.</p>
+      <p>Pero esto no significa automáticamente que utilizar toda la historia proporcione una mejor estimación del riesgo actual. Apple, su modelo de negocio, los mercados financieros, la regulación y el entorno macroeconómico han cambiado considerablemente desde 1980.</p>
+      <p>Existe entonces un trade-off. Una ventana reciente puede ignorar eventos extremos. Una ventana demasiado extensa puede incorporar regímenes que representan pobremente el activo contemporáneo.</p>
+      <div class="keyline">Más datos no significan automáticamente mejor información.</div>
+
+      <h4>Una precisión metodológica importante</h4>
+      <p>En esta etapa también comparamos resultados de simulaciones utilizando distintas ventanas históricas. Sin embargo, los principales supuestos fundamentales de crecimiento de beneficios y múltiplos permanecieron constantes.</p>
+      <p>Por ello, que determinadas distribuciones de valuación hayan cambiado poco no demuestra que el modelo completo sea robusto al tamaño de muestra.</p>
+      <div class="callout warn">
+        <div class="tag">Resultado válido de este experimento</div>
+        <p>Las métricas históricas de riesgo son sensibles a la ventana temporal seleccionada. La selección de esa ventana constituye otra hipótesis del investigador.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="valuacion">
+      <h2>6. Valuación: empresa y precio no son lo mismo</h2>
+      <p>Posteriormente incorporamos información fundamental. Utilizamos como representación simplificada:</p>
+      <div class="eq" data-tex="P = EPS \times P/E"></div>
+      <p>Esta relación permite separar dos fuentes diferentes de incertidumbre. Por un lado está el desempeño económico de la empresa, aproximado mediante sus beneficios por acción. Por otro está cuánto está dispuesto a pagar el mercado por esos beneficios.</p>
+      <p>Construimos escenarios pesimista, base y optimista modificando crecimiento esperado del EPS y múltiplos futuros. Esto produjo una conclusión sencilla pero relevante:</p>
+      <div class="keyline">Una empresa puede continuar creciendo y aun así producir un retorno bajo o negativo para un inversionista si el múltiplo pagado por el mercado se contrae suficientemente.</div>
+      <p>Por tanto, analizar una compañía y analizar una inversión no son exactamente el mismo problema.</p>
+
+      <figure>
+        <img src="assets/apple-lab-tecnico/04_eps_pe_sensitivity.png" alt="Matriz de sensibilidad EPS growth × P/E">
+        <figcaption>Figura 4 — Matriz de sensibilidad EPS growth × P/E</figcaption>
+      </figure>
+    </section>
+
+    <section class="chapter" id="montecarlo">
+      <h2>7. De tres escenarios a miles: Monte Carlo</h2>
+      <p>Los escenarios pesimista, base y optimista siguen representando solamente tres futuros posibles. El siguiente paso consistió en transformar determinados supuestos en distribuciones y generar miles de combinaciones mediante simulación Monte Carlo.</p>
+      <p>En versiones posteriores del experimento realizamos hasta 100,000 simulaciones. En uno de los experimentos de valuación a cinco años obtuvimos aproximadamente:</p>
+
+      <div class="tw">
+      <table>
+        <caption>Distribución simulada en un experimento de valuación a cinco años.</caption>
+        <thead><tr><th>Métrica</th><th>Resultado</th></tr></thead>
+        <tbody>
+          <tr><td>Mediana</td><td class="num">~$390</td></tr>
+          <tr><td>Percentil 5</td><td class="num">~$248</td></tr>
+          <tr><td>Percentil 95</td><td class="num">~$582</td></tr>
+          <tr><td>Probabilidad simulada de pérdida</td><td class="num">~18–19%</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="callout warn">
+        <div class="tag">Interpretación de estas cifras</div>
+        <p>Un 18% de pérdidas simuladas no significa que exista objetivamente una probabilidad del 18% de perder dinero en Apple.</p>
+        <p>Significa que, dadas las distribuciones y supuestos utilizados por ese experimento, aproximadamente 18% de las simulaciones terminaron por debajo del precio de referencia.</p>
+      </div>
+
+      <div class="keyline">Monte Carlo no elimina la incertidumbre. Hace explícitas las consecuencias probabilísticas de nuestros supuestos.</div>
+
+      <figure>
+        <img src="assets/apple-lab-tecnico/05_monte_carlo_distribution.png" alt="Distribución Monte Carlo de valuación a cinco años, con P5, mediana, P95 y precio de referencia">
+        <figcaption>Figura 5 — Distribución Monte Carlo (P5 · Mediana · P95 · Precio de referencia)</figcaption>
+      </figure>
+    </section>
+
+    <section class="chapter" id="mercado">
+      <h2>8. Apple no existe aislada del mercado</h2>
+      <p>La siguiente etapa dejó de estudiar AAPL como un sistema independiente. Comparamos sus rendimientos con Microsoft, Nvidia, S&amp;P 500 y Nasdaq durante aproximadamente 2016–2026.</p>
+      <p>Encontramos correlaciones relevantes. Aproximadamente:</p>
+      <div class="eq" data-tex="Corr(AAPL,S\&P500)=0.74"></div>
+      <p>y:</p>
+      <div class="eq" data-tex="Corr(AAPL,Nasdaq)=0.77"></div>
+
+      <p>Posteriormente estimamos modelos lineales simples. Para el S&amp;P 500 obtuvimos aproximadamente:</p>
+      <div class="param-grid">
+        <div class="param-card"><div class="k">β (S&amp;P 500)</div><div class="v">1.19</div></div>
+        <div class="param-card"><div class="k">R² (S&amp;P 500)</div><div class="v">0.54</div></div>
+      </div>
+      <p>Mientras que utilizando Nasdaq:</p>
+      <div class="param-grid">
+        <div class="param-card"><div class="k">β (Nasdaq)</div><div class="v">≈1.02</div></div>
+        <div class="param-card"><div class="k">R² (Nasdaq)</div><div class="v">≈0.60</div></div>
+      </div>
+
+      <p>Estos resultados indican que una proporción considerable de la variación diaria observada en los rendimientos de Apple está estadísticamente asociada con movimientos generales del mercado. Pero queda otra parte sin explicar.</p>
+      <div class="callout warn">
+        <div class="tag">Precaución</div>
+        <p>Asociación estadística no equivale a causalidad.</p>
+      </div>
+
+      <figure>
+        <img src="assets/apple-lab-tecnico/06_aapl_vs_sp500.png" alt="Dispersión de rendimientos de AAPL frente al S&P 500 con línea estimada y R²">
+        <figcaption>Figura 6 — AAPL vs S&amp;P 500 (línea estimada y R²)</figcaption>
+      </figure>
+
+      <figure>
+        <img src="assets/apple-lab-tecnico/07_aapl_vs_nasdaq.png" alt="Dispersión de rendimientos de AAPL frente al Nasdaq con línea estimada y R²">
+        <figcaption>Figura 7 — AAPL vs Nasdaq (línea estimada y R²)</figcaption>
+      </figure>
+    </section>
+
+    <section class="chapter" id="multifactor">
+      <h2>9. Modelo multifactor</h2>
+      <p>Posteriormente incorporamos simultáneamente S&amp;P 500, Nasdaq, Microsoft y Nvidia. El modelo obtuvo aproximadamente:</p>
+      <div class="param-grid">
+        <div class="param-card"><div class="k">R²</div><div class="v">0.60</div></div>
+        <div class="param-card"><div class="k">Volatilidad residual anualizada</div><div class="v">≈18.2%</div></div>
+      </div>
+      <p>Sin embargo, apareció otro problema econométrico: varias de estas variables están fuertemente relacionadas entre sí. Esto genera multicolinealidad.</p>
+      <p>Por ello, los coeficientes individuales de este modelo deben interpretarse como asociaciones condicionales y no como efectos causales independientes. Un coeficiente negativo para otra empresa tecnológica, por ejemplo, no significa que esa empresa provoque una caída de Apple.</p>
+      <div class="callout">
+        <div class="tag">Regla metodológica del laboratorio</div>
+        <p>Un coeficiente estadístico necesita interpretación económica antes de convertirse en una conclusión.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="macro">
+      <h2>10. Incorporando la macroeconomía</h2>
+      <p>Después preguntamos si determinadas variables económicas podían aportar información adicional. Construimos una base mensual combinando rendimientos de Apple con:</p>
+      <ul class="limits">
+        <li>rendimiento del S&amp;P 500;</li>
+        <li>desempleo;</li>
+        <li>cambios en desempleo;</li>
+        <li>Treasury a 10 años;</li>
+        <li>cambios en tasas;</li>
+        <li>Federal Funds Rate;</li>
+        <li>inflación;</li>
+        <li>dólar.</li>
+      </ul>
+      <p>El modelo macroeconómico obtuvo aproximadamente:</p>
+      <div class="eq" data-tex="R^2=0.45"></div>
+      <p>dentro de la muestra utilizada.</p>
+      <p>La variable con la asociación estadística más consistente continuó siendo el mercado. Algunas variables presentaron relaciones más débiles o estadísticamente inciertas.</p>
+      <div class="keyline">Explicar históricamente una parte de los movimientos de un activo no implica poder anticiparlos.</div>
+      <p>Para responder la segunda pregunta necesitamos datos que el modelo no haya utilizado para construirse.</p>
+    </section>
+
+    <section class="chapter" id="fuera-de-muestra">
+      <h2>11. La prueba más importante: fuera de muestra</h2>
+      <p>Dividimos temporalmente la información.</p>
+      <div class="param-grid">
+        <div class="param-card"><div class="k">Entrenamiento</div><div class="v">≈2016–2023</div></div>
+        <div class="param-card"><div class="k">Prueba</div><div class="v">≈2024–2026</div></div>
+      </div>
+      <p>No utilizamos una división aleatoria porque hacerlo permitiría mezclar observaciones futuras y pasadas de una serie temporal.</p>
+      <p>Para el modelo macroeconómico base obtuvimos aproximadamente:</p>
+      <div class="eq" data-tex="R^2_{train}=0.56"></div>
+      <p>pero:</p>
+      <div class="eq" data-tex="R^2_{test}=-0.15"></div>
+      <p>El resultado cambia radicalmente la interpretación. Un <span data-tex-inline="R^2"></span> fuera de muestra negativo indica que, bajo la definición utilizada en esta evaluación, las predicciones del modelo presentaron peor desempeño cuadrático que el benchmark implícito de la métrica en la muestra de prueba.</p>
+      <div class="keyline">Explicar el pasado estaba resultando considerablemente más sencillo que anticipar información nueva.</div>
+    </section>
+
+    <section class="chapter" id="overfitting">
+      <h2>12. Cuando un modelo aparentemente mejor resulta peor</h2>
+      <p>Intentamos posteriormente incorporar variables rezagadas. Dentro de muestra, el resultado parecía prometedor. El <span data-tex-inline="R^2"></span> aumentó aproximadamente desde:</p>
+      <div class="eq" data-tex="0.56 \rightarrow 0.64"></div>
+      <p>Pero fuera de muestra:</p>
+      <div class="eq" data-tex="-0.15 \rightarrow -0.43"></div>
+      <p>El modelo más complejo explicaba mejor los datos utilizados durante su construcción y, simultáneamente, generalizaba peor. También observamos deterioro en MAE y RMSE.</p>
+      <p>Este experimento proporciona una demostración aplicada del problema de overfitting.</p>
+      <div class="keyline">Que un modelo explique mejor el pasado no significa que conozca mejor el futuro.</div>
+
+      <figure>
+        <img src="assets/apple-lab-tecnico/08_train_vs_test_r2.png" alt="Comparación de R² dentro y fuera de muestra: modelo base (Train 0.56 / Test −0.15) vs modelo con rezagos (Train 0.64 / Test −0.43)">
+        <figcaption>Figura 8 — Train vs Test (R²). Modelo base: Train 0.56 / Test −0.15 · Modelo + lags: Train 0.64 / Test −0.43</figcaption>
+      </figure>
+    </section>
+
+    <section class="chapter" id="direccional">
+      <h2>13. ¿Entonces predijimos correctamente 62–66%?</h2>
+      <p>Existe otro resultado que necesita especial cuidado. Durante ese ejercicio fuera de muestra, los modelos identificaron correctamente el signo del rendimiento mensual aproximadamente:</p>
+
+      <div class="stat-strip">
+        <div class="stat-card"><div class="v">62.07%</div><div class="k">Precisión direccional mensual · modelo 1 · fuera de muestra</div></div>
+        <div class="stat-card"><div class="v">65.52%</div><div class="k">Precisión direccional mensual · modelo 2 · fuera de muestra</div></div>
+        <div class="stat-card"><div class="v rust">≈29</div><div class="k">Observaciones mensuales de prueba</div></div>
+      </div>
+
+      <p>de las observaciones de prueba. Esto significa que el modelo acertó si el rendimiento mensual terminaría siendo positivo o negativo en aproximadamente esa proporción de meses.</p>
+      <div class="callout warn">
+        <div class="tag">Lo que este número NO significa</div>
+        <p>No significa que Apple Lab predijera el precio de Apple con 65.52% de precisión. Se trata exclusivamente de precisión direccional mensual observada en esa muestra fuera de muestra, no de precisión del modelo ni de capacidad predictiva sobre el precio. De hecho, los <span data-tex-inline="R^2"></span> fuera de muestra fueron negativos, lo que muestra que la estimación de la magnitud de los movimientos seguía siendo deficiente bajo la definición utilizada en esa evaluación.</p>
+      </div>
+      <p>Ambos resultados pueden coexistir:</p>
+      <div class="keyline">Cierta información sobre dirección no implica precisión sobre magnitud.</div>
+      <p>Además, la muestra de prueba contenía solamente alrededor de 29 observaciones mensuales. Por ello, el resultado debe considerarse evidencia experimental, no demostración de una ventaja predictiva persistente.</p>
+    </section>
+
+    <section class="chapter" id="objetivo">
+      <h2>14. El objetivo del laboratorio cambió</h2>
+      <p>Después de estos experimentos, la pregunta original comenzó a parecer menos útil. Preguntar <em>¿cuál será el precio de Apple?</em> implica buscar una respuesta puntual para un sistema inherentemente incierto.</p>
+      <p>Una pregunta más útil resultó ser:</p>
+      <div class="keyline">¿Qué podemos conocer sobre riesgos, escenarios y distribuciones antes de tomar una decisión?</div>
+      <p>De esta transición surge el concepto de <strong>Economic Stress Test</strong>. El sistema comenzó a integrar distintas dimensiones:</p>
+      <div class="pipeline">
+        <span>Valuación</span><i>·</i>
+        <span>Riesgo</span><i>·</i>
+        <span>Mercado</span><i>·</i>
+        <span>Macroeconomía</span><i>·</i>
+        <span>Simulación</span><i>·</i>
+        <span>Validación</span>
+      </div>
+      <div class="callout">
+        <div class="tag">Alcance de esta publicación</div>
+        <p>La investigación pública termina deliberadamente en este nivel. Las reglas utilizadas posteriormente para integrar estas dimensiones en un motor automatizado de decisión, sus ponderaciones, calibraciones, thresholds y arquitectura no forman parte de esta publicación.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="prospectivo">
+      <h2>15. Una predicción que todavía no conocemos</h2>
+      <p>Existe una limitación adicional en todos los experimentos retrospectivos: hoy conocemos lo que ocurrió después.</p>
+      <p>Incluso tomando precauciones contra look-ahead bias, sigue siendo posible que decisiones metodológicas hayan sido influenciadas indirectamente por nuestro conocimiento del período histórico. Por eso diseñamos una última prueba.</p>
+
+      <h4>Experimento prospectivo</h4>
+      <p>En una fecha inicial <span data-tex-inline="t_0"></span>:</p>
+      <ul class="limits">
+        <li>recopilamos exclusivamente información disponible hasta ese momento;</li>
+        <li>ejecutamos el modelo;</li>
+        <li>generamos una distribución para un horizonte de cinco meses;</li>
+        <li>registramos los resultados;</li>
+        <li>congelamos el baseline;</li>
+        <li>esperamos.</li>
+      </ul>
+      <p>Formalmente:</p>
+      <div class="eq" data-tex="t_0 \rightarrow \text{información disponible} \rightarrow \text{modelo} \rightarrow \text{predicción congelada}"></div>
+      <p>y posteriormente:</p>
+      <div class="eq" data-tex="t_0+5m \rightarrow \text{resultado observado}"></div>
+      <p>Una vez congelado, el modelo no puede modificarse utilizando información posterior para mejorar retrospectivamente su predicción.</p>
+
+      <h4>Control de calidad</h4>
+      <p>Durante una primera implementación detectamos una inconsistencia computacional en el componente de riesgo de mercado. Los controles produjeron métricas económicamente implausibles.</p>
+      <p>Por ello, esa ejecución fue descartada y no constituye un resultado del experimento prospectivo. El baseline definitivo solamente será registrado después de superar los controles correspondientes.</p>
+      <div class="callout warn">
+        <div class="tag">Procedimiento experimental</div>
+        <p>Una salida computacional no debe aceptarse simplemente porque el programa terminó de ejecutarse.</p>
+      </div>
+
+      <h4>Estado del experimento</h4>
+      <p><span class="status-badge">V21.1 · EN DESARROLLO — BASELINE VALIDADO PENDIENTE</span></p>
+
+      <div class="fig-slot">
+        <span class="slot-tag">Resultado prospectivo V21.1 — pendiente</span>
+        <div class="slot-title">Espacio reservado para el baseline congelado y su evaluación</div>
+        <div class="slot-note">Se completará únicamente cuando el baseline supere los controles de calidad y finalice el horizonte de cinco meses. No debe rellenarse con resultados provisionales ni con la ejecución descartada.</div>
+      </div>
+
+      <p>Cuando finalice el horizonte, evaluaremos la posición del precio observado dentro de la distribución prevista y las diferentes métricas establecidas antes de conocer el resultado. La publicación podrá actualizarse entonces sin modificar retrospectivamente la predicción original.</p>
+    </section>
+
+    <section class="chapter" id="reproducibilidad">
+      <h2>16. Reproducibilidad computacional</h2>
+      <p>Los experimentos fueron desarrollados en Python utilizando rutinas reproducibles para adquisición y transformación de datos, análisis estadístico, econometría y simulación. Dependiendo de la pregunta se utilizaron series diarias o mensuales.</p>
+      <p>El historial bursátil máximo utilizado superó las 11,500 observaciones diarias, mientras que determinados modelos contemporáneos emplearon ventanas más recientes.</p>
+      <p>Las simulaciones Monte Carlo utilizaron hasta:</p>
+      <div class="eq" data-tex="N=100,000"></div>
+      <p>iteraciones, utilizando semillas pseudoaleatorias controladas cuando correspondía.</p>
+      <p>Para las pruebas predictivas, las observaciones fueron separadas temporalmente, manteniendo información posterior fuera del conjunto utilizado para estimar los modelos.</p>
+      <p>Se evaluaron, dependiendo del experimento:</p>
+      <ul class="limits">
+        <li><span data-tex-inline="R^2"></span>;</li>
+        <li><span data-tex-inline="R^2"></span> ajustado;</li>
+        <li>MAE;</li>
+        <li>RMSE;</li>
+        <li>precisión direccional;</li>
+        <li>volatilidad;</li>
+        <li>VaR;</li>
+        <li>drawdown;</li>
+        <li>distribuciones y percentiles simulados.</li>
+      </ul>
+      <p>Los resultados dentro y fuera de muestra se presentan conjuntamente para evitar confundir capacidad explicativa con capacidad predictiva.</p>
+      <div class="callout">
+        <div class="tag">Alcance de la implementación pública</div>
+        <p>La investigación documenta los principales métodos necesarios para interpretar y evaluar los resultados. Determinados componentes posteriores de integración y decisión desarrollados por Kairos no forman parte de la implementación pública.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="limitaciones">
+      <h2>17. Limitaciones</h2>
+      <p>Apple Lab presenta varias limitaciones que deben considerarse al interpretar sus resultados.</p>
+      <ul class="limits">
+        <li><strong>Primera — dependencia de supuestos:</strong> las distribuciones obtenidas mediante Monte Carlo dependen de las distribuciones y parámetros especificados.</li>
+        <li><strong>Segunda — cambios estructurales:</strong> Apple y los mercados financieros han cambiado significativamente durante el período analizado.</li>
+        <li><strong>Tercera — endogeneidad y causalidad:</strong> las relaciones observadas mediante regresión representan asociaciones estadísticas y no necesariamente mecanismos causales.</li>
+        <li><strong>Cuarta — incertidumbre macroeconómica:</strong> las variables económicas pueden publicarse con rezagos, revisarse posteriormente y reaccionar simultáneamente con los mercados ante información no observada.</li>
+        <li><strong>Quinta — tamaño de la prueba:</strong> la evaluación direccional fuera de muestra utiliza un número relativamente reducido de observaciones mensuales.</li>
+        <li><strong>Sexta — generalización:</strong> los resultados obtenidos con Apple no pueden extrapolarse automáticamente a otras empresas, sectores o clases de activos.</li>
+        <li><strong>Séptima — riesgo de modelo:</strong> elegir variables, ventanas temporales, transformaciones y especificaciones constituye en sí mismo una fuente adicional de incertidumbre.</li>
+      </ul>
+      <p>Por tanto, Apple Lab debe interpretarse como un experimento de análisis cuantitativo bajo incertidumbre, no como un sistema que elimina esa incertidumbre.</p>
+    </section>
+
+    <section class="chapter" id="aprendizajes">
+      <h2>18. ¿Qué aprendimos?</h2>
+      <p>El laboratorio produjo varias conclusiones.</p>
+      <div class="findings-grid">
+        <div class="finding-card">
+          <div class="n">01</div>
+          <h4>El riesgo es medible, pero condicional</h4>
+          <p>Podemos medir dimensiones importantes del riesgo, pero esas métricas dependen del período que observamos.</p>
+        </div>
+        <div class="finding-card">
+          <div class="n">02</div>
+          <h4>Las probabilidades heredan los supuestos</h4>
+          <p>Podemos generar miles de escenarios, pero sus probabilidades continúan condicionadas a nuestros supuestos.</p>
+        </div>
+        <div class="finding-card">
+          <div class="n">03</div>
+          <h4>Asociación no implica causalidad</h4>
+          <p>Podemos explicar una parte considerable de los movimientos históricos mediante factores de mercado, pero asociación no implica causalidad.</p>
+        </div>
+        <div class="finding-card">
+          <div class="n">04</div>
+          <h4>Más ajuste puede significar peor generalización</h4>
+          <p>Podemos aumentar el ajuste histórico incorporando variables y rezagos y simultáneamente empeorar el desempeño fuera de muestra.</p>
+        </div>
+        <div class="finding-card">
+          <div class="n">05</div>
+          <h4>Dirección y magnitud son problemas distintos</h4>
+          <p>En una muestra concreta, los modelos identificaron correctamente la dirección de una proporción mayoritaria de los rendimientos mensuales, aunque el reducido tamaño de la prueba impide interpretar este resultado como evidencia de una ventaja predictiva persistente. Acertar el signo de un rendimiento y estimar correctamente su magnitud siguen siendo problemas diferentes.</p>
+        </div>
+      </div>
+      <p>En conjunto, estos resultados cambian lo que entendemos por utilidad de un modelo financiero.</p>
+    </section>
+
+    <section class="chapter" id="conclusion">
+      <h2>19. Conclusión</h2>
+      <p>Apple Lab comenzó intentando responder cuánto podría valer una acción y terminó planteando una pregunta más interesante: <em>¿cuánto podemos saber realmente sobre su futuro?</em></p>
+      <p>Los datos permitieron medir riesgo, construir escenarios, analizar relaciones con el mercado, incorporar variables macroeconómicas y simular miles de resultados posibles. Pero las pruebas fuera de muestra introdujeron una limitación fundamental.</p>
+      <p>Un modelo que describe bien el pasado puede fracasar cuando enfrenta información nueva. Esto no vuelve inútil al análisis cuantitativo. Cambia su propósito.</p>
+      <p>En lugar de tratar un modelo como una máquina destinada a producir un precio futuro correcto, podemos utilizarlo para identificar riesgos, explicitar supuestos, comparar escenarios y estudiar qué tendría que ocurrir para que nuestra interpretación sea incorrecta.</p>
+      <p>Por ello, la principal conclusión de Apple Lab no es una predicción sobre Apple. Es una conclusión sobre incertidumbre:</p>
+      <div class="keyline">Los datos no nos permiten conocer el futuro. Nos permiten entender mejor qué tendría que ocurrir para que estemos equivocados.</div>
+    </section>
+
+    <section class="chapter" id="referencias">
+      <h2>20. Fuentes y referencias</h2>
+
+      <h4>Datos financieros</h4>
+      <div class="fig-slot">
+        <span class="slot-tag">Pendiente de documentar</span>
+        <div class="slot-note">En la versión final deberán documentarse las fuentes utilizadas para precios históricos, fundamentales, índices y empresas comparables, indicando período, frecuencia y fecha de consulta cuando corresponda.</div>
+      </div>
+
+      <h4>Datos macroeconómicos</h4>
+      <div class="fig-slot">
+        <span class="slot-tag">Pendiente de documentar</span>
+        <div class="slot-note">Documentar las fuentes originales correspondientes a inflación, desempleo, Federal Funds Rate, Treasury a 10 años y dólar estadounidense.</div>
+      </div>
+
+      <h4>Referencias metodológicas</h4>
+      <div class="fig-slot">
+        <span class="slot-tag">Pendiente de documentar</span>
+        <div class="slot-note">La bibliografía definitiva deberá incorporar referencias verificables para: Monte Carlo · Value at Risk · drawdown · regresión lineal · evaluación fuera de muestra · series temporales · overfitting.</div>
+      </div>
+      <div class="callout warn">
+        <div class="tag">Regla editorial</div>
+        <p>No deben incorporarse referencias no verificadas únicamente para completar formalmente la bibliografía.</p>
+      </div>
+
+      <h4>Nota metodológica y de uso</h4>
+      <p>Los resultados presentados corresponden a experimentos cuantitativos condicionados a datos, períodos y supuestos específicos. No representan garantías de rendimiento futuro ni sustituyen la evaluación individual de una inversión.</p>
+
+      <a class="code-btn" href="apple-lab-incertidumbre-inversion.html">← Volver a la publicación principal: Apple Lab: invertir bajo incertidumbre</a>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="serif" style="font-weight:600; color:var(--ink);"><a href="../index.html#investigacion" style="color:var(--ink); text-decoration:none;">← Volver a Investigación</a></div>
+      <div>Kairos Lab · Investigación aplicada · 2026 · Nota técnica de acompañamiento.</div>
+      <a class="switch-link" href="apple-lab-incertidumbre-inversion.html">← Volver a la publicación principal</a>
+    </div>
+    <div>Experimento cuantitativo bajo incertidumbre. No constituye asesoría de inversión.</div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.eq[data-tex]').forEach(function(el){
+    katex.render(el.getAttribute('data-tex'), el, { displayMode: true, throwOnError: false });
+  });
+  document.querySelectorAll('.eq-boxed[data-tex]').forEach(function(el){
+    katex.render(el.getAttribute('data-tex'), el, { displayMode: false, throwOnError: false });
+  });
+  document.querySelectorAll('[data-tex-inline]').forEach(function(el){
+    katex.render(el.getAttribute('data-tex-inline'), el, { displayMode: false, throwOnError: false });
+  });
+</script>
+
+</body>
+</html>

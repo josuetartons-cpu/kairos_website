@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nota técnica: desacoplamiento entre crecimiento económico y emisiones de CO2 en Guatemala — Kairos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<style>
+  :root{
+    --paper:#F3F1E8;
+    --panel:#FBFAF5;
+    --ink:#1A2420;
+    --ink-soft:#4B554F;
+    --line:#D8D3C1;
+    --teal:#1F6F5C;
+    --teal-soft:#E4EFEA;
+    --rust:#B5502E;
+    --rust-soft:#F6E7E0;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:"IBM Plex Sans", -apple-system, sans-serif;
+    font-size:16.5px; line-height:1.62;
+  }
+  .serif{font-family:"Source Serif 4", Georgia, serif;}
+  .num{font-family:"IBM Plex Mono", monospace;}
+  a{color:var(--teal);}
+  h1,h2,h3,h4{font-family:"Source Serif 4", Georgia, serif; font-weight:600; line-height:1.25; margin:0 0 0.7rem;}
+
+  header.masthead{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:1rem 1.5rem; border-bottom:1px solid var(--line);
+    font-size:0.92rem; position:sticky; top:0; z-index:20;
+    background:rgba(243,241,232,0.94); backdrop-filter:blur(6px);
+  }
+  header.masthead a{ text-decoration:none; color:var(--ink); }
+  header.masthead .brand{ font-weight:600; }
+  header.masthead .brand span{ color:var(--teal); }
+  header.masthead nav a{ color:var(--ink-soft); margin-left:1.4rem; border-bottom:1px solid transparent; }
+  header.masthead nav a:hover{ color:var(--teal); border-bottom-color:var(--teal); }
+
+  .layout{
+    max-width:1180px; margin:0 auto; padding:0 1.5rem 6rem;
+    display:grid; grid-template-columns:230px minmax(0,1fr); gap:3rem;
+  }
+
+  aside.toc{ position:sticky; top:4.2rem; align-self:start; padding-top:2.6rem; }
+  aside.toc ol{ list-style:none; margin:0; padding:0; counter-reset:toc; border-left:1px solid var(--line); }
+  aside.toc li{ counter-increment:toc; margin:0; }
+  aside.toc a{
+    display:block; padding:0.42rem 0 0.42rem 0.9rem; margin-left:-1px;
+    border-left:2px solid transparent; color:var(--ink-soft); text-decoration:none; font-size:0.86rem;
+  }
+  aside.toc a:hover{ color:var(--teal); border-left-color:var(--teal); }
+  aside.toc a::before{ content: counter(toc) "  "; font-family:"IBM Plex Mono", monospace; color:var(--ink-soft); font-size:0.78rem; }
+
+  main{ min-width:0; padding-top:2.6rem; }
+
+  .hero .kicker{ font-size:0.92rem; color:var(--ink-soft); margin-bottom:0.9rem; }
+  .kicker-link{ color:var(--teal); text-decoration:none; font-weight:600; }
+  .kicker-link:hover{ text-decoration:underline; }
+  .hero h1.serif{ font-size:2.1rem; letter-spacing:-0.01em; max-width:42rem; }
+  .hero .subtitle{ font-size:1.05rem; color:var(--ink-soft); margin-top:0.8rem; max-width:42rem; }
+
+  .banner{
+    background:var(--rust-soft); border:1px solid #E3C4B2; border-radius:3px;
+    padding:1.3rem 1.5rem; margin:1.8rem 0 2.6rem; max-width:44rem;
+  }
+  .banner h3{ font-size:0.98rem; color:var(--rust); margin-bottom:0.4rem; }
+  .banner p{ margin:0; font-size:0.96rem; }
+
+  section.chapter{ margin:3.4rem 0; scroll-margin-top:4.4rem; padding-top:0.4rem; border-top:1px solid var(--line); }
+  section.chapter:first-of-type{ border-top:none; }
+  section.chapter h2{ font-size:1.5rem; margin-bottom:1rem; }
+  section.chapter h4{ font-size:1.02rem; margin-top:1.6rem; }
+  section.chapter p{ max-width:44rem; margin:0 0 1rem; }
+  section.chapter > .full{ max-width:100%; }
+
+  table{ border-collapse:collapse; width:100%; margin:1.2rem 0 1.8rem; font-size:0.9rem; background:var(--panel); }
+  caption{ text-align:left; font-size:0.82rem; color:var(--ink-soft); margin-bottom:0.4rem; caption-side:top; }
+  th,td{ border:1px solid var(--line); padding:0.5rem 0.7rem; text-align:right; }
+  th{ background:#EFEBDD; font-weight:600; text-align:right; }
+  td:first-child, th:first-child{ text-align:left; }
+  tbody tr:hover{ background:#F1EFE3; }
+  .tw{ overflow-x:auto; }
+
+  .eq{ margin:1.3rem 0; padding:0.4rem 0; overflow-x:auto; max-width:100%; }
+  .eq-boxed{ display:inline-block; padding:0.45rem 1rem; border:1.5px solid var(--ink); border-radius:3px; margin:0.5rem 0; }
+
+  .param-grid{
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:0.7rem; margin:1.4rem 0 2rem;
+  }
+  .param-card{ background:var(--panel); border:1px solid var(--line); border-radius:3px; padding:0.8rem 1rem; }
+  .param-card .k{ font-size:0.78rem; color:var(--ink-soft); }
+  .param-card .v{ font-family:"IBM Plex Mono", monospace; font-size:1.05rem; margin-top:0.15rem; }
+
+  .callout{
+    background:var(--teal-soft); border-left:3px solid var(--teal);
+    padding:1rem 1.3rem; margin:1.6rem 0; max-width:44rem; border-radius:0 3px 3px 0;
+  }
+  .callout .tag{ font-size:0.76rem; color:var(--teal); font-weight:600; margin-bottom:0.3rem; }
+  .callout p{ margin:0; max-width:none; }
+
+  .callout.warn{ background:var(--rust-soft); border-left-color:var(--rust); }
+  .callout.warn .tag{ color:var(--rust); }
+
+  figure{ margin:2rem 0; max-width:52rem; }
+  figure img{ width:100%; height:auto; border:1px solid var(--line); border-radius:3px; background:#fff; }
+  figcaption{ font-size:0.82rem; color:var(--ink-soft); margin-top:0.5rem; }
+
+  ul.limits{ max-width:44rem; padding-left:1.2rem; }
+  ul.limits li{ margin-bottom:0.5rem; }
+
+  .findings-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:1rem; margin:1.4rem 0 2rem; max-width:none; }
+  .finding-card{ background:var(--panel); border:1px solid var(--line); border-radius:3px; padding:1.1rem 1.2rem; }
+  .finding-card .n{ font-family:"IBM Plex Mono", monospace; color:var(--teal); font-size:0.8rem; margin-bottom:0.4rem; }
+  .finding-card h4{ margin-top:0; font-size:1rem; }
+  .finding-card p{ margin:0; font-size:0.92rem; max-width:none; }
+
+  .stat-strip{ display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1rem; margin:1.6rem 0 2rem; }
+  .stat-card{ background:var(--panel); border:1px solid var(--line); border-radius:3px; padding:1rem 1.1rem; text-align:center; }
+  .stat-card .v{ font-family:"IBM Plex Mono", monospace; font-size:1.5rem; color:var(--teal); }
+  .stat-card .v.rust{ color:var(--rust); }
+  .stat-card .k{ font-size:0.8rem; color:var(--ink-soft); margin-top:0.3rem; }
+
+  .var-code{ font-family:"IBM Plex Mono", monospace; font-size:0.85rem; }
+
+  .placeholder{ background:#FDF3D8; border:1px dashed #C7A93A; border-radius:3px; padding:0.15rem 0.5rem; font-size:0.85em; color:#7A6412; }
+
+  footer{
+    border-top:1px solid var(--line); padding:2.2rem 1.5rem;
+    font-size:0.86rem; color:var(--ink-soft);
+  }
+  footer .footer-inner{ max-width:1180px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; gap:1rem; }
+  footer a{ color:var(--ink-soft); }
+  .switch-link{ display:inline-block; margin-top:0.4rem; font-size:0.9rem; color:var(--teal); text-decoration:none; border-bottom:1px solid var(--teal); }
+  .code-btn{ display:inline-block; margin-top:0.9rem; font-size:0.9rem; color:var(--teal); text-decoration:none; border-bottom:1px solid var(--teal); font-weight:600; }
+
+  details.toc-mobile{ display:none; }
+
+  @media (max-width:900px){
+    .layout{ grid-template-columns:1fr; }
+    aside.toc{ display:none; }
+    details.toc-mobile{
+      display:block; position:static; margin:1.6rem 0 0; background:var(--panel);
+      border:1px solid var(--line); border-radius:3px; padding:0.7rem 1rem;
+    }
+    details.toc-mobile summary{ font-weight:600; cursor:pointer; font-size:0.92rem; }
+    details.toc-mobile ol{ list-style:none; counter-reset:toc2; padding-left:0; margin:0.7rem 0 0; }
+    details.toc-mobile li{ counter-increment:toc2; padding:0.3rem 0; font-size:0.88rem; }
+    details.toc-mobile a{ color:var(--ink-soft); text-decoration:none; }
+    details.toc-mobile a::before{ content: counter(toc2) ". "; font-family:"IBM Plex Mono", monospace; }
+    main{ padding-top:0; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <a class="brand" href="../index.html">Kairos</a>
+  <nav>
+    <a href="guatemala-crecimiento-emisiones.html">← Volver a la publicación principal</a>
+  </nav>
+</header>
+
+<div class="layout">
+
+  <aside class="toc">
+    <ol>
+      <li><a href="#preguntas">Preguntas de investigación</a></li>
+      <li><a href="#marco-conceptual">Marco conceptual: desacoplamiento</a></li>
+      <li><a href="#datos">Datos</a></li>
+      <li><a href="#construccion-variables">Construcción de variables</a></li>
+      <li><a href="#resultados-2000-2024">Resultados 2000–2024</a></li>
+      <li><a href="#subperiodos">Análisis por subperíodos</a></li>
+      <li><a href="#modelo-pib-co2">Modelo PIB–CO2: niveles y diferencias</a></li>
+      <li><a href="#sensibilidad-pandemia">Sensibilidad al shock 2020–2021</a></li>
+      <li><a href="#renovables-intensidad">Renovables e intensidad de carbono</a></li>
+      <li><a href="#electricidad-renovable">Electricidad renovable</a></li>
+      <li><a href="#tabla-consolidada">Tabla econométrica consolidada</a></li>
+      <li><a href="#diagnosticos">Diagnósticos y extensiones</a></li>
+      <li><a href="#hallazgos">Qué encontramos / qué no</a></li>
+      <li><a href="#limitaciones">Limitaciones</a></li>
+      <li><a href="#reproducibilidad">Código · Reproducir</a></li>
+      <li><a href="#referencias">Referencias</a></li>
+      <li><a href="#conclusion">Conclusión</a></li>
+    </ol>
+  </aside>
+
+  <main>
+
+    <div class="hero">
+      <p class="kicker"><a href="guatemala-crecimiento-emisiones.html" class="kicker-link">Kairos · Investigación</a> · Nota técnica</p>
+      <h1 class="serif">Desacoplamiento entre crecimiento económico y emisiones de CO2 en Guatemala, 2000–2024</h1>
+      <p class="subtitle">Datos, metodología, resultados econométricos y pruebas de robustez</p>
+    </div>
+
+    <div class="banner">
+      <h3>Estudio exploratorio, no una estrategia de identificación causal</h3>
+      <p>Esta nota es econométrico-descriptiva. Combina medidas descriptivas, índices normalizados, elasticidades, regresiones log-log, primeras diferencias y pruebas de sensibilidad para caracterizar la relación entre PIB y emisiones en Guatemala. Ningún resultado debe leerse como prueba de causalidad; la sección de <a href="#limitaciones">limitaciones</a> detalla por qué.</p>
+    </div>
+
+    <p style="max-width:44rem;">Esta nota técnica analiza la relación entre crecimiento económico y emisiones de dióxido de carbono en Guatemala entre 2000 y 2024. El objetivo es evaluar si la economía guatemalteca presenta evidencia de desacoplamiento entre actividad económica y emisiones, y explorar si la composición energética está asociada con cambios en la intensidad de carbono. El análisis utiliza datos anuales de World Development Indicators del Banco Mundial, combinando medidas descriptivas, índices normalizados, elasticidades, regresiones log-log, primeras diferencias y pruebas de sensibilidad.</p>
+
+    <p style="max-width:44rem;">Los resultados muestran que entre 2000 y 2024 el PIB real aumentó aproximadamente 126.8%, mientras las emisiones de CO2 aumentaron 110.4%. La intensidad de carbono disminuyó aproximadamente 7.23%. Estos resultados son consistentes con desacoplamiento relativo, pero no con desacoplamiento absoluto. La relación entre cambios anuales del PIB y emisiones es altamente sensible a las observaciones correspondientes a 2020 y 2021. Finalmente, una mayor participación de energía renovable en el consumo final está asociada consistentemente con menor intensidad de carbono bajo distintas especificaciones — el diseño del estudio, sin embargo, no permite establecer causalidad.</p>
+
+    <details class="toc-mobile">
+      <summary>Contenido de esta nota</summary>
+      <ol>
+        <li><a href="#preguntas">Preguntas de investigación</a></li>
+        <li><a href="#marco-conceptual">Marco conceptual: desacoplamiento</a></li>
+        <li><a href="#datos">Datos</a></li>
+        <li><a href="#construccion-variables">Construcción de variables</a></li>
+        <li><a href="#resultados-2000-2024">Resultados 2000–2024</a></li>
+        <li><a href="#subperiodos">Análisis por subperíodos</a></li>
+        <li><a href="#modelo-pib-co2">Modelo PIB–CO2: niveles y diferencias</a></li>
+        <li><a href="#sensibilidad-pandemia">Sensibilidad al shock 2020–2021</a></li>
+        <li><a href="#renovables-intensidad">Renovables e intensidad de carbono</a></li>
+        <li><a href="#electricidad-renovable">Electricidad renovable</a></li>
+        <li><a href="#tabla-consolidada">Tabla econométrica consolidada</a></li>
+        <li><a href="#diagnosticos">Diagnósticos y extensiones</a></li>
+        <li><a href="#hallazgos">Qué encontramos / qué no</a></li>
+        <li><a href="#limitaciones">Limitaciones</a></li>
+        <li><a href="#reproducibilidad">Código · Reproducir</a></li>
+        <li><a href="#referencias">Referencias</a></li>
+        <li><a href="#conclusion">Conclusión</a></li>
+      </ol>
+    </details>
+
+    <section class="chapter" id="preguntas">
+      <h2>1. Preguntas de investigación</h2>
+      <p>Esta nota busca responder tres preguntas:</p>
+      <ol style="max-width:44rem; padding-left:1.2rem;">
+        <li>¿Existe evidencia de desacoplamiento entre PIB real y emisiones de CO2 en Guatemala entre 2000 y 2024?</li>
+        <li>¿La relación entre crecimiento económico y emisiones es estable a lo largo del tiempo?</li>
+        <li>¿La composición energética está asociada con una menor intensidad de carbono?</li>
+      </ol>
+      <div class="callout warn">
+        <div class="tag">Naturaleza del estudio</div>
+        <p>El estudio es exploratorio y econométrico-descriptivo. No constituye una estrategia de identificación causal.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="marco-conceptual">
+      <h2>2. Marco conceptual: desacoplamiento</h2>
+      <p>El desacoplamiento describe una reducción del vínculo entre crecimiento económico y presión ambiental. La literatura distingue dos grados principales:</p>
+      <div class="param-grid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr));">
+        <div class="param-card">
+          <div class="k">Desacoplamiento relativo</div>
+          <div class="v" style="font-family:inherit; font-size:0.95rem; font-weight:400;">El PIB aumenta y las emisiones también, pero las emisiones crecen más lentamente.</div>
+        </div>
+        <div class="param-card">
+          <div class="k">Desacoplamiento absoluto</div>
+          <div class="v" style="font-family:inherit; font-size:0.95rem; font-weight:400;">El PIB aumenta mientras las emisiones disminuyen.</div>
+        </div>
+      </div>
+      <p>Se utiliza como referencia conceptual la literatura de Peter Tapio sobre grados de desacoplamiento y el marco utilizado por la OCDE (ver <a href="#referencias">referencias</a>), sin pretender una revisión extensa de literatura.</p>
+    </section>
+
+    <section class="chapter" id="datos">
+      <h2>3. Datos</h2>
+      <p>Todas las variables provienen de World Development Indicators del Banco Mundial:</p>
+      <div class="tw">
+      <table>
+        <caption>Variables utilizadas y sus códigos en el Banco Mundial.</caption>
+        <thead><tr><th>Variable</th><th>Código Banco Mundial</th><th>Descripción</th></tr></thead>
+        <tbody>
+          <tr><td>PIB real</td><td class="var-code">NY.GDP.MKTP.KD</td><td style="text-align:left;">GDP (constant 2015 US$)</td></tr>
+          <tr><td>CO2 total</td><td class="var-code">EN.GHG.CO2.MT.CE.AR5</td><td style="text-align:left;">Carbon dioxide emissions excluding LULUCF (Mt CO2e)</td></tr>
+          <tr><td>Energía renovable</td><td class="var-code">EG.FEC.RNEW.ZS</td><td style="text-align:left;">Renewable energy consumption (% of total final energy consumption)</td></tr>
+          <tr><td>Electricidad renovable</td><td class="var-code">EG.ELC.RNEW.ZS</td><td style="text-align:left;">Renewable electricity output (% of total electricity output)</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>Fuente: World Bank — World Development Indicators. El período principal es 2000–2024. Las variables energéticas tienen menor disponibilidad temporal y se utilizan hasta el último año con observaciones disponibles; en este experimento, las series energéticas utilizadas llegan hasta 2021.</p>
+    </section>
+
+    <section class="chapter" id="construccion-variables">
+      <h2>4. Construcción de variables</h2>
+
+      <h4>Por qué utilizamos PIB real</h4>
+      <p>Utilizamos PIB en dólares constantes de 2015 para evitar confundir crecimiento real de producción con cambios puramente nominales derivados de precios o inflación. No se utiliza PIB nominal en el análisis principal.</p>
+
+      <h4>Definición de emisiones</h4>
+      <p>Las emisiones utilizadas corresponden a <span class="var-code">EN.GHG.CO2.MT.CE.AR5</span>: Carbon dioxide emissions excluding LULUCF (Land Use, Land-Use Change and Forestry). Esta decisión implica que el experimento no estudia directamente las emisiones derivadas del cambio de uso de la tierra y el sector forestal — una precisión especialmente importante para interpretar el caso guatemalteco.</p>
+
+      <h4>Energía renovable: dos variables distintas</h4>
+      <p>Distinguimos cuidadosamente entre dos indicadores, porque producen resultados econométricos diferentes:</p>
+      <div class="callout warn">
+        <div class="tag">Advertencia sobre EG.FEC.RNEW.ZS</div>
+        <p><strong>Consumo final renovable</strong> (<span class="var-code">EG.FEC.RNEW.ZS</span>): energía renovable como porcentaje del consumo final total. Puede incluir biomasa y otras fuentes renovables tradicionales — no debe interpretarse exclusivamente como solar, eólica o generación eléctrica moderna.</p>
+      </div>
+      <p><strong>Electricidad renovable</strong> (<span class="var-code">EG.ELC.RNEW.ZS</span>): electricidad renovable como porcentaje de la generación eléctrica.</p>
+
+      <h4>Tasas de crecimiento e intensidad de carbono</h4>
+      <p>Crecimiento del PIB:</p>
+      <div class="eq" data-tex="g^{PIB}_t = 100\left(\frac{PIB_t}{PIB_{t-1}}-1\right)"></div>
+      <p>Crecimiento del CO2:</p>
+      <div class="eq" data-tex="g^{CO2}_t = 100\left(\frac{CO2_t}{CO2_{t-1}}-1\right)"></div>
+      <p>Intensidad de carbono:</p>
+      <div class="eq" data-tex="IC_t = \frac{CO2_t}{PIB_t}"></div>
+      <p>Para obtener una unidad interpretable:</p>
+      <div class="eq" data-tex="IC^{kg/USD}_t = \frac{CO2_t}{PIB_t}\times 10^{9}"></div>
+      <p>Dado que <span class="num">1 Mt = 10⁹ kg</span>, la variable representa kilogramos de CO2e por dólar constante de 2015 de PIB.</p>
+
+      <h4>Índices normalizados</h4>
+      <p>Construimos índices con base 2000 = 100. Para PIB:</p>
+      <div class="eq" data-tex="I^{PIB}_t = 100\,\frac{PIB_t}{PIB_{2000}}"></div>
+      <p>Para CO2:</p>
+      <div class="eq" data-tex="I^{CO2}_t = 100\,\frac{CO2_t}{CO2_{2000}}"></div>
+      <p>Esto permite comparar directamente las trayectorias acumuladas de ambas variables aunque estén expresadas originalmente en unidades distintas.</p>
+
+      <h4>Elasticidad descriptiva</h4>
+      <div class="eq" data-tex="\varepsilon = \frac{\%\Delta CO2}{\%\Delta PIB}"></div>
+      <p>Interpretación simplificada: <span class="num">ε &gt; 1</span> indica que las emisiones crecen más rápido que el PIB; <span class="num">0 &lt; ε &lt; 1</span> es compatible con desacoplamiento relativo; <span class="num">ε &lt; 0</span>, cuando el PIB crece, es compatible con desacoplamiento absoluto. Esta clasificación no se presenta como una prueba causal.</p>
+      <div class="callout">
+        <div class="tag">Dos estimadores distintos</div>
+        <p>La elasticidad punta a punta (≈0.908) y el coeficiente de la regresión log-log (≈0.970) no son el mismo estimador. La primera compara únicamente los valores extremos de la serie, 2000 y 2024, e ignora la trayectoria intermedia. El segundo se estima utilizando todas las observaciones anuales del período. No deben interpretarse como versiones equivalentes de una misma cantidad.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="resultados-2000-2024">
+      <h2>5. Resultados 2000–2024</h2>
+
+      <figure>
+        <img src="assets/guatemala-co2/01_pib_emisiones.png" alt="Guatemala: crecimiento económico y emisiones de CO2, índice 2000=100">
+        <figcaption>Guatemala: crecimiento económico y emisiones de CO2. Índice 2000 = 100.</figcaption>
+      </figure>
+
+      <div class="stat-strip">
+        <div class="stat-card"><div class="v">+126.8%</div><div class="k">PIB real</div></div>
+        <div class="stat-card"><div class="v">+110.4%</div><div class="k">Emisiones CO2</div></div>
+        <div class="stat-card"><div class="v rust">−7.23%</div><div class="k">Intensidad de carbono</div></div>
+        <div class="stat-card"><div class="v">≈0.908</div><div class="k">Elasticidad punta a punta</div></div>
+      </div>
+
+      <p>La economía guatemalteca produjo considerablemente más output económico en 2024 que en 2000, y las emisiones también aumentaron. Sin embargo, el PIB aumentó algo más rápido que las emisiones, lo cual es consistente con desacoplamiento relativo. No existe evidencia de desacoplamiento absoluto de largo plazo, porque las emisiones totales aumentaron aproximadamente 110%.</p>
+    </section>
+
+    <section class="chapter" id="subperiodos">
+      <h2>6. Análisis por subperíodos</h2>
+      <div class="tw">
+      <table>
+        <caption>PIB, CO2 y elasticidad aproximada por subperíodo.</caption>
+        <thead><tr><th>Período</th><th>PIB real</th><th>CO2</th><th>Elasticidad aproximada</th></tr></thead>
+        <tbody>
+          <tr><td>2000–2007</td><td class="num">+30.0%</td><td class="num">+31.2%</td><td class="num">1.03</td></tr>
+          <tr><td>2008–2014</td><td class="num">+20.1%</td><td class="num">+25.7%</td><td class="num">1.24</td></tr>
+          <tr><td>2015–2019</td><td class="num">+13.8%</td><td class="num">+16.0%</td><td class="num">1.14</td></tr>
+          <tr><td>2020–2024</td><td class="num">+20.8%</td><td class="num">+15.6%</td><td class="num">0.77</td></tr>
+          <tr><td>2021–2024</td><td class="num">+11.8%</td><td class="num">+0.8%</td><td class="num">0.073</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>Los primeros períodos presentan un vínculo relativamente estrecho entre crecimiento y emisiones. La divergencia se hace mucho más visible recientemente: entre 2021 y 2024, el PIB creció aproximadamente 11.8%, mientras las emisiones apenas aumentaron alrededor de 0.8%.</p>
+      <div class="callout warn">
+        <div class="tag">Interpretar con cautela</div>
+        <p>Cuatro observaciones no son suficientes para concluir que Guatemala haya experimentado un cambio estructural permanente.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="modelo-pib-co2">
+      <h2>7. Modelo econométrico: niveles y primeras diferencias</h2>
+
+      <h4>Modelo en niveles</h4>
+      <div class="eq" data-tex="\ln(CO2_t) = \alpha + \beta\ln(PIB_t) + \varepsilon_t"></div>
+      <div class="param-grid">
+        <div class="param-card"><div class="k">β̂</div><div class="v">0.96990</div></div>
+        <div class="param-card"><div class="k">p-value</div><div class="v">8.89×10⁻¹⁵</div></div>
+        <div class="param-card"><div class="k">R²</div><div class="v">0.930</div></div>
+      </div>
+      <p>El coeficiente puede interpretarse como una elasticidad asociativa.</p>
+      <div class="callout warn">
+        <div class="tag">Precaución: tendencias comunes</div>
+        <p>PIB y emisiones presentan tendencias persistentes. Una regresión en niveles puede producir una relación estadística muy fuerte aunque parte de esa asociación provenga simplemente de que ambas variables evolucionan en el tiempo. Por ello complementamos el análisis con primeras diferencias. El R² elevado no se presenta como evidencia causal.</p>
+      </div>
+
+      <h4>Primeras diferencias</h4>
+      <div class="eq" data-tex="\Delta\ln(CO2_t) = \alpha + \beta\Delta\ln(PIB_t) + \varepsilon_t"></div>
+      <div class="param-grid">
+        <div class="param-card"><div class="k">β̂</div><div class="v">1.84248</div></div>
+        <div class="param-card"><div class="k">p-value</div><div class="v">0.0138</div></div>
+        <div class="param-card"><div class="k">R²</div><div class="v">0.2455</div></div>
+      </div>
+
+      <figure>
+        <img src="assets/guatemala-co2/02_variaciones_anuales.png" alt="Cambios logarítmicos anuales del PIB y CO2, por año">
+        <figcaption>Cambios logarítmicos anuales del PIB y CO2, identificando cada observación por año.</figcaption>
+      </figure>
+    </section>
+
+    <section class="chapter" id="sensibilidad-pandemia">
+      <h2>8. Sensibilidad al shock 2020–2021</h2>
+      <p>2020 y 2021 son observaciones extraordinarias asociadas con la pandemia y la recuperación posterior. Al excluirlas como prueba de sensibilidad:</p>
+      <div class="param-grid">
+        <div class="param-card"><div class="k">β̂</div><div class="v">0.47326</div></div>
+        <div class="param-card"><div class="k">p-value</div><div class="v">0.6845</div></div>
+        <div class="param-card"><div class="k">R²</div><div class="v">0.0084</div></div>
+      </div>
+      <p>La relación anual prácticamente desaparece.</p>
+      <div class="callout">
+        <div class="tag">Interpretación correcta</div>
+        <p>2020 y 2021 no son observaciones incorrectas ni deben eliminarse del análisis principal. La prueba demuestra que la asociación encontrada en primeras diferencias es altamente sensible a un shock macroeconómico extraordinario.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="renovables-intensidad">
+      <h2>9. Energía renovable e intensidad de carbono</h2>
+
+      <div class="eq" data-tex="\ln(IC_t) = \alpha + \beta\,Renovables_t + \varepsilon_t"></div>
+      <div class="param-grid">
+        <div class="param-card"><div class="k">β̂</div><div class="v">−0.032179</div></div>
+        <div class="param-card"><div class="k">p-value</div><div class="v">2.025×10⁻⁶</div></div>
+        <div class="param-card"><div class="k">R²</div><div class="v">0.6847</div></div>
+      </div>
+      <p>Interpretación aproximada: un punto porcentual adicional de energía renovable en el consumo final está asociado con una intensidad de carbono aproximadamente 3.2% menor. Por tratarse de un modelo semi-log, la transformación exacta es <span class="num">100(e^β − 1)</span>, de modo que el 3.2% es una aproximación.</p>
+
+      <figure>
+        <img src="assets/guatemala-co2/03_renovables_intensidad.png" alt="Guatemala: energía renovable e intensidad de carbono, 2000-2021">
+        <figcaption>Guatemala: energía renovable e intensidad de carbono. Datos disponibles: 2000–2021.</figcaption>
+      </figure>
+
+      <h4>Control por tendencia temporal</h4>
+      <div class="eq" data-tex="\ln(IC_t) = \alpha + \beta\,Renovables_t + \gamma\,t + \varepsilon_t"></div>
+      <p>donde <span class="num">t</span> es una tendencia temporal lineal (el año de la observación).</p>
+      <div class="param-grid">
+        <div class="param-card"><div class="k">β̂ (renovables)</div><div class="v">−0.032339</div></div>
+        <div class="param-card"><div class="k">p-value</div><div class="v">3.133×10⁻⁶</div></div>
+      </div>
+      <p>La tendencia temporal no resulta estadísticamente significativa. El coeficiente de renovables permanece prácticamente inalterado al incorporar una tendencia temporal, lo que reduce —pero no elimina— la posibilidad de que la asociación sea producto de tendencias comunes u otras variables omitidas.</p>
+
+      <h4>Renovables en primeras diferencias</h4>
+      <div class="param-grid">
+        <div class="param-card"><div class="k">β̂</div><div class="v">−0.026674</div></div>
+        <div class="param-card"><div class="k">p-value</div><div class="v">5.349×10⁻⁶</div></div>
+        <div class="param-card"><div class="k">R²</div><div class="v">0.6725</div></div>
+      </div>
+      <p>La relación negativa también aparece al analizar variaciones interanuales, lo que fortalece la robustez descriptiva del resultado. La asociación persiste bajo esta especificación; esto no demuestra que las renovables reduzcan emisiones.</p>
+
+      <h4>Observaciones influyentes</h4>
+      <p>Utilizamos distancia de Cook. Con aproximadamente 22 observaciones, <span class="num">4/n ≈ 0.182</span>. La observación de 2001 presenta una distancia de Cook de aproximadamente <span class="num">0.475</span>. Al excluir 2001 únicamente como prueba de sensibilidad:</p>
+      <div class="param-grid">
+        <div class="param-card"><div class="k">β̂</div><div class="v">−0.036418</div></div>
+        <div class="param-card"><div class="k">p-value</div><div class="v">7.656×10⁻⁷</div></div>
+        <div class="param-card"><div class="k">R²</div><div class="v">0.732</div></div>
+      </div>
+      <p>La asociación negativa no depende exclusivamente de esa observación. La observación de 2001 no se elimina del modelo principal.</p>
+    </section>
+
+    <section class="chapter" id="electricidad-renovable">
+      <h2>10. Electricidad renovable</h2>
+      <p>Aquí mostramos deliberadamente que no todos los resultados cuentan la misma historia.</p>
+
+      <h4>Modelo en niveles</h4>
+      <div class="param-grid">
+        <div class="param-card"><div class="k">β̂</div><div class="v">−0.00178482</div></div>
+        <div class="param-card"><div class="k">p-value</div><div class="v">0.3843</div></div>
+        <div class="param-card"><div class="k">R²</div><div class="v">0.03805</div></div>
+      </div>
+      <p>No existe evidencia estadística clara de asociación en niveles. Con tendencia temporal, β̂ ≈ −0.003834 (p-value = 0.1857); tampoco resulta estadísticamente significativo.</p>
+
+      <figure>
+        <img src="assets/guatemala-co2/04_electricidad_renovable.png" alt="Guatemala: electricidad renovable e intensidad de carbono, 2000-2021">
+        <figcaption>Guatemala: electricidad renovable e intensidad de carbono. Datos: 2000–2021. El amplio intervalo de confianza visible en la gráfica es información, no un defecto visual.</figcaption>
+      </figure>
+
+      <h4>Primeras diferencias</h4>
+      <div class="param-grid">
+        <div class="param-card"><div class="k">β̂</div><div class="v">−0.0045106</div></div>
+        <div class="param-card"><div class="k">p-value</div><div class="v">0.00866</div></div>
+      </div>
+      <div class="callout">
+        <div class="tag">Interpretación prudente</div>
+        <p>Aquí sí encontramos una asociación negativa estadísticamente significativa entre cambios anuales. La evidencia para electricidad renovable depende de la especificación utilizada: no encontramos una asociación clara en niveles, pero sí una relación negativa en variaciones anuales.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="tabla-consolidada">
+      <h2>11. Tabla econométrica consolidada</h2>
+      <div class="tw">
+      <table>
+        <caption>Resumen de todas las especificaciones estimadas.</caption>
+        <thead><tr><th>Modelo</th><th>β</th><th>p-value</th><th>R²</th><th>Interpretación</th></tr></thead>
+        <tbody>
+          <tr><td>PIB–CO2 · niveles</td><td class="num">0.970</td><td class="num">&lt;0.001</td><td class="num">0.930</td><td style="text-align:left;">Asociación fuerte en niveles</td></tr>
+          <tr><td>PIB–CO2 · cambios</td><td class="num">1.842</td><td class="num">0.014</td><td class="num">0.246</td><td style="text-align:left;">Sensible a pandemia</td></tr>
+          <tr><td>PIB–CO2 · sin 2020–21</td><td class="num">0.473</td><td class="num">0.685</td><td class="num">0.008</td><td style="text-align:left;">Sin asociación clara</td></tr>
+          <tr><td>Renovables · niveles</td><td class="num">−0.0322</td><td class="num">&lt;0.001</td><td class="num">0.685</td><td style="text-align:left;">Asociación negativa</td></tr>
+          <tr><td>Renovables + tendencia</td><td class="num">−0.0323</td><td class="num">&lt;0.001</td><td class="num">—</td><td style="text-align:left;">Resultado persiste</td></tr>
+          <tr><td>Renovables · cambios</td><td class="num">−0.0267</td><td class="num">&lt;0.001</td><td class="num">0.673</td><td style="text-align:left;">Resultado persiste</td></tr>
+          <tr><td>Renovables · sin 2001</td><td class="num">−0.0364</td><td class="num">&lt;0.001</td><td class="num">0.732</td><td style="text-align:left;">Robusto a influencia</td></tr>
+          <tr><td>Electricidad renovable · niveles</td><td class="num">−0.0018</td><td class="num">0.384</td><td class="num">0.038</td><td style="text-align:left;">Sin evidencia clara</td></tr>
+          <tr><td>Electricidad renovable · cambios</td><td class="num">−0.00451</td><td class="num">0.0087</td><td class="num">—</td><td style="text-align:left;">Asociación negativa</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+
+    <section class="chapter" id="diagnosticos">
+      <h2>12. Diagnósticos y extensiones</h2>
+      <p>Todavía no hemos ejecutado, en la versión reproducible definitiva de este experimento, las siguientes pruebas:</p>
+      <ul class="limits">
+        <li>Breusch–Pagan (heterocedasticidad)</li>
+        <li>Durbin–Watson (autocorrelación)</li>
+        <li>Errores estándar robustos HC</li>
+        <li>Errores estándar Newey–West</li>
+      </ul>
+      <p>Estas son extensiones previstas para una siguiente iteración metodológica. No se afirma que los modelos presentados hayan "superado" esas pruebas.</p>
+    </section>
+
+    <section class="chapter" id="hallazgos">
+      <h2>13. Qué encontramos y qué no encontramos</h2>
+
+      <h4>Qué encontramos</h4>
+      <div class="findings-grid">
+        <div class="finding-card">
+          <div class="n">01</div>
+          <h4>Desacoplamiento relativo, no absoluto</h4>
+          <p>Entre 2000 y 2024 el PIB creció más que las emisiones, pero las emisiones también aumentaron considerablemente.</p>
+        </div>
+        <div class="finding-card">
+          <div class="n">02</div>
+          <h4>El vínculo anual PIB–CO2 es inestable</h4>
+          <p>La asociación encontrada en primeras diferencias depende fuertemente de 2020–2021.</p>
+        </div>
+        <div class="finding-card">
+          <div class="n">03</div>
+          <h4>La composición energética está asociada con la intensidad de carbono, pero la evidencia no identifica causalidad.</h4>
+          <p>El consumo final renovable presenta una asociación negativa particularmente consistente con la intensidad de carbono. La electricidad renovable presenta resultados más débiles y dependientes de la especificación.</p>
+        </div>
+      </div>
+
+      <h4>Qué NO encontramos</h4>
+      <p>No encontramos evidencia suficiente para afirmar que:</p>
+      <ul class="limits">
+        <li>Guatemala haya alcanzado desacoplamiento absoluto estructural;</li>
+        <li>las energías renovables hayan causado la reducción de intensidad;</li>
+        <li>la matriz eléctrica por sí sola explique la evolución observada;</li>
+        <li>los resultados de 2021–2024 representen necesariamente un nuevo régimen permanente;</li>
+        <li>la relación histórica pueda extrapolarse directamente hacia el futuro.</li>
+      </ul>
+    </section>
+
+    <section class="chapter" id="limitaciones">
+      <h2>14. Limitaciones</h2>
+      <ul class="limits">
+        <li><strong>Tamaño de muestra:</strong> aproximadamente 25 observaciones anuales.</li>
+        <li><strong>Tendencias temporales:</strong> PIB y emisiones presentan tendencias persistentes.</li>
+        <li><strong>Shock 2020–2021:</strong> puede ejercer una influencia desproporcionada.</li>
+        <li><strong>Variables omitidas:</strong> no se controla completamente por estructura sectorial, precios energéticos, transporte, tecnología, eficiencia energética, condiciones hidrológicas ni composición industrial.</li>
+        <li><strong>Biomasa:</strong> el indicador de renovables de consumo final incluye categorías que no equivalen exclusivamente a renovables eléctricas modernas.</li>
+        <li><strong>LULUCF:</strong> las emisiones utilizadas excluyen uso de la tierra, cambio de uso y silvicultura.</li>
+      </ul>
+    </section>
+
+    <section class="chapter" id="reproducibilidad">
+      <h2>15. Código · Reproducir</h2>
+      <p>El análisis fue realizado en R y obtiene los datos directamente de la API del Banco Mundial. La ejecución reconstruye los datasets derivados y genera automáticamente las cuatro figuras y los cuatro CSV.</p>
+      <div class="tw">
+      <table>
+        <caption>Estructura del experimento reproducible.</caption>
+        <thead><tr><th>Componente</th><th>Contenido</th></tr></thead>
+        <tbody>
+          <tr><td class="var-code">01_conexion_banco_mundial.R</td><td style="text-align:left;">Descarga y limpieza de series del Banco Mundial</td></tr>
+          <tr><td class="var-code">02_analisis_desacoplamiento.R</td><td style="text-align:left;">Construcción de variables, modelos y figuras</td></tr>
+          <tr><td class="var-code">figures/</td><td style="text-align:left;">01_pib_emisiones.png · 02_variaciones_anuales.png · 03_renovables_intensidad.png · 04_electricidad_renovable.png</td></tr>
+          <tr><td class="var-code">results/</td><td style="text-align:left;">desacoplamiento_gt.csv · cambios_gt.csv · energia_gt.csv · electricidad_gt.csv</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <a class="code-btn" href="PLACEHOLDER-repositorio-codigo.html">Ver código y reproducir →</a>
+    </section>
+
+    <section class="chapter" id="referencias">
+      <h2>16. Referencias</h2>
+      <ul class="limits" style="list-style:none; padding-left:0;">
+        <li>Tapio, P. (2005). Towards a theory of decoupling: degrees of decoupling in the EU and the case of road traffic in Finland between 1970 and 2001. <em>Transport Policy</em>, 12(2), 137–151.</li>
+        <li>OECD. Literatura y marco conceptual sobre desacoplamiento entre actividad económica y presiones ambientales.</li>
+        <li>World Bank — World Development Indicators. Indicadores: <span class="var-code">NY.GDP.MKTP.KD</span>, <span class="var-code">EN.GHG.CO2.MT.CE.AR5</span>, <span class="var-code">EG.FEC.RNEW.ZS</span>, <span class="var-code">EG.ELC.RNEW.ZS</span>.</li>
+      </ul>
+    </section>
+
+    <section class="chapter" id="conclusion">
+      <h2>17. Conclusión</h2>
+      <p>La evidencia para Guatemala entre 2000 y 2024 es consistente con un proceso limitado de desacoplamiento relativo entre crecimiento económico y emisiones de CO2. El PIB real aumentó aproximadamente 126.8%, frente a un crecimiento de aproximadamente 110.4% en las emisiones. Como resultado, la intensidad de carbono disminuyó alrededor de 7.2%. Esta mejora es relevante, pero insuficiente para hablar de desacoplamiento absoluto.</p>
+      <p>Los años recientes presentan una divergencia considerablemente mayor entre crecimiento y emisiones. Sin embargo, el reducido número de observaciones impide determinar todavía si se trata de una transformación estructural.</p>
+      <p>La composición energética aparece como una posible dimensión asociada con la evolución de la intensidad de carbono. La participación renovable en consumo final presenta una asociación negativa consistente bajo distintas especificaciones. La evidencia para generación eléctrica renovable es más ambigua.</p>
+      <p>En conjunto, los resultados sugieren que el vínculo entre crecimiento económico y emisiones en Guatemala puede debilitarse. Identificar los mecanismos responsables requerirá análisis posteriores de estructura productiva, transporte, eficiencia energética, generación eléctrica y composición sectorial de las emisiones.</p>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="serif" style="font-weight:600; color:var(--ink);"><a href="../index.html#investigacion" style="color:var(--ink); text-decoration:none;">← Volver a Investigación</a></div>
+      <div>Kairos · Nota técnica de acompañamiento.</div>
+      <a class="switch-link" href="guatemala-crecimiento-emisiones.html">← Volver a la publicación principal</a>
+    </div>
+    <div>Análisis reproducible basado en datos públicos del Banco Mundial.</div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.eq[data-tex]').forEach(function(el){
+    katex.render(el.getAttribute('data-tex'), el, { displayMode: true, throwOnError: false });
+  });
+  document.querySelectorAll('.eq-boxed[data-tex]').forEach(function(el){
+    katex.render(el.getAttribute('data-tex'), el, { displayMode: false, throwOnError: false });
+  });
+</script>
+
+</body>
+</html>
