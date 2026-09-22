@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>La corrupción no empieza con personas malas. Empieza con incentivos. — Kairos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Un experimento con 100 licitaciones públicas para entender cuánto valor puede destruir la corrupción, por qué detectar y sancionar son sustitutos, y por qué castigar más no siempre es la mejor solución.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+
+:root{
+  --bg:#F7F4EE;
+  --panel:#FFFFFF;
+  --panel-2:#EFEAE0;
+  --line: #E4DFD3;
+  --text:#1C1B22;
+  --text-dim:#6B6570;
+  --accent:#7A2540;
+  --accent-soft:rgba(122,37,64,0.08);
+  --navy:#1E2A42;
+  --green:#3E6488;
+  --green-soft:rgba(62,100,136,0.10);
+  --amber:#75707A;
+  --amber-soft:rgba(117,112,122,0.10);
+  --red:#8C2E48;
+  --red-soft:rgba(140,46,72,0.10);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+html,body{margin:0;padding:0;}
+body{background:var(--bg); color:var(--text); font-family:'Space Grotesk',sans-serif; -webkit-font-smoothing:antialiased;}
+.mono{font-family:'IBM Plex Mono',monospace;}
+a{color:inherit;}
+section{scroll-margin-top:96px;}
+.skip-link{position:absolute; left:12px; top:-80px; z-index:100; background:var(--text); color:var(--bg); padding:10px 14px; border-radius:4px; text-decoration:none;}
+.skip-link:focus{top:12px;}
+a:focus-visible{outline:3px solid var(--accent); outline-offset:3px;}
+.wrap{max-width:900px; margin:0 auto; padding:60px 26px 90px;}
+
+/* ---------- Nav mínima de retorno ---------- */
+.topbar{border-bottom:1px solid var(--line); background:rgba(247,244,238,0.92); backdrop-filter:blur(6px); position:sticky; top:0; z-index:20;}
+.topbar-inner{max-width:900px; margin:0 auto; padding:14px 26px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;}
+.topbar a.brand{font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:13px; letter-spacing:0.04em; text-decoration:none; color:var(--text);}
+.topbar a.brand span{color:var(--accent);}
+.topbar a.serieslink{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--text-dim); text-decoration:none;}
+.topbar a.serieslink:hover{color:var(--accent);}
+
+/* ---------- Cabecera ---------- */
+.eyebrow{font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent); display:flex; align-items:center; gap:10px; margin-bottom:20px; text-decoration:none;}
+.eyebrow::before{content:""; width:22px; height:1px; background:var(--accent);}
+.series-tag{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--text-dim); margin:-8px 0 20px;}
+
+h1{font-weight:600; font-size:clamp(28px,4.6vw,44px); line-height:1.14; margin:0 0 20px; max-width:24ch;}
+h1 span{color:var(--accent);}
+
+.lede{font-size:16px; line-height:1.7; color:var(--text-dim); max-width:70ch; margin:0 0 10px;}
+.lede strong{color:var(--text); font-weight:600;}
+.meta{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-dim); margin:26px 0 30px; padding-top:18px; border-top:1px solid var(--line); display:flex; gap:18px; flex-wrap:wrap;}
+
+.idea-central{background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:6px; padding:22px 24px; margin:0 0 32px;}
+.idea-central .tag{font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:var(--accent); font-weight:600; display:block; margin-bottom:10px;}
+.idea-central p{font-size:15.5px; line-height:1.7; color:var(--text); margin:0; font-weight:500;}
+
+/* ---------- Botones ---------- */
+.btn{font-family:'IBM Plex Mono',monospace; font-size:13px; text-decoration:none; padding:14px 24px; border-radius:4px; display:inline-block; letter-spacing:0.01em; transition:opacity .15s, background .15s, border-color .15s, color .15s; border:1px solid transparent; cursor:pointer;}
+.btn-primary{background:var(--text); color:var(--bg);}
+.btn-primary:hover{opacity:0.85;}
+.btn-secondary{border:1px solid var(--line); color:var(--text); background:transparent;}
+.btn-secondary:hover{border-color:var(--accent); color:var(--accent);}
+.cta-row{display:flex; gap:14px; flex-wrap:wrap; margin:0 0 40px;}
+
+/* ---------- Índice rápido ---------- */
+.qmap{display:flex; gap:10px; flex-wrap:wrap; margin:0 0 26px;}
+.qmap a{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--text-dim); text-decoration:none; border:1px solid var(--line); border-radius:20px; padding:8px 14px; transition:border-color .15s, color .15s;}
+.qmap a:hover{border-color:var(--accent); color:var(--accent);}
+.qmap a b{color:var(--accent); margin-right:6px;}
+
+/* ---------- Secciones y cuerpo ---------- */
+section{margin-bottom:56px;}
+h2.st{font-size:clamp(22px,3vw,28px); font-weight:600; margin:0 0 10px; max-width:32ch;}
+.sub{font-size:14px; color:var(--text-dim); max-width:64ch; line-height:1.65; margin:0 0 22px;}
+p.body{font-size:15.5px; line-height:1.75; color:var(--text-dim); margin:0 0 18px; max-width:70ch;}
+p.body strong{color:var(--text); font-weight:600;}
+ul.kx-list{margin:0 0 18px; padding-left:20px; font-size:14.5px; color:var(--text-dim); line-height:1.8; max-width:66ch;}
+ul.kx-list li strong{color:var(--text);}
+ul.kx-list.negative{max-width:70ch;}
+ul.kx-list.negative li::marker{color:var(--red); font-weight:700;}
+
+.callout{background:var(--accent-soft); border:1px solid rgba(122,37,64,0.22); border-radius:8px; padding:20px 22px; font-size:15px; line-height:1.7; color:#6B2338; margin:22px 0; font-weight:500;}
+.callout b{color:var(--accent);}
+.callout.neutral{background:var(--panel-2); border-color:var(--line); color:var(--text-dim); font-weight:400;}
+.callout.negative{background:var(--red-soft); border-color:rgba(140,46,72,0.22); color:#6B2338;}
+
+.frase-guia{font-family:'Fraunces',serif; font-size:clamp(19px,2.3vw,24px); font-weight:500; color:var(--text); border-left:3px solid var(--accent); padding-left:22px; margin:30px 0;}
+
+/* ---------- Chips de programas ---------- */
+.chips-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; margin:22px 0 8px;}
+.chip-card{background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:18px 20px;}
+.chip-card .name{font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--accent); font-weight:700; margin-bottom:8px;}
+.chip-card p{font-size:13px; color:var(--text-dim); line-height:1.6; margin:0;}
+
+.concept-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:26px 0 34px;}
+.concept-card{background:var(--panel); border:1px solid var(--line); border-radius:9px; padding:22px;}
+.concept-card h4{font-family:'IBM Plex Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.06em; margin:0 0 14px; color:var(--accent);}
+.concept-card ul{margin:0; padding-left:18px; color:var(--text-dim); font-size:13.5px; line-height:1.75;}
+.policy-flow{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:26px 0 34px; counter-reset:policy;}
+.policy-step{position:relative; background:var(--panel); border:1px solid var(--line); border-top:3px solid var(--accent); border-radius:9px; padding:22px 20px;}
+.policy-step b{display:block; color:var(--text); font-size:14px; margin-bottom:8px;}
+.policy-step p{margin:0; color:var(--text-dim); font-size:13px; line-height:1.6;}
+
+/* ---------- Fórmulas y cifras ---------- */
+.formula{font-family:'IBM Plex Mono',monospace; background:var(--panel-2); border:1px solid var(--line); border-radius:8px; padding:18px 22px; margin:18px 0 26px; font-size:14.5px; line-height:2; color:var(--text); text-align:center;}
+.formula .op{color:var(--accent); font-weight:700; margin:0 6px;}
+
+.stat-row{display:flex; gap:14px; flex-wrap:wrap; margin:22px 0 30px;}
+.stat-box{flex:1 1 150px; background:var(--panel); border:1px solid var(--line); border-radius:9px; padding:20px 16px; text-align:center;}
+.stat-box .stat-label{font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.05em; color:var(--text-dim); margin-bottom:10px; display:block;}
+.stat-box .stat-value{font-family:'IBM Plex Mono',monospace; font-size:24px; font-weight:700; color:var(--accent); line-height:1.2;}
+.stat-box .stat-value.dim{color:var(--text);}
+.stat-box.result{border-color:var(--accent); border-width:1.5px;}
+
+.idea-clave{font-family:'IBM Plex Mono',monospace; font-size:clamp(16px,2.4vw,20px); font-weight:700; text-align:center; color:var(--accent); background:var(--accent-soft); border:1px solid rgba(122,37,64,0.22); border-radius:8px; padding:20px; margin:26px 0;}
+
+/* ---------- Tablas de datos ---------- */
+.data-table{width:100%; border-collapse:collapse; margin:8px 0 26px; font-family:'IBM Plex Mono',monospace; font-size:12.5px;}
+.data-table th,.data-table td{border:1px solid var(--line); padding:9px 8px; text-align:center;}
+.data-table th{background:var(--panel-2); color:var(--text-dim); font-weight:600; text-transform:uppercase; font-size:10.5px; letter-spacing:.04em;}
+.data-table td{background:var(--panel); color:var(--text);}
+.table-wrap{overflow-x:auto; margin:0 0 26px;}
+
+/* ---------- Figuras ---------- */
+figure.figure{margin:26px 0 36px;}
+figure.figure img{max-width:100%; display:block; border-radius:9px; border:1px solid var(--line); background:var(--panel);}
+figure.figure figcaption{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--text-dim); margin-top:10px; line-height:1.6;}
+figure.figure figcaption b{color:var(--accent);}
+
+/* ---------- Bloque final ---------- */
+.conclusion-block{background:var(--navy); border-radius:8px; padding:32px 34px; margin:8px 0 40px;}
+.conclusion-block p{font-size:15.5px; line-height:1.75; color:#C7CFDC; margin:0 0 12px;}
+.conclusion-block p:last-child{margin-bottom:0;}
+.conclusion-block .cb-strong{color:#FFFFFF; font-weight:600;}
+
+.final-cta{background:var(--panel-2); border-radius:10px; padding:36px 34px; text-align:center; margin-bottom:44px;}
+.final-cta h3{font-size:clamp(19px,2.4vw,23px); font-weight:600; margin:0 0 10px;}
+.final-cta p{font-size:14px; color:var(--text-dim); margin:0 0 22px; max-width:52ch; margin-left:auto; margin-right:auto;}
+
+/* ---------- Nota metodológica y pie ---------- */
+.sources{background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:24px 26px; margin-top:12px;}
+.sources h3{font-size:13px; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-dim); margin:0 0 16px; font-weight:600;}
+.sources ul{margin:0; padding-left:18px;}
+.sources li{margin-bottom:10px; font-size:12.5px; line-height:1.6; color:var(--text-dim);}
+
+.footnote{margin-top:50px; padding-top:26px; border-top:1px solid var(--line); display:flex; justify-content:space-between; align-items:flex-start; gap:24px; flex-wrap:wrap;}
+.footnote p{font-size:12.5px; color:var(--text-dim); line-height:1.6; max-width:58ch; margin:0;}
+.footnote .tagf{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--accent); border:1px solid var(--accent); border-radius:4px; padding:8px 12px; white-space:nowrap;}
+
+footer{background:var(--navy); color:#C7CFDC; padding:44px 0 28px; margin-top:10px;}
+.footer-inner{max-width:900px; margin:0 auto; padding:0 26px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:#7C8AA0;}
+.footer-inner a{color:#C7CFDC; text-decoration:none;}
+.footer-inner a:hover{color:#fff;}
+
+@media (max-width:640px){
+  .cta-row{flex-direction:column;}
+  .btn{text-align:center;}
+  .concept-grid,.policy-flow{grid-template-columns:1fr;}
+  .stat-row{flex-direction:column;}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+<header class="topbar">
+  <nav class="topbar-inner" aria-label="Navegación principal">
+    <a class="brand" href="../index.html">KAIRO<span>S</span></a>
+    <a class="serieslink" href="../index.html#laboratorio">Laboratorio Kairos: incentivos y corrupción</a>
+  </nav>
+</header>
+
+<main class="wrap" id="contenido">
+
+  <a href="../index.html#laboratorio" class="eyebrow">Laboratorio · Experimentar</a>
+  <div class="series-tag">Publicación 8 · Kairos Laboratorio — un experimento de teoría de juegos aplicado a compras públicas</div>
+
+  <h1>La corrupción no empieza con <span>personas malas</span>. Empieza con incentivos.</h1>
+
+  <p class="lede">
+    Un experimento con 100 licitaciones para entender cuánto valor puede destruir la corrupción y por qué
+    castigar más no siempre es la mejor solución.
+  </p>
+
+  <div class="idea-central">
+    <span class="tag">En una frase</span>
+    <p>Cuando sobornar y aceptar el soborno siguen siendo rentables para ambas partes, la corrupción puede
+    sostenerse; basta con romper esa rentabilidad para una sola de ellas —no con volver santos a todos— para que
+    la estrategia corrupta deje de funcionar.</p>
+  </div>
+
+  <div class="meta">
+    <span>Kairos Laboratorio · Experimento de incentivos y compras públicas</span>
+    <span>Tiempo estimado de lectura: 8–10 minutos</span>
+  </div>
+
+  <div class="cta-row">
+    <a class="btn btn-primary" href="corrupcion-compras-publicas-tecnico.html">Ver investigación completa →</a>
+  </div>
+
+  <div class="qmap">
+    <a href="#problema"><b>①</b>El problema</a>
+    <a href="#mercado"><b>②</b>Mercado honesto</a>
+    <a href="#corrupcion"><b>③</b>Entra la corrupción</a>
+    <a href="#deteccion-sancion"><b>④</b>Detectar y sancionar</a>
+    <a href="#costos"><b>⑤</b>Controlar cuesta</a>
+    <a href="#dinamica"><b>⑥</b>Una reforma en el tiempo</a>
+    <a href="#aprendizajes"><b>⑦</b>Qué aprendimos</a>
+  </div>
+
+  <!-- ===================== SECCIÓN 1 — APERTURA ===================== -->
+  <section id="problema">
+    <h2 class="st">¿Y si el problema no fuera solamente la persona?</h2>
+    <p class="sub">Cuando hablamos de corrupción solemos pensar en individuos. Pero si todo dependiera únicamente de encontrar personas honestas, cada cambio de funcionario debería resolver el problema.</p>
+
+    <p class="body">
+      Cuando hablamos de corrupción solemos pensar en individuos: una empresa ofrece dinero, un funcionario acepta
+      y alguien roba. Pero si todo dependiera únicamente de encontrar personas honestas, cada cambio de funcionario
+      debería resolver el problema.
+    </p>
+    <p class="body">La pregunta de este experimento es distinta:</p>
+    <div class="frase-guia">¿Qué ocurre cuando el sistema hace rentable sobornar y también hace rentable aceptar el soborno?</div>
+    <p class="body">
+      Para estudiar esa pregunta, Kairos construyó una economía artificial: un mercado de compras públicas
+      simulado, con reglas explícitas y observables, donde podemos cambiar una sola variable a la vez y ver
+      exactamente qué ocurre.
+    </p>
+    <div class="callout neutral">
+      Este modelo no mide la corrupción de Guatemala ni representa contratos reales. Su propósito es aislar
+      mecanismos de incentivos, no estimar cifras del país.
+    </div>
+  </section>
+
+  <!-- ===================== SECCIÓN 2 — MERCADO HONESTO ===================== -->
+  <section id="mercado">
+    <h2 class="st">Primero construimos un mercado honesto</h2>
+    <p class="sub">Antes de estudiar la corrupción, necesitábamos un punto de comparación limpio: qué pasa cuando nadie soborna a nadie.</p>
+
+    <div class="stat-row">
+      <div class="stat-box">
+        <span class="stat-label">Licitaciones</span>
+        <span class="stat-value dim">100</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-label">Empresas por licitación</span>
+        <span class="stat-value dim">5</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-label">Ofertas totales</span>
+        <span class="stat-value dim">500</span>
+      </div>
+    </div>
+
+    <p class="body">Cada empresa participante llega con cuatro características: precio, calidad, experiencia y riesgo. La adjudicación no depende simplemente de quién ofrece el precio más bajo. El Estado, en este modelo, calcula un <strong>índice de valor público</strong> que pondera esas cuatro dimensiones:</p>
+
+    <div class="formula">
+      Valor público <span class="op">=</span> 30% calidad <span class="op">+</span> 25% precio <span class="op">+</span> 25% experiencia <span class="op">+</span> 20% bajo riesgo
+    </div>
+
+    <p class="body">Aplicando esta regla a las 100 licitaciones, sin ningún tipo de soborno, el mercado honesto produce este resultado agregado:</p>
+
+    <div class="stat-row">
+      <div class="stat-box result" style="flex-basis:100%;">
+        <span class="stat-label">Valor público del mercado honesto</span>
+        <span class="stat-value">8197.05</span>
+      </div>
+    </div>
+
+    <div class="callout neutral">
+      8197.05 no son quetzales ni dólares. Es un índice sintético que nos permite comparar exactamente el mismo
+      mercado bajo distintas reglas.
+    </div>
+  </section>
+
+  <!-- ===================== SECCIÓN 3 — ENTRA LA CORRUPCIÓN ===================== -->
+  <section id="corrupcion">
+    <h2 class="st">Dejamos entrar la corrupción</h2>
+    <p class="sub">Con las mismas 100 licitaciones, ahora permitimos que una empresa pueda ofrecer un soborno y que el funcionario pueda aceptarlo.</p>
+
+    <p class="body">Escenario base del experimento:</p>
+    <div class="formula">
+      Soborno <span class="op">=</span> 20 &nbsp;·&nbsp; Probabilidad de detección <span class="op">=</span> 10% &nbsp;·&nbsp; Sanción <span class="op">=</span> 100
+    </div>
+    <p class="body">
+      Con esos parámetros, a las empresas les sigue resultando rentable sobornar, y al funcionario le sigue
+      resultando rentable aceptar. Aplicamos la corrupción sobre las mismas 100 licitaciones y comparamos:
+    </p>
+
+    <div class="stat-row">
+      <div class="stat-box">
+        <span class="stat-label">Valor público honesto</span>
+        <span class="stat-value dim">8197.05</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-label">Valor público corrupto</span>
+        <span class="stat-value dim">5653.88</span>
+      </div>
+      <div class="stat-box result">
+        <span class="stat-label">Pérdida</span>
+        <span class="stat-value">2543.17</span>
+      </div>
+      <div class="stat-box result">
+        <span class="stat-label">Pérdida relativa</span>
+        <span class="stat-value">31.03%</span>
+      </div>
+    </div>
+
+    <figure class="figure">
+      <img src="assets/corrupcion/honest_vs_corrupt_public_value.png" alt="Comparación del valor público del mercado honesto frente al mercado corrupto en las mismas 100 licitaciones" loading="lazy">
+      <figcaption><b>Figura 1.</b> Valor público del mercado honesto frente al mercado corrupto, sobre las mismas 100 licitaciones.</figcaption>
+    </figure>
+
+    <div class="callout">
+      El principal costo en este modelo no es el dinero del soborno. El daño aparece porque el contrato termina en
+      una empresa que genera menos valor público.
+    </div>
+    <p class="body">
+      No sumamos el monto del soborno a la pérdida de valor público porque, dentro de este modelo, el soborno se
+      trata como una transferencia entre agentes, no como una pérdida social adicional. La pérdida medida
+      corresponde a la mala asignación del contrato.
+    </p>
+  </section>
+
+  <!-- ===================== SECCIÓN 4 y 5 — DETECCIÓN Y SANCIÓN ===================== -->
+  <section id="deteccion-sancion">
+    <h2 class="st">Detectar más o sancionar más: no son lo mismo</h2>
+    <p class="sub">El modelo nos deja mover, por separado, la probabilidad de detección y el tamaño de la sanción. Cada una actúa de forma distinta.</p>
+
+    <h4 class="mono" style="font-size:13px; letter-spacing:.04em; text-transform:uppercase; color:var(--accent); margin:0 0 10px;">¿Qué ocurre si aumenta la probabilidad de detección?</h4>
+    <p class="body">Mantenemos la sanción fija en <strong>F = 100</strong> y vamos subiendo la probabilidad de detección <strong>p</strong>:</p>
+    <ul class="kx-list">
+      <li>Con <strong>p &lt; 20%</strong>, el funcionario todavía acepta el soborno.</li>
+      <li>Con <strong>p = 20%</strong>, su beneficio esperado de aceptar llega a cero.</li>
+      <li>En ese punto de indiferencia, la regla del experimento hace que el funcionario rechace.</li>
+    </ul>
+    <p class="body">Desde <strong>p = 20%</strong>, ningún soborno se acepta y ningún contrato se distorsiona, y el valor público vuelve a 8197.05.</p>
+
+    <figure class="figure">
+      <img src="assets/corrupcion/corruption_vs_detection.png" alt="Valor público y sobornos aceptados en función de la probabilidad de detección" loading="lazy">
+      <figcaption><b>Figura 2.</b> Cómo cambia la corrupción efectiva a medida que aumenta la probabilidad de detección, con la sanción fija en F = 100.</figcaption>
+    </figure>
+
+    <div class="idea-clave">intentar corromper ≠ lograr corromper</div>
+    <p class="body">Las empresas todavía pueden querer sobornar, pero la transacción deja de completarse: el incentivo del funcionario ya no la sostiene.</p>
+
+    <h4 class="mono" style="font-size:13px; letter-spacing:.04em; text-transform:uppercase; color:var(--accent); margin:32px 0 10px;">¿Y si en cambio castigamos más?</h4>
+    <p class="body">Ahora fijamos la probabilidad de detección en <strong>p = 10%</strong> y aumentamos la sanción <strong>F</strong>.</p>
+    <p class="body">Con <strong>F = 200</strong>, el funcionario deja de aceptar el soborno. Pero las empresas siguen encontrando rentable ofrecerlo durante mucho más tiempo:</p>
+
+    <div class="stat-row">
+      <div class="stat-box">
+        <span class="stat-label">Funcionario deja de aceptar</span>
+        <span class="stat-value dim">F = 200</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-label">Primera caída en empresas dispuestas a sobornar</span>
+        <span class="stat-value dim">F = 1125</span>
+      </div>
+      <div class="stat-box result">
+        <span class="stat-label">Ninguna empresa mantiene el incentivo</span>
+        <span class="stat-value">F = 1700</span>
+      </div>
+    </div>
+
+    <figure class="figure">
+      <img src="assets/corrupcion/corruption_vs_sanction.png" alt="Empresas dispuestas a sobornar en función del tamaño de la sanción" loading="lazy">
+      <figcaption><b>Figura 3.</b> Empresas dispuestas a sobornar en función del tamaño de la sanción, con la probabilidad de detección fija en p = 10%.</figcaption>
+    </figure>
+
+    <div class="callout">
+      No fue necesario eliminar completamente el incentivo de las empresas para detener la corrupción efectiva. Basta
+      con romper el incentivo de una sola de las dos partes.
+    </div>
+    <div class="frase-guia">Una institución no necesita convertir a todos en santos. Necesita hacer que la estrategia corrupta deje de funcionar.</div>
+
+    <h4 class="mono" style="font-size:13px; letter-spacing:.04em; text-transform:uppercase; color:var(--accent); margin:32px 0 10px;">Detectar más o castigar más: combinaciones equivalentes</h4>
+    <p class="body">El modelo mostró que distintas combinaciones de detección y sanción pueden producir el mismo castigo esperado:</p>
+
+    <div class="chips-grid">
+      <div class="chip-card">
+        <div class="name">10% × 200</div>
+        <p>= 20</p>
+      </div>
+      <div class="chip-card">
+        <div class="name">20% × 100</div>
+        <p>= 20</p>
+      </div>
+      <div class="chip-card">
+        <div class="name">40% × 50</div>
+        <p>= 20</p>
+      </div>
+    </div>
+    <p class="body">En las tres combinaciones, <strong>p · F = 20</strong>, y la corrupción efectiva desaparece. Si varias políticas funcionan igual de bien, ¿cuál conviene? Esa pregunta nos lleva al costo de controlar.</p>
+  </section>
+
+  <!-- ===================== SECCIÓN 6 — COSTOS DE CONTROLAR ===================== -->
+  <section id="costos">
+    <h2 class="st">Controlar también cuesta</h2>
+    <p class="sub">Detectar y sancionar no son gratuitos. Auditar, investigar y sancionar consume recursos institucionales.</p>
+
+    <div class="callout neutral">
+      Los costos institucionales de este experimento son sintéticos: no representan presupuestos reales ni
+      estimaciones para Guatemala. Solo obligan al modelo a reconocer que controlar tiene un precio.
+    </div>
+
+    <p class="body">Definimos dos funciones de costo, una para la detección y otra para la sanción:</p>
+    <div class="formula">
+      C<sub>p</sub>(p) <span class="op">=</span> 1000 p² &nbsp;·&nbsp; C<sub>F</sub>(F) <span class="op">=</span> 0.5 F
+    </div>
+    <p class="body">Y definimos el valor público neto como:</p>
+    <div class="formula">
+      Valor público neto <span class="op">=</span> Valor público <span class="op">−</span> Costo institucional
+    </div>
+
+    <p class="body">Con el escenario que elimina la corrupción a menor costo relativo (<strong>p = 20%, F = 100</strong>), el costo institucional es 40 + 50 = 90:</p>
+    <div class="stat-row">
+      <div class="stat-box">
+        <span class="stat-label">Valor público bruto</span>
+        <span class="stat-value dim">8197.05</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-label">Costo institucional</span>
+        <span class="stat-value dim">90</span>
+      </div>
+      <div class="stat-box result">
+        <span class="stat-label">Valor público neto</span>
+        <span class="stat-value">8107.05</span>
+      </div>
+    </div>
+
+    <figure class="figure">
+      <img src="assets/corrupcion/net_public_value_policy_map.png" alt="Mapa de valor público neto para distintas combinaciones de probabilidad de detección y sanción" loading="lazy">
+      <figcaption><b>Figura 4.</b> Valor público neto —bruto menos costo institucional— para distintas combinaciones de detección y sanción.</figcaption>
+    </figure>
+
+    <h4 class="mono" style="font-size:13px; letter-spacing:.04em; text-transform:uppercase; color:var(--accent); margin:32px 0 10px;">Un resultado extraño: controlar poco puede ser peor que no controlar</h4>
+    <p class="body">Comparemos el escenario base de corrupción (<strong>p = 10%, F = 100</strong>) contra no controlar nada (<strong>p = 0, F = 0</strong>):</p>
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>Escenario</th><th>Valor público</th><th>Costo institucional</th><th>Valor neto</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Control débil (p=10%, F=100)</td><td>5653.88</td><td>60</td><td>5593.88</td></tr>
+          <tr><td>Sin ningún control (p=0, F=0)</td><td>5653.88</td><td>0</td><td>5653.88</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="body">
+      El valor público bruto es idéntico en ambos casos —la corrupción no cambió de comportamiento—, pero el
+      gobierno con control débil terminó con menos valor neto que el gobierno que no controló nada.
+    </p>
+    <div class="callout negative">
+      El gobierno estaba pagando por controlar, pero el control seguía siendo demasiado débil para cambiar la
+      estrategia de nadie. Una política puede costar recursos y ser demasiado débil para modificar el comportamiento.
+    </div>
+
+    <h4 class="mono" style="font-size:13px; letter-spacing:.04em; text-transform:uppercase; color:var(--accent); margin:32px 0 10px;">¿Depende esto de cómo definimos los costos?</h4>
+    <p class="body">Probamos 9 estructuras de costo distintas, variando el peso relativo de detectar y de sancionar. De todas ellas, solo emergieron dos políticas óptimas:</p>
+    <div class="chips-grid">
+      <div class="chip-card">
+        <div class="name">p = 20%, F = 100</div>
+        <p>Óptima cuando sancionar es relativamente más caro que detectar.</p>
+      </div>
+      <div class="chip-card">
+        <div class="name">p = 10%, F = 200</div>
+        <p>Óptima cuando detectar es relativamente más caro que sancionar.</p>
+      </div>
+    </div>
+    <p class="body">Ambas cumplen <strong>p · F = 20</strong>. No existe una combinación universalmente óptima dentro del experimento: la mezcla eficiente depende de los costos relativos, pero la frontera estratégica —p · F = 20— permaneció estable en todos los casos.</p>
+  </section>
+
+  <!-- ===================== SECCIÓN 7 — DINÁMICA EN EL TIEMPO ===================== -->
+  <section id="dinamica">
+    <h2 class="st">¿Qué ocurre si la corrupción ya se volvió una costumbre?</h2>
+    <p class="sub">Todo lo anterior fue estático. Ahora dejamos correr el experimento a lo largo de 100 rondas, con una reforma real ocurriendo a la mitad del camino.</p>
+
+    <p class="body">Simulamos 100 rondas de licitaciones, con una regla que cambia a la mitad del experimento:</p>
+    <div class="chips-grid">
+      <div class="chip-card">
+        <div class="name">Rondas 1–50</div>
+        <p>p = 10%, F = 100 — la corrupción sigue siendo rentable para ambas partes.</p>
+      </div>
+      <div class="chip-card">
+        <div class="name">Rondas 51–100</div>
+        <p>p = 20%, F = 100 — entra en vigor la reforma que aumenta la detección.</p>
+      </div>
+    </div>
+
+    <p class="body">Antes de la reforma, cada ronda repetía el mismo patrón: 100 intentos, 100 sobornos aceptados, 100 contratos distorsionados. Acumulado en 50 rondas:</p>
+    <div class="stat-row">
+      <div class="stat-box">
+        <span class="stat-label">Intentos acumulados</span>
+        <span class="stat-value dim">5000</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-label">Sobornos aceptados</span>
+        <span class="stat-value dim">5000</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-label">Contratos distorsionados</span>
+        <span class="stat-value dim">5000</span>
+      </div>
+      <div class="stat-box result">
+        <span class="stat-label">Pérdida acumulada</span>
+        <span class="stat-value">127158.39</span>
+      </div>
+    </div>
+
+    <h4 class="mono" style="font-size:13px; letter-spacing:.04em; text-transform:uppercase; color:var(--accent); margin:32px 0 10px;">La reforma cambia los resultados de inmediato</h4>
+    <p class="body">En la ronda 51, al aumentar la detección, los sobornos aceptados pasan de 100 a 0 <strong>inmediatamente</strong>. El valor público salta de 5653.88 a 8197.05 en una sola ronda.</p>
+
+    <figure class="figure">
+      <img src="assets/corrupcion/dynamic_public_value.png" alt="Valor público a lo largo de 100 rondas, con un salto inmediato en la ronda 51 tras la reforma" loading="lazy">
+      <figcaption><b>Figura 5.</b> Valor público a lo largo de las 100 rondas. El salto ocurre exactamente en la ronda 51, cuando entra en vigor la reforma.</figcaption>
+    </figure>
+
+    <h4 class="mono" style="font-size:13px; letter-spacing:.04em; text-transform:uppercase; color:var(--accent); margin:32px 0 10px;">Pero el comportamiento tarda más</h4>
+    <p class="body">Aunque ningún soborno vuelve a aceptarse después de la ronda 51, las empresas continúan intentando ofrecerlo durante un tiempo:</p>
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Ronda</th><th>60</th><th>65</th><th>70</th><th>75</th><th>80</th></tr></thead>
+        <tbody><tr><td>Intentos de soborno</td><td>100</td><td>53</td><td>26</td><td>10</td><td>0</td></tr></tbody>
+      </table>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-box">
+        <span class="stat-label">Primer descenso por debajo de 100</span>
+        <span class="stat-value dim">Ronda 61</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-label">Primera ronda sin intentos</span>
+        <span class="stat-value dim">Ronda 80</span>
+      </div>
+      <div class="stat-box result">
+        <span class="stat-label">Retraso adaptativo</span>
+        <span class="stat-value">29 rondas</span>
+      </div>
+    </div>
+
+    <figure class="figure">
+      <img src="assets/corrupcion/dynamic_corruption_attempts.png" alt="Número de intentos de soborno por ronda, mostrando una disminución gradual tras la reforma" loading="lazy">
+      <figcaption><b>Figura 6.</b> Intentos de soborno por ronda. El resultado cambia en la ronda 51, pero los intentos tardan 29 rondas más en desaparecer del todo.</figcaption>
+    </figure>
+
+    <figure class="figure">
+      <img src="assets/corrupcion/dynamic_eligible_firms_above_threshold.png" alt="Empresas con disposición conductual a intentar sobornar, en descenso gradual tras la reforma" loading="lazy">
+      <figcaption><b>Figura 7 (complementaria).</b> Empresas con disposición conductual a intentar sobornar tras la reforma: 400 → 286 → 135 → 60 → 11 → 0. Muestra cómo desaparece gradualmente esa disposición entre las empresas que todavía podían intentarlo.</figcaption>
+    </figure>
+
+    <div class="callout neutral">
+      Las 29 rondas no estiman cuánto tarda una empresa real en cambiar de conducta. La velocidad proviene de una
+      regla artificial de adaptación dentro del modelo, no de evidencia empírica.
+    </div>
+    <div class="idea-clave">los resultados pueden cambiar antes que las conductas</div>
+  </section>
+
+  <!-- ===================== SECCIÓN 8 — APRENDIZAJES ===================== -->
+  <section id="aprendizajes">
+    <h2 class="st">Qué aprendimos</h2>
+    <p class="sub">Seis ideas que resumen el experimento completo.</p>
+    <ul class="kx-list">
+      <li>La corrupción destruyó valor principalmente mediante <strong>mala asignación</strong>, no por el monto del soborno en sí.</li>
+      <li>Basta con cambiar el incentivo de <strong>una sola de las dos partes</strong> para romper la transacción.</li>
+      <li>El deseo de sobornar puede <strong>sobrevivir mucho después</strong> de que la corrupción efectiva desaparece.</li>
+      <li>Aumentar indefinidamente la vigilancia o las sanciones <strong>no fue eficiente</strong> una vez que incluimos los costos institucionales.</li>
+      <li>La mezcla eficiente entre detección y sanción <strong>dependió de sus costos relativos</strong>, no de una regla universal.</li>
+      <li>Una reforma puede cambiar los resultados <strong>de inmediato</strong>, mientras las conductas tardan en adaptarse.</li>
+    </ul>
+  </section>
+
+  <!-- ===================== SECCIÓN 9 — LÍMITES ===================== -->
+  <section id="limites">
+    <h2 class="st">Qué NO demuestra este experimento</h2>
+    <p class="sub">Es tan importante decir qué mostramos como decir qué no estamos afirmando.</p>
+    <ul class="kx-list negative">
+      <li>No estima corrupción real de Guatemala.</li>
+      <li>No utiliza datos de Guatecompras.</li>
+      <li>No estima probabilidades reales de detección.</li>
+      <li>No calcula sanciones óptimas reales.</li>
+      <li>No representa todas las formas posibles de corrupción.</li>
+      <li>No prueba que 20% de detección sea una cifra real deseable.</li>
+      <li>No estima que la adaptación real tarde 29 rondas.</li>
+    </ul>
+    <p class="body">Todos los números dependen de los supuestos artificiales del modelo. El propósito de este experimento es estudiar mecanismos de incentivos, no medir un país.</p>
+  </section>
+
+  <!-- ===================== CIERRE ===================== -->
+  <div class="conclusion-block">
+    <p>Tal vez la pregunta equivocada sea cómo encontrar personas que nunca quieran corromperse.</p>
+    <p>Quizá una pregunta más útil sea cómo diseñar instituciones donde corromper deje de ser una estrategia que
+    funciona.</p>
+    <p class="cb-strong">Las instituciones no necesitan eliminar todas las malas intenciones para cambiar los
+    resultados. A veces necesitan algo más sencillo: cambiar los incentivos.</p>
+  </div>
+
+  <!-- ===================== CTA FINAL ===================== -->
+  <div class="final-cta">
+    <h3>Para profundizar</h3>
+    <p>Esta publicación presenta el argumento de forma introductoria. La investigación completa detalla el diseño
+    del experimento, las reglas de decisión de empresas y funcionarios, el análisis de sensibilidad completo con
+    las 9 estructuras de costo y la especificación del experimento dinámico.</p>
+    <a class="btn btn-primary" href="corrupcion-compras-publicas-tecnico.html">Leer la investigación completa →</a>
+  </div>
+
+  <!-- ===================== NOTA METODOLÓGICA ===================== -->
+  <div class="sources">
+    <h3>Nota metodológica</h3>
+    <ul>
+      <li>Este es un experimento artificial y reproducible, diseñado para estudiar mecanismos de incentivos en compras públicas, no una medición empírica.</li>
+      <li>Las 100 licitaciones, las 500 ofertas, los parámetros de soborno, detección y sanción, y las funciones de costo institucional son supuestos del modelo, definidos para poder comparar el mismo mercado bajo distintas reglas.</li>
+      <li>La versión técnica completa incluye la especificación exacta del experimento y el código utilizado para reproducirlo.</li>
+    </ul>
+  </div>
+
+  <div class="footnote">
+    <p>
+      Esta es una versión divulgativa de un experimento de teoría de juegos. Ningún resultado aquí presentado debe
+      interpretarse como una estimación de corrupción real en Guatemala ni en ningún otro país.
+    </p>
+    <div class="tagf">Publicación 8 · Kairos Laboratorio</div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <span>© 2026 Kairos</span>
+    <a href="corrupcion-compras-publicas-tecnico.html">Investigación completa →</a>
+  </div>
+</footer>
+
+</body>
+</html>

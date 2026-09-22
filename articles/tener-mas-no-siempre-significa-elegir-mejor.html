@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Tener más no siempre significa elegir mejor — Kairos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Una reflexión sobre el costo de elegir, aprender a reconocer lo suficiente y empezar a construir con lo que ya tenemos.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root{
+  --bg:#F7F4EE;
+  --panel:#FFFFFF;
+  --line:#E4DFD3;
+  --text:#1C1B22;
+  --text-dim:#6B6570;
+  --accent:#7A2540;
+  --accent-soft:rgba(122,37,64,0.07);
+  --navy:#1E2A42;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth; scroll-padding-top:22px;}
+html,body{margin:0;padding:0;}
+body{background:var(--bg); color:var(--text); font-family:'Space Grotesk',sans-serif; -webkit-font-smoothing:antialiased;}
+a{color:inherit;}
+:focus-visible{outline:3px solid var(--accent); outline-offset:3px;}
+
+.skip{position:absolute; top:-100px; left:16px; background:var(--panel); color:var(--text); font-family:'IBM Plex Mono',monospace; font-size:12px; padding:12px 16px; border:1px solid var(--line); border-radius:6px; z-index:60; text-decoration:none;}
+.skip:focus{top:12px;}
+
+.progress{height:3px; background:var(--accent); position:fixed; top:0; left:0; width:0; z-index:55;}
+
+/* ---------- NAV (idéntico al resto del sitio) ---------- */
+.nav{border-bottom:1px solid var(--line);}
+.nav-inner{max-width:720px; margin:0 auto; padding:22px 28px; display:flex; justify-content:space-between; align-items:center;}
+.nav-brand{font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:14px; letter-spacing:0.04em; text-decoration:none; color:var(--text);}
+.nav-brand span{color:var(--accent);}
+.nav-back{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-dim); text-decoration:none;}
+.nav-back:hover{color:var(--accent);}
+
+/* ---------- ARTICLE HEADER (mismo ancho de lectura que el resto del sitio: 680px) ---------- */
+.art-eyebrow{display:inline-flex; align-items:center; gap:8px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); text-decoration:none; margin-bottom:26px;}
+.art-eyebrow:hover{text-decoration:underline;}
+h1{font-family:'Fraunces',serif; font-weight:600; font-size:clamp(30px,5vw,44px); line-height:1.16; margin:0 0 20px; letter-spacing:-0.01em; text-wrap:balance;}
+.dek{font-family:'Fraunces',serif; font-style:italic; font-weight:400; font-size:clamp(18px,2.4vw,21px); color:var(--text-dim); line-height:1.5; margin:0 0 26px; max-width:38ch;}
+.art-meta{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--text-dim); padding-bottom:36px; border-bottom:1px solid var(--line); margin-bottom:0;}
+
+/* ---------- PAGE GRID: columna central de 680px + índice lateral opcional en pantallas anchas ---------- */
+.page{
+  display:grid;
+  grid-template-columns: minmax(28px,1fr) min(680px,100% - 56px) minmax(28px,1fr);
+  grid-template-areas:
+    ". hero ."
+    ". toc ."
+    ". prose .";
+}
+.hero{grid-area:hero; padding-top:64px;}
+.toc-wrap{grid-area:toc; margin:34px 0 6px;}
+.prose{grid-area:prose; padding-bottom:10px;}
+
+@media(min-width:1180px){
+  .page{
+    grid-template-columns: minmax(28px,1fr) 200px 28px min(680px,100% - 56px) minmax(28px,1fr);
+    grid-template-areas:
+      ".  .   . hero  ."
+      ". toc  . prose .";
+  }
+  .toc-wrap{align-self:start; position:sticky; top:26px; margin:6px 0;}
+}
+
+/* ---------- ÍNDICE LATERAL ---------- */
+.toc summary{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-dim); cursor:pointer; padding:9px 0; list-style:none;}
+.toc summary::-webkit-details-marker{display:none;}
+.toc summary::before{content:'— '; color:var(--accent);}
+.toc ol{list-style:none; margin:8px 0 0; padding:0; counter-reset:contents;}
+.toc li{counter-increment:contents; border-top:1px solid var(--line); padding:10px 0;}
+.toc li:last-child{border-bottom:1px solid var(--line);}
+.toc a{display:flex; gap:10px; font-family:'Space Grotesk',sans-serif; font-size:13px; line-height:1.4; color:var(--text-dim); text-decoration:none;}
+.toc a:hover{color:var(--accent);}
+.toc a::before{content:counter(contents,decimal-leading-zero); font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--accent); padding-top:2px; flex-shrink:0;}
+@media(max-width:1179px){
+  .toc ol{columns:2; column-gap:24px;}
+  .toc li{break-inside:avoid;}
+}
+@media(max-width:520px){
+  .toc ol{columns:1;}
+}
+
+/* ---------- PROSE (mismas reglas tipográficas que el resto del sitio) ---------- */
+.prose p{font-family:'Fraunces',serif; font-weight:400; font-size:19px; line-height:1.72; color:var(--text); margin:0 0 24px;}
+.prose .opening{font-size:20px;}
+.prose h2{font-family:'Fraunces',serif; font-weight:600; font-size:clamp(22px,3vw,27px); margin:56px 0 22px; letter-spacing:-0.005em; text-wrap:balance;}
+.prose sup{font-family:'IBM Plex Mono',monospace; font-size:11px;}
+.prose sup a{padding:4px; text-decoration:none; color:var(--accent);}
+.prose sup a:hover{text-decoration:underline;}
+
+.prose .pull{font-family:'Fraunces',serif; font-style:italic; font-weight:500; font-size:clamp(21px,3vw,26px); line-height:1.45; color:var(--accent); border-left:3px solid var(--accent); padding-left:24px; margin:44px 0 48px;}
+
+.prose .closing-thesis{background:var(--navy); border-radius:8px; padding:34px 38px; margin:44px 0 40px; font-family:'Fraunces',serif; font-size:clamp(19px,2.6vw,23px); line-height:1.55; color:#E4E7ED; font-weight:400;}
+
+.prose .last-line{font-family:'Fraunces',serif; font-style:italic; font-size:clamp(19px,2.4vw,22px); color:var(--accent); margin-bottom:8px;}
+
+/* ---------- REFERENCIAS ---------- */
+.references{border-top:1px solid var(--line); margin-top:52px; padding-top:30px;}
+.references h2{font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.09em; text-transform:uppercase; color:var(--text-dim); font-weight:600; margin:0 0 20px;}
+.references p{font-family:'Space Grotesk',sans-serif; font-size:14px; line-height:1.65; color:var(--text-dim); margin:0 0 8px; overflow-wrap:anywhere;}
+.references p.reference{font-size:14.5px; color:var(--text); margin:26px 0 8px;}
+.references p.reference a{color:var(--accent); text-decoration:underline; text-decoration-color:rgba(122,37,64,0.35);}
+.backref{font-family:'IBM Plex Mono',monospace; white-space:nowrap; color:var(--text-dim); text-decoration:none; padding:2px 4px;}
+.backref:hover{color:var(--accent);}
+
+/* ---------- FOOTER (idéntico al resto del sitio) ---------- */
+footer{background:var(--navy); padding:40px 0; margin-top:0;}
+.footer-inner{max-width:680px; margin:0 auto; padding:0 28px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;}
+.footer-inner a{font-family:'IBM Plex Mono',monospace; font-size:12px; color:#C7CFDC; text-decoration:none;}
+.footer-inner a:hover{color:#fff;}
+.footer-copy{font-family:'IBM Plex Mono',monospace; font-size:11px; color:#7C8AA0;}
+
+@media(max-width:520px){
+  .page{grid-template-columns: minmax(22px,1fr) min(680px,100% - 44px) minmax(22px,1fr);}
+  .hero{padding-top:44px;}
+  .prose p{font-size:18px;}
+  .prose .opening{font-size:19px;}
+  .prose .pull{font-size:22px; padding-left:18px;}
+  .prose .closing-thesis{padding:26px 24px;}
+  .footer-inner{padding:0 22px;}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+@media print{
+  .nav,.toc-wrap,footer,.progress,.skip{display:none;}
+  body{background:#fff;}
+  .page{display:block; max-width:none;}
+  .hero{padding:0;}
+  h1{font-size:32pt;}
+  .prose p{font-size:12pt; line-height:1.5;}
+  .prose h2{break-after:avoid; font-size:18pt; margin-top:25pt;}
+  .pull,.closing-thesis{break-inside:avoid;}
+  .prose .closing-thesis{background:none; color:#000; border-left:2px solid #7A2540;}
+}
+</style>
+</head>
+<body id="inicio">
+<a class="skip" href="#lectura">Saltar al artículo</a>
+<div class="progress" aria-hidden="true"></div>
+
+<nav class="nav" aria-label="Navegación principal">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-brand" aria-label="Kairos, inicio del sitio">KAIRO<span>S</span></a>
+    <a href="../index.html" class="nav-back">← Volver a Kairos</a>
+  </div>
+</nav>
+
+<main>
+<article aria-labelledby="titulo">
+<div class="page">
+
+  <header class="hero">
+    <a href="../index.html#pensamiento" class="art-eyebrow">Pensamiento · Cogitatio</a>
+    <h1 id="titulo">Tener más no siempre significa elegir mejor</h1>
+    <p class="dek">Cuando demasiadas opciones empiezan a decidir por nosotros</p>
+    <div class="art-meta">Publicación 10 · 8 min de lectura</div>
+  </header>
+
+  <div class="toc-wrap">
+    <details class="toc" open>
+      <summary>En esta reflexión</summary>
+      <ol>
+        <li><a href="#seccion-1">El tiempo también forma parte del precio</a></li>
+        <li><a href="#seccion-2">Las alternativas que siguen abiertas</a></li>
+        <li><a href="#seccion-3">Darle tiempo a una decisión</a></li>
+        <li><a href="#seccion-4">Saber cuándo dejar de buscar</a></li>
+        <li><a href="#seccion-5">Cuando lo que tenemos empieza a ser suficiente</a></li>
+        <li><a href="#seccion-6">Cerrar el catálogo</a></li>
+        <li><a href="#fuentes">Fuentes y alcance</a></li>
+      </ol>
+    </details>
+  </div>
+
+  <div class="prose" id="lectura">
+<p class="opening">Tener acceso a cientos de videojuegos, películas o series parece una excelente manera de resolver una pregunta sencilla: ¿qué quiero jugar o ver hoy? Eso pensé al usar Game Pass. Quizá hayas sentido algo parecido al suscribirte a una plataforma de streaming: con tanto para elegir, encontrar algo que te guste debería ser fácil. Había variedad, posibilidades de descubrir algo nuevo y, en mi caso, juegos que habría sido más caro comprar por separado. El servicio tenía valor. La sorpresa fue descubrir que disponer de tantas alternativas también podía complicar algo que, en principio, hacía para descansar.</p>
+<p>Abrir el catálogo, buscar, comparar, instalar, probar. Recordar otro juego que también quería conocer. Volver al catálogo. En algún momento, elegir qué jugar empezó a competir con el tiempo que tenía para jugar.</p>
+<p>De ahí surgió una pregunta que termina bastante lejos de una consola: si tener opciones es bueno, ¿por qué llega un momento en que tener más puede hacernos disfrutar menos de las que elegimos?</p>
+<h2 id="seccion-1">El tiempo también forma parte del precio</h2>
+<p>Poder elegir tiene un valor enorme. Quien sólo puede aceptar un empleo está en una posición distinta de quien puede comparar varias ofertas. Una oferta educativa más amplia puede abrir una carrera que antes parecía imposible. Sería extraño convertir la abundancia de alternativas en un problema por definición.</p>
+<p>Pero nuestra capacidad de aprovecharlas tiene límites. Un catálogo puede multiplicarse mientras la noche sigue teniendo las mismas horas. Podemos guardar cien cursos sin disponer del tiempo necesario para completar uno. El acceso crece mucho más fácilmente que nuestra atención.</p>
+<p>Además del dinero, elegir exige averiguar qué existe, entender las diferencias y decidir cuáles importan. Si paso buena parte de mi tiempo libre comparando experiencias, esa búsqueda también forma parte de lo que me cuesta disfrutar de ellas. Incluso cuando explorar es entretenido, conviene reconocer qué estoy haciendo: quizá esa noche quiero descubrir juegos; quizá quiero jugar uno. Son actividades distintas.</p>
+<p>La literatura sobre sobrecarga de elección ayuda a matizar esta experiencia. Una revisión de Chernev, Böckenholt y Goodman encontró que el efecto de ampliar un conjunto de opciones depende, entre otras cosas, de la complejidad de las alternativas, la dificultad de la tarea, la claridad de nuestras preferencias y el objetivo con el que elegimos. La abundancia puede ser más difícil de manejar cuando no sabemos bien qué queremos o buscamos decidir con poco esfuerzo. <sup><a id="nota-1" href="#referencia-1" aria-label="Consultar referencia 1">1</a></sup></p>
+<p>Por eso, no hay razón para afirmar que tres opciones siempre sean mejores que treinta. Treinta pueden ser perfectas para alguien que conoce sus gustos. Tres pueden resultar agotadoras si implican consecuencias importantes y criterios difíciles de comparar. La pregunta útil es cuánto trabajo nos exige encontrar algo que encaje con lo que necesitamos.</p>
+<h2 id="seccion-2">Las alternativas que siguen abiertas</h2>
+<p>Elegir implica dejar algo de lado, al menos por un tiempo. La noche que dedico a un juego no puedo dedicarla entera a otro. Ese límite existe aunque el catálogo tenga cinco títulos o cinco mil.</p>
+<p>En economía, el costo de oportunidad se refiere al valor de la mejor alternativa sacrificada. No es la suma de todas las vidas, compras o experiencias que no elegimos. Sin embargo, podemos sentir la renuncia como si estuviéramos perdiéndolo todo a la vez. La opción elegida empieza a competir con una colección imaginaria de ventajas ajenas.</p>
+<p>Una computadora real tiene peso, precio y limitaciones. La alternativa que construimos mentalmente puede reunir la pantalla de un modelo, la batería de otro y el precio de una oferta que ya terminó. Ningún equipo que tengamos sobre el escritorio puede ganar esa comparación.</p>
+<p>El trabajo “Range Effects in Economic Choice: The Role of Complexity”, de Bondi y sus coautores, examina un mecanismo relacionado, aunque diferente de la sobrecarga por cantidad de opciones. En sus experimentos, una mayor complejidad y la presión de tiempo favorecen que las diferencias más marcadas entre atributos pesen más en la elección. El estudio trata sobre cómo comparamos características; no demuestra que un catálogo grande nos haga infelices. <sup><a id="nota-2" href="#referencia-2" aria-label="Consultar referencia 2">2</a></sup></p>
+<p>Para esta reflexión, sirve como recordatorio de que el contexto puede cambiar aquello a lo que prestamos atención. Cuando comparo equipos, ¿estoy valorando una mejora que necesito o una diferencia que resulta especialmente visible? La respuesta puede cambiar lo que considero una buena compra.</p>
+<h2 id="seccion-3">Darle tiempo a una decisión</h2>
+<p>Algo parecido puede ocurrir con decisiones más grandes. Elegir una carrera, una ciudad o un trabajo requiere información y alternativas reales. Investigar puede evitar errores costosos. Pero también podemos seguir revisando caminos posibles mucho después de haber encontrado uno razonable, sin dedicarle el tiempo necesario para descubrir qué ofrece.</p>
+<p>Una carrera empieza a dar frutos cuando desarrollamos habilidades. Un proyecto necesita intentos que no siempre salen bien. Una ciudad se vuelve habitable a través de rutinas y vínculos. Parte del valor aparece después de comprometernos; no está disponible por completo en la comparación inicial.</p>
+<p>Esto no obliga a mantener una decisión equivocada. La nueva información importa, nuestras necesidades cambian y a veces salir es lo más sensato. Conviene distinguir entre revisar porque algo relevante cambió y revisar porque sigue existiendo alguna alternativa atractiva. Esa segunda condición probablemente nunca desaparecerá.</p>
+<p>Podemos darle a una elección un plazo y unos criterios de revisión. Probar una actividad durante un periodo razonable, observar qué aporta y reconsiderar si deja de cumplir lo que necesitamos. Así, el compromiso permite aprender sin convertirse en una obligación de perseverar a cualquier precio.</p>
+<h2 id="seccion-4">Saber cuándo dejar de buscar</h2>
+<p>Buscar la mejor opción imaginable y encontrar una opción suficientemente buena son objetivos distintos. “Suficientemente buena” exige saber qué condiciones necesitamos satisfacer. Para una noche de descanso, pueden ser pocas. Para un empleo, merecen mucha más atención.</p>
+<p>Caplin, Dean y Martin estudiaron experimentalmente la búsqueda de alternativas y encontraron que muchas decisiones podían entenderse mediante el modelo de satisfacción de Herbert Simon: las personas exploran secuencialmente y se detienen al encontrar una opción que alcanza cierto umbral. Ese umbral y el orden de búsqueda responden al entorno de la decisión. <sup><a id="nota-3" href="#referencia-3" aria-label="Consultar referencia 3">3</a></sup></p>
+<p>Mi lectura práctica es que necesitamos criterios para empezar a comparar y también para terminar. Si un equipo ejecuta bien mi trabajo, cabe en mi presupuesto y resulta cómodo de usar, seguir buscando necesita una razón adicional. La mera existencia de algo mejor no demuestra que reemplazarlo mejore mi vida lo suficiente.</p>
+<p class="pull">Una opción tiene valor antes de elegir. Después, seguir comparando también puede tenerlo, pero tiene un costo. Llega un momento en que el beneficio esperado de obtener más información puede ser menor que el tiempo y la atención que exige buscarla. Reconocer ese punto requiere aceptar que quedará incertidumbre.</p>
+<h2 id="seccion-5">Cuando lo que tenemos empieza a ser suficiente</h2>
+<p>Esta pregunta también apareció al mirar mi espacio de trabajo. Ya tenía una computadora y los accesorios necesarios para hacer lo que quería. Podía seguir imaginando mejoras, pero cada vez me costaba más identificar una necesidad concreta que justificara la siguiente compra.</p>
+<p>Reconocerlo cambió la pregunta. ¿Qué podía hacer con el equipo que ya tenía? Había investigaciones por desarrollar, ideas por escribir y herramientas por aprender a construir. El mismo escritorio que podía seguir ampliando ya me permitía trabajar en Kairos.</p>
+<p>También empecé a pensar en destinar recursos a activos y proyectos capaces de aportar valor con el tiempo. Lo vivo como una transición de prioridades: dedicar una mayor parte de mi dinero y mi atención a construir. Comprar una herramienta puede apoyar ese propósito, pero su utilidad depende de lo que permita hacer. Añadir otro dispositivo al escritorio no produce por sí mismo una investigación.</p>
+<p>Esta es una reflexión personal, no un resultado de los estudios citados ni una escala para clasificar a otras personas. Todos consumimos. La música, los videojuegos y una buena comida tienen valor aunque nunca produzcan ingresos. Además, poder decir “ya tengo suficiente” depende de las necesidades y condiciones de cada quien. Para alguien que carece de lo básico, tener más puede transformar su vida.</p>
+<p>Lo que quiero cuestionar es la dificultad de llegar a ese “suficiente” cuando nuestras necesidades ya están cubiertas. Si cada compra abre inmediatamente la búsqueda de la siguiente, disfrutar lo adquirido queda siempre pendiente. Y la promesa de empezar cuando tengamos el equipo completo puede prolongarse tanto como queramos seguir ampliando la lista.</p>
+<p>Crear también exige cuidado. Podemos convertir la búsqueda de productividad en otro catálogo interminable: más aplicaciones, más cursos, más herramientas para un proyecto que nunca empezamos. Incluso el deseo de invertir puede convertirse en comparación constante. La pregunta sigue siendo qué propósito cumple lo que buscamos y cuándo vamos a utilizarlo.</p>
+<h2 id="seccion-6">Cerrar el catálogo</h2>
+<p>Ahora me atrae la idea de tener unos pocos juegos elegidos con intención y darles tiempo. No necesito convertir esa preferencia en una regla para todos. Game Pass puede seguir siendo una excelente opción para otras personas, como también tuvo valor para mí. Lo que cambió fue mi manera de pensar cuánto quería explorar y cuánto quería simplemente jugar.</p>
+<p>Esa distinción me sirve fuera de la consola. Quiero que mi equipo me ayude a desarrollar ideas y que mis compras respondan a necesidades que pueda explicar. Quiero conservar la posibilidad de cambiar sin revisar cada decisión todos los días.</p>
+<p class="closing-thesis">Quizá una buena vida no sea aquella en la que conseguimos mantener abiertas todas nuestras opciones. Quizá sea aquella en la que aprendemos cuáles merece la pena cerrar, al menos durante el tiempo necesario para vivir lo que elegimos.</p>
+<p>Por esta noche, la pregunta puede ser mucho más pequeña: ¿cuál quiero jugar hoy?</p>
+<p class="last-line">Elegir uno. Cerrar el catálogo. Y jugar.</p>
+<section class="references" aria-labelledby="fuentes"><h2 id="fuentes">Fuentes y alcance</h2>
+<p>La literatura acompaña la reflexión. Las experiencias personales y el paso hacia crear e invertir son interpretaciones del autor; los trabajos siguientes no establecen esa trayectoria como una ley general.</p>
+<p id="referencia-1" class="reference"><a href="https://doi.org/10.1016/j.jcps.2014.08.002">[1] Chernev, A., Böckenholt, U. y Goodman, J. (2015). Choice overload: A conceptual review and meta-analysis. Journal of Consumer Psychology, 25(2), 333–358.</a> <a class="backref" href="#nota-1" aria-label="Volver a la cita 1">↩</a></p>
+<p>Sustenta el papel del contexto y de los factores que moderan la sobrecarga de elección. No fija una cantidad universalmente óptima de opciones.</p>
+<p id="referencia-2" class="reference"><a href="https://www.ifo.de/en/cesifo/publications/2025/working-paper/range-effects-economic-choice-role-complexity">[2] Bondi, T., Csaba, D., Friedman, E. y Nunnari, S. (2025). Range Effects in Economic Choice: The Role of Complexity. CESifo Working Paper 12175, versión del 5 de diciembre de 2025.</a> <a class="backref" href="#nota-2" aria-label="Volver a la cita 2">↩</a></p>
+<p>Documento de trabajo experimental sobre rangos de atributos, complejidad y presión de tiempo. No es una prueba directa sobre cantidad de juegos o satisfacción con una suscripción.</p>
+<p id="referencia-3" class="reference"><a href="https://www.aeaweb.org/articles?id=10.1257/aer.101.7.2899">[3] Caplin, A., Dean, M. y Martin, D. (2011). Search and Satisficing. American Economic Review, 101(7), 2899–2922.</a> <a class="backref" href="#nota-3" aria-label="Volver a la cita 3">↩</a></p>
+<p>Sustenta la descripción de búsqueda secuencial y umbrales de satisfacción. Las reglas prácticas propuestas en el ensayo son una interpretación, no una intervención evaluada por ese experimento.</p>
+</section>
+  </div>
+
+</div>
+</article>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <a href="../index.html#pensamiento">← Volver a Pensamiento</a>
+    <span class="footer-copy">© 2026 Kairos</span>
+  </div>
+</footer>
+
+<script>
+const progress=document.querySelector('.progress');
+function updateProgress(){
+  const max=document.documentElement.scrollHeight-innerHeight;
+  progress.style.width=(max>0?Math.min(100,scrollY/max*100):0)+'%';
+}
+addEventListener('scroll',updateProgress,{passive:true});
+addEventListener('resize',updateProgress);
+updateProgress();
+if(matchMedia('(max-width:1179px)').matches){
+  const toc=document.querySelector('.toc');
+  if(toc) toc.open=false;
+}
+</script>
+</body>
+</html>

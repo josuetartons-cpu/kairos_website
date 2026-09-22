@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Corrupción, incentivos y valor público: un experimento computacional de teoría de juegos — Kairos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Investigación técnica de Kairos: economía artificial de 100 licitaciones para estudiar cómo la detección, la sanción y los costos institucionales determinan la corrupción efectiva en compras públicas, con un experimento dinámico de adaptación tras una reforma.">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+
+:root{
+  --bg:#F7F4EE;
+  --panel:#FFFFFF;
+  --panel-2:#EFEAE0;
+  --line: #E4DFD3;
+  --text:#1C1B22;
+  --text-dim:#6B6570;
+  --accent:#7A2540;
+  --accent-soft:rgba(122,37,64,0.08);
+  --navy:#1E2A42;
+  --green:#3E6488;
+  --green-soft:rgba(62,100,136,0.10);
+  --amber:#75707A;
+  --amber-soft:rgba(117,112,122,0.10);
+  --red:#8C2E48;
+  --red-soft:rgba(140,46,72,0.10);
+  --sidebar-w:272px;
+  --shadow-sm:0 1px 3px rgba(28,27,34,0.06);
+  --shadow-md:0 6px 20px rgba(28,27,34,0.09);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+html,body{margin:0;padding:0;}
+body{background:var(--bg); color:var(--text); font-family:'Space Grotesk',sans-serif; -webkit-font-smoothing:antialiased;}
+.mono{font-family:'IBM Plex Mono',monospace;}
+a{color:inherit;}
+section{scroll-margin-top:96px;}
+.skip-link{position:absolute; left:12px; top:-80px; z-index:100; background:var(--text); color:var(--bg); padding:10px 14px; border-radius:4px; text-decoration:none;}
+.skip-link:focus{top:12px;}
+a:focus-visible{outline:3px solid var(--accent); outline-offset:3px;}
+
+/* ---------- Nav mínima de retorno ---------- */
+.topbar{border-bottom:1px solid var(--line); background:rgba(247,244,238,0.92); backdrop-filter:blur(6px); position:sticky; top:0; z-index:30;}
+.topbar-inner{max-width:1180px; margin:0 auto; padding:14px 26px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;}
+.topbar a.brand{font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:13px; letter-spacing:0.04em; text-decoration:none; color:var(--text);}
+.topbar a.brand span{color:var(--accent);}
+.topbar-links{display:flex; gap:16px; flex-wrap:wrap;}
+.topbar a.serieslink{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--text-dim); text-decoration:none;}
+.topbar a.serieslink:hover{color:var(--accent);}
+
+/* ---------- Hero sobrio ---------- */
+.hero{max-width:900px; margin:0 auto; padding:56px 26px 40px; border-bottom:1px solid var(--line);}
+.eyebrow{font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent); display:flex; align-items:center; gap:10px; margin-bottom:20px; text-decoration:none;}
+.eyebrow::before{content:""; width:22px; height:1px; background:var(--accent);}
+.series-tag{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--text-dim); margin:-8px 0 22px;}
+h1{font-family:'Fraunces',serif; font-optical-sizing:auto; font-weight:560; font-size:clamp(28px,4.2vw,42px); line-height:1.16; letter-spacing:-0.005em; margin:0 0 16px; max-width:29ch;}
+h1 span{color:var(--accent); font-style:italic;}
+.subtitle{font-size:16.5px; line-height:1.68; color:var(--text-dim); max-width:68ch; margin:0 0 28px;}
+.hero-meta{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-dim); padding-top:18px; border-top:1px solid var(--line); display:flex; gap:22px; flex-wrap:wrap;}
+.hero-meta span{white-space:nowrap;}
+.hero-meta span b{color:var(--text);}
+.cta-row{display:flex; gap:14px; flex-wrap:wrap; margin:26px 0 0;}
+.btn{font-family:'IBM Plex Mono',monospace; font-size:13px; text-decoration:none; padding:13px 22px; border-radius:4px; display:inline-block; letter-spacing:0.01em; transition:opacity .15s, border-color .15s, color .15s; border:1px solid transparent; cursor:pointer;}
+.btn-primary{background:var(--text); color:var(--bg);}
+.btn-primary:hover{opacity:0.85;}
+.btn-secondary{border:1px solid var(--line); color:var(--text); background:transparent;}
+.btn-secondary:hover{border-color:var(--accent); color:var(--accent);}
+
+/* ---------- Layout con sidebar sticky ---------- */
+.layout{max-width:1180px; margin:0 auto; padding:44px 26px 90px; display:grid; grid-template-columns:var(--sidebar-w) 1fr; gap:46px; align-items:start;}
+@media (max-width:920px){.layout{grid-template-columns:1fr;}}
+
+.toc-sidebar{position:sticky; top:84px; background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:22px 20px; max-height:calc(100vh - 108px); overflow-y:auto; box-shadow:var(--shadow-sm);}
+@media (max-width:920px){.toc-sidebar{position:static; max-height:none; margin-bottom:8px;}}
+.toc-sidebar > h4{font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--text-dim); margin:0 0 16px; display:flex; align-items:center; justify-content:space-between;}
+.toc-progress{font-weight:400; color:var(--text-dim); opacity:.7;}
+.toc-group{margin-bottom:18px;}
+.toc-group:last-child{margin-bottom:0;}
+.toc-group .group-label{font-family:'IBM Plex Mono',monospace; font-size:10.5px; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:8px;}
+.toc-group ul{list-style:none; margin:0; padding:0; border-left:1px solid var(--line);}
+.toc-group li{margin-bottom:1px;}
+.toc-group a{font-size:12.5px; color:var(--text-dim); text-decoration:none; line-height:1.5; display:block; padding:5px 0 5px 12px; margin-left:-1px; border-left:2px solid transparent; transition:color .12s, border-color .12s, background .12s;}
+.toc-group a:hover{color:var(--accent); background:var(--accent-soft); border-radius:0 5px 5px 0;}
+.toc-group a b{font-family:'IBM Plex Mono',monospace; color:var(--text-dim); margin-right:5px; font-weight:600;}
+.toc-group a.active{color:var(--accent); border-left-color:var(--accent); font-weight:600; background:var(--accent-soft); border-radius:0 5px 5px 0;}
+.toc-group a.active b{color:var(--accent);}
+
+.content-col{min-width:0;}
+
+/* ---------- Secciones numeradas ---------- */
+.tsec{margin-bottom:62px; scroll-margin-top:96px;}
+.tsec-head{display:flex; align-items:baseline; gap:16px; margin-bottom:16px; border-bottom:1px solid var(--line); padding-bottom:13px;}
+.tsec-num{font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--accent); font-weight:700; flex:0 0 auto; padding-top:3px;}
+.tsec-head h2{font-family:'Fraunces',serif; font-optical-sizing:auto; font-size:clamp(20px,2.5vw,26px); font-weight:560; line-height:1.28; margin:0; max-width:40ch; letter-spacing:-0.003em;}
+.tsec-sub{font-size:13.5px; color:var(--text-dim); max-width:68ch; line-height:1.6; margin:-6px 0 20px;}
+
+p.body{font-size:15px; line-height:1.78; color:var(--text-dim); margin:0 0 16px; max-width:72ch;}
+p.body strong{color:var(--text); font-weight:600;}
+ul.kx-list{margin:0 0 16px; padding-left:20px; font-size:14px; color:var(--text-dim); line-height:1.85; max-width:68ch;}
+ol.kx-list{margin:0 0 16px; padding-left:22px; font-size:14px; color:var(--text-dim); line-height:1.9; max-width:70ch;}
+ul.kx-list li, ol.kx-list li{margin-bottom:4px;}
+ul.kx-list li strong, ol.kx-list li strong{color:var(--text);}
+
+/* ---------- Ecuaciones ---------- */
+.eq{overflow-x:auto; margin:18px 0 24px; padding:20px 24px; background:var(--panel-2); border:1px solid var(--line); border-left:3px solid var(--navy); border-radius:4px 8px 8px 4px; text-align:center; font-size:15px;}
+.eq-label{font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--text-dim); text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:10px; text-align:left;}
+.katex-display{margin:0.3em 0 !important;}
+.katex-display + .katex-display{margin-top:0.6em !important;}
+
+/* ---------- Idea clave (síntesis conceptual, no ecuación) ---------- */
+.key-insight{margin:20px 0 26px; padding:22px 26px; background:var(--navy); border-radius:8px; position:relative;}
+.key-insight-tag{font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:#8FA3C4; display:block; margin-bottom:10px;}
+.key-insight p{font-family:'Fraunces',serif; font-optical-sizing:auto; font-weight:500; font-size:clamp(17px,2vw,20px); line-height:1.45; color:#FFFFFF; margin:0; max-width:60ch;}
+.key-insight em{color:#D9C79A; font-style:italic;}
+
+/* ---------- Callouts metodológicos ---------- */
+.callout{border-radius:8px; padding:18px 22px; margin:18px 0 24px; font-size:14px; line-height:1.7; max-width:72ch; border-left-width:3px; border-left-style:solid;}
+.callout .callout-tag{font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.06em; font-weight:700; display:flex; align-items:center; gap:7px; margin-bottom:8px;}
+.callout .callout-tag::before{content:""; width:6px; height:6px; border-radius:50%; background:currentColor; flex:0 0 auto;}
+.callout--scope{background:var(--accent-soft); border:1px solid rgba(122,37,64,0.22); border-left-color:var(--accent); color:#6B2338;}
+.callout--scope .callout-tag{color:var(--accent);}
+.callout--assumption{background:var(--panel-2); border:1px solid var(--line); border-left-color:var(--text-dim); color:var(--text-dim);}
+.callout--assumption .callout-tag{color:var(--text-dim);}
+.callout--validation{background:var(--green-soft); border:1px solid rgba(62,100,136,0.24); border-left-color:var(--green); color:#28405A;}
+.callout--validation .callout-tag{color:var(--green);}
+.callout--limitation{background:var(--red-soft); border:1px solid rgba(140,46,72,0.22); border-left-color:var(--red); color:#6B2338;}
+.callout--limitation .callout-tag{color:var(--red);}
+.callout code.mono{background:rgba(28,27,34,0.06); padding:1px 5px; border-radius:3px;}
+
+/* ---------- Tablas responsivas ---------- */
+.table-wrap{overflow-x:auto; margin:8px 0 24px; border-radius:8px; box-shadow:var(--shadow-sm);}
+.data-table{width:100%; border-collapse:collapse; font-family:'IBM Plex Mono',monospace; font-size:12.5px; min-width:420px;}
+.data-table th,.data-table td{border:1px solid var(--line); padding:10px 12px; text-align:center;}
+.data-table th{background:var(--panel-2); color:var(--text-dim); font-weight:600; text-transform:uppercase; font-size:10.5px; letter-spacing:.04em; position:sticky; top:0;}
+.data-table td{background:var(--panel); color:var(--text);}
+.data-table tbody tr:nth-child(even) td{background:#FBFAF7;}
+.data-table tbody tr:hover td{background:var(--accent-soft);}
+.data-table td:first-child, .data-table th:first-child{text-align:left;}
+.data-table tr.highlight td{background:var(--accent-soft); font-weight:700; color:var(--accent);}
+.data-table tr.highlight:hover td{background:var(--accent-soft);}
+
+/* ---------- Figuras ---------- */
+figure.figure{margin:24px 0 32px;}
+figure.figure img{max-width:100%; display:block; border-radius:9px; border:1px solid var(--line); background:var(--panel); cursor:zoom-in; transition:box-shadow .18s, transform .18s;}
+figure.figure img:hover{box-shadow:var(--shadow-md); transform:translateY(-1px);}
+figure.figure figcaption{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-dim); margin-top:10px; line-height:1.65; max-width:72ch;}
+figure.figure figcaption b{color:var(--accent);}
+.figure-row{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+@media (max-width:640px){.figure-row{grid-template-columns:1fr; gap:24px;}}
+
+/* ---------- Lightbox de figuras ---------- */
+.lightbox{position:fixed; inset:0; background:rgba(28,27,34,0.88); display:none; align-items:center; justify-content:center; z-index:200; padding:5vh 5vw; cursor:zoom-out;}
+.lightbox.open{display:flex;}
+.lightbox img{max-width:100%; max-height:90vh; border-radius:6px; box-shadow:0 20px 60px rgba(0,0,0,0.4);}
+.lightbox-close{position:absolute; top:22px; right:26px; font-family:'IBM Plex Mono',monospace; font-size:13px; color:#F7F4EE; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.25); border-radius:5px; padding:8px 14px; cursor:pointer;}
+.lightbox-close:hover{background:rgba(255,255,255,0.16);}
+
+/* ---------- Bloques de código / árbol de archivos ---------- */
+pre.codeblock{background:var(--navy); color:#C7CFDC; border-radius:8px; padding:20px 22px; font-family:'IBM Plex Mono',monospace; font-size:12.5px; line-height:1.7; overflow-x:auto; margin:14px 0 24px;}
+pre.codeblock b{color:#fff;}
+
+/* ---------- Bloque de síntesis final ---------- */
+.conclusion-block{background:var(--navy); border-radius:10px; padding:32px 34px; margin:10px 0 36px;}
+.conclusion-block p{font-size:15.5px; line-height:1.78; color:#C7CFDC; margin:0 0 13px;}
+.conclusion-block p:last-child{margin-bottom:0;}
+.conclusion-block .cb-strong{font-family:'Fraunces',serif; font-optical-sizing:auto; color:#FFFFFF; font-weight:560; font-size:16.5px; line-height:1.55; display:block; margin-top:16px; padding-top:16px; border-top:1px solid rgba(199,207,220,0.18);}
+
+.final-cta{background:var(--panel-2); border-radius:10px; padding:34px 30px; text-align:center; margin-bottom:10px; border:1px solid var(--line);}
+.final-cta h3{font-family:'Fraunces',serif; font-optical-sizing:auto; font-size:clamp(18px,2.2vw,22px); font-weight:560; margin:0 0 10px;}
+.final-cta p{font-size:13.5px; color:var(--text-dim); margin:0 0 20px; max-width:56ch; margin-left:auto; margin-right:auto;}
+.final-cta .cta-row{justify-content:center;}
+
+.footnote{margin-top:40px; padding-top:22px; border-top:1px solid var(--line); font-size:12px; color:var(--text-dim); line-height:1.6; max-width:900px;}
+
+footer{background:var(--navy); color:#C7CFDC; padding:40px 0 26px; margin-top:20px;}
+.footer-inner{max-width:1180px; margin:0 auto; padding:0 26px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:#7C8AA0;}
+.footer-inner a{color:#C7CFDC; text-decoration:none;}
+.footer-inner a:hover{color:#fff;}
+.footer-inner a.placeholder{color:#7C8AA0; font-style:italic;}
+
+/* ---------- Barra de progreso de lectura ---------- */
+.progress-track{position:fixed; top:0; left:0; width:100%; height:3px; background:transparent; z-index:40;}
+.progress-bar{height:100%; width:0%; background:var(--accent); transition:width .08s linear;}
+
+/* ---------- Botón volver arriba ---------- */
+.to-top{position:fixed; right:24px; bottom:24px; width:44px; height:44px; border-radius:50%; background:var(--text); color:var(--bg); border:none; display:flex; align-items:center; justify-content:center; cursor:pointer; opacity:0; pointer-events:none; transform:translateY(8px); transition:opacity .2s, transform .2s; z-index:40; box-shadow:var(--shadow-md);}
+.to-top.visible{opacity:1; pointer-events:auto; transform:translateY(0);}
+.to-top:hover{opacity:0.85;}
+@media (max-width:640px){.to-top{right:16px; bottom:16px; width:40px; height:40px;}}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;} figure.figure img, .toc-group a, .to-top{transition:none;}}
+
+/* ---------- Ajustes responsivos adicionales ---------- */
+@media (max-width:640px){
+  .hero{padding:44px 20px 32px;}
+  .layout{padding:32px 20px 70px;}
+  .data-table{font-size:11.5px;}
+  .data-table th,.data-table td{padding:8px 9px;}
+  .callout,.eq,.key-insight{padding-left:18px; padding-right:18px;}
+  .conclusion-block{padding:26px 22px;}
+}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+<div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+
+<header class="topbar">
+  <nav class="topbar-inner" aria-label="Navegación principal">
+    <a class="brand" href="../index.html">KAIRO<span>S</span></a>
+    <div class="topbar-links">
+      <a class="serieslink" href="corrupcion-compras-publicas.html">← Versión divulgativa</a>
+      <a class="serieslink" href="../index.html#laboratorio">Kairos Laboratorio</a>
+    </div>
+  </nav>
+</header>
+
+<div class="hero">
+  <a href="../index.html#laboratorio" class="eyebrow">Laboratorio · Experimentar</a>
+  <div class="series-tag">Publicación 8 · Investigación técnica — Kairos Corruption Lab</div>
+
+  <h1>Corrupción, incentivos y <span>valor público</span>: un experimento computacional de teoría de juegos aplicado a compras públicas</h1>
+
+  <p class="subtitle">
+    Detección, sanciones, costos institucionales y adaptación estratégica en una economía artificial de licitaciones.
+  </p>
+
+  <div class="hero-meta">
+    <span><b>Tipo</b> · Investigación técnica reproducible</span>
+    <span><b>Base</b> · 100 licitaciones · 500 ofertas</span>
+    <span><b>Lectura</b> · 20–25 minutos</span>
+  </div>
+
+  <div class="cta-row">
+    <a class="btn btn-secondary" href="corrupcion-compras-publicas.html">← Leer primero la versión divulgativa</a>
+  </div>
+</div>
+
+<div class="layout" id="contenido">
+
+  <!-- ===================== TOC STICKY ===================== -->
+  <aside class="toc-sidebar" aria-label="Tabla de contenidos">
+    <h4>Contenido</h4>
+
+    <div class="toc-group">
+      <span class="group-label">I · Marco y alcance</span>
+      <ul>
+        <li><a href="#s01"><b>01</b>Resumen</a></li>
+        <li><a href="#s02"><b>02</b>Alcance y naturaleza</a></li>
+      </ul>
+    </div>
+
+    <div class="toc-group">
+      <span class="group-label">II · Juego estratégico mínimo</span>
+      <ul>
+        <li><a href="#s03"><b>03</b>Juego mínimo</a></li>
+        <li><a href="#s04"><b>04</b>Payoffs</a></li>
+        <li><a href="#s05"><b>05</b>Umbrales teóricos</a></li>
+        <li><a href="#s06"><b>06</b>Regiones estratégicas</a></li>
+      </ul>
+    </div>
+
+    <div class="toc-group">
+      <span class="group-label">III · Mercado sintético</span>
+      <ul>
+        <li><a href="#s07"><b>07</b>Mercado de licitaciones</a></li>
+        <li><a href="#s08"><b>08</b>Función de valor público</a></li>
+        <li><a href="#s09"><b>09</b>Validación del mecanismo</a></li>
+        <li><a href="#s10"><b>10</b>Benchmark honesto</a></li>
+        <li><a href="#s11"><b>11</b>Integrar la corrupción</a></li>
+        <li><a href="#s12"><b>12</b>Mercado corrupto</a></li>
+        <li><a href="#s13"><b>13</b>Interpretación de la pérdida</a></li>
+      </ul>
+    </div>
+
+    <div class="toc-group">
+      <span class="group-label">IV · Experimentos de política</span>
+      <ul>
+        <li><a href="#s14"><b>14</b>Barrido de detección</a></li>
+        <li><a href="#s15"><b>15</b>Barrido de sanciones</a></li>
+        <li><a href="#s16"><b>16</b>Política combinada</a></li>
+        <li><a href="#s17"><b>17</b>Equivalencia estratégica</a></li>
+        <li><a href="#s18"><b>18</b>Costos institucionales</a></li>
+        <li><a href="#s19"><b>19</b>Control insuficiente</a></li>
+        <li><a href="#s20"><b>20</b>Sensibilidad de costos</a></li>
+      </ul>
+    </div>
+
+    <div class="toc-group">
+      <span class="group-label">V · Dinámica y adaptación</span>
+      <ul>
+        <li><a href="#s21"><b>21</b>Juego repetido</a></li>
+        <li><a href="#s22"><b>22</b>Propensión conductual</a></li>
+        <li><a href="#s23"><b>23</b>Elegibilidad</a></li>
+        <li><a href="#s24"><b>24</b>Resultados pre-reforma</a></li>
+        <li><a href="#s25"><b>25</b>Reforma institucional</a></li>
+        <li><a href="#s26"><b>26</b>Persistencia conductual</a></li>
+        <li><a href="#s27"><b>27</b>Estado conductual</a></li>
+        <li><a href="#s28"><b>28</b>Institucional vs. adaptación</a></li>
+      </ul>
+    </div>
+
+    <div class="toc-group">
+      <span class="group-label">VI · Validación y síntesis</span>
+      <ul>
+        <li><a href="#s29"><b>29</b>Validaciones</a></li>
+        <li><a href="#s30"><b>30</b>Resultados principales</a></li>
+        <li><a href="#s31"><b>31</b>Limitaciones</a></li>
+        <li><a href="#s32"><b>32</b>Interpretación</a></li>
+        <li><a href="#s33"><b>33</b>Conclusión</a></li>
+        <li><a href="#s34"><b>34</b>Reproducibilidad</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- ===================== CONTENIDO PRINCIPAL ===================== -->
+  <div class="content-col">
+
+    <!-- 01 -->
+    <section class="tsec" id="s01">
+      <div class="tsec-head"><span class="tsec-num">01</span><h2>Resumen</h2></div>
+      <p class="body">
+        Esta investigación construye una economía artificial de compras públicas para estudiar cómo los incentivos
+        de empresas y funcionarios pueden generar corrupción, distorsión en la adjudicación y pérdida de valor
+        público. El experimento combina teoría de juegos, un mercado sintético de licitaciones, estática comparativa
+        y dinámica adaptativa.
+      </p>
+      <p class="body">Se simulan 100 licitaciones con 5 empresas cada una, para un total de 500 ofertas. El benchmark honesto genera:</p>
+      <div class="eq">\[ PV_{Honest} = \boxed{8197.05} \]</div>
+      <p class="body">unidades de valor público. Bajo el escenario corrupto base,</p>
+      <div class="eq">\[ p = 10\%, \qquad F = 100, \qquad B = 20 \]</div>
+      <p class="body">el valor público cae a:</p>
+      <div class="eq">\[ PV_{Corrupt} = \boxed{5653.88} \]</div>
+      <p class="body">lo que implica una pérdida de <strong>2543.17</strong>, equivalente a <strong>31.03%</strong> respecto al benchmark honesto.</p>
+      <p class="body">
+        Posteriormente se estudian cambios en detección, sanciones, políticas combinadas, costos institucionales y
+        adaptación después de una reforma. Los resultados muestran que, dentro del modelo, la corrupción efectiva
+        puede desaparecer mucho antes que el incentivo privado o la disposición conductual a intentar corromper.
+      </p>
+    </section>
+
+    <!-- 02 -->
+    <section class="tsec" id="s02">
+      <div class="tsec-head"><span class="tsec-num">02</span><h2>Alcance y naturaleza del experimento</h2></div>
+      <div class="callout callout--scope">
+        <span class="callout-tag">Alcance</span>
+        Este estudio no estima corrupción real ni pretende calibrar empíricamente un país específico.
+      </div>
+      <p class="body">No utiliza:</p>
+      <ul class="kx-list">
+        <li>datos de contratación pública reales;</li>
+        <li>Guatecompras;</li>
+        <li>estimación causal;</li>
+        <li>probabilidades empíricas de detección;</li>
+        <li>sanciones legales reales;</li>
+        <li>calibración institucional.</li>
+      </ul>
+      <p class="body">
+        El propósito es estudiar mecanismos estratégicos dentro de una economía artificial reproducible. Los valores
+        numéricos deben interpretarse como resultados internos del modelo, no como estimaciones de un contexto real.
+      </p>
+    </section>
+
+    <!-- 03 -->
+    <section class="tsec" id="s03">
+      <div class="tsec-head"><span class="tsec-num">03</span><h2>Juego estratégico mínimo</h2></div>
+      <p class="body">Consideramos dos actores: la <strong>empresa</strong> y el <strong>funcionario</strong>. La empresa puede competir honestamente o intentar sobornar; el funcionario puede aceptar o rechazar. Los parámetros del juego mínimo son:</p>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Parámetro</th><th>Símbolo</th><th>Valor</th></tr></thead>
+          <tbody>
+            <tr><td>Beneficio privado de referencia</td><td>\(\pi\)</td><td>100</td></tr>
+            <tr><td>Soborno</td><td>\(B\)</td><td>20</td></tr>
+            <tr><td>Probabilidad base de detección</td><td>\(p\)</td><td>0.10</td></tr>
+            <tr><td>Sanción a la empresa</td><td>\(F_E\)</td><td>100</td></tr>
+            <tr><td>Sanción al funcionario</td><td>\(F_F\)</td><td>100</td></tr>
+            <tr><td>Prob. de ganar compitiendo honesto</td><td>\(q_H\)</td><td>0.30</td></tr>
+            <tr><td>Prob. de ganar sobornando</td><td>\(q_C\)</td><td>0.90</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 04 -->
+    <section class="tsec" id="s04">
+      <div class="tsec-head"><span class="tsec-num">04</span><h2>Payoffs</h2></div>
+      <p class="body">Empresa honesta:</p>
+      <div class="eq">\[ EU_E(H) = q_H \pi = 0.30(100) = 30 \]</div>
+      <p class="body">Empresa que soborna, condicionado a la aceptación del funcionario:</p>
+      <div class="eq">\[ EU_E(S \mid A) = q_C \pi - B - pF_E = 0.90(100) - 20 - 0.10(100) = 60 \]</div>
+      <p class="body">Funcionario que acepta:</p>
+      <div class="eq">\[ EU_F(A) = B - pF_F = 20 - 0.10(100) = 10 \]</div>
+      <p class="body">Funcionario que rechaza:</p>
+      <div class="eq">\[ EU_F(R) = 0 \]</div>
+      <p class="body">En el benchmark, \(60 > 30\) y \(10 > 0\): tanto la empresa como el funcionario tienen incentivos compatibles con la transacción corrupta.</p>
+      <figure class="figure">
+        <img src="assets/corrupcion/detection_payoffs.png" alt="Payoffs esperados de empresa y funcionario bajo el escenario base de detección" loading="lazy">
+        <figcaption><b>Figura técnica 1.</b> Payoffs esperados de la empresa (honesta vs. soborno) y del funcionario (aceptar vs. rechazar) bajo el escenario base.</figcaption>
+      </figure>
+    </section>
+
+    <!-- 05 -->
+    <section class="tsec" id="s05">
+      <div class="tsec-head"><span class="tsec-num">05</span><h2>Umbrales teóricos</h2></div>
+      <p class="body"><strong>Funcionario.</strong> Acepta si \(B - pF_F > 0\). El umbral es:</p>
+      <div class="eq">\[ p_F^{*} = \frac{B}{F_F} = \frac{20}{100} = \boxed{0.20} \]</div>
+      <p class="body"><strong>Empresa.</strong> Sobornar resulta preferible si \(q_C\pi - B - pF_E > q_H\pi\). Reordenando:</p>
+      <div class="eq">\[ p_E^{*} = \frac{(q_C - q_H)\pi - B}{F_E} = \frac{(0.90-0.30)(100)-20}{100} = \boxed{0.40} \]</div>
+      <div class="callout callout--assumption">
+        <span class="callout-tag">Convención del modelo</span>
+        Se utiliza una regla estricta: \(EU > 0\). La indiferencia exacta no se clasifica como participación corrupta.
+      </div>
+    </section>
+
+    <!-- 06 -->
+    <section class="tsec" id="s06">
+      <div class="tsec-head"><span class="tsec-num">06</span><h2>Regiones estratégicas</h2></div>
+      <p class="body">Con una sanción común \(F\), aparecen tres regiones:</p>
+      <ul class="kx-list">
+        <li><strong>Región I — corrupción sostenible.</strong> La empresa quiere sobornar y el funcionario quiere aceptar.</li>
+        <li><strong>Región II — intento sin contraparte.</strong> La empresa mantiene el incentivo a sobornar, pero el funcionario rechaza.</li>
+        <li><strong>Región III — comportamiento honesto.</strong> La empresa tampoco encuentra rentable sobornar.</li>
+      </ul>
+      <p class="body">Las fronteras entre regiones son:</p>
+      <div class="eq">\[ F_F^{*} = \frac{20}{p} \qquad F_E^{*} = \frac{40}{p} \]</div>
+      <figure class="figure">
+        <img src="assets/corrupcion/strategic_regions.png" alt="Mapa de las tres regiones estratégicas según probabilidad de detección y sanción" loading="lazy">
+        <figcaption><b>Figura técnica 2.</b> Regiones I (corrupción sostenible), II (intento sin contraparte) y III (comportamiento honesto) en el espacio \((p,F)\). Esta figura reemplaza los mapas separados de empresa y funcionario.</figcaption>
+      </figure>
+    </section>
+
+    <!-- 07 -->
+    <section class="tsec" id="s07">
+      <div class="tsec-head"><span class="tsec-num">07</span><h2>Mercado sintético de compras públicas</h2></div>
+      <p class="body">Se construyen 100 licitaciones con 5 empresas cada una, para un total de 500 ofertas sintéticas, con semilla reproducible \(\texttt{seed}=42\). Las variables se generan como:</p>
+      <div class="eq">
+        \[ Price \sim U(650,950) \qquad Quality \sim U(50,100) \]
+        \[ Experience \sim U(40,100) \qquad Risk \sim U(5,45) \]
+      </div>
+      <div class="callout callout--assumption">
+        <span class="callout-tag">Nota de diseño</span>
+        No se ejecuta Monte Carlo. Se trata de una única economía artificial reproducible, generada una sola vez a partir de la semilla fija.
+      </div>
+    </section>
+
+    <!-- 08 -->
+    <section class="tsec" id="s08">
+      <div class="tsec-head"><span class="tsec-num">08</span><h2>Función de valor público</h2></div>
+      <p class="body">Para cada licitación se transforma el precio en un puntaje relativo:</p>
+      <div class="eq">\[ PriceScore_i = 100\left[1 - \frac{Price_i - Price_{min}}{Price_{max}-Price_{min}}\right] \]</div>
+      <p class="body">El puntaje de bajo riesgo es \(LowRisk_i = 100 - Risk_i\). El valor público de cada oferta es:</p>
+      <div class="eq">\[ PV_i = 0.30\,Quality_i + 0.25\,PriceScore_i + 0.25\,Experience_i + 0.20\,LowRisk_i \]</div>
+      <p class="body">La empresa con \(\max_i PV_i\) gana bajo contratación honesta.</p>
+    </section>
+
+    <!-- 09 -->
+    <section class="tsec" id="s09">
+      <div class="tsec-head"><span class="tsec-num">09</span><h2>Validación determinista del mecanismo de adjudicación</h2></div>
+      <p class="body">Antes de generar las 100 licitaciones se utiliza un benchmark de cinco empresas para verificar que el mecanismo funciona como se espera:</p>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Firma</th><th>Valor público</th></tr></thead>
+          <tbody>
+            <tr><td>A</td><td>67.50</td></tr>
+            <tr><td>B</td><td>69.50</td></tr>
+            <tr><td>C</td><td>69.00</td></tr>
+            <tr class="highlight"><td>D</td><td>72.75</td></tr>
+            <tr><td>E</td><td>66.00</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="body">La empresa <strong>D</strong> gana. Este ejemplo demuestra que el algoritmo no selecciona mecánicamente el precio más bajo, la calidad más alta ni la mayor experiencia: selecciona la oferta con mayor valor público compuesto.</p>
+      <div class="callout callout--validation">
+        <span class="callout-tag">Archivo de resultados</span>
+        <code class="mono">results_final/main/honest_market.csv</code>
+      </div>
+    </section>
+
+    <!-- 10 -->
+    <section class="tsec" id="s10">
+      <div class="tsec-head"><span class="tsec-num">10</span><h2>Benchmark honesto de 100 licitaciones</h2></div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Métrica</th><th>Valor</th></tr></thead>
+          <tbody>
+            <tr class="highlight"><td>Valor público total</td><td>8197.05</td></tr>
+            <tr><td>Valor público promedio</td><td>81.97</td></tr>
+            <tr><td>Valor público mediano</td><td>81.27</td></tr>
+            <tr><td>Gasto agregado</td><td>70548.68</td></tr>
+            <tr><td>Precio promedio ganador</td><td>705.49</td></tr>
+            <tr><td>Calidad promedio</td><td>78.97</td></tr>
+            <tr><td>Experiencia promedio</td><td>76.20</td></tr>
+            <tr><td>Riesgo promedio</td><td>22.99</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <figure class="figure">
+        <img src="assets/corrupcion/honest_public_value_distribution.png" alt="Distribución del valor público entre las 100 licitaciones del mercado honesto" loading="lazy">
+        <figcaption><b>Figura técnica 3.</b> Distribución del valor público entre las 100 licitaciones bajo contratación honesta.</figcaption>
+      </figure>
+    </section>
+
+    <!-- 11 -->
+    <section class="tsec" id="s11">
+      <div class="tsec-head"><span class="tsec-num">11</span><h2>Integración de corrupción al mercado</h2></div>
+      <p class="body">Para introducir heterogeneidad en el incentivo privado se define:</p>
+      <div class="eq">\[ PrivateProfit_i = 0.20\,Price_i \]</div>
+      <div class="callout callout--assumption">
+        <span class="callout-tag">Supuesto sintético</span>
+        Este margen del 20% es sintético; no proviene de márgenes reales observados en ningún sector.
+      </div>
+      <p class="body">Una vez determinado el ganador honesto, únicamente las empresas perdedoras pueden intentar alterar la adjudicación. El payoff de soborno para la empresa \(i\) es:</p>
+      <div class="eq">\[ EU_i(Bribe) = PrivateProfit_i - B - pF_E \]</div>
+      <p class="body">La alternativa honesta de una empresa que ya perdió se normaliza a \(0\). Entre las empresas perdedoras con \(EU_i(Bribe) > 0\), se selecciona la de mayor payoff corrupto. El funcionario acepta si \(B - pF_F > 0\).</p>
+    </section>
+
+    <!-- 12 -->
+    <section class="tsec" id="s12">
+      <div class="tsec-head"><span class="tsec-num">12</span><h2>Resultado del mercado corrupto</h2></div>
+      <p class="body">Escenario: \(p=10\%,\ F_E=F_F=100,\ B=20\).</p>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Métrica</th><th>Valor</th></tr></thead>
+          <tbody>
+            <tr><td>Intentos</td><td>100</td></tr>
+            <tr><td>Sobornos aceptados</td><td>100</td></tr>
+            <tr><td>Adjudicaciones distorsionadas</td><td>100</td></tr>
+            <tr><td>Valor público honesto</td><td>8197.05</td></tr>
+            <tr><td>Valor público corrupto</td><td>5653.88</td></tr>
+            <tr class="highlight"><td>Pérdida</td><td>2543.17 (31.03%)</td></tr>
+            <tr><td>Pérdida media por licitación distorsionada</td><td>25.43</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="figure-row">
+        <figure class="figure">
+          <img src="assets/corrupcion/honest_vs_corrupt_public_value.png" alt="Valor público del mercado honesto frente al mercado corrupto" loading="lazy">
+          <figcaption><b>Figura técnica 4.</b> Valor público honesto frente a corrupto sobre las mismas 100 licitaciones.</figcaption>
+        </figure>
+        <figure class="figure">
+          <img src="assets/corrupcion/corruption_loss_by_tender.png" alt="Pérdida de valor público por licitación distorsionada" loading="lazy">
+          <figcaption><b>Figura técnica 5.</b> Pérdida de valor público, licitación por licitación, entre las adjudicaciones distorsionadas.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 13 -->
+    <section class="tsec" id="s13">
+      <div class="tsec-head"><span class="tsec-num">13</span><h2>Interpretación de la pérdida</h2></div>
+      <p class="body">Los sobornos transferidos suman \(100 \times 20 = 2000\). Sin embargo, no deben sumarse a los 2543.17 de pérdida como si fueran pérdidas independientes.</p>
+      <div class="callout callout--assumption">
+        <span class="callout-tag">Contabilidad del modelo</span>
+        El soborno es fundamentalmente una transferencia entre agentes dentro del modelo, no una pérdida social adicional. La pérdida de valor público refleja <strong>misallocation</strong>: contratos adjudicados a empresas que producen menos valor público que la mejor alternativa honesta.
+      </div>
+    </section>
+
+    <!-- 14 -->
+    <section class="tsec" id="s14">
+      <div class="tsec-head"><span class="tsec-num">14</span><h2>Experimento 6 — barrido de detección</h2></div>
+      <p class="body">Se mantiene \(F=100\) y se varía \(p \in [0,1]\) en pasos de \(0.05\).</p>
+      <p class="body">Para \(p &lt; 20\%\): 100 sobornos aceptados, 100 distorsiones, \(PV=5653.88\). En \(p=20\%\), el payoff del funcionario llega a \(0\) y la corrupción efectiva desaparece; desde entonces, \(PV=8197.05\).</p>
+      <figure class="figure">
+        <img src="assets/corrupcion/corruption_vs_detection.png" alt="Sobornos aceptados y valor público en función de la probabilidad de detección" loading="lazy">
+        <figcaption><b>Figura técnica 6.</b> Barrido de la probabilidad de detección \(p \in [0,1]\), con \(F=100\) fijo.</figcaption>
+      </figure>
+    </section>
+
+    <!-- 15 -->
+    <section class="tsec" id="s15">
+      <div class="tsec-head"><span class="tsec-num">15</span><h2>Experimento 7 — barrido de sanciones</h2></div>
+      <p class="body">Se fija \(p=10\%\) y se varía \(F \in [0,2000]\). El funcionario deja de aceptar en \(F=\boxed{200}\), pero las empresas mantienen incentivos durante mucho más tiempo: primera reducción en empresas dispuestas en \(F=\boxed{1125}\), y cero empresas dispuestas en \(F=\boxed{1700}\).</p>
+      <p class="body">Esto separa <strong>willingness</strong> (disposición a sobornar) de <strong>successful corruption</strong> (corrupción efectivamente lograda).</p>
+      <figure class="figure">
+        <img src="assets/corrupcion/corruption_vs_sanction.png" alt="Empresas dispuestas a sobornar en función del tamaño de la sanción" loading="lazy">
+        <figcaption><b>Figura técnica 7.</b> Barrido de la sanción \(F \in [0,2000]\), con \(p=10\%\) fijo.</figcaption>
+      </figure>
+    </section>
+
+    <!-- 16 -->
+    <section class="tsec" id="s16">
+      <div class="tsec-head"><span class="tsec-num">16</span><h2>Experimento 8A — política combinada</h2></div>
+      <p class="body">Se construye una cuadrícula completa de políticas:</p>
+      <div class="eq">\[ p = 0, 0.05, \ldots, 1 \qquad F = 0, 25, \ldots, 2000 \]</div>
+      <p class="body">Para los experimentos conjuntos de política se impone una sanción común a empresa y funcionario, de modo que \(F_E = F_F = F\).</p>
+      <p class="body">Número total de políticas evaluadas:</p>
+      <div class="eq">\[ 21 \times 81 = \boxed{1701} \]</div>
+      <p class="body">Para cada política se calculan: <code class="mono">Attempts</code>, <code class="mono">Accepted</code>, <code class="mono">Distorted</code>, <code class="mono">PublicValue</code> y <code class="mono">Loss</code>.</p>
+    </section>
+
+    <!-- 17 -->
+    <section class="tsec" id="s17">
+      <div class="tsec-head"><span class="tsec-num">17</span><h2>Equivalencia estratégica</h2></div>
+      <p class="body">Se verifican tres políticas equivalentes:</p>
+      <div class="eq">\[ (p=0.10, F=200) \qquad (p=0.20, F=100) \qquad (p=0.40, F=50) \]</div>
+      <p class="body">Todas cumplen \(pF=20\). En las tres, \(EU_F(A)=0\) y, bajo la convención estricta del modelo, <code class="mono">Accepted=0</code>, <code class="mono">Distorted=0</code> y \(PV=8197.05\).</p>
+      <p class="body">De las 1701 políticas evaluadas, <strong>146</strong> generaron alguna distorsión y <strong>1555</strong> ninguna.</p>
+      <div class="figure-row">
+        <figure class="figure">
+          <img src="assets/corrupcion/policy_distorted_awards_map.png" alt="Mapa de adjudicaciones distorsionadas para cada combinación de detección y sanción" loading="lazy">
+          <figcaption><b>Figura técnica 8.</b> Adjudicaciones distorsionadas para cada una de las 1701 combinaciones \((p,F)\).</figcaption>
+        </figure>
+        <figure class="figure">
+          <img src="assets/corrupcion/policy_firms_willing_map.png" alt="Mapa de empresas dispuestas a sobornar para cada combinación de detección y sanción" loading="lazy">
+          <figcaption><b>Figura técnica 9.</b> Empresas dispuestas a sobornar para cada combinación \((p,F)\).</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 18 -->
+    <section class="tsec" id="s18">
+      <div class="tsec-head"><span class="tsec-num">18</span><h2>Experimento 8B — costos institucionales</h2></div>
+      <p class="body">Funciones de costo sintéticas:</p>
+      <div class="eq">\[ C_p(p) = 1000p^2 \qquad C_F(F) = 0.5F \]</div>
+      <p class="body">Valor público neto:</p>
+      <div class="eq">\[ NetPV(p,F) = PV(p,F) - C_p(p) - C_F(F) \]</div>
+      <p class="body">Dentro de esta cuadrícula de políticas y bajo estas funciones de costo sintéticas, el óptimo de costos base resulta en:</p>
+      <div class="eq">\[ p^{*}=20\%,\ F^{*}=100 \]</div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Componente</th><th>Valor</th></tr></thead>
+          <tbody>
+            <tr><td>Costo de detección</td><td>40</td></tr>
+            <tr><td>Costo de sanción</td><td>50</td></tr>
+            <tr><td>Costo institucional total</td><td>90</td></tr>
+            <tr><td>Valor público bruto</td><td>8197.05</td></tr>
+            <tr class="highlight"><td>Valor público neto</td><td>8107.05</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="figure-row">
+        <figure class="figure">
+          <img src="assets/corrupcion/net_public_value_policy_map.png" alt="Mapa de valor público neto para cada combinación de detección y sanción" loading="lazy">
+          <figcaption><b>Figura técnica 10.</b> Valor público neto —bruto menos costo institucional— para cada política \((p,F)\).</figcaption>
+        </figure>
+        <figure class="figure">
+          <img src="assets/corrupcion/institutional_cost_policy_map.png" alt="Mapa de costo institucional para cada combinación de detección y sanción" loading="lazy">
+          <figcaption><b>Figura técnica 11.</b> Costo institucional \(C_p(p)+C_F(F)\) para cada política \((p,F)\).</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 19 -->
+    <section class="tsec" id="s19">
+      <div class="tsec-head"><span class="tsec-num">19</span><h2>El problema del control insuficiente</h2></div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Escenario</th><th>Costo institucional</th><th>Valor público</th><th>Valor neto</th></tr></thead>
+          <tbody>
+            <tr><td>Baseline (p=10%, F=100)</td><td>60</td><td>5653.88</td><td>5593.88</td></tr>
+            <tr><td>Sin control (p=0, F=0)</td><td>0</td><td>5653.88</td><td>5653.88</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="body">Así, \(5593.88 &lt; 5653.88\). Dentro del modelo, una política puede tener \(Cost &gt; 0\) mientras que \(\Delta Behavior = 0\); por tanto \(\Delta PV = 0\) antes de costos, y el resultado neto empeora.</p>
+    </section>
+
+    <!-- 20 -->
+    <section class="tsec" id="s20">
+      <div class="tsec-head"><span class="tsec-num">20</span><h2>Experimento 8C — sensibilidad</h2></div>
+      <p class="body">Se varían \(\alpha \in \{500,1000,2000\}\) y \(\beta \in \{0.25,0.50,1.00\}\): nueve estructuras de costo distintas. Dentro de la cuadrícula evaluada, solo aparecen dos políticas óptimas:</p>
+      <div class="eq">\[ \boxed{(p=0.10,\ F=200)} \qquad \boxed{(p=0.20,\ F=100)} \]</div>
+      <p class="body">Ambas cumplen \(pF=20\), y todas las políticas óptimas producen 0 adjudicaciones distorsionadas. Interpretación:</p>
+      <ul class="kx-list">
+        <li>Cuando detectar se vuelve relativamente caro: \(p^{*}\downarrow,\ F^{*}\uparrow\).</li>
+        <li>Cuando sancionar es relativamente caro: \(p^{*}\uparrow,\ F^{*}\downarrow\).</li>
+      </ul>
+      <div class="figure-row">
+        <figure class="figure">
+          <img src="assets/corrupcion/cost_sensitivity_optimal_detection.png" alt="Detección óptima según distintas estructuras de costo" loading="lazy">
+          <figcaption><b>Figura técnica 12.</b> Probabilidad de detección óptima bajo las 9 estructuras de costo.</figcaption>
+        </figure>
+        <figure class="figure">
+          <img src="assets/corrupcion/cost_sensitivity_optimal_sanction.png" alt="Sanción óptima según distintas estructuras de costo" loading="lazy">
+          <figcaption><b>Figura técnica 13.</b> Sanción óptima bajo las 9 estructuras de costo.</figcaption>
+        </figure>
+      </div>
+      <figure class="figure">
+        <img src="assets/corrupcion/cost_sensitivity_net_public_value.png" alt="Valor público neto óptimo según distintas estructuras de costo" loading="lazy">
+        <figcaption><b>Figura técnica 14.</b> Valor público neto en el óptimo, bajo las 9 estructuras de costo evaluadas.</figcaption>
+      </figure>
+    </section>
+
+    <!-- 21 -->
+    <section class="tsec" id="s21">
+      <div class="tsec-head"><span class="tsec-num">21</span><h2>Dinámica — Experimento 9B</h2></div>
+      <p class="body">Se construye un juego repetido de 100 rondas, con una reforma en \(t=51\):</p>
+      <div class="eq">
+        \[ \text{Antes: } p=10\%,\ F=100 \]
+        \[ \text{Después: } p=20\%,\ F=100 \]
+      </div>
+      <p class="body">El mercado sintético permanece fijo a lo largo de las 100 rondas, de modo que los cambios observados después de la reforma no provienen de cambios en la composición del mercado, sino del nuevo entorno institucional y de la adaptación conductual.</p>
+    </section>
+
+    <!-- 22 -->
+    <section class="tsec" id="s22">
+      <div class="tsec-head"><span class="tsec-num">22</span><h2>Propensión conductual</h2></div>
+      <p class="body">Cada empresa tiene una propensión \(s_{i,t} \in [0,1]\), inicialmente \(s_{i,0}=0.50\), con umbral de intento \(s_i \geq 0.25\). Tras un intento exitoso:</p>
+      <div class="eq">\[ s_{i,t+1} = s_{i,t} + \lambda_S(1-s_{i,t}), \qquad \lambda_S = 0.25 \]</div>
+      <p class="body">Tras un rechazo:</p>
+      <div class="eq">\[ s_{i,t+1} = s_{i,t} - \lambda_{F,i}\,s_{i,t} \]</div>
+      <div class="callout callout--assumption">
+        <span class="callout-tag">Heterogeneidad determinista</span>
+        Las velocidades de adaptación \(\lambda_{F,i} \in [0.12, 0.35]\) son heterogéneas pero deterministas: se asignan mediante una secuencia determinista, sin muestreo aleatorio.
+      </div>
+      <p class="body">Una empresa solo puede intentar sobornar si es una perdedora elegible, su payoff corrupto es positivo y su propensión alcanza al menos el umbral de 0.25. Cuando varias empresas cumplen estas condiciones dentro de una licitación, el candidato corrupto se selecciona mediante un puntaje estratégico definido como:</p>
+      <div class="eq">\[ StrategicScore_i = EU_i(Bribe) \times s_{i,t} \]</div>
+      <p class="body">La empresa con mayor puntaje estratégico realiza el intento.</p>
+    </section>
+
+    <!-- 23 -->
+    <section class="tsec" id="s23">
+      <div class="tsec-head"><span class="tsec-num">23</span><h2>Elegibilidad</h2></div>
+      <p class="body">Hay 500 empresas en total. Como cada una pertenece a una única licitación y existe un ganador honesto fijo, 100 son ganadoras honestas. Por tanto, <strong>400</strong> son empresas perdedoras elegibles para intentar corromper. La dinámica conductual relevante se mide sobre estas 400.</p>
+    </section>
+
+    <!-- 24 -->
+    <section class="tsec" id="s24">
+      <div class="tsec-head"><span class="tsec-num">24</span><h2>Resultados pre-reforma</h2></div>
+      <p class="body">Durante las rondas 1–50, cada ronda repite: 100 intentos, 100 aceptaciones, 100 distorsiones.</p>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Métrica</th><th>Total en 50 rondas</th></tr></thead>
+          <tbody>
+            <tr><td>Intentos</td><td>5000</td></tr>
+            <tr><td>Aceptaciones</td><td>5000</td></tr>
+            <tr><td>Distorsiones</td><td>5000</td></tr>
+            <tr class="highlight"><td>Pérdida acumulada</td><td>127158.39</td></tr>
+            <tr><td>Valor público medio por ronda</td><td>5653.88</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 25 -->
+    <section class="tsec" id="s25">
+      <div class="tsec-head"><span class="tsec-num">25</span><h2>Reforma institucional</h2></div>
+      <p class="body">En \(t=51\), el castigo esperado pasa de \(10\) a \(20\). El funcionario deja de aceptar inmediatamente:</p>
+      <div class="eq">\[ Accepted_{51}=0 \qquad Distorted_{51}=0 \qquad PV_{51}=8197.05 \]</div>
+      <div class="figure-row">
+        <figure class="figure">
+          <img src="assets/corrupcion/dynamic_accepted_bribes.png" alt="Sobornos aceptados por ronda antes y después de la reforma" loading="lazy">
+          <figcaption><b>Figura técnica 15.</b> Sobornos aceptados por ronda; el cambio ocurre exactamente en \(t=51\).</figcaption>
+        </figure>
+        <figure class="figure">
+          <img src="assets/corrupcion/dynamic_public_value.png" alt="Valor público por ronda antes y después de la reforma" loading="lazy">
+          <figcaption><b>Figura técnica 16.</b> Valor público por ronda a lo largo de las 100 rondas del experimento dinámico.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 26 -->
+    <section class="tsec" id="s26">
+      <div class="tsec-head"><span class="tsec-num">26</span><h2>Persistencia conductual</h2></div>
+      <p class="body">Los intentos de soborno no desaparecen inmediatamente tras la reforma:</p>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Ronda</th><th>60</th><th>65</th><th>70</th><th>75</th><th>80</th></tr></thead>
+          <tbody><tr><td>Intentos</td><td>100</td><td>53</td><td>26</td><td>10</td><td>0</td></tr></tbody>
+        </table>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Hito</th><th>Ronda</th></tr></thead>
+          <tbody>
+            <tr><td>Primer descenso por debajo de 100 intentos</td><td>61</td></tr>
+            <tr><td>Menos de 200 empresas elegibles sobre el umbral</td><td>64</td></tr>
+            <tr><td>Primera ronda sin intentos</td><td>80</td></tr>
+            <tr class="highlight"><td>Retraso adaptativo (80 − 51)</td><td>29</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <figure class="figure">
+        <img src="assets/corrupcion/dynamic_corruption_attempts.png" alt="Intentos de soborno por ronda, mostrando el retraso adaptativo tras la reforma" loading="lazy">
+        <figcaption><b>Figura técnica 17.</b> Intentos de soborno por ronda: el resultado cambia en \(t=51\), pero los intentos tardan 29 rondas más en desaparecer del todo.</figcaption>
+      </figure>
+    </section>
+
+    <!-- 27 -->
+    <section class="tsec" id="s27">
+      <div class="tsec-head"><span class="tsec-num">27</span><h2>Estado conductual</h2></div>
+      <p class="body">Empresas elegibles con propensión sobre el umbral, por ronda:</p>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Ronda</th><th>51</th><th>60</th><th>65</th><th>70</th><th>75</th><th>80</th></tr></thead>
+          <tbody><tr><td>Empresas elegibles</td><td>400</td><td>286</td><td>135</td><td>60</td><td>11</td><td>0</td></tr></tbody>
+        </table>
+      </div>
+      <figure class="figure">
+        <img src="assets/corrupcion/dynamic_eligible_firms_above_threshold.png" alt="Empresas elegibles sobre el umbral de propensión, por ronda" loading="lazy">
+        <figcaption><b>Figura técnica 18.</b> Empresas elegibles con propensión sobre el umbral de intento, ronda por ronda.</figcaption>
+      </figure>
+      <p class="body">La propensión media entre las empresas elegibles pasa de <strong>0.566</strong> en la ronda 51 a <strong>0.221</strong> en la ronda 100.</p>
+      <figure class="figure">
+        <img src="assets/corrupcion/dynamic_average_propensity.png" alt="Propensión media de las empresas elegibles a lo largo de las rondas" loading="lazy">
+        <figcaption><b>Figura técnica 19.</b> Propensión media \(\bar{s}\) entre empresas elegibles, de la ronda 51 a la ronda 100.</figcaption>
+      </figure>
+    </section>
+
+    <!-- 28 -->
+    <section class="tsec" id="s28">
+      <div class="tsec-head"><span class="tsec-num">28</span><h2>Separación entre efecto institucional y adaptación</h2></div>
+      <p class="body">Este es uno de los resultados conceptuales centrales del experimento. La reforma produce un <strong>efecto institucional inmediato</strong> sobre <code class="mono">Accepted</code>, <code class="mono">Distorted</code> y <code class="mono">PublicValue</code>. La conducta empresarial, en cambio, presenta una <strong>adaptación gradual</strong> en <code class="mono">Attempts</code> y en la propensión.</p>
+      <div class="key-insight">
+        <span class="key-insight-tag">Idea clave</span>
+        <p>Los <em>outcomes</em> pueden ajustarse más rápidamente que el <em>behavior</em>.</p>
+      </div>
+    </section>
+
+    <!-- 29 -->
+    <section class="tsec" id="s29">
+      <div class="tsec-head"><span class="tsec-num">29</span><h2>Validaciones</h2></div>
+      <p class="body">El código verifica, mediante <code class="mono">assert</code>, las siguientes condiciones:</p>
+      <ul class="kx-list">
+        <li>tamaño correcto del mercado;</li>
+        <li>cinco ofertas por licitación;</li>
+        <li>benchmark honesto constante;</li>
+        <li>contabilidad de pérdida;</li>
+        <li>reproducción del escenario base;</li>
+        <li>umbral del funcionario;</li>
+        <li>equivalencia de políticas;</li>
+        <li>resultados del Experimento 8B;</li>
+        <li>número correcto de escenarios;</li>
+        <li>tamaño correcto de las series dinámicas;</li>
+        <li>recuperación del benchmark después de la reforma.</li>
+      </ul>
+      <div class="callout callout--validation">
+        <span class="callout-tag">Estado</span>
+        Todos los experimentos principales pasaron las validaciones.
+      </div>
+    </section>
+
+    <!-- 30 -->
+    <section class="tsec" id="s30">
+      <div class="tsec-head"><span class="tsec-num">30</span><h2>Resultados principales</h2></div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Resultado</th><th>Valor</th></tr></thead>
+          <tbody>
+            <tr><td>Licitaciones</td><td>100</td></tr>
+            <tr><td>Ofertas</td><td>500</td></tr>
+            <tr><td>PV honesto</td><td>8197.05</td></tr>
+            <tr><td>PV corrupto</td><td>5653.88</td></tr>
+            <tr><td>Pérdida</td><td>2543.17</td></tr>
+            <tr><td>Pérdida %</td><td>31.03%</td></tr>
+            <tr><td>Umbral detección funcionario</td><td>20%</td></tr>
+            <tr><td>Umbral detección empresa (juego mínimo)</td><td>40%</td></tr>
+            <tr><td>Umbral sanción funcionario con p=10%</td><td>200</td></tr>
+            <tr><td>Primera reducción de empresas dispuestas</td><td>1125</td></tr>
+            <tr><td>Cero empresas dispuestas</td><td>1700</td></tr>
+            <tr><td>Políticas combinadas evaluadas</td><td>1701</td></tr>
+            <tr><td>Óptimo de costos base</td><td>p=20%, F=100</td></tr>
+            <tr><td>NetPV óptimo</td><td>8107.05</td></tr>
+            <tr><td>Rondas dinámicas</td><td>100</td></tr>
+            <tr><td>Ronda de la reforma</td><td>51</td></tr>
+            <tr><td>Primer descenso en intentos</td><td>61</td></tr>
+            <tr><td>Cero intentos</td><td>80</td></tr>
+            <tr class="highlight"><td>Retraso adaptativo</td><td>29 rondas</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 31 -->
+    <section class="tsec" id="s31">
+      <div class="tsec-head"><span class="tsec-num">31</span><h2>Limitaciones</h2></div>
+      <ol class="kx-list">
+        <li>Utiliza parámetros sintéticos.</li>
+        <li>No está calibrado empíricamente.</li>
+        <li>Mantiene fijo el mercado durante las rondas dinámicas.</li>
+        <li>Permite corrupción únicamente después de la evaluación honesta.</li>
+        <li>Permite que solo empresas perdedoras intenten sobornar.</li>
+        <li>Utiliza un solo funcionario representativo.</li>
+        <li>No incluye colusión empresarial.</li>
+        <li>No incluye redes de corrupción.</li>
+        <li>No incluye incertidumbre estratégica compleja.</li>
+        <li>No modela investigación judicial.</li>
+        <li>No modela reputación real.</li>
+        <li>No incluye entrada o salida de empresas.</li>
+        <li>Utiliza una regla adaptativa sintética.</li>
+        <li>No estima duración real de adaptación.</li>
+        <li>No evalúa instituciones reales.</li>
+      </ol>
+      <div class="callout callout--limitation">
+        <span class="callout-tag">Debe leerse explícitamente</span>
+        20% no es una recomendación de política real; \(F=100\) no representa una sanción legal; y 29 rondas no representan tiempo empírico.
+      </div>
+    </section>
+
+    <!-- 32 -->
+    <section class="tsec" id="s32">
+      <div class="tsec-head"><span class="tsec-num">32</span><h2>Interpretación</h2></div>
+      <p class="body">La conclusión no debe ser que aumentar sanciones elimina la corrupción. Debe ser más precisa: dentro de esta economía artificial, la corrupción surge cuando los incentivos de ambas partes son compatibles con la transacción.</p>
+      <p class="body">De ahí se desprenden varios mecanismos: romper <strong>una sola mejor respuesta</strong> puede bloquear la corrupción efectiva, pero eliminar el <strong>incentivo privado</strong> por completo puede requerir instituciones mucho más fuertes.</p>
+      <p class="body">Además, <strong>disuasión</strong> y <strong>eficiencia institucional</strong> son problemas diferentes: una política puede ser disuasoria y aun así no ser eficiente si su costo es excesivo.</p>
+    </section>
+
+    <!-- 33 -->
+    <section class="tsec" id="s33">
+      <div class="tsec-head"><span class="tsec-num">33</span><h2>Conclusión</h2></div>
+      <div class="conclusion-block">
+        <p>El laboratorio muestra que la corrupción puede analizarse como un problema de compatibilidad estratégica entre incentivos privados e institucionales.</p>
+        <p>Bajo instituciones débiles, tanto la empresa como el funcionario encuentran rentable participar, y el mecanismo desplaza contratos hacia empresas con menor valor público.</p>
+        <p>Cambiar la probabilidad de detección o la sanción puede romper esa compatibilidad. Sin embargo, cuando se incorporan costos institucionales, la política relevante ya no es simplemente maximizar vigilancia o castigo, sino encontrar una combinación que modifique incentivos con el menor costo posible.</p>
+        <p>Finalmente, el experimento dinámico muestra que una reforma puede modificar inmediatamente los resultados aun cuando los agentes tarden en ajustar su comportamiento.</p>
+        <p class="cb-strong">El objetivo del ejercicio no es identificar parámetros óptimos para una economía real, sino demostrar cómo teoría de juegos, simulación computacional y análisis institucional pueden combinarse para estudiar mecanismos de corrupción de manera transparente y reproducible.</p>
+      </div>
+    </section>
+
+    <!-- 34 -->
+    <section class="tsec" id="s34">
+      <div class="tsec-head"><span class="tsec-num">34</span><h2>Reproducibilidad</h2></div>
+      <p class="body">El experimento fue construido en Python, utilizando principalmente <code class="mono">numpy</code>, <code class="mono">pandas</code> y <code class="mono">matplotlib</code>, con estructura modular:</p>
+      <pre class="codeblock">src/
+├── game.py
+├── market.py
+├── corruption.py
+├── analysis.py
+├── sanctions.py
+├── policy.py
+├── cost.py
+├── cost_sensitivity.py
+├── dynamics.py
+├── select_figures.py
+└── select_results.py</pre>
+      <p class="body">Los outputs finales están organizados en <code class="mono">figures_final/</code> y <code class="mono">results_final/</code>.</p>
+      <div class="final-cta">
+        <h3>Código y datos</h3>
+        <p>El repositorio público de Kairos Labs con el código curado para reproducción está en preparación. Mientras tanto, el repositorio general del sitio está disponible como referencia.</p>
+        <div class="cta-row">
+          <a class="btn btn-secondary" href="https://github.com/josuetartons-cpu/kairos_website" target="_blank" rel="noopener noreferrer">Repositorio Kairos (placeholder) →</a>
+          <a class="btn btn-primary" href="corrupcion-compras-publicas.html">← Volver a la versión divulgativa</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="footnote">
+      <p>
+        Esta investigación técnica documenta un experimento computacional de teoría de juegos. Ningún resultado
+        numérico presentado debe interpretarse como una estimación de corrupción real en Guatemala ni en ningún otro
+        país; todos los parámetros y funciones de costo son sintéticos y fueron elegidos para estudiar mecanismos de
+        incentivos, no para calibrar un contexto real.
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span>© 2026 Kairos</span>
+    <a href="corrupcion-compras-publicas.html">Versión divulgativa →</a>
+    <a class="placeholder" href="https://github.com/josuetartons-cpu/kairos_website" target="_blank" rel="noopener noreferrer">Repositorio (próximamente)</a>
+  </div>
+</footer>
+
+<button class="to-top" id="toTopBtn" aria-label="Volver al inicio del documento" title="Volver arriba">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+</button>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Figura ampliada">
+  <button class="lightbox-close" id="lightboxClose">Cerrar ✕</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<script>
+  window.addEventListener('load', function () {
+    if (window.renderMathInElement) {
+      renderMathInElement(document.body, {
+        delimiters: [
+          {left: "\\[", right: "\\]", display: true},
+          {left: "\\(", right: "\\)", display: false}
+        ],
+        throwOnError: false
+      });
+    }
+  });
+
+  // ---------- Barra de progreso de lectura ----------
+  (function () {
+    var bar = document.getElementById('progressBar');
+    if (!bar) return;
+    function update() {
+      var h = document.documentElement;
+      var scrolled = h.scrollTop;
+      var max = h.scrollHeight - h.clientHeight;
+      var pct = max > 0 ? (scrolled / max) * 100 : 0;
+      bar.style.width = pct + '%';
+    }
+    document.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // ---------- Botón volver arriba ----------
+  (function () {
+    var btn = document.getElementById('toTopBtn');
+    if (!btn) return;
+    function toggle() {
+      if (window.scrollY > 700) { btn.classList.add('visible'); }
+      else { btn.classList.remove('visible'); }
+    }
+    document.addEventListener('scroll', toggle, { passive: true });
+    btn.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    toggle();
+  })();
+
+  // ---------- TOC con sección activa (scroll-spy) ----------
+  (function () {
+    var sections = Array.prototype.slice.call(document.querySelectorAll('.tsec[id]'));
+    var links = Array.prototype.slice.call(document.querySelectorAll('.toc-group a[href^="#"]'));
+    if (!sections.length || !links.length || !('IntersectionObserver' in window)) return;
+    var linkById = {};
+    links.forEach(function (l) { linkById[l.getAttribute('href').slice(1)] = l; });
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var link = linkById[entry.target.id];
+        if (!link) return;
+        if (entry.isIntersecting) {
+          links.forEach(function (l) { l.classList.remove('active'); });
+          link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+
+    sections.forEach(function (s) { observer.observe(s); });
+  })();
+
+  // ---------- Lightbox de figuras ----------
+  (function () {
+    var lightbox = document.getElementById('lightbox');
+    var lightboxImg = document.getElementById('lightboxImg');
+    var closeBtn = document.getElementById('lightboxClose');
+    if (!lightbox || !lightboxImg) return;
+
+    function open(src, alt) {
+      lightboxImg.src = src;
+      lightboxImg.alt = alt || '';
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function close() {
+      lightbox.classList.remove('open');
+      lightboxImg.src = '';
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('figure.figure img').forEach(function (img) {
+      img.addEventListener('click', function () { open(img.getAttribute('src'), img.getAttribute('alt')); });
+    });
+    closeBtn.addEventListener('click', close);
+    lightbox.addEventListener('click', function (e) { if (e.target === lightbox) close(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  })();
+</script>
+
+</body>
+</html>
