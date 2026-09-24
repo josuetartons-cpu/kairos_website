@@ -51,6 +51,14 @@
   header.masthead .brand span{ color:var(--teal); }
   header.masthead nav a{ color:var(--ink-soft); margin-left:1.4rem; border-bottom:1px solid transparent; }
   header.masthead nav a:hover{ color:var(--teal); border-bottom-color:var(--teal); }
+  header.masthead nav{ display:flex; align-items:center; justify-content:flex-end; flex-wrap:wrap; row-gap:0.4rem; }
+  header.masthead nav a{ white-space:nowrap; }
+  header.masthead nav a.nav-cta{
+    color:var(--teal); border:1px solid var(--teal); border-radius:3px;
+    padding:0.25rem 0.7rem; font-weight:500;
+  }
+  header.masthead nav a.nav-cta:hover{ background:var(--teal-soft); color:var(--teal); border-color:var(--teal); }
+  header.masthead nav a.nav-cta:focus-visible{ outline:2px solid var(--teal); outline-offset:2px; }
 
   main{ max-width:52rem; margin:0 auto; padding:0 1.5rem 6rem; }
 
@@ -153,6 +161,7 @@
     body{ font-size:17px; }
     .hero h1{ font-size:1.9rem; }
     header.masthead nav a{ margin-left:0.9rem; font-size:0.85rem; }
+    header.masthead nav a.nav-cta{ padding:0.2rem 0.55rem; }
     .conclusion{ padding:1.5rem 1.3rem; }
   }
 </style>
@@ -163,6 +172,7 @@
   <a class="brand" href="../index.html">Kairos</a>
   <nav>
     <a href="por-que-el-dinero-no-basta-tecnico.html">Versión técnica →</a>
+    <a class="nav-cta" href="https://github.com/josuetartons-cpu/kairos-labs/tree/main/optimization-lab-01" target="_blank" rel="noopener noreferrer">Código reproducible ↗</a>
   </nav>
 </header>
 
