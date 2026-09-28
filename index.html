@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Kairos — Economía, laboratorio, herramientas y pensamiento</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/kairos-brand-v1/kairos-favicon.svg" type="image/svg+xml">
 <meta name="description" content="Kairos es un proyecto editorial de economía aplicada, experimentación, herramientas y pensamiento — para entender problemas reales, probar ideas y construir mejores decisiones.">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
@@ -13,10 +14,13 @@
   --panel:#FFFFFF;
   --panel-2:#EFEAE0;
   --line: #E4DFD3;
-  --text:#1C1B22;
+  --text:#1F1F1F;
   --text-dim:#6B6570;
-  --accent:#7A2540;
-  --accent-soft:rgba(122,37,64,0.08);
+  --wine:#4A0E1A;
+  --gold:#D4AF7C;
+  --sand:#EADCC8;
+  --accent:var(--wine);
+  --accent-soft:rgba(74,14,26,0.07);
   --navy:#1E2A42;
   --green:#3E6488;
   --green-soft:rgba(62,100,136,0.10);
@@ -31,6 +35,7 @@ html,body{margin:0;padding:0;}
 body{background:var(--bg); color:var(--text); font-family:'Space Grotesk',sans-serif; -webkit-font-smoothing:antialiased;}
 .mono{font-family:'IBM Plex Mono',monospace;}
 a{color:inherit;}
+a:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:2px;}
 section{scroll-margin-top:86px;}
 
 .wrap{max-width:1100px; margin:0 auto; padding:0 28px;}
@@ -38,29 +43,39 @@ section{scroll-margin-top:86px;}
 
 /* ---------- NAV ---------- */
 .nav{position:sticky; top:0; z-index:50; background:rgba(247,244,238,0.92); backdrop-filter:blur(6px); border-bottom:1px solid var(--line);}
-.nav-inner{max-width:1100px; margin:0 auto; padding:18px 28px; display:flex; justify-content:space-between; align-items:center;}
-.nav-brand{font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:15px; letter-spacing:0.04em; text-decoration:none; color:var(--text);}
-.nav-brand span{color:var(--accent);}
+.nav-inner{max-width:1100px; margin:0 auto; padding:8px 28px; display:flex; justify-content:space-between; align-items:center;}
+.nav-brand{display:block; line-height:0; text-decoration:none;}
+.nav-logo{display:block; height:40px; width:auto; max-width:100%;}
 .nav-links{display:flex; gap:26px; list-style:none; margin:0; padding:0;}
 .nav-links a{font-family:'IBM Plex Mono',monospace; font-size:12px; text-decoration:none; color:var(--text-dim); letter-spacing:0.02em; transition:color .15s;}
 .nav-links a:hover{color:var(--accent);}
 @media (max-width:640px){
-  .nav-inner{flex-direction:column; align-items:flex-start; gap:12px; padding:16px 20px;}
+  .nav-inner{flex-direction:column; align-items:flex-start; gap:10px; padding:8px 20px 12px;}
   .nav-links{flex-wrap:wrap; gap:14px 18px;}
 }
 
 /* ---------- HERO ---------- */
 .hero{padding:100px 0 90px;}
 .hero-eyebrow{font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); display:flex; align-items:center; gap:10px; margin-bottom:26px;}
-.hero-eyebrow::before{content:""; width:22px; height:1px; background:var(--accent);}
+.hero-eyebrow::before{content:""; width:22px; height:1px; background:var(--gold);}
+.hero .wrap{position:relative;}
+.hero-mark{display:none;}
+@media (min-width:960px){
+  .hero-mark{display:block; position:absolute; right:28px; top:50%; transform:translateY(-50%); width:clamp(180px,20vw,240px); height:clamp(180px,20vw,240px); object-fit:contain;}
+}
+.hero-logica{font-family:'Fraunces',serif; font-size:clamp(19px,2.3vw,25px); font-weight:500; line-height:1.35; color:var(--text); margin:-8px 0 36px;}
+.hero-logica span{display:block; color:var(--text-dim); font-style:italic; font-weight:400; font-size:0.82em; margin-top:6px;}
+.hero-descriptor{display:flex; align-items:center; gap:10px; margin:56px 0 0; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.14em; color:var(--text-dim);}
+.hero-descriptor::before{content:""; flex:none; width:22px; height:1px; background:var(--gold);}
 .hero h1{font-size:clamp(42px,7vw,74px); font-weight:700; line-height:1.02; margin:0 0 28px; letter-spacing:-0.01em; max-width:14ch;}
 .hero .tagline{font-size:clamp(18px,2.4vw,23px); color:var(--text-dim); max-width:36ch; line-height:1.5; margin:0 0 36px; font-weight:400;}
 .hero-ctas{display:flex; gap:14px; flex-wrap:wrap;}
 .btn{font-family:'IBM Plex Mono',monospace; font-size:13px; text-decoration:none; padding:14px 26px; border-radius:4px; display:inline-block; letter-spacing:0.01em; transition:opacity .15s, background .15s;}
-.btn-primary{background:var(--text); color:var(--bg);}
+.btn-primary{background:var(--accent); color:var(--bg);}
 .btn-primary:hover{opacity:0.85;}
 .btn-secondary{border:1px solid var(--line); color:var(--text);}
 .btn-secondary:hover{border-color:var(--accent); color:var(--accent);}
+.btn:focus-visible{outline:2px solid var(--accent); outline-offset:3px;}
 
 /* ---------- LA FILOSOFÍA ---------- */
 .la-filosofia{padding:70px 0; border-top:1px solid var(--line);}
@@ -88,6 +103,13 @@ section{scroll-margin-top:86px;}
   border-left:3px solid var(--accent); padding-left:20px; margin:0;
 }
 
+.principios{margin-top:56px; padding-top:38px; border-top:1px solid var(--line);}
+.principios-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:30px;}
+@media (max-width:700px){.principios-grid{grid-template-columns:1fr; gap:24px;}}
+.principio::before{content:""; display:block; width:24px; height:2px; background:var(--gold); margin-bottom:14px;}
+.principio h3{font-size:17px; font-weight:600; margin:0 0 8px;}
+.principio p{font-size:13.5px; color:var(--text-dim); line-height:1.65; margin:0;}
+
 /* ---------- PILARES ---------- */
 .pilares{padding:70px 0; border-top:1px solid var(--line);}
 .pilares-head{max-width:56ch; margin-bottom:40px;}
@@ -101,6 +123,10 @@ section{scroll-margin-top:86px;}
 .pilar h3{font-size:18.5px; font-weight:600; margin:0 0 5px; color:var(--text);}
 .pilar-accion{font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600; letter-spacing:0.13em; text-transform:uppercase; color:var(--text-dim); margin:0 0 16px;}
 .pilar p{font-size:13.5px; line-height:1.65; color:var(--text-dim); margin:0;}
+.pilar-cta{display:inline-flex; align-items:center; gap:6px; margin-top:18px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:600; letter-spacing:0.02em; color:var(--accent); text-decoration:none;}
+.pilar-cta::after{content:"→"; transition:transform .15s;}
+.pilar-cta:hover{text-decoration:underline;}
+.pilar-cta:hover::after{transform:translateX(3px);}
 .pilares-relacion{margin-top:30px; max-width:72ch;}
 .pilares-relacion p{font-size:13.5px; color:var(--text-dim); line-height:1.75; margin:0 0 16px;}
 .pilares-mantra{font-family:'Fraunces',serif; font-size:clamp(19px,2.3vw,25px); font-weight:500; color:var(--text); margin:0;}
@@ -123,24 +149,6 @@ section{scroll-margin-top:86px;}
 .pub-date{color:var(--text-dim);}
 .pub-cta{color:var(--accent); font-weight:600;}
 .pubs-empty-note{font-size:12.5px; color:var(--text-dim); margin-top:20px; font-style:italic;}
-
-/* ---------- EXPLORAR KAIROS ---------- */
-.explorar{padding:70px 0; border-top:1px solid var(--line);}
-.explorar-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:46px 56px; margin-top:8px;}
-@media (max-width:760px){.explorar-grid{grid-template-columns:1fr; gap:38px;}}
-.explorar-area-head{display:flex; align-items:center; gap:16px; margin-bottom:14px;}
-.glifo-sm{width:28px; height:28px; margin-bottom:0; flex-shrink:0;}
-.explorar-area-head h3{font-size:18px; font-weight:600; margin:0 0 3px;}
-.explorar-area-head .pilar-accion{margin:0;}
-.explorar-desc{font-size:13.5px; color:var(--text-dim); line-height:1.6; margin:0 0 18px; max-width:48ch;}
-.explorar-list{list-style:none; margin:0; padding:0; border-top:1px solid var(--line);}
-.explorar-list li{border-bottom:1px solid var(--line);}
-.explorar-list a{display:block; padding:14px 2px; font-size:14.5px; font-weight:500; color:var(--text); text-decoration:none; line-height:1.45;}
-.explorar-list a:hover{color:var(--accent);}
-.explorar-empty{border-top:1px solid var(--line); padding:20px 2px 4px; font-size:13.5px; color:var(--text-dim); line-height:1.65;}
-.explorar-empty p{margin:0 0 14px;}
-.explorar-tags{display:flex; gap:10px; flex-wrap:wrap;}
-.explorar-tag{font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-dim); border:1px solid var(--line); padding:5px 10px; border-radius:12px;}
 
 /* ---------- CÓDIGO Y DATOS ---------- */
 .codigo{padding:70px 0; border-top:1px solid var(--line);}
@@ -170,12 +178,6 @@ section{scroll-margin-top:86px;}
 .metodo-step h4{font-size:16.5px; font-weight:600; margin:0 0 8px;}
 .metodo-step p{font-size:12.5px; color:var(--text-dim); line-height:1.6; margin:0;}
 
-/* ---------- NEWSLETTER ---------- */
-.newsletter{padding:70px 0; border-top:1px solid var(--line);}
-.nl-box{background:var(--panel-2); border-radius:10px; padding:50px 40px; text-align:center;}
-.nl-box h2{font-size:clamp(22px,3vw,28px); font-weight:600; margin:0 0 10px;}
-.nl-box p{font-size:14.5px; color:var(--text-dim); margin:0;}
-
 /* ---------- SOBRE KAIROS ---------- */
 .sobre{padding:70px 0; border-top:1px solid var(--line);}
 .sobre-grid{display:grid; grid-template-columns:0.8fr 1.2fr; gap:50px;}
@@ -184,31 +186,35 @@ section{scroll-margin-top:86px;}
 .sobre p{font-size:15.5px; line-height:1.75; color:var(--text-dim); margin:0 0 16px;}
 
 /* ---------- FOOTER ---------- */
-footer{background:var(--navy); color:#C7CFDC; padding:56px 0 32px; margin-top:20px;}
-.footer-top{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:30px; padding-bottom:36px; border-bottom:1px solid rgba(255,255,255,0.12);}
-.footer-brand{font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:18px; color:#fff; letter-spacing:0.03em; margin-bottom:8px;}
-.footer-pillars{font-family:'IBM Plex Mono',monospace; font-size:12px; color:#93A0B5;}
-.footer-links{display:flex; gap:22px; list-style:none; margin:0; padding:0;}
-.footer-links a{font-size:13px; color:#C7CFDC; text-decoration:none;}
-.footer-links a:hover{color:#fff;}
-.footer-bottom{display:flex; justify-content:space-between; padding-top:22px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:#7C8AA0; flex-wrap:wrap; gap:10px;}
+footer{background:var(--wine); color:var(--sand); padding:56px 0 32px; margin-top:20px;}
+.footer-top{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:30px; padding-bottom:36px; border-bottom:1px solid rgba(234,220,200,0.18);}
+.footer-logo{display:block; height:88px; width:auto; max-width:100%; margin-bottom:16px;}
+.footer-descriptor{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.14em; color:var(--gold); margin-bottom:8px;}
+.footer-pillars{font-family:'IBM Plex Mono',monospace; font-size:12px; color:#CDBBA2;}
+.footer-links{display:flex; gap:22px; list-style:none; margin:0; padding:0; flex-wrap:wrap;}
+.footer-links a{font-size:13px; color:var(--sand); text-decoration:none;}
+.footer-links a:hover{color:#fff; text-decoration:underline;}
+.footer-pendiente{font-size:13px; color:#CDBBA2; cursor:default;}
+.footer-pendiente small{font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; margin-left:6px; opacity:0.85;}
+footer a:focus-visible{outline-color:var(--gold);}
+.footer-bottom{display:flex; justify-content:space-between; padding-top:22px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:#C2AF95; flex-wrap:wrap; gap:10px;}
 
 @media (max-width:640px){
   .footer-top{flex-direction:column;}
 }
 </style>
 </head>
-<body>
+<body id="top">
 
 <nav class="nav">
   <div class="nav-inner">
-    <a href="#" class="nav-brand">KAIRO<span>S</span></a>
+    <a href="#top" class="nav-brand"><img class="nav-logo" src="assets/kairos-brand-v1/kairos-logo.svg" alt="KAIROS" height="40"></a>
     <ul class="nav-links">
-      <li><a href="#">Inicio</a></li>
-      <li><a href="#economia">Economía</a></li>
-      <li><a href="#laboratorio">Laboratorio</a></li>
-      <li><a href="#herramientas">Herramientas</a></li>
-      <li><a href="#pensamiento">Pensamiento</a></li>
+      <li><a href="#top">Inicio</a></li>
+      <li><a href="economia.html">Economía</a></li>
+      <li><a href="laboratorio.html">Laboratorio</a></li>
+      <li><a href="herramientas.html">Herramientas</a></li>
+      <li><a href="pensamiento.html">Pensamiento</a></li>
       <li><a href="#codigo">Código</a></li>
       <li><a href="#sobre-kairos">Sobre Kairos</a></li>
     </ul>
@@ -217,13 +223,16 @@ footer{background:var(--navy); color:#C7CFDC; padding:56px 0 32px; margin-top:20
 
 <header class="hero">
   <div class="wrap">
+    <img class="hero-mark" src="assets/kairos-brand-v1/kairos-symbol.svg" alt="" width="240" height="240">
     <div class="hero-eyebrow">Proyecto editorial</div>
     <h1>Kairos</h1>
     <p class="tagline">Kairos es un espacio para observar el mundo, experimentar con ideas, construir herramientas y reflexionar sobre lo aprendido.</p>
+    <p class="hero-logica">Observar · Comprender · Orientar.<span>Elegir te corresponde a ti.</span></p>
     <div class="hero-ctas">
       <a href="#publicaciones" class="btn btn-primary">Explorar publicaciones</a>
       <a href="#que-es-kairos" class="btn btn-secondary">Conoce Kairos</a>
     </div>
+    <p class="hero-descriptor">RESEARCH · LABS · TOOLS · ADVISORY</p>
   </div>
 </header>
 
@@ -238,6 +247,23 @@ footer{background:var(--navy); color:#C7CFDC; padding:56px 0 32px; margin-top:20
         <p>El nombre viene del griego <em>kairós</em> — el momento que importa, no solo el que transcurre.</p>
       </div>
       <p class="que-es-quote">No se trata solamente de saber cuánto tiempo pasa, sino de reconocer qué momentos, ideas y decisiones realmente pesan.</p>
+    </div>
+    <div class="principios">
+      <div class="eyebrow">Principios</div>
+      <div class="principios-grid">
+        <div class="principio">
+          <h3>Libertad</h3>
+          <p>El conocimiento debe aumentar la autonomía de las personas.</p>
+        </div>
+        <div class="principio">
+          <h3>Razonamiento</h3>
+          <p>Observar, cuestionar, investigar y comprender antes de actuar.</p>
+        </div>
+        <div class="principio">
+          <h3>Acompañamiento</h3>
+          <p>Conocimiento, modelos, herramientas y orientación, sin sustituir tu decisión.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -284,6 +310,7 @@ footer{background:var(--navy); color:#C7CFDC; padding:56px 0 32px; margin-top:20
         <h3>Economía</h3>
         <div class="pilar-accion">Observar</div>
         <p>Analizar cómo funcionan los sistemas económicos, las políticas, los mercados y los problemas reales utilizando datos, evidencia y contexto.</p>
+        <a href="economia.html" class="pilar-cta">Explorar Economía</a>
       </div>
       <div class="pilar">
         <svg class="glifo" viewBox="0 0 60 60" aria-hidden="true">
@@ -294,6 +321,7 @@ footer{background:var(--navy); color:#C7CFDC; padding:56px 0 32px; margin-top:20
         <h3>Laboratorio</h3>
         <div class="pilar-accion">Experimentar</div>
         <p>Probar hipótesis, construir simulaciones, explorar escenarios y llevar ideas más allá de la intuición.</p>
+        <a href="laboratorio.html" class="pilar-cta">Entrar al Laboratorio</a>
       </div>
       <div class="pilar">
         <svg class="glifo" viewBox="0 0 60 60" aria-hidden="true">
@@ -305,6 +333,7 @@ footer{background:var(--navy); color:#C7CFDC; padding:56px 0 32px; margin-top:20
         <h3>Herramientas</h3>
         <div class="pilar-accion">Construir</div>
         <p>Transformar investigaciones y modelos en calculadoras, plantillas, sistemas y recursos utilizables para resolver problemas concretos.</p>
+        <a href="herramientas.html" class="pilar-cta">Explorar Herramientas</a>
       </div>
       <div class="pilar">
         <svg class="glifo" viewBox="0 0 60 60" aria-hidden="true">
@@ -315,6 +344,7 @@ footer{background:var(--navy); color:#C7CFDC; padding:56px 0 32px; margin-top:20
         <h3>Pensamiento</h3>
         <div class="pilar-accion">Reflexionar</div>
         <p>Tomar distancia de los resultados, conectar ideas y construir mejores marcos para interpretar decisiones, incertidumbre y comportamiento.</p>
+        <a href="pensamiento.html" class="pilar-cta">Explorar Pensamiento</a>
       </div>
     </div>
     <div class="pilares-relacion">
@@ -368,101 +398,6 @@ footer{background:var(--navy); color:#C7CFDC; padding:56px 0 32px; margin-top:20
           </div>
         </div>
       </a>
-    </div>
-  </div>
-</section>
-
-<section class="explorar" id="explorar-kairos">
-  <div class="wrap">
-    <div class="pilares-head">
-      <div class="eyebrow">Explorar Kairos</div>
-      <h2>Explorar Kairos</h2>
-      <p>Cada pregunta puede tomar una ruta distinta: observar un fenómeno, experimentar con una hipótesis, construir una herramienta o reflexionar sobre lo aprendido.</p>
-    </div>
-    <div class="explorar-grid">
-
-      <div class="explorar-area" id="economia">
-        <div class="explorar-area-head">
-          <svg class="glifo glifo-sm" viewBox="0 0 60 60" aria-hidden="true">
-            <line x1="30" y1="6" x2="30" y2="54"/>
-            <line x1="14" y1="20" x2="46" y2="20"/>
-            <line x1="10" y1="32" x2="50" y2="32"/>
-            <line x1="17" y1="44" x2="43" y2="44"/>
-          </svg>
-          <div>
-            <h3>Economía</h3>
-            <div class="pilar-accion">Observar</div>
-          </div>
-        </div>
-        <p class="explorar-desc">Investigaciones sobre economía, políticas públicas, mercados, desarrollo y problemas reales utilizando datos, evidencia y contexto.</p>
-        <ul class="explorar-list">
-          <li><a href="articles/como-saber-si-una-economia-esta-en-recesion.html">¿Cómo saber si una economía está entrando en recesión?</a></li>
-          <li><a href="articles/guatemala-crecimiento-emisiones.html">¿Es posible que Guatemala pueda crecer sin generar más emisiones?</a></li>
-        </ul>
-      </div>
-
-      <div class="explorar-area" id="laboratorio">
-        <div class="explorar-area-head">
-          <svg class="glifo glifo-sm" viewBox="0 0 60 60" aria-hidden="true">
-            <line x1="30" y1="54" x2="30" y2="26"/>
-            <line x1="30" y1="26" x2="14" y2="6"/>
-            <line x1="30" y1="26" x2="46" y2="6"/>
-          </svg>
-          <div>
-            <h3>Laboratorio</h3>
-            <div class="pilar-accion">Experimentar</div>
-          </div>
-        </div>
-        <p class="explorar-desc">Simulaciones, modelos, optimización y experimentos construidos para probar ideas más allá de la intuición.</p>
-        <ul class="explorar-list">
-          <li><a href="articles/apple-lab-incertidumbre-inversion.html">Apple Lab: cuando los datos no predicen el futuro, pero ayudan a tomar mejores decisiones</a></li>
-          <li><a href="articles/por-que-el-dinero-no-basta.html">¿Por qué darle dinero a los pobres no soluciona el problema? — Optimization Lab #1</a></li>
-        </ul>
-      </div>
-
-      <div class="explorar-area" id="pensamiento">
-        <div class="explorar-area-head">
-          <svg class="glifo glifo-sm" viewBox="0 0 60 60" aria-hidden="true">
-            <path d="M 38 10 A 22 22 0 1 1 22 10"/>
-            <path d="M 22 10 C 26 14, 28 17, 26 21"/>
-            <circle cx="30" cy="34" r="2.2" fill="currentColor" stroke="none"/>
-          </svg>
-          <div>
-            <h3>Pensamiento</h3>
-            <div class="pilar-accion">Reflexionar</div>
-          </div>
-        </div>
-        <p class="explorar-desc">Reflexiones sobre decisiones, incertidumbre, comportamiento y los marcos que utilizamos para interpretar el mundo.</p>
-        <ul class="explorar-list">
-          <li><a href="articles/decidir-bajo-presion.html">Decidir bajo presión: cuando nuestras emociones intentan tomar el control</a></li>
-          <li><a href="articles/querer-controlarlo-todo.html">El problema de querer controlarlo todo</a></li>
-        </ul>
-      </div>
-
-      <div class="explorar-area" id="herramientas">
-        <div class="explorar-area-head">
-          <svg class="glifo glifo-sm" viewBox="0 0 60 60" aria-hidden="true">
-            <line x1="14" y1="6" x2="30" y2="26"/>
-            <line x1="46" y1="6" x2="30" y2="26"/>
-            <line x1="30" y1="26" x2="30" y2="46"/>
-            <rect x="18" y="46" width="24" height="5" fill="currentColor" stroke="none"/>
-          </svg>
-          <div>
-            <h3>Herramientas</h3>
-            <div class="pilar-accion">Construir</div>
-          </div>
-        </div>
-        <p class="explorar-desc">Modelos, calculadoras y productos interactivos construidos a partir de investigaciones de Kairos.</p>
-        <div class="explorar-empty">
-          <p>Algunos experimentos de Kairos terminarán convertidos en herramientas que puedas utilizar directamente. Estamos construyendo las primeras.</p>
-          <div class="explorar-tags">
-            <span class="explorar-tag">Modelos interactivos</span>
-            <span class="explorar-tag">Calculadoras</span>
-            <span class="explorar-tag">Herramientas de decisión</span>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
@@ -525,15 +460,6 @@ footer{background:var(--navy); color:#C7CFDC; padding:56px 0 32px; margin-top:20
   </div>
 </section>
 
-<section class="newsletter">
-  <div class="wrap-narrow">
-    <div class="nl-box">
-      <h2>Pronto vas a poder suscribirte aquí</h2>
-      <p>Todavía estamos construyendo esa parte. Cuando esté lista, vas a poder recibir las nuevas publicaciones directo en tu correo.</p>
-    </div>
-  </div>
-</section>
-
 <section class="sobre" id="sobre-kairos">
   <div class="wrap">
     <div class="sobre-grid">
@@ -553,13 +479,14 @@ footer{background:var(--navy); color:#C7CFDC; padding:56px 0 32px; margin-top:20
   <div class="wrap">
     <div class="footer-top">
       <div>
-        <div class="footer-brand">KAIROS</div>
+        <img class="footer-logo" src="assets/kairos-brand-v1/kairos-logo-light.svg" alt="KAIROS" height="88">
+        <div class="footer-descriptor">RESEARCH · LABS · TOOLS · ADVISORY</div>
         <div class="footer-pillars">Economía · Laboratorio · Herramientas · Pensamiento</div>
       </div>
       <ul class="footer-links">
         <li><a href="#sobre-kairos">Sobre nosotros</a></li>
-        <li><a href="#">Contacto</a></li>
-        <li><a href="#">Privacidad</a></li>
+        <li><span class="footer-pendiente">Contacto<small>Próximamente</small></span></li>
+        <li><span class="footer-pendiente">Privacidad<small>Próximamente</small></span></li>
         <li><a href="https://github.com/josuetartons-cpu/kairos-labs" target="_blank" rel="noopener noreferrer">Kairos Labs</a></li>
       </ul>
     </div>

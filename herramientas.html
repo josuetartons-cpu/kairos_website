@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Herramientas — Kairos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Herramientas en desarrollo de Kairos para explorar escenarios, comparar alternativas y entender la incertidumbre al tomar decisiones.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+
+:root{
+  --bg:#F7F4EE;
+  --panel:#FFFFFF;
+  --panel-2:#EFEAE0;
+  --line: #E4DFD3;
+  --text:#1C1B22;
+  --text-dim:#6B6570;
+  --accent:#7A2540;
+  --accent-soft:rgba(122,37,64,0.08);
+  --navy:#1E2A42;
+  --green:#3E6488;
+  --green-soft:rgba(62,100,136,0.10);
+  --amber:#75707A;
+  --amber-soft:rgba(117,112,122,0.10);
+  --red:#8C2E48;
+  --red-soft:rgba(140,46,72,0.10);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+html,body{margin:0;padding:0;}
+body{background:var(--bg); color:var(--text); font-family:'Space Grotesk',sans-serif; -webkit-font-smoothing:antialiased;}
+.mono{font-family:'IBM Plex Mono',monospace;}
+a{color:inherit;}
+section{scroll-margin-top:86px;}
+
+.wrap{max-width:1100px; margin:0 auto; padding:0 28px;}
+.wrap-narrow{max-width:760px; margin:0 auto; padding:0 28px;}
+
+/* ---------- NAV ---------- */
+.nav{position:sticky; top:0; z-index:50; background:rgba(247,244,238,0.92); backdrop-filter:blur(6px); border-bottom:1px solid var(--line);}
+.nav-inner{max-width:1100px; margin:0 auto; padding:18px 28px; display:flex; justify-content:space-between; align-items:center;}
+.nav-brand{font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:15px; letter-spacing:0.04em; text-decoration:none; color:var(--text);}
+.nav-brand span{color:var(--accent);}
+.nav-links{display:flex; gap:26px; list-style:none; margin:0; padding:0;}
+.nav-links a{font-family:'IBM Plex Mono',monospace; font-size:12px; text-decoration:none; color:var(--text-dim); letter-spacing:0.02em; transition:color .15s;}
+.nav-links a:hover{color:var(--accent);}
+@media (max-width:640px){
+  .nav-inner{flex-direction:column; align-items:flex-start; gap:12px; padding:16px 20px;}
+  .nav-links{flex-wrap:wrap; gap:14px 18px;}
+}
+
+/* ---------- HERO ---------- */
+.hero{padding:100px 0 90px;}
+.hero-eyebrow{font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); display:flex; align-items:center; gap:10px; margin-bottom:26px;}
+.hero-eyebrow::before{content:""; width:22px; height:1px; background:var(--accent);}
+.hero h1{font-size:clamp(42px,7vw,74px); font-weight:700; line-height:1.02; margin:0 0 28px; letter-spacing:-0.01em; max-width:14ch;}
+.hero .tagline{font-size:clamp(18px,2.4vw,23px); color:var(--text-dim); max-width:36ch; line-height:1.5; margin:0 0 36px; font-weight:400;}
+.hero-ctas{display:flex; gap:14px; flex-wrap:wrap;}
+.btn{font-family:'IBM Plex Mono',monospace; font-size:13px; text-decoration:none; padding:14px 26px; border-radius:4px; display:inline-block; letter-spacing:0.01em; transition:opacity .15s, background .15s;}
+.btn-primary{background:var(--text); color:var(--bg);}
+.btn-primary:hover{opacity:0.85;}
+.btn-secondary{border:1px solid var(--line); color:var(--text);}
+.btn-secondary:hover{border-color:var(--accent); color:var(--accent);}
+
+/* ---------- LA FILOSOFÍA ---------- */
+.la-filosofia{padding:70px 0; border-top:1px solid var(--line);}
+.eyebrow{font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); display:flex; align-items:center; gap:10px; margin-bottom:24px;}
+.eyebrow::before{content:""; width:20px; height:1px; background:var(--accent);}
+
+.fundador{display:grid; grid-template-columns:150px 1fr; gap:30px; align-items:start; margin-top:46px; padding-top:42px; border-top:1px solid var(--line);}
+.fundador-foto{width:100%; aspect-ratio:3/4; object-fit:cover; object-position:top center; border-radius:6px; border:1px solid var(--line); display:block;}
+.fundador-nombre{font-size:17px; font-weight:600; color:var(--text); margin:0 0 4px;}
+.fundador-rol{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--accent); margin:0 0 16px;}
+.fundador-bio{font-size:14.5px; line-height:1.7; color:var(--text-dim); margin:0; max-width:54ch;}
+@media (max-width:560px){
+  .fundador{grid-template-columns:1fr; gap:20px;}
+  .fundador-foto{max-width:150px;}
+}
+
+/* ---------- QUÉ ES KAIROS ---------- */
+.que-es{padding:70px 0; border-top:1px solid var(--line);}
+.que-es-grid{display:grid; grid-template-columns:1fr 1fr; gap:50px; align-items:start;}
+@media (max-width:760px){.que-es-grid{grid-template-columns:1fr; gap:30px;}}
+.que-es h2{font-size:clamp(24px,3vw,32px); font-weight:600; margin:0 0 20px; max-width:16ch;}
+.que-es p{font-size:15.5px; line-height:1.75; color:var(--text-dim); margin:0 0 16px;}
+.que-es-quote{
+  font-size:17px; line-height:1.65; font-weight:500; color:var(--text);
+  border-left:3px solid var(--accent); padding-left:20px; margin:0;
+}
+
+/* ---------- PILARES ---------- */
+.pilares{padding:70px 0; border-top:1px solid var(--line);}
+.pilares-head{max-width:56ch; margin-bottom:40px;}
+.pilares-head h2{font-size:clamp(24px,3vw,32px); font-weight:600; margin:0 0 12px;}
+.pilares-head p{font-size:15px; color:var(--text-dim); line-height:1.6; margin:0;}
+.pilares-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:8px; overflow:hidden;}
+@media (max-width:900px){.pilares-grid{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:560px){.pilares-grid{grid-template-columns:1fr;}}
+.pilar{background:var(--panel); padding:32px 26px; position:relative;}
+.glifo{width:36px; height:36px; stroke:currentColor; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; fill:none; color:var(--accent); margin-bottom:22px; display:block;}
+.pilar h3{font-size:18.5px; font-weight:600; margin:0 0 5px; color:var(--text);}
+.pilar-accion{font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600; letter-spacing:0.13em; text-transform:uppercase; color:var(--text-dim); margin:0 0 16px;}
+.pilar p{font-size:13.5px; line-height:1.65; color:var(--text-dim); margin:0;}
+.pilar-cta{display:inline-flex; align-items:center; gap:6px; margin-top:18px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:600; letter-spacing:0.02em; color:var(--accent); text-decoration:none;}
+.pilar-cta::after{content:"→"; transition:transform .15s;}
+.pilar-cta:hover{text-decoration:underline;}
+.pilar-cta:hover::after{transform:translateX(3px);}
+.pilares-relacion{margin-top:30px; max-width:72ch;}
+.pilares-relacion p{font-size:13.5px; color:var(--text-dim); line-height:1.75; margin:0 0 16px;}
+.pilares-mantra{font-family:'Fraunces',serif; font-size:clamp(19px,2.3vw,25px); font-weight:500; color:var(--text); margin:0;}
+
+/* ---------- PUBLICACIONES ---------- */
+.pubs{padding:70px 0; border-top:1px solid var(--line);}
+.pubs-head{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:36px; flex-wrap:wrap; gap:14px;}
+.pubs-head h2{font-size:clamp(24px,3vw,32px); font-weight:600; margin:0;}
+.pubs-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:22px;}
+.pub-card{background:var(--panel); border:1px solid var(--line); border-radius:8px; overflow:hidden; text-decoration:none; color:var(--text); display:block; transition:border-color .15s, transform .15s;}
+.pub-card:hover{border-color:var(--accent); transform:translateY(-2px);}
+.pub-visual{height:8px; background:linear-gradient(90deg, var(--green) 0%, var(--green) 30%, var(--amber) 45%, var(--amber) 60%, var(--red) 75%, var(--red) 100%);}
+.pub-visual.ambiental{background:linear-gradient(90deg, #294F3A 0%, #477A56 45%, #8BA06B 72%, #C4A96A 100%);}
+.pub-visual.laboratorio{background:linear-gradient(90deg, var(--accent) 0%, var(--red) 45%, var(--green) 100%);}
+.pub-body{padding:28px 30px 30px;}
+.pub-tag{font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:var(--accent); background:var(--accent-soft); padding:4px 10px; border-radius:12px; display:inline-block; margin-bottom:16px;}
+.pub-body h3{font-size:20px; font-weight:600; line-height:1.35; margin:0 0 12px; max-width:34ch;}
+.pub-body p{font-size:13.5px; line-height:1.6; color:var(--text-dim); margin:0 0 18px;}
+.pub-meta{display:flex; justify-content:space-between; align-items:center; font-family:'IBM Plex Mono',monospace; font-size:11px;}
+.pub-date{color:var(--text-dim);}
+.pub-cta{color:var(--accent); font-weight:600;}
+.pubs-empty-note{font-size:12.5px; color:var(--text-dim); margin-top:20px; font-style:italic;}
+
+/* ---------- CÓDIGO Y DATOS ---------- */
+.codigo{padding:70px 0; border-top:1px solid var(--line);}
+.codigo-head{max-width:64ch;}
+.codigo-head p{font-size:15px; color:var(--text-dim); line-height:1.7; margin:0 0 16px;}
+.codigo-sub{font-family:'Fraunces',serif; font-size:17px; font-weight:500; color:var(--text); font-style:italic;}
+.codigo-head .btn{margin-top:14px;}
+.codigo-cols{display:grid; grid-template-columns:repeat(3,1fr); gap:30px; margin-top:44px; padding-top:34px; border-top:1px solid var(--line);}
+@media (max-width:700px){.codigo-cols{grid-template-columns:1fr; gap:22px;}}
+.codigo-cols h4{font-size:15px; font-weight:600; margin:0 0 8px;}
+.codigo-cols p{font-size:12.5px; color:var(--text-dim); line-height:1.6; margin:0;}
+
+/* ---------- POR QUÉ KAIROS ---------- */
+.porque{padding:70px 0; border-top:1px solid var(--line);}
+.porque-head{max-width:56ch; margin-bottom:50px;}
+.porque-head h2{font-size:clamp(24px,3vw,32px); font-weight:600; margin:0 0 14px;}
+.porque-head p{font-size:15.5px; color:var(--text-dim); line-height:1.65; margin:0;}
+.metodo{display:flex; gap:0; position:relative;}
+@media (max-width:800px){.metodo{flex-direction:column; gap:26px;}}
+.metodo-step{flex:1; position:relative; padding-right:24px;}
+.metodo-step:not(:last-child)::after{
+  content:"→"; position:absolute; right:-4px; top:6px; color:var(--line); font-size:20px;
+  font-family:'IBM Plex Mono',monospace;
+}
+@media (max-width:800px){.metodo-step:not(:last-child)::after{content:"↓"; right:auto; left:0; top:auto; bottom:-22px;}}
+.metodo-step .n{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--accent); margin-bottom:10px;}
+.metodo-step h4{font-size:16.5px; font-weight:600; margin:0 0 8px;}
+.metodo-step p{font-size:12.5px; color:var(--text-dim); line-height:1.6; margin:0;}
+
+/* ---------- SOBRE KAIROS ---------- */
+.sobre{padding:70px 0; border-top:1px solid var(--line);}
+.sobre-grid{display:grid; grid-template-columns:0.8fr 1.2fr; gap:50px;}
+@media (max-width:760px){.sobre-grid{grid-template-columns:1fr; gap:20px;}}
+.sobre h2{font-size:clamp(24px,3vw,32px); font-weight:600; margin:0; max-width:14ch;}
+.sobre p{font-size:15.5px; line-height:1.75; color:var(--text-dim); margin:0 0 16px;}
+
+/* ---------- FOOTER ---------- */
+footer{background:var(--navy); color:#C7CFDC; padding:56px 0 32px; margin-top:20px;}
+.footer-top{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:30px; padding-bottom:36px; border-bottom:1px solid rgba(255,255,255,0.12);}
+.footer-brand{font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:18px; color:#fff; letter-spacing:0.03em; margin-bottom:8px;}
+.footer-pillars{font-family:'IBM Plex Mono',monospace; font-size:12px; color:#93A0B5;}
+.footer-links{display:flex; gap:22px; list-style:none; margin:0; padding:0;}
+.footer-links a{font-size:13px; color:#C7CFDC; text-decoration:none;}
+.footer-links a:hover{color:#fff;}
+.footer-bottom{display:flex; justify-content:space-between; padding-top:22px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:#7C8AA0; flex-wrap:wrap; gap:10px;}
+
+@media (max-width:640px){
+  .footer-top{flex-direction:column;}
+}
+
+/* ---------- HERRAMIENTAS ---------- */
+.tools-hero{padding:88px 0 76px;}
+.tools-hero-grid{display:grid;grid-template-columns:1.12fr 1fr;gap:52px;align-items:center;}
+.tools-hero h1{font-size:clamp(44px,5.5vw,68px);max-width:12ch;letter-spacing:-.045em;line-height:1.04;margin:0 0 28px;}
+.tools-hero h1 span{color:var(--accent);}
+.tools-copy{font-size:15px;line-height:1.8;color:var(--text-dim);max-width:65ch;}
+.tools-copy p{margin:0 0 16px;}
+.tools-promise{font-family:'Fraunces',serif;font-size:21px;line-height:1.5;margin:26px 0;}
+.tools-actions{display:flex;flex-wrap:wrap;gap:10px;}
+.tools-actions .btn{font-size:11px;padding:15px 17px;min-height:44px;}
+.tools-preview{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:8px;box-shadow:0 18px 50px rgba(30,42,66,.06);overflow:hidden;}
+.tools-preview-top{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.07em;color:var(--text-dim);}
+.tools-preview-title{padding:26px 22px 20px;}
+.tools-preview-title strong{display:block;font-size:20px;font-weight:500;margin-bottom:8px;}
+.tools-preview-title span{font-size:12px;color:var(--text-dim);}
+.tools-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:11px;line-height:1.6;}
+.tools-table th,.tools-table td{padding:15px 12px;text-align:left;border-top:1px solid var(--line);overflow-wrap:anywhere;}
+.tools-table th{font-weight:500;}
+.tools-table thead{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent);background:var(--accent-soft);}
+.tools-table td{color:var(--text-dim);}
+.tools-preview figcaption{font-size:11px;line-height:1.65;color:var(--text-dim);padding:18px 22px;background:var(--bg);border-top:1px solid var(--line);}
+.tools-section{padding:76px 0;border-top:1px solid var(--line);}
+.tools-section h2{font-size:clamp(28px,3.4vw,40px);font-weight:500;letter-spacing:-.035em;line-height:1.15;margin:0 0 22px;}
+.tools-section-head{max-width:680px;margin-bottom:38px;}
+.tools-section-head p{color:var(--text-dim);font-size:15px;line-height:1.8;margin:0;}
+.tools-kicker{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0 0 18px;}
+.tools-capabilities{display:grid;grid-template-columns:repeat(4,1fr);gap:26px;}
+.tools-capability{padding-top:22px;border-top:2px solid var(--line);}
+.tools-capability h3{font-size:16px;font-weight:500;margin:0 0 12px;}
+.tools-capability p{font-size:13px;line-height:1.75;color:var(--text-dim);margin:0;}
+.tools-process{background:var(--panel-2);}
+.tools-steps{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(4,1fr);gap:30px;counter-reset:steps;}
+.tools-steps li{counter-increment:steps;}
+.tools-steps li::before{content:'0' counter(steps);font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);display:block;padding-bottom:20px;margin-bottom:22px;border-bottom:1px solid #CFC8BA;}
+.tools-steps h3{font-size:17px;font-weight:500;line-height:1.4;margin:0 0 12px;}
+.tools-steps p{font-size:13px;color:var(--text-dim);line-height:1.75;margin:0;}
+.tools-steps li:last-child h3{color:var(--accent);}
+.tools-split{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:start;}
+.tools-quote{font-family:'Fraunces',serif;font-size:clamp(26px,3vw,36px);line-height:1.4;border-left:2px solid var(--accent);padding:8px 0 8px 28px;margin:0;}
+.tools-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;}
+.tools-card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:30px;display:flex;flex-direction:column;}
+.tools-card-top{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:26px;}
+.tools-number{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-dim);}
+.tools-status{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent);background:var(--accent-soft);border-radius:20px;padding:6px 10px;}
+.tools-card h3{font-size:24px;font-weight:500;letter-spacing:-.025em;margin:0 0 14px;}
+.tools-card p{font-size:14px;line-height:1.8;color:var(--text-dim);margin:0 0 20px;}
+.tools-variables{border-top:1px solid var(--line);padding-top:18px;margin-top:auto;}
+.tools-variables span{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);}
+.tools-variables ul{list-style:none;display:flex;flex-wrap:wrap;gap:7px;padding:0;margin:12px 0 0;}
+.tools-variables li{font-size:11px;line-height:1.4;padding:5px 8px;border:1px solid var(--line);border-radius:3px;color:var(--text-dim);}
+.tools-card-wide{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:40px;background:var(--panel-2);}
+.tools-card-wide .tools-variables{margin-top:0;align-self:center;}
+.tools-path{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:8px;overflow:hidden;}
+.tools-path article{padding:30px;}
+.tools-path article+article{border-left:1px solid var(--line);}
+.tools-path h3{font-size:18px;font-weight:500;line-height:1.4;margin:16px 0 12px;}
+.tools-path p{font-size:13px;line-height:1.8;color:var(--text-dim);margin:0;}
+.tools-note{font-size:12px;color:var(--text-dim);line-height:1.7;margin:20px 0 0;}
+.tools-advisory .tools-split{align-items:center;}
+.tools-contact{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-dim);border-top:1px solid var(--line);padding-top:18px;margin:12px 0 0;}
+.tools-close{text-align:center;background:var(--panel-2);padding:80px 0;}
+.tools-close h2{max-width:700px;margin:0 auto 26px;font-size:clamp(34px,4.3vw,52px);}
+.tools-close p{max-width:620px;margin:0 auto 20px;font-size:15px;line-height:1.8;color:var(--text-dim);}
+.tools-close .btn{margin-top:12px;min-height:44px;}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:5px;}
+@media(max-width:900px){.tools-hero-grid{grid-template-columns:1fr;gap:42px;}.tools-hero h1{max-width:15ch;}.tools-preview{max-width:580px;width:100%;}.tools-capabilities,.tools-steps{grid-template-columns:repeat(2,1fr);}.tools-split{gap:36px;}.nav-inner{flex-wrap:wrap;gap:16px;}.nav-links{flex-wrap:wrap;}}
+@media(max-width:640px){.tools-hero{padding:52px 0;}.tools-section{padding:52px 0;}.tools-grid,.tools-split,.tools-path,.tools-card-wide{grid-template-columns:1fr;}.tools-card-wide{gap:8px;}.tools-card{padding:24px;}.tools-path article+article{border-left:0;border-top:1px solid var(--line);}.tools-close{padding:60px 0;}.tools-quote{font-size:26px;}.tools-section{scroll-margin-top:150px;}.footer-links{flex-wrap:wrap;}.tools-table th,.tools-table td{padding:12px 8px;}}
+@media(max-width:400px){.tools-capabilities,.tools-steps{grid-template-columns:1fr;}.wrap{padding-left:20px;padding-right:20px;}.tools-hero h1{font-size:43px;}.tools-preview-top{font-size:9px;padding:16px;}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*,*::before,*::after{transition:none!important;}}
+
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">KAIRO<span>S</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="economia.html">Economía</a></li>
+      <li><a href="laboratorio.html">Laboratorio</a></li>
+      <li><a href="herramientas.html">Herramientas</a></li>
+      <li><a href="pensamiento.html">Pensamiento</a></li>
+      <li><a href="index.html#codigo">Código</a></li>
+      <li><a href="index.html#sobre-kairos">Sobre Kairos</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+<header class="tools-hero">
+ <div class="wrap tools-hero-grid">
+  <div>
+   <div class="hero-eyebrow">Herramientas · Construir</div>
+   <h1>Tecnología para <span>decidir mejor.</span></h1>
+   <div class="tools-copy"><p>Vivimos rodeados de información, pero tener más información no siempre hace más fácil tomar una decisión.</p><p>En Kairos creemos que la tecnología debe estar al servicio de las personas, no al revés. Por eso estamos construyendo herramientas para acompañarte cuando necesitas evaluar una inversión, comenzar un proyecto, organizar tus finanzas o tomar una decisión importante.</p></div>
+   <p class="tools-promise">No podemos eliminar la incertidumbre.<br>Podemos ayudarte a entenderla.</p>
+   <div class="tools-actions"><a class="btn btn-primary" href="#en-desarrollo">Conocer lo que estamos construyendo ↓</a><a class="btn btn-secondary" href="#proceso">De datos a decisiones</a></div>
+  </div>
+  <figure class="tools-preview">
+   <div class="tools-preview-top"><span>KAIROS / DECISIONES</span><span>VISTA CONCEPTUAL · NO INTERACTIVA</span></div>
+   <div class="tools-preview-title"><strong>Una decisión. Más perspectiva.</strong><span>Comparar antes de elegir.</span></div>
+   <table class="tools-table" aria-label="Esquema conceptual de comparación, sin resultados calculados"><thead><tr><th scope="col">Qué observar</th><th scope="col">Alternativa A</th><th scope="col">Alternativa B</th></tr></thead><tbody><tr><th scope="row">Costo total</th><td>Por estimar</td><td>Por estimar</td></tr><tr><th scope="row">Horizonte</th><td>Según tus supuestos</td><td>Según tus supuestos</td></tr><tr><th scope="row">Punto de equilibrio</th><td>Por explorar</td><td>Por explorar</td></tr><tr><th scope="row">Escenario adverso</th><td>Por explorar</td><td>Por explorar</td></tr></tbody></table>
+   <figcaption>Así queremos ayudarte a comparar. No representa resultados de una herramienta disponible.</figcaption>
+  </figure>
+ </div>
+</header>
+<section class="tools-section"><div class="wrap">
+ <div class="tools-section-head"><div class="tools-kicker">01 / Perspectiva</div><h2>Más claridad para actuar</h2><p>Diseñamos herramientas para explorar escenarios, identificar riesgos y entender cómo una decisión puede comportarse cuando las condiciones cambian. El objetivo es transformar problemas complejos en alternativas que puedas comprender y comparar.</p></div>
+ <p class="tools-kicker">Lo que buscamos hacer posible</p>
+ <div class="tools-capabilities">
+  <article class="tools-capability"><h3>Comparar alternativas</h3><p>Entender costos, beneficios y lo que se sacrifica al elegir una opción frente a otra.</p></article>
+  <article class="tools-capability"><h3>Encontrar el equilibrio</h3><p>Identificar las condiciones bajo las que una alternativa deja de ser favorable.</p></article>
+  <article class="tools-capability"><h3>Explorar escenarios</h3><p>Considerar distintos futuros posibles, incluidos los adversos.</p></article>
+  <article class="tools-capability"><h3>Entender la sensibilidad</h3><p>Observar cuánto podría cambiar un resultado al variar precios, tasas, costos u otros supuestos.</p></article>
+ </div>
+</div></section>
+<section class="tools-section tools-process" id="proceso"><div class="wrap">
+ <div class="tools-section-head"><div class="tools-kicker">02 / El proceso</div><h2>De datos a decisiones</h2><p>Este es el recorrido que guía el diseño de nuestras herramientas.</p></div>
+ <ol class="tools-steps">
+  <li><h3>Cuéntanos qué quieres decidir</h3><p>El punto de partida son tus objetivos, condiciones, restricciones y la información relevante para el problema.</p></li>
+  <li><h3>Exploramos los escenarios</h3><p>Los modelos, las simulaciones y el análisis permitirían explorar futuros posibles a partir de esos datos y supuestos.</p></li>
+  <li><h3>Entiende el riesgo</h3><p>Una evaluación útil debe incluir escenarios adversos y mostrar qué cambia cuando las condiciones dejan de ser favorables.</p></li>
+  <li><h3>Tú decides</h3><p>Kairos organiza la incertidumbre. La decisión sigue siendo tuya.</p></li>
+ </ol>
+</div></section>
+<section class="tools-section"><div class="wrap tools-split">
+ <div><div class="tools-kicker">03 / Nuestro criterio</div><h2>Entender por qué cambia una decisión</h2><div class="tools-copy"><p>Una respuesta aislada no cuenta toda la historia. Queremos que puedas entender cuánto cuesta cada alternativa, durante cuánto tiempo y bajo qué condiciones cambia el resultado.</p><p>Una herramienta útil debería mostrar el punto de equilibrio, los riesgos y la sensibilidad a sus supuestos. Cuando el modelo permita estimar probabilidades, también debería explicar de dónde salen y cuáles son sus límites.</p></div></div>
+ <blockquote class="tools-quote">No decidir por ti.<br>Darte mejores condiciones para decidir.</blockquote>
+</div></section>
+<section class="tools-section" id="en-desarrollo"><div class="wrap">
+ <div class="tools-section-head"><div class="tools-kicker">04 / Lo que estamos construyendo</div><h2>En desarrollo</h2><p>Estas son las líneas que queremos convertir en herramientas de Kairos. Aún no están disponibles como productos públicos; sus funciones y alcance pueden cambiar durante el desarrollo.</p></div>
+ <div class="tools-grid">
+<article class="tools-card"><div><div class="tools-card-top"><span class="tools-number">LÍNEA 01</span><span class="tools-status">En desarrollo</span></div><h3>Comprar vs. alquilar</h3><p>Una herramienta para comparar el costo económico completo de ambas decisiones y explorar bajo qué condiciones cambia el resultado.</p></div><div class="tools-variables"><span>PODRÍA CONSIDERAR</span><ul><li>Precio</li><li>Alquiler</li><li>Financiamiento</li><li>Tasas</li><li>Mantenimiento</li><li>Horizonte temporal</li><li>Costo de oportunidad</li><li>Apreciación</li><li>Inflación</li></ul></div></article>
+<article class="tools-card"><div><div class="tools-card-top"><span class="tools-number">LÍNEA 02</span><span class="tools-status">En desarrollo</span></div><h3>Costo real de una deuda</h3><p>Una herramienta para entender cuánto podría costar realmente una obligación financiera, más allá de la tasa anunciada.</p></div><div class="tools-variables"><span>PODRÍA CONSIDERAR</span><ul><li>Tasa nominal</li><li>Tasa efectiva</li><li>Comisiones</li><li>Seguros</li><li>Plazo</li><li>Inflación</li><li>Costo total</li></ul></div></article>
+<article class="tools-card"><div><div class="tools-card-top"><span class="tools-number">LÍNEA 03</span><span class="tools-status">En desarrollo</span></div><h3>Retiro bajo incertidumbre</h3><p>Una herramienta para explorar distintos futuros posibles del ahorro y los retiros, incluyendo escenarios menos favorables.</p></div><div class="tools-variables"><span>PODRÍA CONSIDERAR</span><ul><li>Ahorro</li><li>Rendimiento</li><li>Inflación</li><li>Horizonte</li><li>Retiros</li><li>Monte Carlo</li><li>Escenarios adversos</li></ul></div></article>
+<article class="tools-card"><div><div class="tools-card-top"><span class="tools-number">LÍNEA 04</span><span class="tools-status">En desarrollo</span></div><h3>Kairos Agriculture — Precio de cosecha</h3><p>Una primera idea dentro de Kairos Agriculture: evaluar cómo costos, rendimiento y precio podrían afectar el margen de una cosecha y su punto de equilibrio.</p><p>Kairos Agriculture se plantea como una familia de herramientas especializadas para acompañar decisiones de productores y otros actores del sector agrícola.</p></div><div class="tools-variables"><span>PODRÍA CONSIDERAR</span><ul><li>Costos</li><li>Rendimiento</li><li>Precio</li><li>Margen</li><li>Punto de equilibrio</li><li>Escenarios de mercado</li><li>Riesgo productivo y económico</li></ul></div></article>
+<article class="tools-card tools-card-wide"><div><div class="tools-card-top"><span class="tools-number">LÍNEA 05</span><span class="tools-status">En desarrollo</span></div><h3>Economic Stress Test</h3><p>Una posible evolución hacia producto del trabajo experimental iniciado en Apple Lab, orientada a explorar escenarios, sensibilidad y riesgo en decisiones bajo incertidumbre.</p></div><div class="tools-variables"><span>PODRÍA EXPLORAR</span><ul><li>Simulación</li><li>Pruebas de estrés</li><li>Sensibilidad</li><li>Condiciones que cambian el resultado</li></ul></div></article>
+ </div>
+</div></section>
+<section class="tools-section"><div class="wrap">
+ <div class="tools-section-head"><div class="tools-kicker">05 / Una visión que crece</div><h2>Distintas formas de profundizar</h2><p>Imaginamos una familia de soluciones que pueda crecer con la complejidad de cada decisión.</p></div>
+ <div class="tools-path">
+  <article><span class="tools-number">01 / EXPLORAR</span><h3>Herramientas abiertas</h3><p>Modelos y herramientas accesibles para explorar decisiones concretas.</p></article>
+  <article><span class="tools-number">02 / PROFUNDIZAR</span><h3>Herramientas avanzadas</h3><p>Mayor profundidad analítica mediante escenarios, simulaciones, reportes u otras capacidades que podamos desarrollar.</p></article>
+  <article><span class="tools-number">03 / ADAPTAR</span><h3>Análisis especializado</h3><p>Trabajo adaptado a problemas que no caben en una herramienta estandarizada.</p></article>
+ </div><p class="tools-note">Una dirección de desarrollo, no una oferta comercial disponible.</p>
+</div></section>
+<section class="tools-section tools-advisory"><div class="wrap tools-split">
+ <div><div class="tools-kicker">06 / Análisis especializado</div><h2>Algunas decisiones necesitan algo más que una herramienta.</h2></div>
+ <div class="tools-copy"><p>Algunos problemas necesitan un modelo adaptado a sus propias condiciones. Queremos desarrollar una línea de análisis especializado para estudiar esos casos, construir modelos y poner escenarios a prueba.</p><p>Podría acompañar decisiones sobre inversiones, empresas, proyectos, agricultura, organizaciones y otros problemas económicos, cuantitativos o estratégicos.</p><p>El propósito sería producir herramientas y evidencia útil para actuar: modelar, medir, simular y entender qué cambia el resultado.</p>
+ <!-- PENDIENTE: CTA futuro «Solicitar análisis». Habilitar únicamente cuando exista un canal comercial y una URL confirmados. -->
+ <span class="tools-contact">Canal de solicitudes aún no habilitado.</span></div>
+</div></section>
+<section class="tools-section tools-close"><div class="wrap">
+ <div class="tools-kicker">Tecnología al servicio de las personas</div>
+ <h2>El futuro es incierto.<br>Puedes decidir con más claridad.</h2>
+ <p>Kairos no promete conocer el futuro. Te ayuda a estar preparado para más de uno.</p><p>Estamos construyendo herramientas para entender las alternativas, reconocer los límites y decidir con más información.</p>
+ <a href="#en-desarrollo" class="btn btn-primary">Ver líneas en desarrollo ↑</a>
+</div></section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">KAIROS</div>
+        <div class="footer-pillars">Economía · Laboratorio · Herramientas · Pensamiento</div>
+      </div>
+      <ul class="footer-links">
+        <li><a href="index.html#sobre-kairos">Sobre nosotros</a></li>
+        <li><a href="#">Contacto</a></li>
+        <li><a href="#">Privacidad</a></li>
+        <li><a href="https://github.com/josuetartons-cpu/kairos-labs" target="_blank" rel="noopener noreferrer">Kairos Labs</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Kairos</span>
+      <span>Observar · Experimentar · Construir · Reflexionar</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

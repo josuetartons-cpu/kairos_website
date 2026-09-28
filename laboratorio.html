@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Laboratorio — Kairos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="El espacio experimental de Kairos: preguntas, modelos y simulaciones para explorar posibilidades, poner a prueba ideas y conocer sus límites.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+
+:root{
+  --bg:#F7F4EE;
+  --panel:#FFFFFF;
+  --panel-2:#EFEAE0;
+  --line: #E4DFD3;
+  --text:#1C1B22;
+  --text-dim:#6B6570;
+  --accent:#7A2540;
+  --accent-soft:rgba(122,37,64,0.08);
+  --navy:#1E2A42;
+  --green:#3E6488;
+  --green-soft:rgba(62,100,136,0.10);
+  --amber:#75707A;
+  --amber-soft:rgba(117,112,122,0.10);
+  --red:#8C2E48;
+  --red-soft:rgba(140,46,72,0.10);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+html,body{margin:0;padding:0;}
+body{background:var(--bg); color:var(--text); font-family:'Space Grotesk',sans-serif; -webkit-font-smoothing:antialiased;}
+.mono{font-family:'IBM Plex Mono',monospace;}
+a{color:inherit;}
+section{scroll-margin-top:86px;}
+
+.wrap{max-width:1100px; margin:0 auto; padding:0 28px;}
+.wrap-narrow{max-width:760px; margin:0 auto; padding:0 28px;}
+
+/* ---------- NAV ---------- */
+.nav{position:sticky; top:0; z-index:50; background:rgba(247,244,238,0.92); backdrop-filter:blur(6px); border-bottom:1px solid var(--line);}
+.nav-inner{max-width:1100px; margin:0 auto; padding:18px 28px; display:flex; justify-content:space-between; align-items:center;}
+.nav-brand{font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:15px; letter-spacing:0.04em; text-decoration:none; color:var(--text);}
+.nav-brand span{color:var(--accent);}
+.nav-links{display:flex; gap:26px; list-style:none; margin:0; padding:0;}
+.nav-links a{font-family:'IBM Plex Mono',monospace; font-size:12px; text-decoration:none; color:var(--text-dim); letter-spacing:0.02em; transition:color .15s;}
+.nav-links a:hover{color:var(--accent);}
+@media (max-width:640px){
+  .nav-inner{flex-direction:column; align-items:flex-start; gap:12px; padding:16px 20px;}
+  .nav-links{flex-wrap:wrap; gap:14px 18px;}
+}
+
+/* ---------- HERO ---------- */
+.hero{padding:100px 0 90px;}
+.hero-eyebrow{font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); display:flex; align-items:center; gap:10px; margin-bottom:26px;}
+.hero-eyebrow::before{content:""; width:22px; height:1px; background:var(--accent);}
+.hero h1{font-size:clamp(42px,7vw,74px); font-weight:700; line-height:1.02; margin:0 0 28px; letter-spacing:-0.01em; max-width:14ch;}
+.hero .tagline{font-size:clamp(18px,2.4vw,23px); color:var(--text-dim); max-width:36ch; line-height:1.5; margin:0 0 36px; font-weight:400;}
+.hero-ctas{display:flex; gap:14px; flex-wrap:wrap;}
+.btn{font-family:'IBM Plex Mono',monospace; font-size:13px; text-decoration:none; padding:14px 26px; border-radius:4px; display:inline-block; letter-spacing:0.01em; transition:opacity .15s, background .15s;}
+.btn-primary{background:var(--text); color:var(--bg);}
+.btn-primary:hover{opacity:0.85;}
+.btn-secondary{border:1px solid var(--line); color:var(--text);}
+.btn-secondary:hover{border-color:var(--accent); color:var(--accent);}
+
+/* ---------- LA FILOSOFÍA ---------- */
+.la-filosofia{padding:70px 0; border-top:1px solid var(--line);}
+.eyebrow{font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); display:flex; align-items:center; gap:10px; margin-bottom:24px;}
+.eyebrow::before{content:""; width:20px; height:1px; background:var(--accent);}
+
+.fundador{display:grid; grid-template-columns:150px 1fr; gap:30px; align-items:start; margin-top:46px; padding-top:42px; border-top:1px solid var(--line);}
+.fundador-foto{width:100%; aspect-ratio:3/4; object-fit:cover; object-position:top center; border-radius:6px; border:1px solid var(--line); display:block;}
+.fundador-nombre{font-size:17px; font-weight:600; color:var(--text); margin:0 0 4px;}
+.fundador-rol{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--accent); margin:0 0 16px;}
+.fundador-bio{font-size:14.5px; line-height:1.7; color:var(--text-dim); margin:0; max-width:54ch;}
+@media (max-width:560px){
+  .fundador{grid-template-columns:1fr; gap:20px;}
+  .fundador-foto{max-width:150px;}
+}
+
+/* ---------- QUÉ ES KAIROS ---------- */
+.que-es{padding:70px 0; border-top:1px solid var(--line);}
+.que-es-grid{display:grid; grid-template-columns:1fr 1fr; gap:50px; align-items:start;}
+@media (max-width:760px){.que-es-grid{grid-template-columns:1fr; gap:30px;}}
+.que-es h2{font-size:clamp(24px,3vw,32px); font-weight:600; margin:0 0 20px; max-width:16ch;}
+.que-es p{font-size:15.5px; line-height:1.75; color:var(--text-dim); margin:0 0 16px;}
+.que-es-quote{
+  font-size:17px; line-height:1.65; font-weight:500; color:var(--text);
+  border-left:3px solid var(--accent); padding-left:20px; margin:0;
+}
+
+/* ---------- PILARES ---------- */
+.pilares{padding:70px 0; border-top:1px solid var(--line);}
+.pilares-head{max-width:56ch; margin-bottom:40px;}
+.pilares-head h2{font-size:clamp(24px,3vw,32px); font-weight:600; margin:0 0 12px;}
+.pilares-head p{font-size:15px; color:var(--text-dim); line-height:1.6; margin:0;}
+.pilares-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:8px; overflow:hidden;}
+@media (max-width:900px){.pilares-grid{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:560px){.pilares-grid{grid-template-columns:1fr;}}
+.pilar{background:var(--panel); padding:32px 26px; position:relative;}
+.glifo{width:36px; height:36px; stroke:currentColor; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; fill:none; color:var(--accent); margin-bottom:22px; display:block;}
+.pilar h3{font-size:18.5px; font-weight:600; margin:0 0 5px; color:var(--text);}
+.pilar-accion{font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600; letter-spacing:0.13em; text-transform:uppercase; color:var(--text-dim); margin:0 0 16px;}
+.pilar p{font-size:13.5px; line-height:1.65; color:var(--text-dim); margin:0;}
+.pilar-cta{display:inline-flex; align-items:center; gap:6px; margin-top:18px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:600; letter-spacing:0.02em; color:var(--accent); text-decoration:none;}
+.pilar-cta::after{content:"→"; transition:transform .15s;}
+.pilar-cta:hover{text-decoration:underline;}
+.pilar-cta:hover::after{transform:translateX(3px);}
+.pilares-relacion{margin-top:30px; max-width:72ch;}
+.pilares-relacion p{font-size:13.5px; color:var(--text-dim); line-height:1.75; margin:0 0 16px;}
+.pilares-mantra{font-family:'Fraunces',serif; font-size:clamp(19px,2.3vw,25px); font-weight:500; color:var(--text); margin:0;}
+
+/* ---------- PUBLICACIONES ---------- */
+.pubs{padding:70px 0; border-top:1px solid var(--line);}
+.pubs-head{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:36px; flex-wrap:wrap; gap:14px;}
+.pubs-head h2{font-size:clamp(24px,3vw,32px); font-weight:600; margin:0;}
+.pubs-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:22px;}
+.pub-card{background:var(--panel); border:1px solid var(--line); border-radius:8px; overflow:hidden; text-decoration:none; color:var(--text); display:block; transition:border-color .15s, transform .15s;}
+.pub-card:hover{border-color:var(--accent); transform:translateY(-2px);}
+.pub-visual{height:8px; background:linear-gradient(90deg, var(--green) 0%, var(--green) 30%, var(--amber) 45%, var(--amber) 60%, var(--red) 75%, var(--red) 100%);}
+.pub-visual.ambiental{background:linear-gradient(90deg, #294F3A 0%, #477A56 45%, #8BA06B 72%, #C4A96A 100%);}
+.pub-visual.laboratorio{background:linear-gradient(90deg, var(--accent) 0%, var(--red) 45%, var(--green) 100%);}
+.pub-body{padding:28px 30px 30px;}
+.pub-tag{font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:var(--accent); background:var(--accent-soft); padding:4px 10px; border-radius:12px; display:inline-block; margin-bottom:16px;}
+.pub-body h3{font-size:20px; font-weight:600; line-height:1.35; margin:0 0 12px; max-width:34ch;}
+.pub-body p{font-size:13.5px; line-height:1.6; color:var(--text-dim); margin:0 0 18px;}
+.pub-meta{display:flex; justify-content:space-between; align-items:center; font-family:'IBM Plex Mono',monospace; font-size:11px;}
+.pub-date{color:var(--text-dim);}
+.pub-cta{color:var(--accent); font-weight:600;}
+.pubs-empty-note{font-size:12.5px; color:var(--text-dim); margin-top:20px; font-style:italic;}
+
+/* ---------- CÓDIGO Y DATOS ---------- */
+.codigo{padding:70px 0; border-top:1px solid var(--line);}
+.codigo-head{max-width:64ch;}
+.codigo-head p{font-size:15px; color:var(--text-dim); line-height:1.7; margin:0 0 16px;}
+.codigo-sub{font-family:'Fraunces',serif; font-size:17px; font-weight:500; color:var(--text); font-style:italic;}
+.codigo-head .btn{margin-top:14px;}
+.codigo-cols{display:grid; grid-template-columns:repeat(3,1fr); gap:30px; margin-top:44px; padding-top:34px; border-top:1px solid var(--line);}
+@media (max-width:700px){.codigo-cols{grid-template-columns:1fr; gap:22px;}}
+.codigo-cols h4{font-size:15px; font-weight:600; margin:0 0 8px;}
+.codigo-cols p{font-size:12.5px; color:var(--text-dim); line-height:1.6; margin:0;}
+
+/* ---------- POR QUÉ KAIROS ---------- */
+.porque{padding:70px 0; border-top:1px solid var(--line);}
+.porque-head{max-width:56ch; margin-bottom:50px;}
+.porque-head h2{font-size:clamp(24px,3vw,32px); font-weight:600; margin:0 0 14px;}
+.porque-head p{font-size:15.5px; color:var(--text-dim); line-height:1.65; margin:0;}
+.metodo{display:flex; gap:0; position:relative;}
+@media (max-width:800px){.metodo{flex-direction:column; gap:26px;}}
+.metodo-step{flex:1; position:relative; padding-right:24px;}
+.metodo-step:not(:last-child)::after{
+  content:"→"; position:absolute; right:-4px; top:6px; color:var(--line); font-size:20px;
+  font-family:'IBM Plex Mono',monospace;
+}
+@media (max-width:800px){.metodo-step:not(:last-child)::after{content:"↓"; right:auto; left:0; top:auto; bottom:-22px;}}
+.metodo-step .n{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--accent); margin-bottom:10px;}
+.metodo-step h4{font-size:16.5px; font-weight:600; margin:0 0 8px;}
+.metodo-step p{font-size:12.5px; color:var(--text-dim); line-height:1.6; margin:0;}
+
+/* ---------- SOBRE KAIROS ---------- */
+.sobre{padding:70px 0; border-top:1px solid var(--line);}
+.sobre-grid{display:grid; grid-template-columns:0.8fr 1.2fr; gap:50px;}
+@media (max-width:760px){.sobre-grid{grid-template-columns:1fr; gap:20px;}}
+.sobre h2{font-size:clamp(24px,3vw,32px); font-weight:600; margin:0; max-width:14ch;}
+.sobre p{font-size:15.5px; line-height:1.75; color:var(--text-dim); margin:0 0 16px;}
+
+/* ---------- FOOTER ---------- */
+footer{background:var(--navy); color:#C7CFDC; padding:56px 0 32px; margin-top:20px;}
+.footer-top{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:30px; padding-bottom:36px; border-bottom:1px solid rgba(255,255,255,0.12);}
+.footer-brand{font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:18px; color:#fff; letter-spacing:0.03em; margin-bottom:8px;}
+.footer-pillars{font-family:'IBM Plex Mono',monospace; font-size:12px; color:#93A0B5;}
+.footer-links{display:flex; gap:22px; list-style:none; margin:0; padding:0;}
+.footer-links a{font-size:13px; color:#C7CFDC; text-decoration:none;}
+.footer-links a:hover{color:#fff;}
+.footer-bottom{display:flex; justify-content:space-between; padding-top:22px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:#7C8AA0; flex-wrap:wrap; gap:10px;}
+
+@media (max-width:640px){
+  .footer-top{flex-direction:column;}
+}
+
+/* ---------- LABORATORIO: CONTENIDO ESPECÍFICO DE ESTA PÁGINA ---------- */
+.sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;}
+
+.lab-hero{padding:90px 0 70px;}
+.lab-questions{list-style:none; margin:0 0 30px; padding:0; display:flex; flex-direction:column; gap:12px; max-width:56ch;}
+.lab-questions li{font-size:17px; line-height:1.5; color:var(--text); font-weight:500; padding-left:20px; position:relative;}
+.lab-questions li::before{content:"—"; position:absolute; left:0; color:var(--accent);}
+.lab-remate{font-family:'Fraunces',serif; font-size:clamp(20px,2.4vw,26px); font-weight:500; font-style:italic; color:var(--text); margin:0 0 34px; max-width:44ch;}
+
+.lab-section{padding:70px 0; border-top:1px solid var(--line);}
+.lab-section h2{font-size:clamp(24px,3vw,32px); font-weight:600; margin:0 0 20px; max-width:22ch;}
+.lab-section > .wrap > p{font-size:15.5px; line-height:1.75; color:var(--text-dim); margin:0 0 16px; max-width:68ch;}
+.lab-quote{font-family:'Fraunces',serif; font-size:19px; font-weight:500; font-style:italic; color:var(--text); margin:24px 0; max-width:56ch;}
+.lab-puente{font-size:15px; line-height:1.7; color:var(--text-dim); max-width:60ch; margin:0 0 16px;}
+.lab-nota{font-size:13.5px; line-height:1.65; color:var(--text-dim); border-left:3px solid var(--line); padding-left:18px; margin:20px 0 0; max-width:60ch;}
+
+.lab-reglas{list-style:none; margin:38px 0 0; padding:0; border-top:1px solid var(--line);}
+.lab-regla{display:flex; gap:20px; padding:22px 2px; border-bottom:1px solid var(--line); align-items:flex-start;}
+.lab-regla-num{font-family:'IBM Plex Mono',monospace; font-size:13px; font-weight:700; color:var(--accent); flex-shrink:0; min-width:28px;}
+.lab-regla-body h4{font-size:15.5px; font-weight:600; margin:0 0 6px; color:var(--text);}
+.lab-regla-body p{font-size:13.5px; line-height:1.6; color:var(--text-dim); margin:0;}
+
+.lab-cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:24px; margin-top:36px;}
+.lab-card{background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:28px 30px 30px; display:flex; flex-direction:column;}
+.lab-card-tag{font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:var(--accent); background:var(--accent-soft); padding:4px 10px; border-radius:12px; display:inline-block; margin-bottom:14px; align-self:flex-start;}
+.lab-card-name{font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600; letter-spacing:0.04em; color:var(--text-dim); text-transform:uppercase; margin:0 0 8px;}
+.lab-card h3{font-size:19px; font-weight:600; line-height:1.35; margin:0 0 12px;}
+.lab-card p{font-size:13.5px; line-height:1.6; color:var(--text-dim); margin:0 0 14px;}
+.lab-card-actions{display:flex; flex-wrap:wrap; align-items:center; gap:8px 18px; margin-top:auto; padding-top:6px;}
+.lab-card-primary{font-family:'IBM Plex Mono',monospace; font-size:12.5px; font-weight:600; color:var(--accent); text-decoration:none; display:inline-flex; align-items:center; gap:6px; min-height:44px; padding:4px 0;}
+.lab-card-primary::after{content:"→"; transition:transform .15s;}
+.lab-card-primary:hover::after{transform:translateX(3px);}
+.lab-card-secondary{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--text-dim); text-decoration:underline; text-underline-offset:2px; display:inline-flex; align-items:center; min-height:44px; padding:4px 0;}
+.lab-card-secondary:hover{color:var(--accent);}
+.lab-card-tertiary{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--text-dim); text-decoration:none; border:1px solid var(--line); border-radius:4px; padding:8px 14px; display:inline-flex; align-items:center; gap:6px; min-height:44px;}
+.lab-card-tertiary:hover{border-color:var(--accent); color:var(--accent);}
+.lab-card-note{font-size:12.5px; color:var(--text-dim); font-style:italic; margin:auto 0 0;}
+
+.lab-futuro-box{background:var(--panel-2); border-radius:10px; padding:40px 36px; margin-top:30px;}
+.lab-futuro-list{list-style:none; margin:20px 0 24px; padding:0; display:flex; flex-direction:column; gap:12px;}
+.lab-futuro-list li{font-size:15px; line-height:1.55; color:var(--text); padding-left:20px; position:relative;}
+.lab-futuro-list li::before{content:"—"; position:absolute; left:0; color:var(--accent);}
+.lab-futuro-remate{font-family:'Fraunces',serif; font-size:17px; font-weight:500; font-style:italic; color:var(--text); margin:0;}
+
+.lab-cierre-lines p{margin:0 0 4px; font-size:15.5px; color:var(--text-dim); line-height:1.6;}
+.lab-cierre-quote{font-family:'Fraunces',serif; font-size:19px; font-weight:500; font-style:italic; color:var(--text); margin:24px 0; max-width:56ch;}
+.lab-cierre-cta-line{font-weight:600; color:var(--text); font-size:16px; margin:0 0 30px;}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  .lab-card-primary::after,.pilar-cta::after,.eco-card-primary::after{transition:none;}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">KAIRO<span>S</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="economia.html">Economía</a></li>
+      <li><a href="laboratorio.html">Laboratorio</a></li>
+      <li><a href="herramientas.html">Herramientas</a></li>
+      <li><a href="pensamiento.html">Pensamiento</a></li>
+      <li><a href="index.html#codigo">Código</a></li>
+      <li><a href="index.html#sobre-kairos">Sobre Kairos</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero lab-hero">
+  <div class="wrap">
+    <div class="hero-eyebrow">Laboratorio · Experimentar</div>
+    <h1>¿Y si lo intentamos?</h1>
+    <ul class="lab-questions">
+      <li>¿Podemos hacer que el mismo presupuesto ayude a más personas?</li>
+      <li>¿Cuándo deja de valer la pena ser corrupto?</li>
+      <li>¿Podemos simular futuros posibles para entender qué puede salir mal?</li>
+      <li>¿Qué pasaría si ponemos una idea absurda frente a los datos?</li>
+    </ul>
+    <p class="lab-remate">No sabemos. Por eso existe el Laboratorio.</p>
+    <div class="hero-ctas">
+      <a href="#experimentos" class="btn btn-primary">Explorar experimentos</a>
+      <a href="#reglas" class="btn btn-secondary">Conocer las reglas</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="lab-section" id="proposito">
+  <div class="wrap">
+    <h2>Un lugar para experimentar</h2>
+    <p>Laboratorio es el espacio experimental de Kairos.</p>
+    <p>Aquí construimos modelos, simulaciones y experimentos computacionales para explorar preguntas que serían difíciles, costosas o simplemente extrañas de probar en el mundo real.</p>
+    <p>Algunas ideas funcionarán. Otras probablemente no. Ambas cosas nos enseñan algo.</p>
+    <p class="lab-quote">La curiosidad propone. Los datos ponen los límites.</p>
+    <p class="lab-puente">En Economía buscamos entender lo que ocurre. En Laboratorio preguntamos qué pasaría si cambiamos las reglas, los supuestos o la manera de decidir.</p>
+    <p class="lab-nota">Una simulación explora lo que puede ocurrir bajo ciertos supuestos. No equivale por sí sola a una predicción ni sustituye la evidencia del mundo real.</p>
+  </div>
+</section>
+
+<section class="lab-section" id="hecho-en-kairos">
+  <div class="wrap">
+    <h2>Hecho en Kairos</h2>
+    <p>Los experimentos de esta sección nacen y se desarrollan en Kairos. Diseñamos las preguntas, construimos los modelos, escribimos el código y documentamos lo que encontramos.</p>
+    <p>Cuando el material reproducible está disponible, lo compartimos en Kairos Labs para que puedas revisar los supuestos, explorar el código y seguir el experimento.</p>
+    <p>No buscamos que confíes ciegamente en una gráfica. Queremos que puedas descubrir cómo llegamos hasta ella.</p>
+    <div class="hero-ctas">
+      <a href="https://github.com/josuetartons-cpu/kairos-labs" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Explorar Kairos Labs ↗<span class="sr-only"> (abre en una pestaña nueva)</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="lab-section" id="reglas">
+  <div class="wrap">
+    <h2>Las reglas del laboratorio</h2>
+    <ol class="lab-reglas">
+      <li class="lab-regla">
+        <span class="lab-regla-num">01</span>
+        <div class="lab-regla-body">
+          <h4>Preguntar cosas raras.</h4>
+          <p>Las buenas investigaciones no siempre empiezan con preguntas habituales.</p>
+        </div>
+      </li>
+      <li class="lab-regla">
+        <span class="lab-regla-num">02</span>
+        <div class="lab-regla-body">
+          <h4>Construir algo.</h4>
+          <p>Un modelo, una simulación, un algoritmo o un experimento que permita poner la pregunta a prueba.</p>
+        </div>
+      </li>
+      <li class="lab-regla">
+        <span class="lab-regla-num">03</span>
+        <div class="lab-regla-body">
+          <h4>Romperlo.</h4>
+          <p>Cambiar supuestos, parámetros y condiciones hasta descubrir cuándo deja de funcionar.</p>
+        </div>
+      </li>
+      <li class="lab-regla">
+        <span class="lab-regla-num">04</span>
+        <div class="lab-regla-body">
+          <h4>Mostrar lo que encontramos.</h4>
+          <p>Incluyendo aquello que contradiga nuestra intuición inicial y los límites de lo que podemos concluir.</p>
+        </div>
+      </li>
+      <li class="lab-regla">
+        <span class="lab-regla-num">05</span>
+        <div class="lab-regla-body">
+          <h4>Dejar instrucciones.</h4>
+          <p>Cuando sea posible, publicar el código y los materiales necesarios para que alguien más pueda reproducirlo.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="lab-section" id="experimentos">
+  <div class="wrap">
+    <h2>Experimentos</h2>
+    <p>Tres preguntas para empezar. Elige una lectura para conocer el experimento y, cuando esté disponible, profundiza en su versión técnica o explora el código.</p>
+    <div class="lab-cards">
+
+      <article class="lab-card">
+        <span class="lab-card-tag">Optimización · Simulación</span>
+        <div class="lab-card-name">Optimization Lab #1</div>
+        <h3>¿Por qué darle dinero a los pobres no basta?</h3>
+        <p>100,000 hogares simulados. Un presupuesto limitado. Cuatro estrategias de focalización: A, B, C y D.</p>
+        <p>¿Qué cambia cuando distribuimos los recursos de maneras diferentes? Un experimento para comparar decisiones de asignación dentro de un modelo.</p>
+        <div class="lab-card-actions">
+          <a href="articles/por-que-el-dinero-no-basta.html" class="lab-card-primary">Leer publicación<span class="sr-only"> — Optimization Lab #1</span></a>
+          <a href="articles/por-que-el-dinero-no-basta-tecnico.html" class="lab-card-secondary">Versión técnica<span class="sr-only"> — Optimization Lab #1</span></a>
+          <a href="https://github.com/josuetartons-cpu/kairos-labs/tree/main/optimization-lab-01" target="_blank" rel="noopener noreferrer" class="lab-card-tertiary">Código y experimento ↗<span class="sr-only"> — Optimization Lab #1 (abre en una pestaña nueva)</span></a>
+        </div>
+      </article>
+
+      <article class="lab-card">
+        <span class="lab-card-tag">Riesgo · Modelos · Simulación</span>
+        <div class="lab-card-name">Apple Lab / Economic Stress Test</div>
+        <h3>¿Podemos enseñarle a una computadora a explorar el riesgo de Apple?</h3>
+        <p>Datos de AAPL, simulaciones Monte Carlo y evaluación de modelos para explorar escenarios de riesgo.</p>
+        <p>¿Qué podemos aprender al poner un modelo a prueba y observar dónde deja de funcionar?</p>
+        <div class="lab-card-actions">
+          <a href="articles/apple-lab-incertidumbre-inversion.html" class="lab-card-primary">Leer publicación<span class="sr-only"> — Apple Lab / Economic Stress Test</span></a>
+        </div>
+      </article>
+
+      <article class="lab-card">
+        <span class="lab-card-tag">Teoría de juegos · Incentivos · Simulación</span>
+        <div class="lab-card-name">Corrupción en compras públicas</div>
+        <h3>¿Cuándo deja de valer la pena ser corrupto?</h3>
+        <p>Una empresa. Un funcionario. Un soborno. Una probabilidad de ser descubierto.</p>
+        <p>¿Cómo cambian los incentivos cuando modificamos las reglas? Un experimento para explorar el papel de la detección y las sanciones dentro del modelo.</p>
+        <div class="lab-card-actions">
+          <a href="articles/corrupcion-compras-publicas.html" class="lab-card-primary">Leer publicación<span class="sr-only"> — Corrupción en compras públicas</span></a>
+          <a href="articles/corrupcion-compras-publicas-tecnico.html" class="lab-card-secondary">Versión técnica<span class="sr-only"> — Corrupción en compras públicas</span></a>
+          <a href="https://github.com/josuetartons-cpu/kairos-labs/tree/main/public-procurement-corruption" target="_blank" rel="noopener noreferrer" class="lab-card-tertiary">Código y experimento ↗<span class="sr-only"> — Corrupción en compras públicas (abre en una pestaña nueva)</span></a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section class="lab-section" id="futuro">
+  <div class="wrap">
+    <h2>¿Qué podríamos intentar después?</h2>
+    <p>Ideas para explorar. Son posibilidades, no investigaciones realizadas ni proyectos con fecha de entrega.</p>
+    <div class="lab-futuro-box">
+      <ul class="lab-futuro-list">
+        <li>¿Cómo funcionaría el comercio entre mundos separados por años de viaje?</li>
+        <li>¿Qué necesitaría una economía para usar chapas como dinero?</li>
+        <li>¿Qué ocurre si modelamos el contagio financiero como una epidemia?</li>
+        <li>¿Podemos encontrar mejores ubicaciones para los servicios públicos?</li>
+        <li>¿Cómo podríamos modelar decisiones humanas que parecen irracionales?</li>
+      </ul>
+      <p class="lab-futuro-remate">¿Qué otra cosa podríamos intentar?</p>
+    </div>
+  </div>
+</section>
+
+<section class="lab-section" id="cierre">
+  <div class="wrap">
+    <h2>Lo imposible tiene parámetros</h2>
+    <div class="lab-cierre-lines">
+      <p>No todo puede predecirse.</p>
+      <p>No todo puede modelarse.</p>
+      <p>Y una simulación nunca será el mundo real.</p>
+    </div>
+    <p class="lab-cierre-quote">Pero muchas cosas que parecen imposibles de explorar pueden convertirse en una pregunta, un modelo y unas cuantas probabilidades.</p>
+    <p class="lab-cierre-cta-line">Acompáñanos a descubrir hasta dónde podemos llegar.</p>
+    <div class="hero-ctas">
+      <a href="https://github.com/josuetartons-cpu/kairos-labs" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Explorar Kairos Labs ↗<span class="sr-only"> (abre en una pestaña nueva)</span></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">KAIROS</div>
+        <div class="footer-pillars">Economía · Laboratorio · Herramientas · Pensamiento</div>
+      </div>
+      <ul class="footer-links">
+        <li><a href="index.html#sobre-kairos">Sobre nosotros</a></li>
+        <li><a href="#">Contacto</a></li>
+        <li><a href="#">Privacidad</a></li>
+        <li><a href="https://github.com/josuetartons-cpu/kairos-labs" target="_blank" rel="noopener noreferrer">Kairos Labs</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Kairos</span>
+      <span>Observar · Experimentar · Construir · Reflexionar</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

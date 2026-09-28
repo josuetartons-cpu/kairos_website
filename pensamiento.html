@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Pensamiento — Kairos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Un espacio de Kairos para examinar decisiones, deseos y expectativas mediante preguntas, perspectivas y lecturas, y construir tus propias conclusiones.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+
+:root{
+  --bg:#F7F4EE;
+  --panel:#FFFFFF;
+  --panel-2:#EFEAE0;
+  --line: #E4DFD3;
+  --text:#1C1B22;
+  --text-dim:#6B6570;
+  --accent:#7A2540;
+  --accent-soft:rgba(122,37,64,0.08);
+  --navy:#1E2A42;
+  --green:#3E6488;
+  --green-soft:rgba(62,100,136,0.10);
+  --amber:#75707A;
+  --amber-soft:rgba(117,112,122,0.10);
+  --red:#8C2E48;
+  --red-soft:rgba(140,46,72,0.10);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+html,body{margin:0;padding:0;}
+body{background:var(--bg); color:var(--text); font-family:'Space Grotesk',sans-serif; -webkit-font-smoothing:antialiased;}
+.mono{font-family:'IBM Plex Mono',monospace;}
+a{color:inherit;}
+section{scroll-margin-top:86px;}
+
+.wrap{max-width:1100px; margin:0 auto; padding:0 28px;}
+.wrap-narrow{max-width:760px; margin:0 auto; padding:0 28px;}
+
+/* ---------- NAV ---------- */
+.nav{position:sticky; top:0; z-index:50; background:rgba(247,244,238,0.92); backdrop-filter:blur(6px); border-bottom:1px solid var(--line);}
+.nav-inner{max-width:1100px; margin:0 auto; padding:18px 28px; display:flex; justify-content:space-between; align-items:center;}
+.nav-brand{font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:15px; letter-spacing:0.04em; text-decoration:none; color:var(--text);}
+.nav-brand span{color:var(--accent);}
+.nav-links{display:flex; gap:26px; list-style:none; margin:0; padding:0;}
+.nav-links a{font-family:'IBM Plex Mono',monospace; font-size:12px; text-decoration:none; color:var(--text-dim); letter-spacing:0.02em; transition:color .15s;}
+.nav-links a:hover{color:var(--accent);}
+@media (max-width:640px){
+  .nav-inner{flex-direction:column; align-items:flex-start; gap:12px; padding:16px 20px;}
+  .nav-links{flex-wrap:wrap; gap:14px 18px;}
+}
+
+/* ---------- HERO ---------- */
+.hero{padding:100px 0 90px;}
+.hero-eyebrow{font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); display:flex; align-items:center; gap:10px; margin-bottom:26px;}
+.hero-eyebrow::before{content:""; width:22px; height:1px; background:var(--accent);}
+.hero h1{font-size:clamp(42px,7vw,74px); font-weight:700; line-height:1.02; margin:0 0 28px; letter-spacing:-0.01em; max-width:14ch;}
+.hero .tagline{font-size:clamp(18px,2.4vw,23px); color:var(--text-dim); max-width:36ch; line-height:1.5; margin:0 0 36px; font-weight:400;}
+.hero-ctas{display:flex; gap:14px; flex-wrap:wrap;}
+.btn{font-family:'IBM Plex Mono',monospace; font-size:13px; text-decoration:none; padding:14px 26px; border-radius:4px; display:inline-block; letter-spacing:0.01em; transition:opacity .15s, background .15s;}
+.btn-primary{background:var(--text); color:var(--bg);}
+.btn-primary:hover{opacity:0.85;}
+.btn-secondary{border:1px solid var(--line); color:var(--text);}
+.btn-secondary:hover{border-color:var(--accent); color:var(--accent);}
+
+/* ---------- LA FILOSOFÍA ---------- */
+.la-filosofia{padding:70px 0; border-top:1px solid var(--line);}
+.eyebrow{font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); display:flex; align-items:center; gap:10px; margin-bottom:24px;}
+.eyebrow::before{content:""; width:20px; height:1px; background:var(--accent);}
+
+.fundador{display:grid; grid-template-columns:150px 1fr; gap:30px; align-items:start; margin-top:46px; padding-top:42px; border-top:1px solid var(--line);}
+.fundador-foto{width:100%; aspect-ratio:3/4; object-fit:cover; object-position:top center; border-radius:6px; border:1px solid var(--line); display:block;}
+.fundador-nombre{font-size:17px; font-weight:600; color:var(--text); margin:0 0 4px;}
+.fundador-rol{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--accent); margin:0 0 16px;}
+.fundador-bio{font-size:14.5px; line-height:1.7; color:var(--text-dim); margin:0; max-width:54ch;}
+@media (max-width:560px){
+  .fundador{grid-template-columns:1fr; gap:20px;}
+  .fundador-foto{max-width:150px;}
+}
+
+/* ---------- QUÉ ES KAIROS ---------- */
+.que-es{padding:70px 0; border-top:1px solid var(--line);}
+.que-es-grid{display:grid; grid-template-columns:1fr 1fr; gap:50px; align-items:start;}
+@media (max-width:760px){.que-es-grid{grid-template-columns:1fr; gap:30px;}}
+.que-es h2{font-size:clamp(24px,3vw,32px); font-weight:600; margin:0 0 20px; max-width:16ch;}
+.que-es p{font-size:15.5px; line-height:1.75; color:var(--text-dim); margin:0 0 16px;}
+.que-es-quote{
+  font-size:17px; line-height:1.65; font-weight:500; color:var(--text);
+  border-left:3px solid var(--accent); padding-left:20px; margin:0;
+}
+
+/* ---------- PILARES ---------- */
+.pilares{padding:70px 0; border-top:1px solid var(--line);}
+.pilares-head{max-width:56ch; margin-bottom:40px;}
+.pilares-head h2{font-size:clamp(24px,3vw,32px); font-weight:600; margin:0 0 12px;}
+.pilares-head p{font-size:15px; color:var(--text-dim); line-height:1.6; margin:0;}
+.pilares-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:8px; overflow:hidden;}
+@media (max-width:900px){.pilares-grid{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:560px){.pilares-grid{grid-template-columns:1fr;}}
+.pilar{background:var(--panel); padding:32px 26px; position:relative;}
+.glifo{width:36px; height:36px; stroke:currentColor; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; fill:none; color:var(--accent); margin-bottom:22px; display:block;}
+.pilar h3{font-size:18.5px; font-weight:600; margin:0 0 5px; color:var(--text);}
+.pilar-accion{font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600; letter-spacing:0.13em; text-transform:uppercase; color:var(--text-dim); margin:0 0 16px;}
+.pilar p{font-size:13.5px; line-height:1.65; color:var(--text-dim); margin:0;}
+.pilar-cta{display:inline-flex; align-items:center; gap:6px; margin-top:18px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:600; letter-spacing:0.02em; color:var(--accent); text-decoration:none;}
+.pilar-cta::after{content:"→"; transition:transform .15s;}
+.pilar-cta:hover{text-decoration:underline;}
+.pilar-cta:hover::after{transform:translateX(3px);}
+.pilares-relacion{margin-top:30px; max-width:72ch;}
+.pilares-relacion p{font-size:13.5px; color:var(--text-dim); line-height:1.75; margin:0 0 16px;}
+.pilares-mantra{font-family:'Fraunces',serif; font-size:clamp(19px,2.3vw,25px); font-weight:500; color:var(--text); margin:0;}
+
+/* ---------- PUBLICACIONES ---------- */
+.pubs{padding:70px 0; border-top:1px solid var(--line);}
+.pubs-head{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:36px; flex-wrap:wrap; gap:14px;}
+.pubs-head h2{font-size:clamp(24px,3vw,32px); font-weight:600; margin:0;}
+.pubs-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:22px;}
+.pub-card{background:var(--panel); border:1px solid var(--line); border-radius:8px; overflow:hidden; text-decoration:none; color:var(--text); display:block; transition:border-color .15s, transform .15s;}
+.pub-card:hover{border-color:var(--accent); transform:translateY(-2px);}
+.pub-visual{height:8px; background:linear-gradient(90deg, var(--green) 0%, var(--green) 30%, var(--amber) 45%, var(--amber) 60%, var(--red) 75%, var(--red) 100%);}
+.pub-visual.ambiental{background:linear-gradient(90deg, #294F3A 0%, #477A56 45%, #8BA06B 72%, #C4A96A 100%);}
+.pub-visual.laboratorio{background:linear-gradient(90deg, var(--accent) 0%, var(--red) 45%, var(--green) 100%);}
+.pub-body{padding:28px 30px 30px;}
+.pub-tag{font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:var(--accent); background:var(--accent-soft); padding:4px 10px; border-radius:12px; display:inline-block; margin-bottom:16px;}
+.pub-body h3{font-size:20px; font-weight:600; line-height:1.35; margin:0 0 12px; max-width:34ch;}
+.pub-body p{font-size:13.5px; line-height:1.6; color:var(--text-dim); margin:0 0 18px;}
+.pub-meta{display:flex; justify-content:space-between; align-items:center; font-family:'IBM Plex Mono',monospace; font-size:11px;}
+.pub-date{color:var(--text-dim);}
+.pub-cta{color:var(--accent); font-weight:600;}
+.pubs-empty-note{font-size:12.5px; color:var(--text-dim); margin-top:20px; font-style:italic;}
+
+/* ---------- CÓDIGO Y DATOS ---------- */
+.codigo{padding:70px 0; border-top:1px solid var(--line);}
+.codigo-head{max-width:64ch;}
+.codigo-head p{font-size:15px; color:var(--text-dim); line-height:1.7; margin:0 0 16px;}
+.codigo-sub{font-family:'Fraunces',serif; font-size:17px; font-weight:500; color:var(--text); font-style:italic;}
+.codigo-head .btn{margin-top:14px;}
+.codigo-cols{display:grid; grid-template-columns:repeat(3,1fr); gap:30px; margin-top:44px; padding-top:34px; border-top:1px solid var(--line);}
+@media (max-width:700px){.codigo-cols{grid-template-columns:1fr; gap:22px;}}
+.codigo-cols h4{font-size:15px; font-weight:600; margin:0 0 8px;}
+.codigo-cols p{font-size:12.5px; color:var(--text-dim); line-height:1.6; margin:0;}
+
+/* ---------- POR QUÉ KAIROS ---------- */
+.porque{padding:70px 0; border-top:1px solid var(--line);}
+.porque-head{max-width:56ch; margin-bottom:50px;}
+.porque-head h2{font-size:clamp(24px,3vw,32px); font-weight:600; margin:0 0 14px;}
+.porque-head p{font-size:15.5px; color:var(--text-dim); line-height:1.65; margin:0;}
+.metodo{display:flex; gap:0; position:relative;}
+@media (max-width:800px){.metodo{flex-direction:column; gap:26px;}}
+.metodo-step{flex:1; position:relative; padding-right:24px;}
+.metodo-step:not(:last-child)::after{
+  content:"→"; position:absolute; right:-4px; top:6px; color:var(--line); font-size:20px;
+  font-family:'IBM Plex Mono',monospace;
+}
+@media (max-width:800px){.metodo-step:not(:last-child)::after{content:"↓"; right:auto; left:0; top:auto; bottom:-22px;}}
+.metodo-step .n{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--accent); margin-bottom:10px;}
+.metodo-step h4{font-size:16.5px; font-weight:600; margin:0 0 8px;}
+.metodo-step p{font-size:12.5px; color:var(--text-dim); line-height:1.6; margin:0;}
+
+/* ---------- SOBRE KAIROS ---------- */
+.sobre{padding:70px 0; border-top:1px solid var(--line);}
+.sobre-grid{display:grid; grid-template-columns:0.8fr 1.2fr; gap:50px;}
+@media (max-width:760px){.sobre-grid{grid-template-columns:1fr; gap:20px;}}
+.sobre h2{font-size:clamp(24px,3vw,32px); font-weight:600; margin:0; max-width:14ch;}
+.sobre p{font-size:15.5px; line-height:1.75; color:var(--text-dim); margin:0 0 16px;}
+
+/* ---------- FOOTER ---------- */
+footer{background:var(--navy); color:#C7CFDC; padding:56px 0 32px; margin-top:20px;}
+.footer-top{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:30px; padding-bottom:36px; border-bottom:1px solid rgba(255,255,255,0.12);}
+.footer-brand{font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:18px; color:#fff; letter-spacing:0.03em; margin-bottom:8px;}
+.footer-pillars{font-family:'IBM Plex Mono',monospace; font-size:12px; color:#93A0B5;}
+.footer-links{display:flex; gap:22px; list-style:none; margin:0; padding:0;}
+.footer-links a{font-size:13px; color:#C7CFDC; text-decoration:none;}
+.footer-links a:hover{color:#fff;}
+.footer-bottom{display:flex; justify-content:space-between; padding-top:22px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:#7C8AA0; flex-wrap:wrap; gap:10px;}
+
+@media (max-width:640px){
+  .footer-top{flex-direction:column;}
+}
+
+/* ---------- PENSAMIENTO ---------- */
+.thought-hero{padding:100px 0 88px;}
+.thought-hero h1{font-family:'Fraunces',serif;font-size:clamp(42px,6.4vw,76px);font-weight:400;line-height:1.12;letter-spacing:-.035em;max-width:17ch;margin:0 0 36px;}
+.thought-intro{font-size:21px;line-height:1.65;margin:0 0 22px;}
+.thought-copy{font-size:16px;line-height:1.85;color:var(--text-dim);max-width:64ch;}
+.thought-copy p{margin:0 0 20px;}
+.thought-hero .thought-copy{max-width:58ch;}
+.thought-remate{font-family:'Fraunces',serif;font-size:22px;line-height:1.55;margin:30px 0 22px;}
+.thought-link{display:inline-flex;align-items:center;gap:12px;min-height:44px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);text-decoration:underline;text-underline-offset:5px;line-height:1.6;}
+.thought-link:hover{text-decoration-thickness:2px;}
+.thought-section{padding:80px 0;border-top:1px solid var(--line);}
+.thought-section h2{font-family:'Fraunces',serif;font-size:clamp(29px,3.6vw,43px);font-weight:400;line-height:1.25;letter-spacing:-.025em;margin:0 0 24px;}
+.thought-kicker{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);line-height:1.8;margin:0 0 22px;}
+.thought-questions{list-style:none;padding:0;margin:40px 0 26px;}
+.thought-questions li{font-family:'Fraunces',serif;font-size:clamp(23px,3vw,32px);line-height:1.5;padding:28px 0;border-top:1px solid var(--line);}
+.thought-questions li:last-child{border-bottom:1px solid var(--line);}
+.thought-note{font-size:13px;line-height:1.8;color:var(--text-dim);margin:0;}
+.thought-history{background:var(--panel-2);}
+.thought-pause{margin:42px 0 0;padding:32px 0 0;border-top:1px solid #D3CCBF;}
+.thought-pause .thought-kicker{margin-bottom:12px;}
+.thought-label{display:block;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.04em;color:var(--text-dim);margin-bottom:12px;}
+.thought-paraphrase{font-family:'Fraunces',serif;font-size:23px;line-height:1.6;margin:0 0 12px;}
+.thought-source{font-size:12px;color:var(--text-dim);display:inline-flex;align-items:center;min-height:44px;text-underline-offset:3px;}
+.thought-today{border-left:2px solid var(--accent);padding-left:24px;margin:28px 0 0;}
+.thought-today p{font-size:21px;line-height:1.6;margin:0;}
+.thought-catalog-head{max-width:650px;margin-bottom:42px;}
+.thought-reading{display:grid;grid-template-columns:160px minmax(0,1fr);gap:40px;padding:36px 0;border-top:1px solid var(--line);}
+.thought-reading:last-child{border-bottom:1px solid var(--line);}
+.thought-axis{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.13em;color:var(--accent);margin:8px 0 0;}
+.thought-reading h3{font-family:'Fraunces',serif;font-size:clamp(25px,3vw,33px);font-weight:400;line-height:1.3;margin:0 0 14px;}
+.thought-reading p{font-size:15px;color:var(--text-dim);line-height:1.8;max-width:65ch;margin:0 0 14px;}
+.thought-reading .thought-axis{font-size:11px;color:var(--accent);}
+.thought-close{padding:90px 0;background:var(--panel-2);}
+.thought-close h2{font-size:clamp(32px,4.5vw,51px);max-width:22ch;margin-bottom:18px;}
+.thought-close-sub{font-family:'Fraunces',serif;font-size:clamp(23px,3vw,30px);line-height:1.5;margin:0 0 36px;}
+.thought-final-question{font-family:'Fraunces',serif;font-size:clamp(27px,3.5vw,38px);line-height:1.4;margin:36px 0 22px;}
+.thought-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:5px;}
+@media(max-width:900px){.nav-inner{flex-wrap:wrap;gap:16px;}.nav-links{flex-wrap:wrap;}}
+@media(max-width:640px){.thought-hero{padding:58px 0;}.thought-section{padding:54px 0;scroll-margin-top:155px;}.thought-reading{grid-template-columns:1fr;gap:12px;padding:28px 0;}.thought-reading .thought-axis{margin:0;}.thought-close{padding:60px 0;}.thought-paraphrase{font-size:21px;}.thought-today{padding-left:18px;}.footer-links{flex-wrap:wrap;}.thought-intro{font-size:19px;}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*,*::before,*::after{transition:none!important;}}
+
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">KAIRO<span>S</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="economia.html">Economía</a></li>
+      <li><a href="laboratorio.html">Laboratorio</a></li>
+      <li><a href="herramientas.html">Herramientas</a></li>
+      <li><a href="pensamiento.html">Pensamiento</a></li>
+      <li><a href="index.html#codigo">Código</a></li>
+      <li><a href="index.html#sobre-kairos">Sobre Kairos</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+<header class="thought-hero"><div class="wrap-narrow">
+ <div class="hero-eyebrow">Pensamiento · Reflexionar</div>
+ <h1>¿Cuánto de tu vida elegiste realmente?</h1>
+ <p class="thought-intro">Algunas decisiones las tomamos.<br>Otras simplemente las repetimos.</p>
+ <div class="thought-copy"><p>Pensamiento es un espacio para detenernos, examinar aquello que damos por sentado y construir nuestras propias conclusiones.</p></div>
+ <p class="thought-remate">Aquí nadie viene a decirte qué pensar.</p>
+ <a class="thought-link" href="#lecturas">Explorar lecturas <span aria-hidden="true">→</span></a>
+</div></header>
+<section class="thought-section"><div class="wrap-narrow">
+ <div class="thought-kicker">Una pausa en lo cotidiano</div>
+ <h2>Preguntas para llevar contigo</h2>
+ <div class="thought-copy"><p>No hace falta responderlas ahora. Quizá alguna vuelva a aparecer la próxima vez que tengas que elegir.</p></div>
+ <ul class="thought-questions"><li>¿Lo quiero o aprendí a quererlo?</li><li>¿Estoy persiguiendo una vida que deseo o una que aprendí a considerar exitosa?</li><li>¿Esta decisión responde a mis circunstancias actuales o a una forma de pensar que alguna vez necesité para sobrevivir?</li></ul>
+ <p class="thought-note">A veces las razones se mezclan. Examinar una decisión no exige encontrar una respuesta perfecta.</p>
+</div></section>
+<section class="thought-section thought-history"><div class="wrap-narrow">
+ <div class="thought-kicker">Otras épocas. Preguntas reconocibles.</div>
+ <h2>Cambió el mundo. Muchas de nuestras preguntas permanecieron.</h2>
+ <div class="thought-copy"><p>Tenemos teléfonos inteligentes, inteligencia artificial, vuelos intercontinentales y acceso instantáneo a más información de la que podríamos consumir.</p><p>Aun así, seguimos preguntándonos cuánto es suficiente, qué deseamos, cómo convivir con la incertidumbre y qué significa una vida que valga la pena para nosotros.</p><p>Los contextos cambian. Algunas preguntas sobre el deseo, el miedo, la riqueza y la vida en común siguen siendo reconocibles, aunque hoy las formulemos de otra manera.</p></div>
+ <aside class="thought-pause" aria-label="Una idea de Platón como punto de partida">
+  <div class="thought-kicker">Platón · Apología de Sócrates · 38a</div>
+  <span class="thought-label">Paráfrasis</span>
+  <p class="thought-paraphrase">En la Apología, Sócrates defiende el examen de sí mismo y de los demás como una parte central de la vida.</p>
+  <a class="thought-source" href="https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.01.0170%3Atext%3DApol.%3Apage%3D38">Platón, Apología, 38a · Fuente en Perseus (en inglés)</a>
+  <div class="thought-today"><span class="thought-label">Pregunta de Kairos</span><p>¿Cuánto de lo que haces hoy elegiste conscientemente?</p></div>
+ </aside>
+</div></section>
+<section class="thought-section" id="lecturas"><div class="wrap">
+ <div class="thought-catalog-head"><div class="thought-kicker">Lecturas · Pensamiento</div><h2>Cuatro formas de examinar lo cotidiano</h2><div class="thought-copy"><p>Decidir, elegir, intentar controlar, cambiar de perspectiva. Cuatro lecturas para mirar de nuevo experiencias que conocemos de cerca.</p></div></div>
+<article class="thought-reading"><p class="thought-axis">DECISIÓN</p><div><h3>Decidir bajo presión</h3><p>Cómo la presión, las emociones y el contexto pueden influir en lo que decidimos, incluso cuando creemos tener claras nuestras razones.</p><a class="thought-link" href="articles/decidir-bajo-presion.html">Leer publicación<span class="thought-sr"> — Decidir bajo presión</span> <span aria-hidden="true">→</span></a></div></article>
+<article class="thought-reading"><p class="thought-axis">ELECCIÓN</p><div><h3>Tener más no siempre significa elegir mejor</h3><p>Una reflexión sobre la abundancia de opciones, el costo de elegir y la diferencia entre poder escoger más y sentir que hemos elegido mejor.</p><a class="thought-link" href="articles/tener-mas-no-siempre-significa-elegir-mejor.html">Leer publicación<span class="thought-sr"> — Tener más no siempre significa elegir mejor</span> <span aria-hidden="true">→</span></a></div></article>
+<article class="thought-reading"><p class="thought-axis">CONTROL</p><div><h3>El problema de querer controlarlo todo</h3><p>Una mirada a la incertidumbre y al desgaste de intentar dominar variables que no dependen completamente de nosotros.</p><a class="thought-link" href="articles/querer-controlarlo-todo.html">Leer publicación<span class="thought-sr"> — El problema de querer controlarlo todo</span> <span aria-hidden="true">→</span></a></div></article>
+<article class="thought-reading"><p class="thought-axis">PERSPECTIVA</p><div><h3>No era el fin del mundo</h3><p>Una reflexión sobre las crisis que parecen definitivas y sobre cómo puede cambiar nuestra manera de mirarlas con el tiempo.</p><a class="thought-link" href="articles/no-era-el-fin-del-mundo.html">Leer publicación<span class="thought-sr"> — No era el fin del mundo</span> <span aria-hidden="true">→</span></a></div></article>
+</div></section>
+<section class="thought-section"><div class="wrap-narrow">
+ <div class="thought-kicker">La libertad de pensar distinto</div>
+ <h2>Un espacio para disentir</h2>
+ <div class="thought-copy"><p>Aquí pueden convivir argumentos opuestos, experiencias, investigaciones e ideas filosóficas. No para que adoptes una doctrina, sino para que encuentres perspectivas con las que pensar, incluso cuando no estés de acuerdo.</p><p>La filosofía puede acompañar una pregunta. No tiene por qué cerrarla.</p></div>
+ <aside class="thought-pause" aria-label="Una idea de Montaigne como punto de partida">
+  <div class="thought-kicker">Montaigne · Ensayos · II, 12</div><span class="thought-label">Paráfrasis</span>
+  <p class="thought-paraphrase">Montaigne recurre a la pregunta por lo que sabe para poner en cuestión la seguridad de sus propios juicios.</p>
+  <a class="thought-source" href="https://www.gutenberg.org/files/3600/3600-h/3600-h.htm">Montaigne, Ensayos · Fuente en Project Gutenberg (en inglés)</a>
+  <div class="thought-today"><span class="thought-label">Pregunta de Kairos</span><p>¿Qué parte de esta certeza estaría dispuesto a revisar?</p></div>
+ </aside>
+</div></section>
+<section class="thought-section thought-close"><div class="wrap-narrow">
+ <h2>No necesitas que alguien piense por ti.</h2>
+ <p class="thought-close-sub">Necesitas tiempo, preguntas y libertad para hacerlo.</p>
+ <div class="thought-copy"><p>Los datos pueden ayudarnos a entender el mundo. Los modelos pueden ayudarnos a explorar lo que podría ocurrir. Pero no pueden responder por nosotros todas las preguntas sobre lo que queremos.</p></div>
+ <p class="thought-final-question">¿Qué vida quiero construir con todo esto?</p>
+ <a class="thought-link" href="#lecturas">Volver a las lecturas <span aria-hidden="true">↑</span></a>
+</div></section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">KAIROS</div>
+        <div class="footer-pillars">Economía · Laboratorio · Herramientas · Pensamiento</div>
+      </div>
+      <ul class="footer-links">
+        <li><a href="index.html#sobre-kairos">Sobre nosotros</a></li>
+        <li><a href="#">Contacto</a></li>
+        <li><a href="#">Privacidad</a></li>
+        <li><a href="https://github.com/josuetartons-cpu/kairos-labs" target="_blank" rel="noopener noreferrer">Kairos Labs</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Kairos</span>
+      <span>Observar · Experimentar · Construir · Reflexionar</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

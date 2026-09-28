@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Economía — Kairos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Economía aplicada, datos, mercados, desarrollo y políticas públicas — la sección Economía de Kairos.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+
+:root{
+  --bg:#F7F4EE;
+  --panel:#FFFFFF;
+  --panel-2:#EFEAE0;
+  --line: #E4DFD3;
+  --text:#1C1B22;
+  --text-dim:#6B6570;
+  --accent:#7A2540;
+  --accent-soft:rgba(122,37,64,0.08);
+  --navy:#1E2A42;
+  --green:#3E6488;
+  --green-soft:rgba(62,100,136,0.10);
+  --amber:#75707A;
+  --amber-soft:rgba(117,112,122,0.10);
+  --red:#8C2E48;
+  --red-soft:rgba(140,46,72,0.10);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+html,body{margin:0;padding:0;}
+body{background:var(--bg); color:var(--text); font-family:'Space Grotesk',sans-serif; -webkit-font-smoothing:antialiased;}
+.mono{font-family:'IBM Plex Mono',monospace;}
+a{color:inherit;}
+section{scroll-margin-top:86px;}
+
+.wrap{max-width:1100px; margin:0 auto; padding:0 28px;}
+.wrap-narrow{max-width:760px; margin:0 auto; padding:0 28px;}
+
+/* ---------- NAV ---------- */
+.nav{position:sticky; top:0; z-index:50; background:rgba(247,244,238,0.92); backdrop-filter:blur(6px); border-bottom:1px solid var(--line);}
+.nav-inner{max-width:1100px; margin:0 auto; padding:18px 28px; display:flex; justify-content:space-between; align-items:center;}
+.nav-brand{font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:15px; letter-spacing:0.04em; text-decoration:none; color:var(--text);}
+.nav-brand span{color:var(--accent);}
+.nav-links{display:flex; gap:26px; list-style:none; margin:0; padding:0;}
+.nav-links a{font-family:'IBM Plex Mono',monospace; font-size:12px; text-decoration:none; color:var(--text-dim); letter-spacing:0.02em; transition:color .15s;}
+.nav-links a:hover{color:var(--accent);}
+@media (max-width:640px){
+  .nav-inner{flex-direction:column; align-items:flex-start; gap:12px; padding:16px 20px;}
+  .nav-links{flex-wrap:wrap; gap:14px 18px;}
+}
+
+/* ---------- HERO ---------- */
+.hero{padding:100px 0 90px;}
+.hero-eyebrow{font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); display:flex; align-items:center; gap:10px; margin-bottom:26px;}
+.hero-eyebrow::before{content:""; width:22px; height:1px; background:var(--accent);}
+.hero h1{font-size:clamp(42px,7vw,74px); font-weight:700; line-height:1.02; margin:0 0 28px; letter-spacing:-0.01em; max-width:14ch;}
+.hero .tagline{font-size:clamp(18px,2.4vw,23px); color:var(--text-dim); max-width:36ch; line-height:1.5; margin:0 0 36px; font-weight:400;}
+.hero-ctas{display:flex; gap:14px; flex-wrap:wrap;}
+.btn{font-family:'IBM Plex Mono',monospace; font-size:13px; text-decoration:none; padding:14px 26px; border-radius:4px; display:inline-block; letter-spacing:0.01em; transition:opacity .15s, background .15s;}
+.btn-primary{background:var(--text); color:var(--bg);}
+.btn-primary:hover{opacity:0.85;}
+.btn-secondary{border:1px solid var(--line); color:var(--text);}
+.btn-secondary:hover{border-color:var(--accent); color:var(--accent);}
+
+/* ---------- LA FILOSOFÍA ---------- */
+.la-filosofia{padding:70px 0; border-top:1px solid var(--line);}
+.eyebrow{font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); display:flex; align-items:center; gap:10px; margin-bottom:24px;}
+.eyebrow::before{content:""; width:20px; height:1px; background:var(--accent);}
+
+.fundador{display:grid; grid-template-columns:150px 1fr; gap:30px; align-items:start; margin-top:46px; padding-top:42px; border-top:1px solid var(--line);}
+.fundador-foto{width:100%; aspect-ratio:3/4; object-fit:cover; object-position:top center; border-radius:6px; border:1px solid var(--line); display:block;}
+.fundador-nombre{font-size:17px; font-weight:600; color:var(--text); margin:0 0 4px;}
+.fundador-rol{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--accent); margin:0 0 16px;}
+.fundador-bio{font-size:14.5px; line-height:1.7; color:var(--text-dim); margin:0; max-width:54ch;}
+@media (max-width:560px){
+  .fundador{grid-template-columns:1fr; gap:20px;}
+  .fundador-foto{max-width:150px;}
+}
+
+/* ---------- QUÉ ES KAIROS ---------- */
+.que-es{padding:70px 0; border-top:1px solid var(--line);}
+.que-es-grid{display:grid; grid-template-columns:1fr 1fr; gap:50px; align-items:start;}
+@media (max-width:760px){.que-es-grid{grid-template-columns:1fr; gap:30px;}}
+.que-es h2{font-size:clamp(24px,3vw,32px); font-weight:600; margin:0 0 20px; max-width:16ch;}
+.que-es p{font-size:15.5px; line-height:1.75; color:var(--text-dim); margin:0 0 16px;}
+.que-es-quote{
+  font-size:17px; line-height:1.65; font-weight:500; color:var(--text);
+  border-left:3px solid var(--accent); padding-left:20px; margin:0;
+}
+
+/* ---------- PILARES ---------- */
+.pilares{padding:70px 0; border-top:1px solid var(--line);}
+.pilares-head{max-width:56ch; margin-bottom:40px;}
+.pilares-head h2{font-size:clamp(24px,3vw,32px); font-weight:600; margin:0 0 12px;}
+.pilares-head p{font-size:15px; color:var(--text-dim); line-height:1.6; margin:0;}
+.pilares-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:8px; overflow:hidden;}
+@media (max-width:900px){.pilares-grid{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:560px){.pilares-grid{grid-template-columns:1fr;}}
+.pilar{background:var(--panel); padding:32px 26px; position:relative;}
+.glifo{width:36px; height:36px; stroke:currentColor; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; fill:none; color:var(--accent); margin-bottom:22px; display:block;}
+.pilar h3{font-size:18.5px; font-weight:600; margin:0 0 5px; color:var(--text);}
+.pilar-accion{font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600; letter-spacing:0.13em; text-transform:uppercase; color:var(--text-dim); margin:0 0 16px;}
+.pilar p{font-size:13.5px; line-height:1.65; color:var(--text-dim); margin:0;}
+.pilar-cta{display:inline-flex; align-items:center; gap:6px; margin-top:18px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:600; letter-spacing:0.02em; color:var(--accent); text-decoration:none;}
+.pilar-cta::after{content:"→"; transition:transform .15s;}
+.pilar-cta:hover{text-decoration:underline;}
+.pilar-cta:hover::after{transform:translateX(3px);}
+.pilares-relacion{margin-top:30px; max-width:72ch;}
+.pilares-relacion p{font-size:13.5px; color:var(--text-dim); line-height:1.75; margin:0 0 16px;}
+.pilares-mantra{font-family:'Fraunces',serif; font-size:clamp(19px,2.3vw,25px); font-weight:500; color:var(--text); margin:0;}
+
+/* ---------- PUBLICACIONES ---------- */
+.pubs{padding:70px 0; border-top:1px solid var(--line);}
+.pubs-head{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:36px; flex-wrap:wrap; gap:14px;}
+.pubs-head h2{font-size:clamp(24px,3vw,32px); font-weight:600; margin:0;}
+.pubs-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:22px;}
+.pub-card{background:var(--panel); border:1px solid var(--line); border-radius:8px; overflow:hidden; text-decoration:none; color:var(--text); display:block; transition:border-color .15s, transform .15s;}
+.pub-card:hover{border-color:var(--accent); transform:translateY(-2px);}
+.pub-visual{height:8px; background:linear-gradient(90deg, var(--green) 0%, var(--green) 30%, var(--amber) 45%, var(--amber) 60%, var(--red) 75%, var(--red) 100%);}
+.pub-visual.ambiental{background:linear-gradient(90deg, #294F3A 0%, #477A56 45%, #8BA06B 72%, #C4A96A 100%);}
+.pub-visual.laboratorio{background:linear-gradient(90deg, var(--accent) 0%, var(--red) 45%, var(--green) 100%);}
+.pub-body{padding:28px 30px 30px;}
+.pub-tag{font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:var(--accent); background:var(--accent-soft); padding:4px 10px; border-radius:12px; display:inline-block; margin-bottom:16px;}
+.pub-body h3{font-size:20px; font-weight:600; line-height:1.35; margin:0 0 12px; max-width:34ch;}
+.pub-body p{font-size:13.5px; line-height:1.6; color:var(--text-dim); margin:0 0 18px;}
+.pub-meta{display:flex; justify-content:space-between; align-items:center; font-family:'IBM Plex Mono',monospace; font-size:11px;}
+.pub-date{color:var(--text-dim);}
+.pub-cta{color:var(--accent); font-weight:600;}
+.pubs-empty-note{font-size:12.5px; color:var(--text-dim); margin-top:20px; font-style:italic;}
+
+/* ---------- CÓDIGO Y DATOS ---------- */
+.codigo{padding:70px 0; border-top:1px solid var(--line);}
+.codigo-head{max-width:64ch;}
+.codigo-head p{font-size:15px; color:var(--text-dim); line-height:1.7; margin:0 0 16px;}
+.codigo-sub{font-family:'Fraunces',serif; font-size:17px; font-weight:500; color:var(--text); font-style:italic;}
+.codigo-head .btn{margin-top:14px;}
+.codigo-cols{display:grid; grid-template-columns:repeat(3,1fr); gap:30px; margin-top:44px; padding-top:34px; border-top:1px solid var(--line);}
+@media (max-width:700px){.codigo-cols{grid-template-columns:1fr; gap:22px;}}
+.codigo-cols h4{font-size:15px; font-weight:600; margin:0 0 8px;}
+.codigo-cols p{font-size:12.5px; color:var(--text-dim); line-height:1.6; margin:0;}
+
+/* ---------- POR QUÉ KAIROS ---------- */
+.porque{padding:70px 0; border-top:1px solid var(--line);}
+.porque-head{max-width:56ch; margin-bottom:50px;}
+.porque-head h2{font-size:clamp(24px,3vw,32px); font-weight:600; margin:0 0 14px;}
+.porque-head p{font-size:15.5px; color:var(--text-dim); line-height:1.65; margin:0;}
+.metodo{display:flex; gap:0; position:relative;}
+@media (max-width:800px){.metodo{flex-direction:column; gap:26px;}}
+.metodo-step{flex:1; position:relative; padding-right:24px;}
+.metodo-step:not(:last-child)::after{
+  content:"→"; position:absolute; right:-4px; top:6px; color:var(--line); font-size:20px;
+  font-family:'IBM Plex Mono',monospace;
+}
+@media (max-width:800px){.metodo-step:not(:last-child)::after{content:"↓"; right:auto; left:0; top:auto; bottom:-22px;}}
+.metodo-step .n{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--accent); margin-bottom:10px;}
+.metodo-step h4{font-size:16.5px; font-weight:600; margin:0 0 8px;}
+.metodo-step p{font-size:12.5px; color:var(--text-dim); line-height:1.6; margin:0;}
+
+/* ---------- SOBRE KAIROS ---------- */
+.sobre{padding:70px 0; border-top:1px solid var(--line);}
+.sobre-grid{display:grid; grid-template-columns:0.8fr 1.2fr; gap:50px;}
+@media (max-width:760px){.sobre-grid{grid-template-columns:1fr; gap:20px;}}
+.sobre h2{font-size:clamp(24px,3vw,32px); font-weight:600; margin:0; max-width:14ch;}
+.sobre p{font-size:15.5px; line-height:1.75; color:var(--text-dim); margin:0 0 16px;}
+
+/* ---------- FOOTER ---------- */
+footer{background:var(--navy); color:#C7CFDC; padding:56px 0 32px; margin-top:20px;}
+.footer-top{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:30px; padding-bottom:36px; border-bottom:1px solid rgba(255,255,255,0.12);}
+.footer-brand{font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:18px; color:#fff; letter-spacing:0.03em; margin-bottom:8px;}
+.footer-pillars{font-family:'IBM Plex Mono',monospace; font-size:12px; color:#93A0B5;}
+.footer-links{display:flex; gap:22px; list-style:none; margin:0; padding:0;}
+.footer-links a{font-size:13px; color:#C7CFDC; text-decoration:none;}
+.footer-links a:hover{color:#fff;}
+.footer-bottom{display:flex; justify-content:space-between; padding-top:22px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:#7C8AA0; flex-wrap:wrap; gap:10px;}
+
+@media (max-width:640px){
+  .footer-top{flex-direction:column;}
+}
+
+/* ---------- ECONOMÍA: CONTENIDO ESPECÍFICO DE ESTA PÁGINA ---------- */
+.sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;}
+
+.eco-hero{padding:70px 0 60px;}
+.eco-questions{list-style:none; margin:0 0 26px; padding:0; display:flex; flex-direction:column; gap:10px; max-width:52ch;}
+.eco-questions li{font-size:16px; line-height:1.5; color:var(--text); font-weight:500; padding-left:18px; position:relative;}
+.eco-questions li::before{content:"—"; position:absolute; left:0; color:var(--accent);}
+.eco-hero .que-es-quote{max-width:52ch; margin-bottom:34px;}
+
+.eco-section{padding:70px 0; border-top:1px solid var(--line);}
+.eco-section h2{font-size:clamp(24px,3vw,32px); font-weight:600; margin:0 0 20px; max-width:20ch;}
+.eco-section > .wrap > p{font-size:15.5px; line-height:1.75; color:var(--text-dim); margin:0 0 16px; max-width:68ch;}
+.eco-definicion p{font-size:15.5px; line-height:1.75; color:var(--text-dim); margin:0 0 16px; max-width:68ch;}
+
+.eco-relevancia-steps{margin-top:38px;}
+.eco-recorrido-steps{margin-top:38px; list-style:none; padding:0;}
+.eco-recorrido-cierre{font-family:'Fraunces',serif; font-size:17px; font-weight:500; font-style:italic; color:var(--text); margin:30px 0 0; max-width:60ch;}
+
+.eco-cards{display:grid; grid-template-columns:repeat(2,1fr); gap:24px; margin-top:36px;}
+@media (max-width:760px){.eco-cards{grid-template-columns:1fr;}}
+.eco-card{background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:28px 30px 30px; display:flex; flex-direction:column;}
+.eco-card-tags{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px;}
+.eco-card-tag{font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:var(--accent); background:var(--accent-soft); padding:4px 10px; border-radius:12px;}
+.eco-card h3{font-size:19px; font-weight:600; line-height:1.35; margin:0 0 12px;}
+.eco-card p{font-size:13.5px; line-height:1.6; color:var(--text-dim); margin:0 0 20px;}
+.eco-card-actions{display:flex; flex-wrap:wrap; align-items:center; gap:8px 20px; margin-top:auto;}
+.eco-card-primary{font-family:'IBM Plex Mono',monospace; font-size:12.5px; font-weight:600; color:var(--accent); text-decoration:none; display:inline-flex; align-items:center; gap:6px; min-height:44px; padding:4px 0;}
+.eco-card-primary::after{content:"→"; transition:transform .15s;}
+.eco-card-primary:hover::after{transform:translateX(3px);}
+.eco-card-secondary{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--text-dim); text-decoration:underline; text-underline-offset:2px; display:inline-flex; align-items:center; min-height:44px; padding:4px 0;}
+.eco-card-secondary:hover{color:var(--accent);}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">KAIRO<span>S</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="economia.html">Economía</a></li>
+      <li><a href="laboratorio.html">Laboratorio</a></li>
+      <li><a href="herramientas.html">Herramientas</a></li>
+      <li><a href="pensamiento.html">Pensamiento</a></li>
+      <li><a href="index.html#codigo">Código</a></li>
+      <li><a href="index.html#sobre-kairos">Sobre Kairos</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero eco-hero">
+  <div class="wrap">
+    <div class="hero-eyebrow">Observar</div>
+    <h1>Economía</h1>
+    <p class="tagline">Las grandes preguntas económicas empiezan en la vida cotidiana.</p>
+    <ul class="eco-questions">
+      <li>¿Cómo sabemos si la economía está en recesión?</li>
+      <li>¿Puede Guatemala crecer sin aumentar sus emisiones?</li>
+      <li>¿Qué cambia cuando pagamos por conservar un bosque?</li>
+      <li>¿Por qué el dinero público no siempre se traduce en mejores servicios?</li>
+    </ul>
+    <p class="que-es-quote">Observar es el primer paso: hacer preguntas, mirar la evidencia y reconocer lo que todavía no sabemos.</p>
+    <div class="hero-ctas">
+      <a href="#catalogo" class="btn btn-primary">Explorar publicaciones</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="eco-section eco-definicion" id="definicion">
+  <div class="wrap">
+    <h2>La economía también está en lo que compartimos</h2>
+    <p>La economía estudia cómo las personas, las organizaciones y las sociedades utilizan recursos limitados para satisfacer necesidades. También pregunta cómo se distribuyen esos recursos, qué incentivos guían nuestras decisiones y qué papel tienen las instituciones.</p>
+    <p>Está en el trabajo y los precios, pero también en los bosques que conservamos, los servicios públicos que recibimos y las oportunidades a las que podemos acceder.</p>
+  </div>
+</section>
+
+<section class="eco-section" id="relevancia">
+  <div class="wrap">
+    <h2>Entender lo que está en juego</h2>
+    <p>Los precios, la tecnología, la energía y las políticas públicas cambian. Tener más información no siempre significa comprender mejor lo que ocurre. Cada decisión económica tiene consecuencias: qué se produce, qué se protege, quién recibe los beneficios y quién asume los costos. Mirar estas relaciones nos ayuda a evaluar propuestas y a formular mejores preguntas.</p>
+    <div class="metodo eco-relevancia-steps">
+      <div class="metodo-step">
+        <h4>Leer las señales</h4>
+        <p>Distinguir una cifra aislada de una tendencia y preguntar qué nos dice sobre la actividad económica.</p>
+      </div>
+      <div class="metodo-step">
+        <h4>Reconocer los costos</h4>
+        <p>Explorar cómo el crecimiento y las políticas de conservación se relacionan con el ambiente.</p>
+      </div>
+      <div class="metodo-step">
+        <h4>Examinar los incentivos</h4>
+        <p>Entender cómo las reglas y las instituciones influyen en el uso de los recursos públicos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="eco-section" id="recorrido">
+  <div class="wrap">
+    <h2>Observar → Entender → Decidir</h2>
+    <p>Una pregunta abre el camino. La evidencia nos ayuda a recorrerlo.</p>
+    <ol class="metodo eco-recorrido-steps">
+      <li class="metodo-step">
+        <h4>Observar</h4>
+        <p>Partir de lo que sucede: identificar un problema, reunir datos y poner las primeras intuiciones a prueba.</p>
+      </li>
+      <li class="metodo-step">
+        <h4>Entender</h4>
+        <p>Explorar relaciones, incentivos y explicaciones. Distinguir lo que sabemos de lo que depende de nuestros supuestos.</p>
+      </li>
+      <li class="metodo-step">
+        <h4>Decidir</h4>
+        <p>Comparar alternativas y sus consecuencias, reconociendo los límites de la evidencia y los valores en juego.</p>
+      </li>
+    </ol>
+    <p class="eco-recorrido-cierre">En Economía empezamos por observar. Cada publicación ofrece una oportunidad para profundizar y construir criterio.</p>
+  </div>
+</section>
+
+<section class="eco-section" id="catalogo">
+  <div class="wrap">
+    <h2>Preguntas para empezar a observar</h2>
+    <p>Explora las publicaciones. Empieza por una lectura accesible y, cuando esté disponible, profundiza en la versión técnica.</p>
+    <div class="eco-cards">
+
+      <article class="eco-card">
+        <div class="eco-card-tags"><span class="eco-card-tag">Macroeconomía</span></div>
+        <h3>¿Cómo saber si una economía está en recesión?</h3>
+        <p>¿Qué significa que una economía esté en recesión? Una mirada a las señales que ayudan a interpretar la actividad económica y a entender los límites de un indicador aislado.</p>
+        <div class="eco-card-actions">
+          <a href="articles/como-saber-si-una-economia-esta-en-recesion.html" class="eco-card-primary">Leer publicación<span class="sr-only"> — ¿Cómo saber si una economía está en recesión?</span></a>
+        </div>
+      </article>
+
+      <article class="eco-card">
+        <div class="eco-card-tags"><span class="eco-card-tag">Economía ambiental</span><span class="eco-card-tag">Datos</span></div>
+        <h3>Guatemala: crecimiento y emisiones</h3>
+        <p>¿Puede Guatemala crecer sin aumentar proporcionalmente sus emisiones de CO₂? Una exploración de la relación entre actividad económica y emisiones, y de lo que significa hablar de desacoplamiento.</p>
+        <div class="eco-card-actions">
+          <a href="articles/guatemala-crecimiento-emisiones.html" class="eco-card-primary">Leer publicación<span class="sr-only"> — Guatemala: crecimiento y emisiones</span></a>
+          <a href="articles/desacoplamiento-pib-co2-tecnico.html" class="eco-card-secondary">Versión técnica<span class="sr-only"> — Guatemala: crecimiento y emisiones</span></a>
+        </div>
+      </article>
+
+
+      <article class="eco-card">
+        <div class="eco-card-tags"><span class="eco-card-tag">Economía ambiental</span><span class="eco-card-tag">Política pública</span></div>
+        <h3>Pagos por conservación</h3>
+        <p>¿Funciona pagar por conservar? Una mirada a los incentivos y al diseño de las políticas de conservación.</p>
+        <div class="eco-card-actions">
+          <a href="articles/pagar-por-conservar.html" class="eco-card-primary">Leer publicación<span class="sr-only"> — Pagos por conservación</span></a>
+          <a href="articles/investigacion-pagos-conservacion.html" class="eco-card-secondary">Versión técnica<span class="sr-only"> — Pagos por conservación</span></a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">KAIROS</div>
+        <div class="footer-pillars">Economía · Laboratorio · Herramientas · Pensamiento</div>
+      </div>
+      <ul class="footer-links">
+        <li><a href="index.html#sobre-kairos">Sobre nosotros</a></li>
+        <li><a href="#">Contacto</a></li>
+        <li><a href="#">Privacidad</a></li>
+        <li><a href="https://github.com/josuetartons-cpu/kairos-labs" target="_blank" rel="noopener noreferrer">Kairos Labs</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Kairos</span>
+      <span>Observar · Experimentar · Construir · Reflexionar</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
