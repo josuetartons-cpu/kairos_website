@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Tener más no siempre significa elegir mejor — Kairos</title>
+<title>Tener más no siempre significa elegir mejor | Kairos</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Una reflexión sobre el costo de elegir, aprender a reconocer lo suficiente y empezar a construir con lo que ya tenemos.">
 <style>
@@ -14,9 +14,11 @@
   --line:#E4DFD3;
   --text:#1C1B22;
   --text-dim:#6B6570;
-  --accent:#7A2540;
-  --accent-soft:rgba(122,37,64,0.07);
-  --navy:#1E2A42;
+  --accent:#5C3D66;
+  --accent-soft:rgba(92,61,102,0.10);
+  --wine:#4A0E1A;
+  --gold:#D4AF7C;
+  --sand:#EADCC8;
 }
 *{box-sizing:border-box;}
 html{scroll-behavior:smooth; scroll-padding-top:22px;}
@@ -33,8 +35,8 @@ a{color:inherit;}
 /* ---------- NAV (idéntico al resto del sitio) ---------- */
 .nav{border-bottom:1px solid var(--line);}
 .nav-inner{max-width:720px; margin:0 auto; padding:22px 28px; display:flex; justify-content:space-between; align-items:center;}
-.nav-brand{font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:14px; letter-spacing:0.04em; text-decoration:none; color:var(--text);}
-.nav-brand span{color:var(--accent);}
+.nav-brand{display:inline-flex; align-items:center; line-height:0; text-decoration:none; color:var(--text);}
+.nav-logo{display:block; height:40px; width:auto; max-width:100%;}
 .nav-back{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-dim); text-decoration:none;}
 .nav-back:hover{color:var(--accent);}
 
@@ -71,7 +73,7 @@ h1{font-family:'Fraunces',serif; font-weight:600; font-size:clamp(30px,5vw,44px)
 /* ---------- ÍNDICE LATERAL ---------- */
 .toc summary{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-dim); cursor:pointer; padding:9px 0; list-style:none;}
 .toc summary::-webkit-details-marker{display:none;}
-.toc summary::before{content:'— '; color:var(--accent);}
+.toc summary::before{content:''; display:inline-block; width:14px; height:2px; margin-right:9px; vertical-align:middle; background:var(--accent);}
 .toc ol{list-style:none; margin:8px 0 0; padding:0; counter-reset:contents;}
 .toc li{counter-increment:contents; border-top:1px solid var(--line); padding:10px 0;}
 .toc li:last-child{border-bottom:1px solid var(--line);}
@@ -96,7 +98,7 @@ h1{font-family:'Fraunces',serif; font-weight:600; font-size:clamp(30px,5vw,44px)
 
 .prose .pull{font-family:'Fraunces',serif; font-style:italic; font-weight:500; font-size:clamp(21px,3vw,26px); line-height:1.45; color:var(--accent); border-left:3px solid var(--accent); padding-left:24px; margin:44px 0 48px;}
 
-.prose .closing-thesis{background:var(--navy); border-radius:8px; padding:34px 38px; margin:44px 0 40px; font-family:'Fraunces',serif; font-size:clamp(19px,2.6vw,23px); line-height:1.55; color:#E4E7ED; font-weight:400;}
+.prose .closing-thesis{background:var(--accent); border-radius:8px; padding:34px 38px; margin:44px 0 40px; font-family:'Fraunces',serif; font-size:clamp(19px,2.6vw,23px); line-height:1.55; color:var(--bg); font-weight:400;}
 
 .prose .last-line{font-family:'Fraunces',serif; font-style:italic; font-size:clamp(19px,2.4vw,22px); color:var(--accent); margin-bottom:8px;}
 
@@ -105,16 +107,17 @@ h1{font-family:'Fraunces',serif; font-weight:600; font-size:clamp(30px,5vw,44px)
 .references h2{font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.09em; text-transform:uppercase; color:var(--text-dim); font-weight:600; margin:0 0 20px;}
 .references p{font-family:'Space Grotesk',sans-serif; font-size:14px; line-height:1.65; color:var(--text-dim); margin:0 0 8px; overflow-wrap:anywhere;}
 .references p.reference{font-size:14.5px; color:var(--text); margin:26px 0 8px;}
-.references p.reference a{color:var(--accent); text-decoration:underline; text-decoration-color:rgba(122,37,64,0.35);}
+.references p.reference a{color:var(--accent); text-decoration:underline; text-decoration-color:rgba(92,61,102,0.35);}
 .backref{font-family:'IBM Plex Mono',monospace; white-space:nowrap; color:var(--text-dim); text-decoration:none; padding:2px 4px;}
 .backref:hover{color:var(--accent);}
 
 /* ---------- FOOTER (idéntico al resto del sitio) ---------- */
-footer{background:var(--navy); padding:40px 0; margin-top:0;}
+footer{background:var(--wine); padding:40px 0; margin-top:0;}
 .footer-inner{max-width:680px; margin:0 auto; padding:0 28px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;}
-.footer-inner a{font-family:'IBM Plex Mono',monospace; font-size:12px; color:#C7CFDC; text-decoration:none;}
-.footer-inner a:hover{color:#fff;}
-.footer-copy{font-family:'IBM Plex Mono',monospace; font-size:11px; color:#7C8AA0;}
+.footer-inner a{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--sand); text-decoration:none;}
+.footer-inner a:hover{color:var(--gold);}
+.footer-inner a:focus-visible{outline-color:var(--gold);}
+.footer-copy{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--sand); opacity:0.8;}
 
 @media(max-width:520px){
   .page{grid-template-columns: minmax(22px,1fr) min(680px,100% - 44px) minmax(22px,1fr);}
@@ -135,7 +138,7 @@ footer{background:var(--navy); padding:40px 0; margin-top:0;}
   .prose p{font-size:12pt; line-height:1.5;}
   .prose h2{break-after:avoid; font-size:18pt; margin-top:25pt;}
   .pull,.closing-thesis{break-inside:avoid;}
-  .prose .closing-thesis{background:none; color:#000; border-left:2px solid #7A2540;}
+  .prose .closing-thesis{background:none; color:#000; border-left:2px solid var(--accent);}
 }
 </style>
 </head>
@@ -145,7 +148,7 @@ footer{background:var(--navy); padding:40px 0; margin-top:0;}
 
 <nav class="nav" aria-label="Navegación principal">
   <div class="nav-inner">
-    <a href="../index.html" class="nav-brand" aria-label="Kairos, inicio del sitio">KAIRO<span>S</span></a>
+    <a href="../index.html" class="nav-brand" aria-label="Kairos, inicio del sitio"><img class="nav-logo" src="../assets/kairos-brand-v1/kairos-logo.svg" alt="Kairos"></a>
     <a href="../index.html" class="nav-back">← Volver a Kairos</a>
   </div>
 </nav>
@@ -155,7 +158,7 @@ footer{background:var(--navy); padding:40px 0; margin-top:0;}
 <div class="page">
 
   <header class="hero">
-    <a href="../index.html#pensamiento" class="art-eyebrow">Pensamiento · Cogitatio</a>
+    <a href="../index.html#pensamiento" class="art-eyebrow">Pensamiento · Reflexionar</a>
     <h1 id="titulo">Tener más no siempre significa elegir mejor</h1>
     <p class="dek">Cuando demasiadas opciones empiezan a decidir por nosotros</p>
     <div class="art-meta">Publicación 10 · 8 min de lectura</div>

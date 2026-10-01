@@ -31,6 +31,14 @@
   --sand:#EADCC8;
   --accent:var(--wine);
   --accent-soft:rgba(74,14,26,0.07);
+  --economia:#3E6488;
+  --economia-soft:rgba(62,100,136,0.10);
+  --laboratorio:#8C2E48;
+  --laboratorio-soft:rgba(140,46,72,0.10);
+  --herramientas:#9A6A32;
+  --herramientas-soft:rgba(154,106,50,0.10);
+  --pensamiento:#5C3D66;
+  --pensamiento-soft:rgba(92,61,102,0.10);
   --navy:#1E2A42;
   --green:#3E6488;
   --green-soft:rgba(62,100,136,0.10);
@@ -130,12 +138,18 @@ section{scroll-margin-top:86px;}
 .pilares-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:8px; overflow:hidden;}
 @media (max-width:900px){.pilares-grid{grid-template-columns:repeat(2,1fr);}}
 @media (max-width:560px){.pilares-grid{grid-template-columns:1fr;}}
-.pilar{background:var(--panel); padding:32px 26px; position:relative;}
-.glifo{width:36px; height:36px; stroke:currentColor; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; fill:none; color:var(--accent); margin-bottom:22px; display:block;}
+.pilar{background:var(--panel); padding:32px 26px; position:relative; --sec:var(--accent);}
+.pilar::before{content:""; position:absolute; top:0; left:26px; width:28px; height:3px; background:var(--sec);}
+.pilar.economia{--sec:var(--economia);}
+.pilar.laboratorio{--sec:var(--laboratorio);}
+.pilar.herramientas{--sec:var(--herramientas);}
+.pilar.pensamiento{--sec:var(--pensamiento);}
+.glifo{width:36px; height:36px; stroke:currentColor; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; fill:none; color:var(--sec, var(--accent)); margin-bottom:22px; display:block;}
 .pilar h3{font-size:18.5px; font-weight:600; margin:0 0 5px; color:var(--text);}
 .pilar-accion{font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600; letter-spacing:0.13em; text-transform:uppercase; color:var(--text-dim); margin:0 0 16px;}
 .pilar p{font-size:13.5px; line-height:1.65; color:var(--text-dim); margin:0;}
-.pilar-cta{display:inline-flex; align-items:center; gap:6px; margin-top:18px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:600; letter-spacing:0.02em; color:var(--accent); text-decoration:none;}
+.pilar-cta{display:inline-flex; align-items:center; gap:6px; margin-top:18px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:600; letter-spacing:0.02em; color:var(--sec, var(--accent)); text-decoration:none;}
+.pilar-cta:focus-visible{outline-color:var(--sec, var(--accent));}
 .pilar-cta::after{content:"→"; transition:transform .15s;}
 .pilar-cta:hover{text-decoration:underline;}
 .pilar-cta:hover::after{transform:translateX(3px);}
@@ -148,18 +162,20 @@ section{scroll-margin-top:86px;}
 .pubs-head{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:36px; flex-wrap:wrap; gap:14px;}
 .pubs-head h2{font-size:clamp(24px,3vw,32px); font-weight:600; margin:0;}
 .pubs-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:22px;}
-.pub-card{background:var(--panel); border:1px solid var(--line); border-radius:8px; overflow:hidden; text-decoration:none; color:var(--text); display:block; transition:border-color .15s, transform .15s;}
-.pub-card:hover{border-color:var(--accent); transform:translateY(-2px);}
-.pub-visual{height:8px; background:linear-gradient(90deg, var(--green) 0%, var(--green) 30%, var(--amber) 45%, var(--amber) 60%, var(--red) 75%, var(--red) 100%);}
-.pub-visual.ambiental{background:linear-gradient(90deg, #294F3A 0%, #477A56 45%, #8BA06B 72%, #C4A96A 100%);}
-.pub-visual.laboratorio{background:linear-gradient(90deg, var(--accent) 0%, var(--red) 45%, var(--green) 100%);}
+.pub-card{--pub:var(--accent); --pub-soft:var(--accent-soft); background:var(--panel); border:1px solid var(--line); border-radius:8px; overflow:hidden; text-decoration:none; color:var(--text); display:block; transition:border-color .15s, transform .15s;}
+.pub-card.economia{--pub:var(--economia); --pub-soft:var(--economia-soft);}
+.pub-card.laboratorio{--pub:var(--laboratorio); --pub-soft:var(--laboratorio-soft);}
+.pub-card.pensamiento{--pub:var(--pensamiento); --pub-soft:var(--pensamiento-soft);}
+.pub-card:hover{border-color:var(--pub); transform:translateY(-2px);}
+.pub-card:focus-visible{outline-color:var(--pub);}
+.pub-visual{height:6px; background:var(--pub);}
 .pub-body{padding:28px 30px 30px;}
-.pub-tag{font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:var(--accent); background:var(--accent-soft); padding:4px 10px; border-radius:12px; display:inline-block; margin-bottom:16px;}
+.pub-tag{font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:var(--pub); background:var(--pub-soft); padding:4px 10px; border-radius:12px; display:inline-block; margin-bottom:16px;}
 .pub-body h3{font-size:20px; font-weight:600; line-height:1.35; margin:0 0 12px; max-width:34ch;}
 .pub-body p{font-size:13.5px; line-height:1.6; color:var(--text-dim); margin:0 0 18px;}
 .pub-meta{display:flex; justify-content:space-between; align-items:center; font-family:'IBM Plex Mono',monospace; font-size:11px;}
 .pub-date{color:var(--text-dim);}
-.pub-cta{color:var(--accent); font-weight:600;}
+.pub-cta{color:var(--pub); font-weight:600;}
 .pubs-empty-note{font-size:12.5px; color:var(--text-dim); margin-top:20px; font-style:italic;}
 
 /* ---------- CÓDIGO Y DATOS ---------- */
@@ -213,6 +229,12 @@ footer a:focus-visible{outline-color:var(--gold);}
 
 @media (max-width:640px){
   .footer-top{flex-direction:column;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{transition:none!important;}
+  .pub-card:hover{transform:none;}
 }
 </style>
 </head>
@@ -312,7 +334,7 @@ footer a:focus-visible{outline-color:var(--gold);}
       <p>Economía, laboratorio, herramientas y pensamiento no son categorías aisladas. Son cuatro movimientos de un mismo proceso: observar, experimentar, construir y reflexionar.</p>
     </div>
     <div class="pilares-grid">
-      <div class="pilar">
+      <div class="pilar economia">
         <svg class="glifo" viewBox="0 0 60 60" aria-hidden="true">
           <line x1="30" y1="6" x2="30" y2="54"/>
           <line x1="14" y1="20" x2="46" y2="20"/>
@@ -324,7 +346,7 @@ footer a:focus-visible{outline-color:var(--gold);}
         <p>Analizar cómo funcionan los sistemas económicos, las políticas, los mercados y los problemas reales utilizando datos, evidencia y contexto.</p>
         <a href="economia.html" class="pilar-cta">Explorar Economía</a>
       </div>
-      <div class="pilar">
+      <div class="pilar laboratorio">
         <svg class="glifo" viewBox="0 0 60 60" aria-hidden="true">
           <line x1="30" y1="54" x2="30" y2="26"/>
           <line x1="30" y1="26" x2="14" y2="6"/>
@@ -335,7 +357,7 @@ footer a:focus-visible{outline-color:var(--gold);}
         <p>Probar hipótesis, construir simulaciones, explorar escenarios y llevar ideas más allá de la intuición.</p>
         <a href="laboratorio.html" class="pilar-cta">Entrar al Laboratorio</a>
       </div>
-      <div class="pilar">
+      <div class="pilar herramientas">
         <svg class="glifo" viewBox="0 0 60 60" aria-hidden="true">
           <line x1="14" y1="6" x2="30" y2="26"/>
           <line x1="46" y1="6" x2="30" y2="26"/>
@@ -347,7 +369,7 @@ footer a:focus-visible{outline-color:var(--gold);}
         <p>Transformar investigaciones y modelos en calculadoras, plantillas, sistemas y recursos utilizables para resolver problemas concretos.</p>
         <a href="herramientas.html" class="pilar-cta">Explorar Herramientas</a>
       </div>
-      <div class="pilar">
+      <div class="pilar pensamiento">
         <svg class="glifo" viewBox="0 0 60 60" aria-hidden="true">
           <path d="M 38 10 A 22 22 0 1 1 22 10"/>
           <path d="M 22 10 C 26 14, 28 17, 26 21"/>
@@ -372,41 +394,38 @@ footer a:focus-visible{outline-color:var(--gold);}
       <h2>Publicaciones destacadas</h2>
     </div>
     <div class="pubs-grid">
-      <a href="articles/como-saber-si-una-economia-esta-en-recesion.html" class="pub-card">
-        <div class="pub-visual"></div>
-        <div class="pub-body">
-          <span class="pub-tag">Economía</span>
-          <h3>¿Cómo saber si una economía está entrando en recesión?</h3>
-          <p>Las señales clásicas, de la curva de rendimientos al estrés real de los hogares, leídas con datos actualizados a julio de 2026.</p>
-          <div class="pub-meta">
-            <span class="pub-date">Agosto 2026</span>
-            <span class="pub-cta">Leer artículo →</span>
-          </div>
-        </div>
-      </a>
-
-      <a href="articles/guatemala-crecimiento-emisiones.html" class="pub-card">
+      <a href="articles/guatemala-crecimiento-emisiones.html" class="pub-card economia">
         <div class="pub-visual"></div>
         <div class="pub-body">
           <span class="pub-tag">Economía · Observar</span>
           <h3>¿Es posible que Guatemala pueda crecer sin generar más emisiones?</h3>
           <p>Evidencia sobre crecimiento, desacoplamiento y energía renovable, 2000–2024.</p>
           <div class="pub-meta">
-            <span class="pub-date">Septiembre 2026</span>
             <span class="pub-cta">Leer publicación →</span>
           </div>
         </div>
       </a>
 
-      <a href="articles/por-que-el-dinero-no-basta.html" class="pub-card">
-        <div class="pub-visual laboratorio"></div>
+      <a href="articles/por-que-el-dinero-no-basta.html" class="pub-card laboratorio">
+        <div class="pub-visual"></div>
         <div class="pub-body">
           <span class="pub-tag">Laboratorio · Optimization Lab #1</span>
-          <h3>¿Por qué darle dinero a los pobres no soluciona el problema?</h3>
+          <h3>¿Por qué darle dinero a los pobres no basta?</h3>
           <p>Un experimento con 100,000 hogares sobre focalización, información e incentivos: qué ocurre cuando distintas estrategias reciben el mismo presupuesto y las personas responden a las reglas.</p>
           <div class="pub-meta">
-            <span class="pub-date">Septiembre 2026</span>
             <span class="pub-cta">Leer experimento →</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="articles/tener-mas-no-siempre-significa-elegir-mejor.html" class="pub-card pensamiento">
+        <div class="pub-visual"></div>
+        <div class="pub-body">
+          <span class="pub-tag">Pensamiento · Reflexionar</span>
+          <h3>Tener más no siempre significa elegir mejor</h3>
+          <p>Una reflexión sobre la abundancia de opciones, el costo de elegir y la diferencia entre poder escoger más y sentir que hemos elegido mejor.</p>
+          <div class="pub-meta">
+            <span class="pub-cta">Leer publicación →</span>
           </div>
         </div>
       </a>

@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Herramientas — Kairos</title>
+<title>Herramientas | Kairos</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Herramientas en desarrollo de Kairos para explorar escenarios, comparar alternativas y entender la incertidumbre al tomar decisiones.">
 <style>
@@ -15,8 +15,11 @@
   --line: #E4DFD3;
   --text:#1C1B22;
   --text-dim:#6B6570;
-  --accent:#7A2540;
-  --accent-soft:rgba(122,37,64,0.08);
+  --wine:#4A0E1A;
+  --gold:#D4AF7C;
+  --sand:#EADCC8;
+  --accent:#9A6A32;
+  --accent-soft:rgba(154,106,50,0.10);
   --navy:#1E2A42;
   --green:#3E6488;
   --green-soft:rgba(62,100,136,0.10);
@@ -38,14 +41,14 @@ section{scroll-margin-top:86px;}
 
 /* ---------- NAV ---------- */
 .nav{position:sticky; top:0; z-index:50; background:rgba(247,244,238,0.92); backdrop-filter:blur(6px); border-bottom:1px solid var(--line);}
-.nav-inner{max-width:1100px; margin:0 auto; padding:18px 28px; display:flex; justify-content:space-between; align-items:center;}
-.nav-brand{font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:15px; letter-spacing:0.04em; text-decoration:none; color:var(--text);}
-.nav-brand span{color:var(--accent);}
+.nav-inner{max-width:1100px; margin:0 auto; padding:8px 28px; display:flex; justify-content:space-between; align-items:center;}
+.nav-brand{display:block; line-height:0; text-decoration:none;}
+.nav-logo{display:block; height:40px; width:auto; max-width:100%;}
 .nav-links{display:flex; gap:26px; list-style:none; margin:0; padding:0;}
 .nav-links a{font-family:'IBM Plex Mono',monospace; font-size:12px; text-decoration:none; color:var(--text-dim); letter-spacing:0.02em; transition:color .15s;}
 .nav-links a:hover{color:var(--accent);}
 @media (max-width:640px){
-  .nav-inner{flex-direction:column; align-items:flex-start; gap:12px; padding:16px 20px;}
+  .nav-inner{flex-direction:column; align-items:flex-start; gap:10px; padding:8px 20px 12px;}
   .nav-links{flex-wrap:wrap; gap:14px 18px;}
 }
 
@@ -164,14 +167,16 @@ section{scroll-margin-top:86px;}
 .sobre p{font-size:15.5px; line-height:1.75; color:var(--text-dim); margin:0 0 16px;}
 
 /* ---------- FOOTER ---------- */
-footer{background:var(--navy); color:#C7CFDC; padding:56px 0 32px; margin-top:20px;}
-.footer-top{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:30px; padding-bottom:36px; border-bottom:1px solid rgba(255,255,255,0.12);}
-.footer-brand{font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:18px; color:#fff; letter-spacing:0.03em; margin-bottom:8px;}
-.footer-pillars{font-family:'IBM Plex Mono',monospace; font-size:12px; color:#93A0B5;}
-.footer-links{display:flex; gap:22px; list-style:none; margin:0; padding:0;}
-.footer-links a{font-size:13px; color:#C7CFDC; text-decoration:none;}
-.footer-links a:hover{color:#fff;}
-.footer-bottom{display:flex; justify-content:space-between; padding-top:22px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:#7C8AA0; flex-wrap:wrap; gap:10px;}
+footer{background:var(--wine); color:var(--sand); padding:56px 0 32px; margin-top:20px;}
+.footer-top{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:30px; padding-bottom:36px; border-bottom:1px solid rgba(234,220,200,0.18);}
+.footer-logo{display:block; height:88px; width:auto; max-width:100%; margin-bottom:16px;}
+.footer-descriptor{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.14em; color:var(--gold); margin-bottom:8px;}
+.footer-pillars{font-family:'IBM Plex Mono',monospace; font-size:12px; color:#CDBBA2;}
+.footer-links{display:flex; gap:22px; list-style:none; margin:0; padding:0; flex-wrap:wrap;}
+.footer-links a{font-size:13px; color:var(--sand); text-decoration:none;}
+.footer-links a:hover{color:#fff; text-decoration:underline;}
+footer a:focus-visible{outline-color:var(--gold);}
+.footer-bottom{display:flex; justify-content:space-between; padding-top:22px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:#C2AF95; flex-wrap:wrap; gap:10px;}
 
 @media (max-width:640px){
   .footer-top{flex-direction:column;}
@@ -199,29 +204,31 @@ footer{background:var(--navy); color:#C7CFDC; padding:56px 0 32px; margin-top:20
 .tools-table td{color:var(--text-dim);}
 .tools-preview figcaption{font-size:11px;line-height:1.65;color:var(--text-dim);padding:18px 22px;background:var(--bg);border-top:1px solid var(--line);}
 .tools-section{padding:76px 0;border-top:1px solid var(--line);}
-.tools-section h2{font-size:clamp(28px,3.4vw,40px);font-weight:500;letter-spacing:-.035em;line-height:1.15;margin:0 0 22px;}
+.tools-section h2{font-size:clamp(28px,3.4vw,40px);font-weight:600;letter-spacing:-.035em;line-height:1.15;margin:0 0 22px;}
 .tools-section-head{max-width:680px;margin-bottom:38px;}
 .tools-section-head p{color:var(--text-dim);font-size:15px;line-height:1.8;margin:0;}
 .tools-kicker{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0 0 18px;}
 .tools-capabilities{display:grid;grid-template-columns:repeat(4,1fr);gap:26px;}
 .tools-capability{padding-top:22px;border-top:2px solid var(--line);}
-.tools-capability h3{font-size:16px;font-weight:500;margin:0 0 12px;}
+.tools-capability h3{font-size:16px;font-weight:600;margin:0 0 12px;}
 .tools-capability p{font-size:13px;line-height:1.75;color:var(--text-dim);margin:0;}
 .tools-process{background:var(--panel-2);}
 .tools-steps{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(4,1fr);gap:30px;counter-reset:steps;}
 .tools-steps li{counter-increment:steps;}
 .tools-steps li::before{content:'0' counter(steps);font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);display:block;padding-bottom:20px;margin-bottom:22px;border-bottom:1px solid #CFC8BA;}
-.tools-steps h3{font-size:17px;font-weight:500;line-height:1.4;margin:0 0 12px;}
+.tools-steps h3{font-size:17px;font-weight:600;line-height:1.4;margin:0 0 12px;}
 .tools-steps p{font-size:13px;color:var(--text-dim);line-height:1.75;margin:0;}
 .tools-steps li:last-child h3{color:var(--accent);}
 .tools-split{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:start;}
 .tools-quote{font-family:'Fraunces',serif;font-size:clamp(26px,3vw,36px);line-height:1.4;border-left:2px solid var(--accent);padding:8px 0 8px 28px;margin:0;}
 .tools-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;}
-.tools-card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:30px;display:flex;flex-direction:column;}
+.tools-card{position:relative;overflow:hidden;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:36px 30px 30px;display:flex;flex-direction:column;transition:border-color .15s;}
+.tools-card::before{content:"";position:absolute;top:0;left:0;right:0;height:6px;background:var(--accent);}
+.tools-card:hover{border-color:var(--accent);}
 .tools-card-top{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:26px;}
 .tools-number{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-dim);}
 .tools-status{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent);background:var(--accent-soft);border-radius:20px;padding:6px 10px;}
-.tools-card h3{font-size:24px;font-weight:500;letter-spacing:-.025em;margin:0 0 14px;}
+.tools-card h3{font-size:24px;font-weight:600;letter-spacing:-.025em;margin:0 0 14px;}
 .tools-card p{font-size:14px;line-height:1.8;color:var(--text-dim);margin:0 0 20px;}
 .tools-variables{border-top:1px solid var(--line);padding-top:18px;margin-top:auto;}
 .tools-variables span{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);}
@@ -232,7 +239,7 @@ footer{background:var(--navy); color:#C7CFDC; padding:56px 0 32px; margin-top:20
 .tools-path{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:8px;overflow:hidden;}
 .tools-path article{padding:30px;}
 .tools-path article+article{border-left:1px solid var(--line);}
-.tools-path h3{font-size:18px;font-weight:500;line-height:1.4;margin:16px 0 12px;}
+.tools-path h3{font-size:18px;font-weight:600;line-height:1.4;margin:16px 0 12px;}
 .tools-path p{font-size:13px;line-height:1.8;color:var(--text-dim);margin:0;}
 .tools-note{font-size:12px;color:var(--text-dim);line-height:1.7;margin:20px 0 0;}
 .tools-advisory .tools-split{align-items:center;}
@@ -243,7 +250,7 @@ footer{background:var(--navy); color:#C7CFDC; padding:56px 0 32px; margin-top:20
 .tools-close .btn{margin-top:12px;min-height:44px;}
 a:focus-visible{outline:2px solid var(--accent);outline-offset:5px;}
 @media(max-width:900px){.tools-hero-grid{grid-template-columns:1fr;gap:42px;}.tools-hero h1{max-width:15ch;}.tools-preview{max-width:580px;width:100%;}.tools-capabilities,.tools-steps{grid-template-columns:repeat(2,1fr);}.tools-split{gap:36px;}.nav-inner{flex-wrap:wrap;gap:16px;}.nav-links{flex-wrap:wrap;}}
-@media(max-width:640px){.tools-hero{padding:52px 0;}.tools-section{padding:52px 0;}.tools-grid,.tools-split,.tools-path,.tools-card-wide{grid-template-columns:1fr;}.tools-card-wide{gap:8px;}.tools-card{padding:24px;}.tools-path article+article{border-left:0;border-top:1px solid var(--line);}.tools-close{padding:60px 0;}.tools-quote{font-size:26px;}.tools-section{scroll-margin-top:150px;}.footer-links{flex-wrap:wrap;}.tools-table th,.tools-table td{padding:12px 8px;}}
+@media(max-width:640px){.tools-hero{padding:52px 0;}.tools-section{padding:52px 0;}.tools-grid,.tools-split,.tools-path,.tools-card-wide{grid-template-columns:1fr;}.tools-card-wide{gap:8px;}.tools-card{padding:30px 24px 24px;}.tools-path article+article{border-left:0;border-top:1px solid var(--line);}.tools-close{padding:60px 0;}.tools-quote{font-size:26px;}.tools-section{scroll-margin-top:150px;}.footer-links{flex-wrap:wrap;}.tools-table th,.tools-table td{padding:12px 8px;}}
 @media(max-width:400px){.tools-capabilities,.tools-steps{grid-template-columns:1fr;}.wrap{padding-left:20px;padding-right:20px;}.tools-hero h1{font-size:43px;}.tools-preview-top{font-size:9px;padding:16px;}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*,*::before,*::after{transition:none!important;}}
 
@@ -253,7 +260,7 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:5px;}
 
 <nav class="nav">
   <div class="nav-inner">
-    <a href="index.html" class="nav-brand">KAIRO<span>S</span></a>
+    <a href="index.html" class="nav-brand"><img class="nav-logo" src="assets/kairos-brand-v1/kairos-logo.svg" alt="KAIROS" height="40"></a>
     <ul class="nav-links">
       <li><a href="index.html">Inicio</a></li>
       <li><a href="economia.html">Economía</a></li>
@@ -313,7 +320,7 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:5px;}
 <article class="tools-card"><div><div class="tools-card-top"><span class="tools-number">LÍNEA 01</span><span class="tools-status">En desarrollo</span></div><h3>Comprar vs. alquilar</h3><p>Una herramienta para comparar el costo económico completo de ambas decisiones y explorar bajo qué condiciones cambia el resultado.</p></div><div class="tools-variables"><span>PODRÍA CONSIDERAR</span><ul><li>Precio</li><li>Alquiler</li><li>Financiamiento</li><li>Tasas</li><li>Mantenimiento</li><li>Horizonte temporal</li><li>Costo de oportunidad</li><li>Apreciación</li><li>Inflación</li></ul></div></article>
 <article class="tools-card"><div><div class="tools-card-top"><span class="tools-number">LÍNEA 02</span><span class="tools-status">En desarrollo</span></div><h3>Costo real de una deuda</h3><p>Una herramienta para entender cuánto podría costar realmente una obligación financiera, más allá de la tasa anunciada.</p></div><div class="tools-variables"><span>PODRÍA CONSIDERAR</span><ul><li>Tasa nominal</li><li>Tasa efectiva</li><li>Comisiones</li><li>Seguros</li><li>Plazo</li><li>Inflación</li><li>Costo total</li></ul></div></article>
 <article class="tools-card"><div><div class="tools-card-top"><span class="tools-number">LÍNEA 03</span><span class="tools-status">En desarrollo</span></div><h3>Retiro bajo incertidumbre</h3><p>Una herramienta para explorar distintos futuros posibles del ahorro y los retiros, incluyendo escenarios menos favorables.</p></div><div class="tools-variables"><span>PODRÍA CONSIDERAR</span><ul><li>Ahorro</li><li>Rendimiento</li><li>Inflación</li><li>Horizonte</li><li>Retiros</li><li>Monte Carlo</li><li>Escenarios adversos</li></ul></div></article>
-<article class="tools-card"><div><div class="tools-card-top"><span class="tools-number">LÍNEA 04</span><span class="tools-status">En desarrollo</span></div><h3>Kairos Agriculture — Precio de cosecha</h3><p>Una primera idea dentro de Kairos Agriculture: evaluar cómo costos, rendimiento y precio podrían afectar el margen de una cosecha y su punto de equilibrio.</p><p>Kairos Agriculture se plantea como una familia de herramientas especializadas para acompañar decisiones de productores y otros actores del sector agrícola.</p></div><div class="tools-variables"><span>PODRÍA CONSIDERAR</span><ul><li>Costos</li><li>Rendimiento</li><li>Precio</li><li>Margen</li><li>Punto de equilibrio</li><li>Escenarios de mercado</li><li>Riesgo productivo y económico</li></ul></div></article>
+<article class="tools-card"><div><div class="tools-card-top"><span class="tools-number">LÍNEA 04</span><span class="tools-status">En desarrollo</span></div><h3>Kairos Agriculture: Precio de cosecha</h3><p>Una primera idea dentro de Kairos Agriculture: evaluar cómo costos, rendimiento y precio podrían afectar el margen de una cosecha y su punto de equilibrio.</p><p>Kairos Agriculture se plantea como una familia de herramientas especializadas para acompañar decisiones de productores y otros actores del sector agrícola.</p></div><div class="tools-variables"><span>PODRÍA CONSIDERAR</span><ul><li>Costos</li><li>Rendimiento</li><li>Precio</li><li>Margen</li><li>Punto de equilibrio</li><li>Escenarios de mercado</li><li>Riesgo productivo y económico</li></ul></div></article>
 <article class="tools-card tools-card-wide"><div><div class="tools-card-top"><span class="tools-number">LÍNEA 05</span><span class="tools-status">En desarrollo</span></div><h3>Economic Stress Test</h3><p>Una posible evolución hacia producto del trabajo experimental iniciado en Apple Lab, orientada a explorar escenarios, sensibilidad y riesgo en decisiones bajo incertidumbre.</p></div><div class="tools-variables"><span>PODRÍA EXPLORAR</span><ul><li>Simulación</li><li>Pruebas de estrés</li><li>Sensibilidad</li><li>Condiciones que cambian el resultado</li></ul></div></article>
  </div>
 </div></section>
@@ -343,14 +350,17 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:5px;}
   <div class="wrap">
     <div class="footer-top">
       <div>
-        <div class="footer-brand">KAIROS</div>
+        <img class="footer-logo" src="assets/kairos-brand-v1/kairos-logo-light.svg" alt="KAIROS" height="88">
+        <div class="footer-descriptor">RESEARCH · LABS · TOOLS · ADVISORY</div>
         <div class="footer-pillars">Economía · Laboratorio · Herramientas · Pensamiento</div>
       </div>
       <ul class="footer-links">
         <li><a href="index.html#sobre-kairos">Sobre nosotros</a></li>
-        <li><a href="#">Contacto</a></li>
-        <li><a href="#">Privacidad</a></li>
+        <li><a href="mailto:contactkairoslra@gmail.com">Contacto</a></li>
+        <li><a href="privacidad.html">Privacidad</a></li>
         <li><a href="https://github.com/josuetartons-cpu/kairos-labs" target="_blank" rel="noopener noreferrer">Kairos Labs</a></li>
+        <li><a href="https://www.instagram.com/kairoslra/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+        <li><a href="https://www.linkedin.com/company/146643635" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
       </ul>
     </div>
     <div class="footer-bottom">

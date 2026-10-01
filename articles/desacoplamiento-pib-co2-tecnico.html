@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nota técnica: desacoplamiento entre crecimiento económico y emisiones de CO2 en Guatemala — Kairos</title>
+<title>Nota técnica: desacoplamiento entre crecimiento económico y emisiones de CO2 en Guatemala | Kairos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
 <style>
@@ -16,34 +16,39 @@
     --ink:#1A2420;
     --ink-soft:#4B554F;
     --line:#D8D3C1;
-    --teal:#1F6F5C;
-    --teal-soft:#E4EFEA;
-    --rust:#B5502E;
-    --rust-soft:#F6E7E0;
+    --accent:#3E6488;
+    --accent-soft:rgba(62,100,136,0.10);
+    --wine:#4A0E1A;
+    --wine-soft:rgba(74,14,26,0.08);
+    --gold:#D4AF7C;
+    --sand:#EADCC8;
+    --warning:var(--wine);
+    --warning-soft:var(--wine-soft);
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
     margin:0; background:var(--paper); color:var(--ink);
-    font-family:"IBM Plex Sans", -apple-system, sans-serif;
+    font-family:"Space Grotesk", -apple-system, sans-serif;
     font-size:16.5px; line-height:1.62;
   }
-  .serif{font-family:"Source Serif 4", Georgia, serif;}
+  .serif{font-family:"Fraunces", Georgia, serif;}
   .num{font-family:"IBM Plex Mono", monospace;}
-  a{color:var(--teal);}
-  h1,h2,h3,h4{font-family:"Source Serif 4", Georgia, serif; font-weight:600; line-height:1.25; margin:0 0 0.7rem;}
+  a{color:var(--accent);}
+  a:focus-visible,summary:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:2px;}
+  h1,h2,h3,h4{font-family:"Fraunces", Georgia, serif; font-weight:600; line-height:1.25; margin:0 0 0.7rem;}
 
   header.masthead{
     display:flex; align-items:center; justify-content:space-between;
-    padding:1rem 1.5rem; border-bottom:1px solid var(--line);
+    padding:0.7rem 1.5rem; border-bottom:1px solid var(--line);
     font-size:0.92rem; position:sticky; top:0; z-index:20;
     background:rgba(243,241,232,0.94); backdrop-filter:blur(6px);
   }
   header.masthead a{ text-decoration:none; color:var(--ink); }
-  header.masthead .brand{ font-weight:600; }
-  header.masthead .brand span{ color:var(--teal); }
-  header.masthead nav a{ color:var(--ink-soft); margin-left:1.4rem; border-bottom:1px solid transparent; }
-  header.masthead nav a:hover{ color:var(--teal); border-bottom-color:var(--teal); }
+  header.masthead .brand{ display:inline-flex; align-items:center; line-height:0; }
+  .brand-logo{ display:block; height:40px; width:auto; max-width:100%; }
+  header.masthead nav a{ font-family:"IBM Plex Mono", monospace; font-size:0.78rem; color:var(--ink-soft); margin-left:1.4rem; border-bottom:1px solid transparent; }
+  header.masthead nav a:hover{ color:var(--accent); border-bottom-color:var(--accent); }
 
   .layout{
     max-width:1180px; margin:0 auto; padding:0 1.5rem 6rem;
@@ -57,22 +62,22 @@
     display:block; padding:0.42rem 0 0.42rem 0.9rem; margin-left:-1px;
     border-left:2px solid transparent; color:var(--ink-soft); text-decoration:none; font-size:0.86rem;
   }
-  aside.toc a:hover{ color:var(--teal); border-left-color:var(--teal); }
+  aside.toc a:hover, aside.toc a:focus-visible{ color:var(--accent); border-left-color:var(--accent); }
   aside.toc a::before{ content: counter(toc) "  "; font-family:"IBM Plex Mono", monospace; color:var(--ink-soft); font-size:0.78rem; }
 
   main{ min-width:0; padding-top:2.6rem; }
 
   .hero .kicker{ font-size:0.92rem; color:var(--ink-soft); margin-bottom:0.9rem; }
-  .kicker-link{ color:var(--teal); text-decoration:none; font-weight:600; }
+  .kicker-link{ color:var(--accent); text-decoration:none; font-weight:600; }
   .kicker-link:hover{ text-decoration:underline; }
   .hero h1.serif{ font-size:2.1rem; letter-spacing:-0.01em; max-width:42rem; }
   .hero .subtitle{ font-size:1.05rem; color:var(--ink-soft); margin-top:0.8rem; max-width:42rem; }
 
   .banner{
-    background:var(--rust-soft); border:1px solid #E3C4B2; border-radius:3px;
+    background:var(--warning-soft); border:1px solid rgba(74,14,26,0.25); border-left:3px solid var(--warning); border-radius:3px;
     padding:1.3rem 1.5rem; margin:1.8rem 0 2.6rem; max-width:44rem;
   }
-  .banner h3{ font-size:0.98rem; color:var(--rust); margin-bottom:0.4rem; }
+  .banner h3{ font-size:0.98rem; color:var(--warning); margin-bottom:0.4rem; }
   .banner p{ margin:0; font-size:0.96rem; }
 
   section.chapter{ margin:3.4rem 0; scroll-margin-top:4.4rem; padding-top:0.4rem; border-top:1px solid var(--line); }
@@ -85,9 +90,9 @@
   table{ border-collapse:collapse; width:100%; margin:1.2rem 0 1.8rem; font-size:0.9rem; background:var(--panel); }
   caption{ text-align:left; font-size:0.82rem; color:var(--ink-soft); margin-bottom:0.4rem; caption-side:top; }
   th,td{ border:1px solid var(--line); padding:0.5rem 0.7rem; text-align:right; }
-  th{ background:#EFEBDD; font-weight:600; text-align:right; }
+  th{ background:var(--accent-soft); font-weight:600; text-align:right; }
   td:first-child, th:first-child{ text-align:left; }
-  tbody tr:hover{ background:#F1EFE3; }
+  tbody tr:hover{ background:rgba(62,100,136,0.05); }
   .tw{ overflow-x:auto; }
 
   .eq{ margin:1.3rem 0; padding:0.4rem 0; overflow-x:auto; max-width:100%; }
@@ -101,14 +106,14 @@
   .param-card .v{ font-family:"IBM Plex Mono", monospace; font-size:1.05rem; margin-top:0.15rem; }
 
   .callout{
-    background:var(--teal-soft); border-left:3px solid var(--teal);
+    background:var(--accent-soft); border-left:3px solid var(--accent);
     padding:1rem 1.3rem; margin:1.6rem 0; max-width:44rem; border-radius:0 3px 3px 0;
   }
-  .callout .tag{ font-size:0.76rem; color:var(--teal); font-weight:600; margin-bottom:0.3rem; }
+  .callout .tag{ font-family:"IBM Plex Mono", monospace; font-size:0.76rem; color:var(--accent); font-weight:600; margin-bottom:0.3rem; }
   .callout p{ margin:0; max-width:none; }
 
-  .callout.warn{ background:var(--rust-soft); border-left-color:var(--rust); }
-  .callout.warn .tag{ color:var(--rust); }
+  .callout.warn{ background:var(--warning-soft); border-left-color:var(--warning); }
+  .callout.warn .tag{ color:var(--warning); }
 
   figure{ margin:2rem 0; max-width:52rem; }
   figure img{ width:100%; height:auto; border:1px solid var(--line); border-radius:3px; background:#fff; }
@@ -119,14 +124,14 @@
 
   .findings-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:1rem; margin:1.4rem 0 2rem; max-width:none; }
   .finding-card{ background:var(--panel); border:1px solid var(--line); border-radius:3px; padding:1.1rem 1.2rem; }
-  .finding-card .n{ font-family:"IBM Plex Mono", monospace; color:var(--teal); font-size:0.8rem; margin-bottom:0.4rem; }
+  .finding-card .n{ font-family:"IBM Plex Mono", monospace; color:var(--accent); font-size:0.8rem; margin-bottom:0.4rem; }
   .finding-card h4{ margin-top:0; font-size:1rem; }
   .finding-card p{ margin:0; font-size:0.92rem; max-width:none; }
 
   .stat-strip{ display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1rem; margin:1.6rem 0 2rem; }
   .stat-card{ background:var(--panel); border:1px solid var(--line); border-radius:3px; padding:1rem 1.1rem; text-align:center; }
-  .stat-card .v{ font-family:"IBM Plex Mono", monospace; font-size:1.5rem; color:var(--teal); }
-  .stat-card .v.rust{ color:var(--rust); }
+  .stat-card .v{ font-family:"IBM Plex Mono", monospace; font-size:1.5rem; color:var(--accent); }
+  .stat-card .v.rust{ color:var(--warning); }
   .stat-card .k{ font-size:0.8rem; color:var(--ink-soft); margin-top:0.3rem; }
 
   .var-code{ font-family:"IBM Plex Mono", monospace; font-size:0.85rem; }
@@ -134,13 +139,20 @@
   .placeholder{ background:#FDF3D8; border:1px dashed #C7A93A; border-radius:3px; padding:0.15rem 0.5rem; font-size:0.85em; color:#7A6412; }
 
   footer{
-    border-top:1px solid var(--line); padding:2.2rem 1.5rem;
-    font-size:0.86rem; color:var(--ink-soft);
+    background:var(--wine); padding:2.2rem 1.5rem;
+    font-size:0.86rem; color:var(--sand);
   }
   footer .footer-inner{ max-width:1180px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; gap:1rem; }
-  footer a{ color:var(--ink-soft); }
-  .switch-link{ display:inline-block; margin-top:0.4rem; font-size:0.9rem; color:var(--teal); text-decoration:none; border-bottom:1px solid var(--teal); }
-  .code-btn{ display:inline-block; margin-top:0.9rem; font-size:0.9rem; color:var(--teal); text-decoration:none; border-bottom:1px solid var(--teal); font-weight:600; }
+  footer a{ color:var(--gold); }
+  footer a:hover{ color:var(--sand); }
+  footer a:focus-visible{ outline-color:var(--gold); }
+  footer .footer-title{ font-weight:600; color:var(--sand); }
+  footer .footer-title a{ color:var(--sand); text-decoration:none; }
+  footer .footer-title a:hover{ color:var(--gold); }
+  .switch-link{ display:inline-block; margin-top:0.4rem; font-size:0.9rem; color:var(--accent); text-decoration:none; border-bottom:1px solid var(--accent); }
+  footer .switch-link{ color:var(--gold); border-bottom-color:var(--gold); }
+  footer .switch-link:hover{ color:var(--sand); border-bottom-color:var(--sand); }
+  .code-btn{ display:inline-block; margin-top:0.9rem; font-size:0.9rem; color:var(--accent); text-decoration:none; border-bottom:1px solid var(--accent); font-weight:600; }
 
   details.toc-mobile{ display:none; }
 
@@ -155,15 +167,21 @@
     details.toc-mobile ol{ list-style:none; counter-reset:toc2; padding-left:0; margin:0.7rem 0 0; }
     details.toc-mobile li{ counter-increment:toc2; padding:0.3rem 0; font-size:0.88rem; }
     details.toc-mobile a{ color:var(--ink-soft); text-decoration:none; }
+    details.toc-mobile a:hover{ color:var(--accent); }
     details.toc-mobile a::before{ content: counter(toc2) ". "; font-family:"IBM Plex Mono", monospace; }
     main{ padding-top:0; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *,*::before,*::after{ transition:none !important; animation:none !important; }
   }
 </style>
 </head>
 <body>
 
 <header class="masthead">
-  <a class="brand" href="../index.html">Kairos</a>
+  <a class="brand" href="../index.html" aria-label="Kairos, ir al inicio"><img class="brand-logo" src="../assets/kairos-brand-v1/kairos-logo.svg" alt="Kairos"></a>
   <nav>
     <a href="guatemala-crecimiento-emisiones.html">← Volver a la publicación principal</a>
   </nav>
@@ -208,7 +226,7 @@
 
     <p style="max-width:44rem;">Esta nota técnica analiza la relación entre crecimiento económico y emisiones de dióxido de carbono en Guatemala entre 2000 y 2024. El objetivo es evaluar si la economía guatemalteca presenta evidencia de desacoplamiento entre actividad económica y emisiones, y explorar si la composición energética está asociada con cambios en la intensidad de carbono. El análisis utiliza datos anuales de World Development Indicators del Banco Mundial, combinando medidas descriptivas, índices normalizados, elasticidades, regresiones log-log, primeras diferencias y pruebas de sensibilidad.</p>
 
-    <p style="max-width:44rem;">Los resultados muestran que entre 2000 y 2024 el PIB real aumentó aproximadamente 126.8%, mientras las emisiones de CO2 aumentaron 110.4%. La intensidad de carbono disminuyó aproximadamente 7.23%. Estos resultados son consistentes con desacoplamiento relativo, pero no con desacoplamiento absoluto. La relación entre cambios anuales del PIB y emisiones es altamente sensible a las observaciones correspondientes a 2020 y 2021. Finalmente, una mayor participación de energía renovable en el consumo final está asociada consistentemente con menor intensidad de carbono bajo distintas especificaciones — el diseño del estudio, sin embargo, no permite establecer causalidad.</p>
+    <p style="max-width:44rem;">Los resultados muestran que entre 2000 y 2024 el PIB real aumentó aproximadamente 126.8%, mientras las emisiones de CO2 aumentaron 110.4%. La intensidad de carbono disminuyó aproximadamente 7.23%. Estos resultados son consistentes con desacoplamiento relativo, pero no con desacoplamiento absoluto. La relación entre cambios anuales del PIB y emisiones es altamente sensible a las observaciones correspondientes a 2020 y 2021. Finalmente, una mayor participación de energía renovable en el consumo final está asociada consistentemente con menor intensidad de carbono bajo distintas especificaciones (el diseño del estudio, sin embargo, no permite establecer causalidad).</p>
 
     <details class="toc-mobile">
       <summary>Contenido de esta nota</summary>
@@ -278,7 +296,7 @@
         </tbody>
       </table>
       </div>
-      <p>Fuente: World Bank — World Development Indicators. El período principal es 2000–2024. Las variables energéticas tienen menor disponibilidad temporal y se utilizan hasta el último año con observaciones disponibles; en este experimento, las series energéticas utilizadas llegan hasta 2021.</p>
+      <p>Fuente: World Bank: World Development Indicators. El período principal es 2000–2024. Las variables energéticas tienen menor disponibilidad temporal y se utilizan hasta el último año con observaciones disponibles; en este experimento, las series energéticas utilizadas llegan hasta 2021.</p>
     </section>
 
     <section class="chapter" id="construccion-variables">
@@ -288,13 +306,13 @@
       <p>Utilizamos PIB en dólares constantes de 2015 para evitar confundir crecimiento real de producción con cambios puramente nominales derivados de precios o inflación. No se utiliza PIB nominal en el análisis principal.</p>
 
       <h4>Definición de emisiones</h4>
-      <p>Las emisiones utilizadas corresponden a <span class="var-code">EN.GHG.CO2.MT.CE.AR5</span>: Carbon dioxide emissions excluding LULUCF (Land Use, Land-Use Change and Forestry). Esta decisión implica que el experimento no estudia directamente las emisiones derivadas del cambio de uso de la tierra y el sector forestal — una precisión especialmente importante para interpretar el caso guatemalteco.</p>
+      <p>Las emisiones utilizadas corresponden a <span class="var-code">EN.GHG.CO2.MT.CE.AR5</span>: Carbon dioxide emissions excluding LULUCF (Land Use, Land-Use Change and Forestry). Esta decisión implica que el experimento no estudia directamente las emisiones derivadas del cambio de uso de la tierra y el sector forestal: una precisión especialmente importante para interpretar el caso guatemalteco.</p>
 
       <h4>Energía renovable: dos variables distintas</h4>
       <p>Distinguimos cuidadosamente entre dos indicadores, porque producen resultados econométricos diferentes:</p>
       <div class="callout warn">
         <div class="tag">Advertencia sobre EG.FEC.RNEW.ZS</div>
-        <p><strong>Consumo final renovable</strong> (<span class="var-code">EG.FEC.RNEW.ZS</span>): energía renovable como porcentaje del consumo final total. Puede incluir biomasa y otras fuentes renovables tradicionales — no debe interpretarse exclusivamente como solar, eólica o generación eléctrica moderna.</p>
+        <p><strong>Consumo final renovable</strong> (<span class="var-code">EG.FEC.RNEW.ZS</span>): energía renovable como porcentaje del consumo final total. Puede incluir biomasa y otras fuentes renovables tradicionales: no debe interpretarse exclusivamente como solar, eólica o generación eléctrica moderna.</p>
       </div>
       <p><strong>Electricidad renovable</strong> (<span class="var-code">EG.ELC.RNEW.ZS</span>): electricidad renovable como porcentaje de la generación eléctrica.</p>
 
@@ -433,7 +451,7 @@
         <div class="param-card"><div class="k">β̂ (renovables)</div><div class="v">−0.032339</div></div>
         <div class="param-card"><div class="k">p-value</div><div class="v">3.133×10⁻⁶</div></div>
       </div>
-      <p>La tendencia temporal no resulta estadísticamente significativa. El coeficiente de renovables permanece prácticamente inalterado al incorporar una tendencia temporal, lo que reduce —pero no elimina— la posibilidad de que la asociación sea producto de tendencias comunes u otras variables omitidas.</p>
+      <p>La tendencia temporal no resulta estadísticamente significativa. El coeficiente de renovables permanece prácticamente inalterado al incorporar una tendencia temporal, lo que reduce (pero no elimina) la posibilidad de que la asociación sea producto de tendencias comunes u otras variables omitidas.</p>
 
       <h4>Renovables en primeras diferencias</h4>
       <div class="param-grid">
@@ -492,11 +510,11 @@
           <tr><td>PIB–CO2 · cambios</td><td class="num">1.842</td><td class="num">0.014</td><td class="num">0.246</td><td style="text-align:left;">Sensible a pandemia</td></tr>
           <tr><td>PIB–CO2 · sin 2020–21</td><td class="num">0.473</td><td class="num">0.685</td><td class="num">0.008</td><td style="text-align:left;">Sin asociación clara</td></tr>
           <tr><td>Renovables · niveles</td><td class="num">−0.0322</td><td class="num">&lt;0.001</td><td class="num">0.685</td><td style="text-align:left;">Asociación negativa</td></tr>
-          <tr><td>Renovables + tendencia</td><td class="num">−0.0323</td><td class="num">&lt;0.001</td><td class="num">—</td><td style="text-align:left;">Resultado persiste</td></tr>
+          <tr><td>Renovables + tendencia</td><td class="num">−0.0323</td><td class="num">&lt;0.001</td><td class="num">N/D</td><td style="text-align:left;">Resultado persiste</td></tr>
           <tr><td>Renovables · cambios</td><td class="num">−0.0267</td><td class="num">&lt;0.001</td><td class="num">0.673</td><td style="text-align:left;">Resultado persiste</td></tr>
           <tr><td>Renovables · sin 2001</td><td class="num">−0.0364</td><td class="num">&lt;0.001</td><td class="num">0.732</td><td style="text-align:left;">Robusto a influencia</td></tr>
           <tr><td>Electricidad renovable · niveles</td><td class="num">−0.0018</td><td class="num">0.384</td><td class="num">0.038</td><td style="text-align:left;">Sin evidencia clara</td></tr>
-          <tr><td>Electricidad renovable · cambios</td><td class="num">−0.00451</td><td class="num">0.0087</td><td class="num">—</td><td style="text-align:left;">Asociación negativa</td></tr>
+          <tr><td>Electricidad renovable · cambios</td><td class="num">−0.00451</td><td class="num">0.0087</td><td class="num">N/D</td><td style="text-align:left;">Asociación negativa</td></tr>
         </tbody>
       </table>
       </div>
@@ -582,7 +600,7 @@
       <ul class="limits" style="list-style:none; padding-left:0;">
         <li>Tapio, P. (2005). Towards a theory of decoupling: degrees of decoupling in the EU and the case of road traffic in Finland between 1970 and 2001. <em>Transport Policy</em>, 12(2), 137–151.</li>
         <li>OECD. Literatura y marco conceptual sobre desacoplamiento entre actividad económica y presiones ambientales.</li>
-        <li>World Bank — World Development Indicators. Indicadores: <span class="var-code">NY.GDP.MKTP.KD</span>, <span class="var-code">EN.GHG.CO2.MT.CE.AR5</span>, <span class="var-code">EG.FEC.RNEW.ZS</span>, <span class="var-code">EG.ELC.RNEW.ZS</span>.</li>
+        <li>World Bank: World Development Indicators. Indicadores: <span class="var-code">NY.GDP.MKTP.KD</span>, <span class="var-code">EN.GHG.CO2.MT.CE.AR5</span>, <span class="var-code">EG.FEC.RNEW.ZS</span>, <span class="var-code">EG.ELC.RNEW.ZS</span>.</li>
       </ul>
     </section>
 
@@ -600,7 +618,7 @@
 <footer>
   <div class="footer-inner">
     <div>
-      <div class="serif" style="font-weight:600; color:var(--ink);"><a href="../index.html#investigacion" style="color:var(--ink); text-decoration:none;">← Volver a Investigación</a></div>
+      <div class="serif footer-title"><a href="../index.html#investigacion">← Volver a Investigación</a></div>
       <div>Kairos · Nota técnica de acompañamiento.</div>
       <a class="switch-link" href="guatemala-crecimiento-emisiones.html">← Volver a la publicación principal</a>
     </div>

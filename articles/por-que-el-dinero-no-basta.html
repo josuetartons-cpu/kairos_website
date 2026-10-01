@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>¿Por qué darle dinero a los pobres no soluciona el problema? — Kairos</title>
+<title>¿Por qué darle dinero a los pobres no basta? | Kairos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
 <style>
@@ -16,10 +16,14 @@
     --ink:#1A2420;
     --ink-soft:#4B554F;
     --line:#D8D3C1;
-    --teal:#1F6F5C;
-    --teal-soft:#E4EFEA;
-    --rust:#B5502E;
-    --rust-soft:#F6E7E0;
+    --accent:#8C2E48;
+    --accent-soft:rgba(140,46,72,0.10);
+    --wine:#4A0E1A;
+    --wine-soft:rgba(74,14,26,0.08);
+    --gold:#D4AF7C;
+    --sand:#EADCC8;
+    --warning:var(--wine);
+    --warning-soft:var(--wine-soft);
     --measure:38rem;
   }
   *{box-sizing:border-box;}
@@ -28,66 +32,58 @@
     margin:0;
     background:var(--paper);
     color:var(--ink);
-    font-family:"Source Serif 4", Georgia, serif;
+    font-family:"Fraunces", Georgia, serif;
     font-size:19px;
     line-height:1.65;
   }
-  .ui{font-family:"IBM Plex Sans", -apple-system, sans-serif;}
+  .ui{font-family:"Space Grotesk", -apple-system, sans-serif;}
   .num{font-family:"IBM Plex Mono", monospace;}
-  a{color:var(--teal);}
-  h1,h2,h3{font-family:"Source Serif 4", Georgia, serif; font-weight:600; line-height:1.2; margin:0;}
+  a{color:var(--accent);}
+  a:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:2px;}
+  h1,h2,h3{font-family:"Fraunces", Georgia, serif; font-weight:600; line-height:1.2; margin:0;}
 
   header.masthead{
     display:flex; align-items:center; justify-content:space-between;
-    padding:1.1rem 1.5rem;
+    padding:0.7rem 1.5rem;
     border-bottom:1px solid var(--line);
-    font-family:"IBM Plex Sans", sans-serif;
-    font-size:0.92rem;
     position:sticky; top:0; background:rgba(243,241,232,0.92); backdrop-filter:blur(6px);
     z-index:10;
   }
   header.masthead a{ text-decoration:none; color:var(--ink); }
-  header.masthead .brand{ font-weight:600; letter-spacing:0.01em; }
-  header.masthead .brand span{ color:var(--teal); }
-  header.masthead nav a{ color:var(--ink-soft); margin-left:1.4rem; border-bottom:1px solid transparent; }
-  header.masthead nav a:hover{ color:var(--teal); border-bottom-color:var(--teal); }
-  header.masthead nav{ display:flex; align-items:center; justify-content:flex-end; flex-wrap:wrap; row-gap:0.4rem; }
-  header.masthead nav a{ white-space:nowrap; }
-  header.masthead nav a.nav-cta{
-    color:var(--teal); border:1px solid var(--teal); border-radius:3px;
-    padding:0.25rem 0.7rem; font-weight:500;
-  }
-  header.masthead nav a.nav-cta:hover{ background:var(--teal-soft); color:var(--teal); border-color:var(--teal); }
-  header.masthead nav a.nav-cta:focus-visible{ outline:2px solid var(--teal); outline-offset:2px; }
+  header.masthead .brand{ display:inline-flex; align-items:center; line-height:0; }
+  .brand-logo{ display:block; height:40px; width:auto; max-width:100%; }
+  header.masthead nav a{ font-family:"IBM Plex Mono", monospace; font-size:0.78rem; color:var(--ink-soft); border-bottom:1px solid transparent; white-space:nowrap; }
+  header.masthead nav a:hover{ color:var(--accent); border-bottom-color:var(--accent); }
 
   main{ max-width:52rem; margin:0 auto; padding:0 1.5rem 6rem; }
 
   .hero{ padding:3.6rem 0 1.6rem; max-width:var(--measure); }
   .hero .kicker{
-    font-family:"IBM Plex Sans", sans-serif; font-size:0.95rem; color:var(--ink-soft);
+    font-family:"Space Grotesk", sans-serif; font-size:0.95rem; color:var(--ink-soft);
     margin-bottom:1.1rem;
   }
-  .kicker-link{ color:var(--teal); text-decoration:none; font-weight:600; }
+  .kicker-link{ color:var(--accent); text-decoration:none; font-weight:600; }
   .kicker-link:hover{ text-decoration:underline; }
   .kicker-series{ color:var(--ink-soft); }
   .hero h1{ font-size:2.5rem; letter-spacing:-0.01em; }
   .hero .subtitle{
-    font-size:1.2rem; color:var(--ink-soft); margin-top:1rem; font-style:italic;
+    font-family:"Space Grotesk", sans-serif; font-size:1.2rem; color:var(--ink-soft); margin-top:1rem;
   }
 
   .banner{
-    background:var(--rust-soft);
-    border:1px solid #E3C4B2;
+    background:var(--warning-soft);
+    border:1px solid rgba(74,14,26,0.25);
+    border-left:3px solid var(--warning);
     border-radius:3px;
     padding:1.4rem 1.6rem;
     margin:2rem 0 3rem;
     max-width:var(--measure);
   }
   .banner h3{
-    font-family:"IBM Plex Sans", sans-serif; font-size:1rem; font-weight:600;
-    color:var(--rust); margin-bottom:0.5rem;
+    font-family:"Space Grotesk", sans-serif; font-size:1rem; font-weight:600;
+    color:var(--warning); margin-bottom:0.5rem;
   }
-  .banner p{ margin:0; font-size:1rem; color:var(--ink); }
+  .banner p{ margin:0; font-family:"Space Grotesk", sans-serif; font-size:0.95rem; line-height:1.65; color:var(--ink); }
 
   article p{ max-width:var(--measure); margin:0 0 1.3rem; }
   article > .lede{ font-size:1.15rem; }
@@ -95,8 +91,8 @@
   section.entry{ margin:3.6rem 0; }
   .entry-head{ display:flex; align-items:baseline; gap:1rem; max-width:var(--measure); margin-bottom:1.1rem; }
   .entry-head .n{
-    font-family:"IBM Plex Mono", monospace; font-size:1rem; color:var(--teal);
-    border:1px solid var(--teal); border-radius:50%;
+    font-family:"IBM Plex Mono", monospace; font-size:1rem; color:var(--accent);
+    border:1px solid var(--accent); border-radius:50%;
     width:2rem; height:2rem; min-width:2rem;
     display:flex; align-items:center; justify-content:center;
   }
@@ -110,19 +106,21 @@
     background:var(--panel); border:1px solid var(--line); border-radius:3px;
     padding:1rem 1.2rem; flex:1 1 170px; min-width:150px;
   }
-  .stat-card .label{ font-family:"IBM Plex Sans", sans-serif; font-size:0.82rem; color:var(--ink-soft); }
+  .stat-card .label{ font-family:"Space Grotesk", sans-serif; font-size:0.82rem; color:var(--ink-soft); }
   .stat-card .value{ font-family:"IBM Plex Mono", monospace; font-size:1.5rem; color:var(--ink); margin-top:0.2rem; }
-  .stat-card .sub{ font-family:"IBM Plex Sans", sans-serif; font-size:0.78rem; color:var(--ink-soft); margin-top:0.15rem; }
-  .stat-card.good .value{ color:var(--teal); }
-  .stat-card.bad .value{ color:var(--rust); }
+  .stat-card .sub{ font-family:"Space Grotesk", sans-serif; font-size:0.78rem; color:var(--ink-soft); margin-top:0.15rem; }
+  .stat-card.good .value{ color:var(--accent); }
+  .stat-card.bad .value{ color:var(--warning); }
 
   .callout{
-    background:var(--teal-soft); border-left:3px solid var(--teal);
+    background:var(--accent-soft); border-left:3px solid var(--accent);
     padding:1.1rem 1.4rem; margin:1.8rem 0; max-width:var(--measure);
     border-radius:0 3px 3px 0;
   }
-  .callout .tag{ font-family:"IBM Plex Sans", sans-serif; font-size:0.78rem; color:var(--teal); font-weight:600; margin-bottom:0.35rem; }
-  .callout p{ margin:0; }
+  .callout .tag{ font-family:"IBM Plex Mono", monospace; font-size:0.78rem; color:var(--accent); font-weight:600; margin-bottom:0.35rem; }
+  .callout p{ margin:0; font-family:"Space Grotesk", sans-serif; font-size:0.95rem; line-height:1.65; }
+  .callout.warn{ background:var(--warning-soft); border-left-color:var(--warning); }
+  .callout.warn .tag{ color:var(--warning); }
 
   .eq{ margin:1.6rem 0; padding:0.6rem 0; overflow-x:auto; }
   .eq-boxed{
@@ -133,7 +131,7 @@
   figure{ margin:2.4rem 0; max-width:100%; }
   figure img{ width:100%; height:auto; border:1px solid var(--line); border-radius:3px; background:#fff; }
   figcaption{
-    font-family:"IBM Plex Sans", sans-serif; font-size:0.85rem; color:var(--ink-soft);
+    font-family:"Space Grotesk", sans-serif; font-size:0.85rem; color:var(--ink-soft);
     margin-top:0.6rem; max-width:var(--measure);
   }
 
@@ -145,34 +143,55 @@
   }
   .conclusion .big{ font-size:1.4rem; margin-bottom:0.9rem; }
 
+  .deep{
+    background:var(--panel); border:1px solid var(--line); border-radius:3px;
+    padding:1.8rem 2rem; margin:3.6rem 0 0; max-width:var(--measure);
+  }
+  .deep .deep-label{ font-family:"IBM Plex Mono", monospace; font-size:0.78rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin:0 0 0.6rem; }
+  .deep h3{ font-size:1.3rem; line-height:1.3; margin:0 0 0.6rem; }
+  .deep .deep-text{ font-family:"Space Grotesk", sans-serif; font-size:0.95rem; line-height:1.65; color:var(--ink-soft); margin:0 0 1.3rem; max-width:none; }
+  .deep-actions{ display:flex; flex-wrap:wrap; gap:0.7rem; }
+  .deep-cta{
+    display:inline-flex; align-items:center; gap:0.5rem;
+    font-family:"IBM Plex Mono", monospace; font-size:0.78rem; font-weight:600; letter-spacing:0.02em;
+    text-decoration:none; border:1px solid var(--accent); border-radius:4px; padding:0.65rem 1.05rem;
+    color:var(--accent); background:transparent; transition:color .15s, background .15s;
+  }
+  .deep-cta.primary{ background:var(--accent); color:#fff; }
+  .deep-cta.primary:hover{ background:var(--panel); color:var(--accent); }
+  .deep-cta.secondary:hover{ background:var(--accent-soft); }
+
   footer{
-    border-top:1px solid var(--line); padding:2.4rem 1.5rem;
-    font-family:"IBM Plex Sans", sans-serif; font-size:0.88rem; color:var(--ink-soft);
+    background:var(--wine); padding:2.4rem 1.5rem;
+    font-family:"Space Grotesk", sans-serif; font-size:0.88rem; color:var(--sand);
   }
   footer .footer-inner{ max-width:52rem; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; gap:1rem; }
-  footer a{ color:var(--ink-soft); }
-
-  .switch-link{
-    display:inline-block; margin-top:0.4rem; font-family:"IBM Plex Sans", sans-serif;
-    font-size:0.9rem; color:var(--teal); text-decoration:none; border-bottom:1px solid var(--teal);
-  }
+  footer a{ color:var(--gold); }
+  footer a:hover{ color:var(--sand); }
+  footer a:focus-visible{ outline-color:var(--gold); }
+  footer .footer-title{ font-weight:600; }
+  footer .footer-title a{ color:var(--sand); text-decoration:none; }
+  footer .footer-title a:hover{ color:var(--gold); }
 
   @media (max-width:640px){
     body{ font-size:17px; }
     .hero h1{ font-size:1.9rem; }
-    header.masthead nav a{ margin-left:0.9rem; font-size:0.85rem; }
-    header.masthead nav a.nav-cta{ padding:0.2rem 0.55rem; }
     .conclusion{ padding:1.5rem 1.3rem; }
+    .deep{ padding:1.5rem 1.3rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *,*::before,*::after{ transition:none !important; animation:none !important; }
   }
 </style>
 </head>
 <body>
 
 <header class="masthead">
-  <a class="brand" href="../index.html">Kairos</a>
+  <a class="brand" href="../index.html" aria-label="Kairos, ir al inicio"><img class="brand-logo" src="../assets/kairos-brand-v1/kairos-logo.svg" alt="Kairos"></a>
   <nav>
-    <a href="por-que-el-dinero-no-basta-tecnico.html">Versión técnica →</a>
-    <a class="nav-cta" href="https://github.com/josuetartons-cpu/kairos-labs/tree/main/optimization-lab-01" target="_blank" rel="noopener noreferrer">Código reproducible ↗</a>
+    <a href="../index.html#laboratorio">← Volver a Laboratorio</a>
   </nav>
 </header>
 
@@ -180,7 +199,7 @@
 
   <div class="hero">
     <p class="kicker ui"><a href="../index.html#laboratorio" class="kicker-link">Laboratorio · Experimentar</a> · <span class="kicker-series">Optimization Lab #1</span></p>
-    <h1>¿Por qué darle dinero a los pobres no soluciona el problema?</h1>
+    <h1>¿Por qué darle dinero a los pobres no basta?</h1>
     <p class="subtitle">Un experimento con 100,000 hogares sobre dinero, focalización, información e incentivos.</p>
   </div>
 
@@ -221,13 +240,13 @@
       <p>Le dimos el mismo presupuesto, Q20 millones, a cuatro estrategias distintas de reparto. Cada una representa una forma razonable de pensar la política pública.</p>
 
       <div class="stat-row">
-        <div class="stat-card"><div class="label ui">A — Universal</div><div class="value">25.31%</div><div class="sub ui">4,662 hogares salen · Q200 por hogar</div></div>
-        <div class="stat-card"><div class="label ui">B — Q1,000 a los más pobres</div><div class="value">17.35%</div><div class="sub ui">12,623 hogares salen</div></div>
-        <div class="stat-card good"><div class="label ui">C — brecha mínima primero</div><div class="value">0.13%</div><div class="sub ui">29,837 hogares salen</div></div>
-        <div class="stat-card good"><div class="label ui">D — pobreza profunda primero</div><div class="value">3.26%</div><div class="sub ui">26,707 hogares salen</div></div>
+        <div class="stat-card"><div class="label ui">A: Universal</div><div class="value">25.31%</div><div class="sub ui">4,662 hogares salen · Q200 por hogar</div></div>
+        <div class="stat-card"><div class="label ui">B: Q1,000 a los más pobres</div><div class="value">17.35%</div><div class="sub ui">12,623 hogares salen</div></div>
+        <div class="stat-card good"><div class="label ui">C: brecha mínima primero</div><div class="value">0.13%</div><div class="sub ui">29,837 hogares salen</div></div>
+        <div class="stat-card good"><div class="label ui">D: pobreza profunda primero</div><div class="value">3.26%</div><div class="sub ui">26,707 hogares salen</div></div>
       </div>
 
-      <p><strong>A</strong> reparte Q200 a cada uno de los 100,000 hogares, pobres o no. <strong>B</strong> entrega Q1,000 a los hogares más pobres hasta agotar el presupuesto. <strong>C</strong> prioriza a quienes necesitan menos dinero para cruzar la línea — la forma más barata de "graduar" a un hogar de la pobreza. <strong>D</strong> hace lo contrario: atiende primero a quienes tienen la brecha más profunda.</p>
+      <p><strong>A</strong> reparte Q200 a cada uno de los 100,000 hogares, pobres o no. <strong>B</strong> entrega Q1,000 a los hogares más pobres hasta agotar el presupuesto. <strong>C</strong> prioriza a quienes necesitan menos dinero para cruzar la línea: la forma más barata de "graduar" a un hogar de la pobreza. <strong>D</strong> hace lo contrario: atiende primero a quienes tienen la brecha más profunda.</p>
 
       <figure>
         <img src="assets/subsidios/01_pobreza_final_gobiernos.png" alt="Gráfica de barras: pobreza final por estrategia de gobierno con presupuesto de Q20 millones">
@@ -258,7 +277,7 @@
 
       <p>El algoritmo no cambió. Lo que cambió es que ahora observa imperfectamente a la población que quiere ayudar, y eso basta para que un diseño casi perfecto se convierta en uno mediocre.</p>
 
-      <div class="callout">
+      <div class="callout warn">
         <div class="tag ui">Nota metodológica</div>
         <p>Los escenarios de información imperfecta y comportamiento estratégico se evalúan por separado. No representan perturbaciones acumulativas del mismo modelo: la sección siguiente parte de nuevo del algoritmo C con información perfecta, y le agrega conducta estratégica en el reporte, no el error de medición de esta sección.</p>
       </div>
@@ -275,7 +294,7 @@
         <div class="stat-card bad"><div class="label ui">Hogares que manipulan su reporte</div><div class="value">38.38%</div></div>
       </div>
 
-      <div class="callout">
+      <div class="callout warn">
         <div class="tag ui">Importante</div>
         <p>Esto no significa que el 38.38% de los guatemaltecos mentiría en un programa social real. Es el comportamiento óptimo que resulta de las reglas específicas de esta economía artificial: una auditoría baja, una sanción moderada y un costo de manipular casi nulo. Cambia las reglas, y cambia la conducta.</p>
       </div>
@@ -308,7 +327,7 @@
       </div>
       <p>Cada auditoría cuesta Q100 en el experimento. El presupuesto total ya no es solo transferencias: también hay que pagar la fiscalización.</p>
       <div class="eq" data-tex="B = \text{transferencias} + \text{fiscalización}"></div>
-      <p>Con una auditoría del 9.5% y una sanción de 10 veces —el punto justo donde nadie tiene incentivo a mentir— el costo de fiscalizar y el dinero que queda para transferir se reparten así:</p>
+      <p>Con una auditoría del 9.5% y una sanción de 10 veces (el punto justo donde nadie tiene incentivo a mentir), el costo de fiscalizar y el dinero que queda para transferir se reparten así:</p>
 
       <div class="stat-row">
         <div class="stat-card"><div class="label ui">Costo de auditoría</div><div class="value">≈Q950K</div></div>
@@ -322,7 +341,7 @@
         <figcaption>Resultados bajo distintas fricciones de información e incentivos: pobreza final media en 50 simulaciones, según el mecanismo. Kairos Optimization Lab #1.</figcaption>
       </figure>
 
-      <p>Esta es, quizás, la imagen que resume el experimento entero: son cuatro pruebas separadas del mismo algoritmo base, no cuatro pasos de una misma corrida. Con información perfecta e ilimitada (C perfecto), el algoritmo casi elimina la pobreza. Sometido únicamente a error de medición (C imperfecto), se estanca cerca de 16%. Sometido únicamente a manipulación estratégica del reporte, sin corregirla (estratégico), se queda en 10.6%. Y un mecanismo diseñado para eliminar el incentivo a manipular —auditoría y sanción calibradas, con su costo incluido— recupera casi todo el terreno, con manipulación cero.</p>
+      <p>Esta es, quizás, la imagen que resume el experimento entero: son cuatro pruebas separadas del mismo algoritmo base, no cuatro pasos de una misma corrida. Con información perfecta e ilimitada (C perfecto), el algoritmo casi elimina la pobreza. Sometido únicamente a error de medición (C imperfecto), se estanca cerca de 16%. Sometido únicamente a manipulación estratégica del reporte, sin corregirla (estratégico), se queda en 10.6%. Y un mecanismo diseñado para eliminar el incentivo a manipular (auditoría y sanción calibradas, con su costo incluido) recupera casi todo el terreno, con manipulación cero.</p>
     </section>
 
     <section class="entry">
@@ -354,7 +373,7 @@
 
       <div class="callout">
         <div class="tag ui">Hallazgo</div>
-        <p>A partir de Q25 millones, C y D dejan de gastar más: ambas se estabilizan en Q20,232,300.65, exactamente la brecha agregada completa de esta población sintética. Una vez cerrada la brecha, seguir aumentando el presupuesto no reduce nada más dentro del objetivo modelado — la reducción marginal adicional es cero. A continúa gastando todo el presupuesto porque reparte entre los 100,000 hogares. B también termina saturándose: con Q30 millones solo ejecuta Q29.971 millones, equivalentes a Q1,000 para cada uno de los 29,971 hogares inicialmente pobres. C y D se saturan antes porque dejan de gastar una vez cerrada toda la brecha monetaria.</p>
+        <p>A partir de Q25 millones, C y D dejan de gastar más: ambas se estabilizan en Q20,232,300.65, exactamente la brecha agregada completa de esta población sintética. Una vez cerrada la brecha, seguir aumentando el presupuesto no reduce nada más dentro del objetivo modelado: la reducción marginal adicional es cero. A continúa gastando todo el presupuesto porque reparte entre los 100,000 hogares. B también termina saturándose: con Q30 millones solo ejecuta Q29.971 millones, equivalentes a Q1,000 para cada uno de los 29,971 hogares inicialmente pobres. C y D se saturan antes porque dejan de gastar una vez cerrada toda la brecha monetaria.</p>
       </div>
     </section>
 
@@ -367,7 +386,7 @@
       </div>
       <div class="conclusion">
         <p class="big">Sí, dar dinero funciona.</p>
-        <p>En este experimento, entregado bien —con buena focalización, buena información y buenos incentivos— el mismo presupuesto que apenas movía la aguja en un reparto universal terminó por cerrar casi toda la brecha de pobreza. Pero la pregunta difícil nunca fue si dar dinero funciona. Es esta:</p>
+        <p>En este experimento, entregado bien (con buena focalización, buena información y buenos incentivos), el mismo presupuesto que apenas movía la aguja en un reparto universal terminó por cerrar casi toda la brecha de pobreza. Pero la pregunta difícil nunca fue si dar dinero funciona. Es esta:</p>
         <p class="big">¿A quién, cuánto, con qué información, bajo qué objetivo y frente a qué incentivos?</p>
         <div class="eq" data-tex="\text{política contra la pobreza} = \text{dinero} + \text{información} + \text{objetivos} + \text{incentivos} + \text{restricciones}"></div>
         <p>Ninguna de esas piezas sobra. Y ninguna, por sí sola, sustituye a las demás.</p>
@@ -376,14 +395,23 @@
 
   </article>
 
+  <aside class="deep" aria-labelledby="deep-title">
+    <p class="deep-label">Profundizar</p>
+    <h3 id="deep-title">¿Quieres revisar el modelo, los supuestos y las simulaciones?</h3>
+    <p class="deep-text">Consulta la versión técnica del experimento o reproduce el análisis completo en Kairos Labs.</p>
+    <div class="deep-actions">
+      <a class="deep-cta primary" href="por-que-el-dinero-no-basta-tecnico.html">Leer versión técnica →</a>
+      <a class="deep-cta secondary" href="https://github.com/josuetartons-cpu/kairos-labs/tree/main/optimization-lab-01" target="_blank" rel="noopener noreferrer">Ver código reproducible ↗</a>
+    </div>
+  </aside>
+
 </main>
 
 <footer>
   <div class="footer-inner">
     <div>
-      <div class="ui"><a href="../index.html#laboratorio" style="color:var(--ink); text-decoration:none; font-weight:600;">← Volver a Laboratorio</a></div>
+      <div class="ui footer-title"><a href="../index.html#laboratorio">← Volver a Laboratorio</a></div>
       <div class="ui">Optimization Lab #1 · Experimento sintético con fines educativos.</div>
-      <a class="switch-link" href="por-que-el-dinero-no-basta-tecnico.html">Leer la versión técnica completa →</a>
     </div>
     <div class="ui">
       Una futura investigación de Kairos aplicará este marco a datos reales de Guatemala.
