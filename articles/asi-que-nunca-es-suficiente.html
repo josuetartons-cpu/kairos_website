@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿Así que nunca es suficiente? | Kairos</title>
+<meta name="description" content="Una reflexión sobre el deseo, la novedad y la satisfacción. Cinco preguntas para decidir qué deseos merecen un lugar en la vida que estamos construyendo.">
+<meta name="author" content="Josué Tarton">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_GT">
+<meta property="og:site_name" content="Kairos">
+<meta property="og:title" content="¿Así que nunca es suficiente?">
+<meta property="og:description" content="Cómo aprender a querer sin convertir nuestra vida en una persecución">
+<meta name="theme-color" content="#5C3D66">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root{
+  --bg:#F7F4EE;
+  --panel:#FFFFFF;
+  --line:#E4DFD3;
+  --text:#1C1B22;
+  --text-dim:#6B6570;
+  --accent:#5C3D66;
+  --accent-soft:rgba(92,61,102,0.10);
+  --wine:#4A0E1A;
+  --gold:#D4AF7C;
+  --sand:#EADCC8;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth; scroll-padding-top:22px;}
+html,body{margin:0;padding:0;}
+body{background:var(--bg); color:var(--text); font-family:'Space Grotesk',sans-serif; -webkit-font-smoothing:antialiased;}
+a{color:inherit;}
+:focus-visible{outline:3px solid var(--accent); outline-offset:3px;}
+
+.skip{position:absolute; top:-100px; left:16px; background:var(--panel); color:var(--text); font-family:'IBM Plex Mono',monospace; font-size:12px; padding:12px 16px; border:1px solid var(--line); border-radius:6px; z-index:60; text-decoration:none;}
+.skip:focus{top:12px;}
+
+.progress{height:3px; background:var(--accent); position:fixed; top:0; left:0; width:0; z-index:55;}
+
+/* ---------- NAV (idéntico al resto del sitio) ---------- */
+.nav{border-bottom:1px solid var(--line);}
+.nav-inner{max-width:720px; margin:0 auto; padding:22px 28px; display:flex; justify-content:space-between; align-items:center;}
+.nav-brand{display:inline-flex; align-items:center; line-height:0; text-decoration:none; color:var(--text);}
+.nav-logo{display:block; height:40px; width:auto; max-width:100%;}
+.nav-back{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-dim); text-decoration:none;}
+.nav-back:hover{color:var(--accent);}
+
+/* ---------- ARTICLE HEADER (mismo ancho de lectura que el resto del sitio: 680px) ---------- */
+.art-eyebrow{display:inline-flex; align-items:center; gap:8px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); text-decoration:none; margin-bottom:26px;}
+.art-eyebrow:hover{text-decoration:underline;}
+h1{font-family:'Fraunces',serif; font-weight:600; font-size:clamp(30px,5vw,44px); line-height:1.16; margin:0 0 20px; letter-spacing:-0.01em; text-wrap:balance;}
+.dek{font-family:'Fraunces',serif; font-style:italic; font-weight:400; font-size:clamp(18px,2.4vw,21px); color:var(--text-dim); line-height:1.5; margin:0 0 26px; max-width:38ch;}
+.art-meta{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--text-dim); padding-bottom:36px; border-bottom:1px solid var(--line); margin-bottom:0;}
+
+/* ---------- PAGE GRID: columna central de 680px + índice lateral opcional en pantallas anchas ---------- */
+.page{
+  display:grid;
+  grid-template-columns: minmax(28px,1fr) min(680px,100% - 56px) minmax(28px,1fr);
+  grid-template-areas:
+    ". hero ."
+    ". toc ."
+    ". prose .";
+}
+.hero{grid-area:hero; padding-top:64px;}
+.toc-wrap{grid-area:toc; margin:34px 0 6px;}
+.prose{grid-area:prose; padding-bottom:10px;}
+
+@media(min-width:1180px){
+  .page{
+    grid-template-columns: minmax(28px,1fr) 200px 28px min(680px,100% - 56px) minmax(28px,1fr);
+    grid-template-areas:
+      ".  .   . hero  ."
+      ". toc  . prose .";
+  }
+  .toc-wrap{align-self:start; position:sticky; top:26px; margin:6px 0;}
+}
+
+/* ---------- ÍNDICE LATERAL ---------- */
+.toc summary{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-dim); cursor:pointer; padding:9px 0; list-style:none;}
+.toc summary::-webkit-details-marker{display:none;}
+.toc summary::before{content:''; display:inline-block; width:14px; height:2px; margin-right:9px; vertical-align:middle; background:var(--accent);}
+.toc ol{list-style:none; margin:8px 0 0; padding:0; counter-reset:contents;}
+.toc li{counter-increment:contents; border-top:1px solid var(--line); padding:10px 0;}
+.toc li:last-child{border-bottom:1px solid var(--line);}
+.toc a{display:flex; gap:10px; font-family:'Space Grotesk',sans-serif; font-size:13px; line-height:1.4; color:var(--text-dim); text-decoration:none;}
+.toc a:hover{color:var(--accent);}
+.toc a::before{content:counter(contents,decimal-leading-zero); font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--accent); padding-top:2px; flex-shrink:0;}
+@media(max-width:1179px){
+  .toc ol{columns:2; column-gap:24px;}
+  .toc li{break-inside:avoid;}
+}
+@media(max-width:520px){
+  .toc ol{columns:1;}
+}
+
+/* ---------- PROSE (mismas reglas tipográficas que el resto del sitio) ---------- */
+.prose p{font-family:'Fraunces',serif; font-weight:400; font-size:19px; line-height:1.72; color:var(--text); margin:0 0 24px;}
+.prose .opening{font-size:20px;}
+.prose h2{font-family:'Fraunces',serif; font-weight:600; font-size:clamp(22px,3vw,27px); margin:56px 0 22px; letter-spacing:-0.005em; text-wrap:balance;}
+.prose sup{font-family:'IBM Plex Mono',monospace; font-size:11px;}
+.prose sup a{padding:4px; text-decoration:none; color:var(--accent);}
+.prose sup a:hover{text-decoration:underline;}
+
+.prose .pull{font-family:'Fraunces',serif; font-style:italic; font-weight:500; font-size:clamp(21px,3vw,26px); line-height:1.45; color:var(--accent); border-left:3px solid var(--accent); padding-left:24px; margin:44px 0 48px;}
+
+.prose .closing-thesis{background:var(--accent); border-radius:8px; padding:34px 38px; margin:44px 0 40px; font-family:'Fraunces',serif; font-size:clamp(19px,2.6vw,23px); line-height:1.55; color:var(--bg); font-weight:400;}
+
+.prose .last-line{font-family:'Fraunces',serif; font-style:italic; font-size:clamp(19px,2.4vw,22px); color:var(--accent); margin-bottom:8px;}
+
+/* ---------- REFERENCIAS ---------- */
+.references{border-top:1px solid var(--line); margin-top:52px; padding-top:30px;}
+.references h2{font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.09em; text-transform:uppercase; color:var(--text-dim); font-weight:600; margin:0 0 20px;}
+.references p{font-family:'Space Grotesk',sans-serif; font-size:14px; line-height:1.65; color:var(--text-dim); margin:0 0 8px; overflow-wrap:anywhere;}
+.references p.reference{font-size:14.5px; color:var(--text); margin:26px 0 8px;}
+.references p.reference a{color:var(--accent); text-decoration:underline; text-decoration-color:rgba(92,61,102,0.35);}
+.backref{font-family:'IBM Plex Mono',monospace; white-space:nowrap; color:var(--text-dim); text-decoration:none; padding:2px 4px;}
+.backref:hover{color:var(--accent);}
+
+/* ---------- FOOTER (idéntico al resto del sitio) ---------- */
+footer{background:var(--wine); padding:40px 0; margin-top:0;}
+.footer-inner{max-width:680px; margin:0 auto; padding:0 28px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;}
+.footer-inner a{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--sand); text-decoration:none;}
+.footer-inner a:hover{color:var(--gold);}
+.footer-inner a:focus-visible{outline-color:var(--gold);}
+.footer-copy{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--sand); opacity:0.8;}
+
+@media(max-width:520px){
+  .page{grid-template-columns: minmax(22px,1fr) min(680px,100% - 44px) minmax(22px,1fr);}
+  .hero{padding-top:44px;}
+  .prose p{font-size:18px;}
+  .prose .opening{font-size:19px;}
+  .prose .pull{font-size:22px; padding-left:18px;}
+  .prose .closing-thesis{padding:26px 24px;}
+  .footer-inner{padding:0 22px;}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+@media print{
+  .nav,.toc-wrap,footer,.progress,.skip{display:none;}
+  body{background:#fff;}
+  .page{display:block; max-width:none;}
+  .hero{padding:0;}
+  h1{font-size:32pt;}
+  .prose p{font-size:12pt; line-height:1.5;}
+  .prose h2{break-after:avoid; font-size:18pt; margin-top:25pt;}
+  .pull,.closing-thesis{break-inside:avoid;}
+  .prose .closing-thesis{background:none; color:#000; border-left:2px solid var(--accent);}
+}
+
+/* Componentes de esta reflexión */
+[hidden]{display:none!important;}
+.nav-wordmark{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:29px;letter-spacing:-1.5px;line-height:1;}
+.prose h3{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(21px,2.7vw,24px);line-height:1.35;margin:38px 0 20px;text-wrap:balance;}
+.prose em{font-style:italic;}
+.prose strong{font-weight:600;}
+.framework{margin:30px 0 40px;padding:0;}
+.desire-step{border-top:1px solid var(--line);padding:28px 0 8px;scroll-margin-top:28px;}
+.desire-step:last-child{border-bottom:1px solid var(--line);}
+.prose .step-heading{display:flex;align-items:baseline;gap:14px;margin:0 0 15px;}
+.step-number{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;color:var(--accent);letter-spacing:.02em;}
+.prose .step-question{font-size:21px;line-height:1.45;color:var(--accent);font-weight:500;margin-bottom:18px;}
+.prose .desire-step p:last-child{margin-bottom:20px;}
+.toc a[aria-current="location"]{color:var(--accent);font-weight:500;}
+.toc a{transition:color .15s ease;}
+.references .backrefs{display:inline;}
+.references .scope-note{margin-top:26px;}
+@media(min-width:1180px){.toc-wrap{max-height:calc(100vh - 52px);overflow-y:auto;scrollbar-width:thin;}}
+@media(max-width:520px){
+ .nav-inner{padding:19px 22px;gap:18px;}
+ .nav-logo{height:34px;}
+ .nav-back{font-size:10.5px;}
+ .dek{max-width:100%;}
+ .prose .step-question{font-size:20px;}
+ .prose .pull{margin:34px 0;}
+ .prose .closing-thesis{padding:26px 24px;}
+ .art-meta{line-height:1.7;}
+}
+@media(prefers-reduced-motion:reduce){.toc a{transition:none;}}
+@media print{
+ .nav-wordmark{display:none;}
+ .prose h3{font-size:14pt;break-after:avoid;}
+ .prose .step-question{font-size:13pt;}
+ .prose .pull,.prose .last-line{color:#000;}
+ .references p,.references p.reference{font-size:10pt;}
+ .references a{color:#000;}
+ .desire-step{padding:12pt 0 0;}
+}
+</style>
+</head>
+<body id="inicio">
+<a class="skip" href="#lectura">Saltar al artículo</a>
+<div class="progress" aria-hidden="true"></div>
+<nav class="nav" aria-label="Navegación principal"><div class="nav-inner">
+<a href="../index.html" class="nav-brand" aria-label="Kairos, inicio del sitio"><img class="nav-logo" src="../assets/kairos-brand-v1/kairos-logo.svg" alt="Kairos"><span class="nav-wordmark" hidden aria-hidden="true">kairos</span></a>
+<a href="../index.html" class="nav-back">← Volver a Kairos</a>
+</div></nav>
+<main><article aria-labelledby="titulo"><div class="page">
+<header class="hero">
+<a href="../pensamiento.html" class="art-eyebrow">Pensamiento · Reflexionar</a>
+<h1 id="titulo">¿Así que nunca es suficiente?</h1>
+<p class="dek">Cómo aprender a querer sin convertir nuestra vida en una persecución</p>
+<div class="art-meta">Josué Tarton · 12 min de lectura</div>
+</header>
+<div class="toc-wrap"><details class="toc" open><summary>En esta reflexión</summary><ol>
+<li><a href="#seccion-1">El deseo tiene un lugar en nuestra vida</a></li>
+<li><a href="#seccion-2">Lo que la dopamina ayuda a entender</a></li>
+<li><a href="#seccion-3">La cultura de lo siguiente</a></li>
+<li><a href="#seccion-4">Conseguir y cuidar requieren esfuerzos diferentes</a></li>
+<li><a href="#seccion-5">Terminar mi ecosistema tecnológico</a></li>
+<li><a href="#seccion-6">Cinco preguntas antes de convertir un deseo en una decisión</a></li>
+<li><a href="#seccion-7">Aprender a cerrar un ciclo</a></li>
+<li><a href="#seccion-8">Una vida que no esté siempre esperando</a></li>
+<li><a href="#fuentes">Fuentes y alcance</a></li>
+</ol></details></div>
+<div class="prose" id="lectura">
+<p class="opening">Durante mucho tiempo me pregunté qué nos mueve a perseguir un objetivo, comprar un producto o buscar un amor. Me interesaba entender el entusiasmo con el que imaginamos algo que todavía no tenemos. Pero también lo que ocurre después: llegamos, lo conseguimos, y a veces nuestra atención ya está puesta en otra parte. Como si el esfuerzo que nos costó obtener eso tan deseado no hubiera valido la pena.</p>
+<p>Buscando una explicación encontré en un foro este libro: <em>Dopamina</em>, de Daniel Z. Lieberman y Michael E. Long. El libro me llevó a pensar en el deseo, la anticipación y la dificultad de sentirnos satisfechos con aquello que antes parecía tan importante. <sup><a id="nota-1-1" href="#referencia-1" aria-label="Consultar referencia 1">1</a></sup></p>
+<p>Uno de los aspectos que me llamaron la atención es que, tanto en el amor como en nuestros proyectos debemos aprender a manejar lo que tenemos y lo que deseamos. De esa lectura surgió una pregunta que me gustaría explorar aquí: ¿cómo podemos seguir deseando cosas nuevas sin convertir nuestra vida en una persecución permanente de lo siguiente?</p>
+<p>No quisiera decirte qué deberías querer. Me interesa algo más cercano a nuestras decisiones cotidianas: cómo reconocer cuáles de nuestros deseos merecen un lugar en la vida que estamos construyendo.</p>
+<section aria-labelledby="seccion-1"><h2 id="seccion-1">El deseo tiene un lugar en nuestra vida</h2>
+<p>Desear puede llevarnos a estudiar una carrera, acercarnos a alguien o comenzar un proyecto que todavía no sabemos cómo terminar. Nos permite imaginar cambios antes de que existan. Muchas cosas valiosas empiezan con esa inquietud.</p>
+<p>Por eso, la satisfacción no tendría por qué exigirnos abandonar la ambición. Podemos valorar lo que tenemos y querer mejorar algunas partes de nuestra vida. Una persona puede disfrutar su trabajo mientras se prepara para una oportunidad distinta. Puede estar a gusto en su ciudad y sentir curiosidad por conocer otras.</p>
+<p>La dificultad aparece cuando el entusiasmo por una posibilidad se convierte, casi sin darnos cuenta, en una instrucción: si me atrae, debo perseguirla. Entonces cada alternativa abre una tarea pendiente y cada logro parece durar apenas lo necesario para descubrir el siguiente.</p>
+<p>La intensidad de un deseo nos dice que algo nos atrae. Para decidir qué hacer con él necesitamos saber más: qué esperamos obtener, qué nos exige y cómo se relaciona con lo que ya elegimos.</p>
+</section>
+<section aria-labelledby="seccion-2"><h2 id="seccion-2">Lo que la dopamina ayuda a entender</h2>
+<p>La investigación sobre recompensa distingue entre el impulso de buscar algo y el placer de experimentarlo. Kent Berridge y Terry Robinson utilizan los términos <em>wanting</em> y <em>liking</em> para estudiar procesos que pueden separarse. En ese marco, la dopamina participa en sistemas que hacen atractivas ciertas recompensas y sus señales; su actividad no equivale, por sí sola, al disfrute que esas recompensas producen. <sup><a id="nota-2-1" href="#referencia-2" aria-label="Consultar referencia 2">2</a></sup></p>
+<p>Otra línea de investigación muestra que la actividad de determinadas neuronas dopaminérgicas puede señalar diferencias entre una recompensa esperada y la obtenida. Es lo que se conoce como error de predicción de recompensa: una señal relevante para aprender de lo que ocurre. Esto no significa que la dopamina se apague al conseguir algo, ni que solo exista mientras esperamos. <sup><a id="nota-3-1" href="#referencia-3" aria-label="Consultar referencia 3">3</a></sup></p>
+<p>Estas ideas ayudan a distinguir motivación, aprendizaje y placer. No permiten atribuir cada compra, cada enamoramiento o cada cambio de trabajo a una molécula. Tampoco convierten el interés cotidiano por algo nuevo en una adicción.</p>
+<p>La pregunta que propongo para nuestra vida es una interpretación a partir de esa distinción: ¿cuánto nos atrae la experiencia que vamos a tener y cuánto nos atrae imaginarla? Podemos investigar durante semanas una cámara y descubrir después que disfrutábamos más comparando modelos que tomando fotografías. También podemos comprarla, usarla durante años y encontrar en ella una afición importante. El entusiasmo inicial, por sí solo, no nos dice cuál de esas historias será la nuestra.</p>
+</section>
+<section aria-labelledby="seccion-3"><h2 id="seccion-3">La cultura de lo siguiente</h2>
+<p>Un video termina y otro comienza. Vemos una computadora, un restaurante, una ciudad o una forma de vestir que no conocíamos. En unos minutos aparecen suficientes posibilidades para ocupar meses de tiempo y varios presupuestos.</p>
+<p>Descubrirlas puede enriquecer nuestra vida. Una recomendación puede acercarnos a un libro que necesitábamos o a una actividad que terminamos disfrutando. Pero también puede cambiar lo que esperamos de nosotros mismos y de los demás.</p>
+<p>Pensemos en una tendencia como regalar flores amarillas. Para alguien puede ser una expresión de cariño que le gusta desde hace tiempo. Para otra persona, la expectativa puede aparecer después de ver muchas publicaciones sobre el mismo gesto. Una costumbre que antes no figuraba en su relación empieza a sentirse como algo que debería suceder.</p>
+<p>El deseo puede ser sincero en ambos casos. Su origen no lo vuelve automáticamente superficial. Lo que merece atención es el momento en que una posibilidad ajena se transforma en una obligación propia.</p>
+<p>Aquí no hace falta afirmar que las redes destruyeron nuestra dopamina. Basta con hacernos una pregunta antes de actuar: ¿esto me interesa por el lugar que tendría en mi vida, o empieza a parecerme indispensable porque lo estoy viendo en todas partes?</p>
+</section>
+<section aria-labelledby="seccion-4"><h2 id="seccion-4">Conseguir y cuidar requieren esfuerzos diferentes</h2>
+<p>Antes de conseguir algo, buena parte de su atractivo está en lo que podría llegar a ser. Un proyecto todavía admite muchas versiones. Una ciudad que no conocemos puede contener todo lo que echamos de menos. Una relación que comienza está llena de descubrimientos.</p>
+<p>Después aparece la convivencia con lo concreto. El proyecto exige correcciones. La ciudad tiene trayectos y días aburridos. La relación necesita conversaciones que no siempre son fáciles. Aquello que imaginábamos empieza a ocupar un lugar real, con posibilidades y límites.</p>
+<p>La investigación sobre adaptación hedónica estudia cómo pueden disminuir algunas ganancias de bienestar después de cambios positivos. Sheldon y Lyubomirsky examinaron, en un estudio longitudinal con estudiantes, tanto el descenso de emociones positivas como el aumento de aspiraciones después de una mejora. <sup><a id="nota-4-1" href="#referencia-4" aria-label="Consultar referencia 4">4</a></sup> Esto no implica que todo logro pierda su efecto ni que la familiaridad haga inútil lo conseguido.</p>
+<p>Desde ahí, propongo distinguir entre perder novedad y perder valor. Una computadora puede dejar de emocionarnos al encenderla y seguir siendo una herramienta excelente. Una amistad puede tener menos sorpresas que al principio y ofrecer una confianza que antes no existía.</p>
+<h3 id="del-enamoramiento-al-compromiso">Del enamoramiento al compromiso</h3>
+<p>En <em>Dopamina</em>, la historia de Shawn y Samantha me llamó la atención porque muestra algo que solemos asociar únicamente con las relaciones: el entusiasmo del comienzo no puede durar para siempre de la misma manera. <sup><a id="nota-1-2" href="#referencia-1" aria-label="Consultar referencia 1">1</a></sup></p>
+<p>Al principio existe descubrimiento. Queremos conocer más, imaginamos posibilidades y buena parte del atractivo está precisamente en aquello que todavía no sabemos. Con el tiempo, esa relación deja de sostenerse únicamente en la novedad. Si continúa, necesita aprender otra forma de querer.</p>
+<p>El libro utiliza esta transición para distinguir, de manera general, entre el impulso asociado a lo nuevo y una relación más vinculada con aquello que tenemos delante. A mí me resulta útil pensarla como el paso del amor de amantes al amor de compañeros.</p>
+<p>Creo que algo parecido puede ocurrir con nuestros proyectos.</p>
+<p>Cuando comenzamos uno, buena parte de su fuerza está en lo que imaginamos que podría llegar a ser. Pensamos en todo lo que podemos construir, en las oportunidades que podría abrir y en el impacto que quizá llegue a tener.</p>
+<p>Eso me ocurrió con Kairos.</p>
+<p>Al principio era fácil imaginarlo en grande: una plataforma que pudiera crecer, llegar a muchas personas, convertirse en algo económicamente sostenible y quizá incluso ayudar a cambiar la manera en que algunas personas entienden ciertos problemas. Había muchas posibilidades y, precisamente por eso, también mucha emoción.</p>
+<p>Con el tiempo mi relación con el proyecto cambió.</p>
+<p>Kairos sigue siendo importante para mí, pero ya no necesito que se convierta en algo extraordinario para justificar su existencia. Hoy lo veo también como un espacio que puede acompañar mi trayectoria profesional: un lugar donde investigar, escribir, experimentar, aprender y compartir conocimiento útil.</p>
+<p>Si algún día crece mucho, será una posibilidad interesante. Si genera ingresos, también. Pero su valor no depende únicamente de alcanzar esa versión futura.</p>
+<p>Ya está cumpliendo una función mientras lo construyo.</p>
+<p>Me permite desarrollar ideas, mejorar habilidades y producir información que puede ser útil para otras personas. El proyecto dejó de ser solamente una promesa sobre lo que podría llegar a convertirse y empezó a tener valor por lo que me permite hacer ahora.</p>
+<p>Quizá eso también ocurre cuando un proyecto madura. Dejamos de relacionarnos únicamente con la versión ideal que imaginamos al comienzo y empezamos a trabajar con lo que realmente tenemos delante.</p>
+<p>No significa perder ambición.</p>
+<p>Significa que el proyecto ya no necesita emocionarnos como el primer día para seguir mereciendo nuestra atención.</p>
+<p>La pregunta «¿y si existe algo mejor?» puede acompañarnos en muchos ámbitos. A veces abre una mejora necesaria. Otras veces nos impide dedicar suficiente atención a lo que elegimos como para descubrir su valor.</p>
+<p>Conviene preguntarnos qué cambió: ¿nuestras necesidades, las condiciones de esa elección o el entusiasmo del comienzo? Las respuestas pueden justificar tanto continuar como salir. Cuidar lo que tenemos también incluye reconocer cuándo ya no nos hace bien o cuándo dejó de encajar. Haber invertido tiempo en algo no nos obliga a conservarlo.</p>
+<p>En cambio, si todavía tiene sentido para nosotros, quizá necesita una clase de esfuerzo que la búsqueda inicial no nos enseñó. Conseguir una oportunidad y construir algo con ella son trabajos diferentes.</p>
+</section>
+<section aria-labelledby="seccion-5"><h2 id="seccion-5">Terminar mi ecosistema tecnológico</h2>
+<p>Algo de esto lo reconocí al construir mi ecosistema tecnológico. Durante un tiempo aparecían dispositivos, accesorios y posibilidades que me parecían interesantes. Cada uno podía añadir alguna función o abrir otra manera de trabajar.</p>
+<p>Poco a poco comencé a distinguir entre «esto es interesante» y «esto tiene un lugar real en mi vida». Algunos dispositivos reducían una fricción concreta. Otros me ofrecían una forma de disfrutar mi tiempo. También había cosas que podía admirar sin necesitar incorporarlas.</p>
+<p>Esa distinción me permitió establecer un punto de suficiencia. Dejé de interpretar automáticamente «me gusta» como «necesito tenerlo». Pude seguir interesado en la tecnología y reconocer que, para lo que hacía en ese momento, mi ecosistema ya estaba completo.</p>
+<p>Completo no significa definitivo. Si mis necesidades cambian, podré revisar esa decisión. Lo que cambió fue el criterio: la aparición de una opción nueva dejó de ser razón suficiente para ampliar el conjunto.</p>
+<p class="pull">Un producto puede ser extraordinario y aun así no tener un lugar claro en mi vida. Entenderlo me permite apreciarlo sin convertir su ausencia en una carencia.</p>
+</section>
+<section aria-labelledby="seccion-6"><h2 id="seccion-6">Cinco preguntas antes de convertir un deseo en una decisión</h2>
+<p>A partir de estas reflexiones, propongo el Marco Kairos del deseo. Es una herramienta de deliberación, no una prueba psicológica ni una fórmula validada para garantizar satisfacción. Su propósito es abrir un espacio entre sentir interés y asumir un compromiso.</p>
+<div class="framework" aria-label="Marco Kairos del deseo">
+<section class="desire-step" aria-labelledby="pregunta-1"><h3 class="step-heading" id="pregunta-1"><span class="step-number">01</span>Origen</h3>
+<p class="step-question">¿De dónde apareció este deseo?</p>
+<p>¿Responde a una dificultad que ya tenía? ¿Surgió al hablar con alguien, ver publicidad o conocer una alternativa? Identificar su origen ayuda a comprender qué lo activó. Un deseo nacido de una recomendación puede llevarnos a algo valioso. Uno que nos acompaña desde hace años también puede necesitar revisión.</p>
+</section>
+<section class="desire-step" aria-labelledby="pregunta-2"><h3 class="step-heading" id="pregunta-2"><span class="step-number">02</span>Encaje</h3>
+<p class="step-question">¿Dónde cabe esto en la vida que realmente llevo?</p>
+<p>Imaginamos con facilidad una versión de nosotros que tendrá tiempo para todo lo nuevo. Conviene mirar también nuestra semana habitual: qué hacemos, qué disfrutamos y qué ya nos cuesta sostener. Una actividad puede gustarnos mucho y necesitar un espacio que todavía no tenemos. En ese caso, podemos decidir cómo abrirlo o reconocer que queremos retomarla más adelante.</p>
+</section>
+<section class="desire-step" aria-labelledby="pregunta-3"><h3 class="step-heading" id="pregunta-3"><span class="step-number">03</span>Función</h3>
+<p class="step-question">¿Qué quiero obtener de esto?</p>
+<p>Puede resolver un problema, permitirnos aprender o darnos placer. El disfrute también es una función válida. No necesitamos inventar productividad para justificar una afición o una compra que simplemente nos gusta.</p>
+<p>Nombrar lo que buscamos permite evaluar mejor la elección. Si queremos descansar, por ejemplo, podemos preguntarnos si la experiencia que estamos planeando nos ofrecerá descanso o añadirá obligaciones.</p>
+</section>
+<section class="desire-step" aria-labelledby="pregunta-4"><h3 class="step-heading" id="pregunta-4"><span class="step-number">04</span>Costo de oportunidad</h3>
+<p class="step-question">¿Qué desplaza?</p>
+<p>Una decisión puede consumir dinero, tiempo, atención, espacio o energía. Incluso algo gratuito puede ocupar las horas que necesitábamos para otra actividad.</p>
+<p>La pregunta es concreta: ¿quiero esto lo suficiente para aceptar aquello a lo que estoy renunciando? A veces la respuesta será sí. Tener claro el intercambio nos permite elegirlo sin ocultarnos su costo.</p>
+</section>
+<section class="desire-step" aria-labelledby="pregunta-5"><h3 class="step-heading" id="pregunta-5"><span class="step-number">05</span>Suficiencia</h3>
+<p class="step-question">¿Qué tendría que ocurrir para considerar cumplido este deseo?</p>
+<p>Si buscamos una computadora para realizar determinadas tareas, podemos definir cuáles. Si queremos aprender algo, podemos reconocer un nivel o una experiencia que nos importe alcanzar.</p>
+<p>En proyectos abiertos, la suficiencia puede referirse a una etapa: publicar una primera versión, terminar un experimento o dedicar cierto tiempo antes de evaluar el siguiente paso. Ese criterio puede revisarse si cambian nuestras necesidades. Lo importante es reconocer cuándo lo estamos modificando y por qué.</p>
+<p>La imagen de un juego sin condición de victoria me resulta útil: si cada avance mueve la meta, será difícil reconocer que llegamos. No necesitamos fijar un límite para toda la vida, pero sí alguna manera de saber cuándo una búsqueda puede descansar.</p>
+</section>
+</div>
+</section>
+<section aria-labelledby="seccion-7"><h2 id="seccion-7">Aprender a cerrar un ciclo</h2>
+<p>Aplicar estas preguntas puede llevarnos a perseguir un deseo, posponerlo o dejarlo pasar. También puede permitirnos disfrutarlo de una manera más limitada: leer sobre una ciudad sin planear una mudanza o investigar un dispositivo sin comprarlo.</p>
+<p>La curiosidad tiene valor aunque no termine en adquisición. No todo interés necesita convertirse en una nueva dirección vital.</p>
+<p>Cuando sí decidimos actuar, podemos dar paso a otra etapa: usar aquello que compramos, practicar lo que empezamos o trabajar en el proyecto que elegimos. Cerrar la búsqueda abre tiempo para la experiencia.</p>
+<p>Esto también aplica a las ideas. Una posibilidad nueva puede parecer más atractiva que un proyecto que ya entró en su parte difícil. Antes de reemplazarlo, conviene examinar si apareció una oportunidad mejor o si estamos buscando otra vez el entusiasmo de comenzar.</p>
+</section>
+<section aria-labelledby="seccion-8"><h2 id="seccion-8">Una vida que no esté siempre esperando</h2>
+<p>«Cuando consiga ese trabajo». «Cuando pueda comprarlo». «Cuando termine este proyecto». Pensar así puede ayudarnos a organizar esfuerzos. Pero, si la satisfacción queda siempre condicionada al siguiente resultado, el presente termina pareciéndose a una sala de espera.</p>
+<p>Tampoco sería justo pedirle a alguien que se conforme con condiciones que necesita cambiar. La seguridad económica, el descanso o la posibilidad de salir de un entorno dañino son necesidades reales. Valorar una parte de nuestra vida no elimina esas dificultades.</p>
+<p>Me interesa la posibilidad de reconocer lo que hoy tiene valor mientras trabajamos en lo que hace falta. Que un proyecto esté incompleto no impide disfrutar de una conversación, una comida o una actividad que ya nos gusta. Que queramos avanzar no obliga a tratar toda nuestra vida actual como insuficiente.</p>
+<p>Entonces, ¿cuándo será suficiente? Quizá no podamos responder una sola vez y para siempre. Podemos empezar por un ámbito concreto y reconocer qué tenemos, qué queremos cambiar y qué búsqueda ya cumplió su propósito.</p>
+<p>Para esta reflexión, estar satisfecho significa que un nuevo deseo ya no tiene autoridad automática sobre nuestra vida. Podemos escucharlo, examinarlo y decidir. Algunas veces nos llevará a un cambio importante. Otras veces podremos disfrutar la posibilidad y regresar a lo que estábamos haciendo.</p>
+<p class="closing-thesis">No se trata de dejar de querer cosas. Se trata de decidir cuáles de nuestros deseos merecen convertirse en decisiones.</p>
+<p class="last-line">Quizá hemos aprendido mucho mejor a perseguir lo que no tenemos que a cuidar lo que ya conseguimos. Dedicarle atención a esto último también puede ser parte de la vida que queremos construir.</p>
+</section>
+<section class="references" aria-labelledby="fuentes"><h2 id="fuentes">Fuentes y alcance</h2>
+<p class="reference" id="referencia-1"><a href="https://proassetspdlcom.cdnstatics2.com/usuaris/libros_contenido/arxius/48/47810_Dopamina.pdf">[1] Lieberman, D. Z. y Long, M. E. (2021). Dopamina. Península. Capítulo 1 Amor.</a> <span class="backrefs"><a class="backref" href="#nota-1-1" aria-label="Volver a la cita 1, mención 1">↩1</a> <a class="backref" href="#nota-1-2" aria-label="Volver a la cita 1, mención 2">↩2</a></span></p>
+<p>Libro de divulgación que motiva la reflexión y aporta el relato de Shawn y Samantha. Fragmento oficial.</p>
+<p class="reference" id="referencia-2"><a href="https://sites.lsa.umich.edu/berridge-lab/wp-content/uploads/sites/743/2019/10/2016-Berridge-Robinson-Liking-wanting-IS-theory-of-addiction-Am-Psychol.pdf">[2] Berridge, K. C. y Robinson, T. E. (2016). Liking, wanting, and the incentive-sensitization theory of addiction. American Psychologist, 71(8), 670–679. doi:10.1037/amp0000059.</a> <span class="backrefs"><a class="backref" href="#nota-2-1" aria-label="Volver a la cita 2, mención 1">↩</a></span></p>
+<p>Síntesis de investigación sobre motivación y placer. Wanting tiene aquí un sentido técnico específico; no equivale a todos los deseos conscientes.</p>
+<p class="reference" id="referencia-3"><a href="https://www.gatsby.ucl.ac.uk/~dayan/papers/sdm97.pdf">[3] Schultz, W., Dayan, P. y Montague, P. R. (1997). A neural substrate of prediction and reward. Science, 275(5306), 1593–1599. doi:10.1126/science.275.5306.1593.</a> <span class="backrefs"><a class="backref" href="#nota-3-1" aria-label="Volver a la cita 3, mención 1">↩</a></span></p>
+<p>Trabajo sobre aprendizaje y señales dopaminérgicas de predicción de recompensa; no es una prueba sobre decisiones de consumo o relaciones personales.</p>
+<p class="reference" id="referencia-4"><a href="https://journals.sagepub.com/doi/abs/10.1177/0146167212436400">[4] Sheldon, K. M. y Lyubomirsky, S. (2012). The challenge of staying happier: Testing the hedonic adaptation prevention model. Personality and Social Psychology Bulletin, 38(5), 670–680. doi:10.1177/0146167212436400.</a> <span class="backrefs"><a class="backref" href="#nota-4-1" aria-label="Volver a la cita 4, mención 1">↩</a></span></p>
+<p>Estudio longitudinal de tres meses con 481 estudiantes. Se consultó el resumen publicado. Apoya el estudio de cambios en emociones y aspiraciones; no demuestra que toda mejora produzca una adaptación completa.</p>
+<p class="scope-note">El Marco Kairos del deseo, los ejemplos cotidianos y la definición propuesta de suficiencia son aportaciones interpretativas del artículo. Las fuentes científicas sustentan las distinciones señaladas en el texto; no validan el marco completo ni explican por sí solas el comportamiento del lector.</p>
+</section>
+</div></div></article></main>
+<footer><div class="footer-inner"><a href="../pensamiento.html">← Volver a Pensamiento</a><span class="footer-copy">© 2026 Kairos</span></div></footer>
+<script>
+(() => {
+ const progress=document.querySelector('.progress');
+ let pending=false;
+ const updateProgress=()=>{
+   const max=document.documentElement.scrollHeight-innerHeight;
+   progress.style.width=(max>0?Math.max(0,Math.min(100,scrollY/max*100)):0)+'%';
+   pending=false;
+ };
+ addEventListener('scroll',()=>{if(!pending){pending=true;requestAnimationFrame(updateProgress);}},{passive:true});
+ addEventListener('resize',updateProgress);
+ updateProgress();
+ const compact=matchMedia('(max-width:1179px)');
+ const toc=document.querySelector('.toc');
+ const syncToc=()=>{toc.open=!compact.matches;};
+ syncToc();
+ compact.addEventListener('change',syncToc);
+ const logo=document.querySelector('.nav-logo');
+ const showWordmark=()=>{logo.hidden=true;document.querySelector('.nav-wordmark').hidden=false;};
+ logo.addEventListener('error',showWordmark);
+ if(logo.complete && logo.naturalWidth===0)showWordmark();
+ const tocLinks=[...document.querySelectorAll('.toc a')];
+ const headings=tocLinks.map(a=>document.getElementById(a.hash.slice(1)));
+ let observing=false;
+ const markSection=()=>{
+   let active=null;
+   for(const heading of headings){if(heading.getBoundingClientRect().top<=150)active=heading.id;}
+   for(const a of tocLinks){if(a.hash==='#'+active)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');}
+   observing=false;
+ };
+ addEventListener('scroll',()=>{if(!observing){observing=true;requestAnimationFrame(markSection);}},{passive:true});
+ addEventListener('resize',markSection);
+ markSection();
+})();
+</script>
+</body></html>
