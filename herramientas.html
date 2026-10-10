@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>Herramientas | Kairos</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Herramientas en desarrollo de Kairos para explorar escenarios, comparar alternativas y entender la incertidumbre al tomar decisiones.">
+<meta name="description" content="Herramientas de Kairos: conocimiento convertido en recursos para decidir, aprender, analizar o construir. Decisiones personales, agricultura, negocios y aprendizaje.">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
 
@@ -185,7 +185,7 @@ footer a:focus-visible{outline-color:var(--gold);}
 /* ---------- HERRAMIENTAS ---------- */
 .tools-hero{padding:88px 0 76px;}
 .tools-hero-grid{display:grid;grid-template-columns:1.12fr 1fr;gap:52px;align-items:center;}
-.tools-hero h1{font-size:clamp(44px,5.5vw,68px);max-width:12ch;letter-spacing:-.045em;line-height:1.04;margin:0 0 28px;}
+.tools-hero h1{font-size:clamp(44px,5.5vw,68px);max-width:16ch;letter-spacing:-.045em;line-height:1.04;margin:0 0 28px;}
 .tools-hero h1 span{color:var(--accent);}
 .tools-copy{font-size:15px;line-height:1.8;color:var(--text-dim);max-width:65ch;}
 .tools-copy p{margin:0 0 16px;}
@@ -212,6 +212,10 @@ footer a:focus-visible{outline-color:var(--gold);}
 .tools-capability{padding-top:22px;border-top:2px solid var(--line);}
 .tools-capability h3{font-size:16px;font-weight:600;margin:0 0 12px;}
 .tools-capability p{font-size:13px;line-height:1.75;color:var(--text-dim);margin:0;}
+.tools-eco-label{display:block;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);margin:0 0 12px;}
+.tools-eco .tools-capability:last-child{border-top-color:var(--accent);}
+.tools-eco .tools-capability:last-child h3,.tools-eco .tools-capability:last-child .tools-eco-label{color:var(--accent);}
+.tools-eco-line{font-family:'Fraunces',serif;font-size:clamp(19px,2.3vw,24px);font-weight:500;line-height:1.5;margin:40px 0 0;max-width:40ch;}
 .tools-process{background:var(--panel-2);}
 .tools-steps{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(4,1fr);gap:30px;counter-reset:steps;}
 .tools-steps li{counter-increment:steps;}
@@ -221,21 +225,30 @@ footer a:focus-visible{outline-color:var(--gold);}
 .tools-steps li:last-child h3{color:var(--accent);}
 .tools-split{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:start;}
 .tools-quote{font-family:'Fraunces',serif;font-size:clamp(26px,3vw,36px);line-height:1.4;border-left:2px solid var(--accent);padding:8px 0 8px 28px;margin:0;}
-.tools-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;}
 .tools-card{position:relative;overflow:hidden;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:36px 30px 30px;display:flex;flex-direction:column;transition:border-color .15s;}
 .tools-card::before{content:"";position:absolute;top:0;left:0;right:0;height:6px;background:var(--accent);}
 .tools-card:hover{border-color:var(--accent);}
 .tools-card-top{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:26px;}
 .tools-number{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-dim);}
 .tools-status{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent);background:var(--accent-soft);border-radius:20px;padding:6px 10px;}
-.tools-card h3{font-size:24px;font-weight:600;letter-spacing:-.025em;margin:0 0 14px;}
+.tools-card h3,.tools-card h4{font-size:24px;font-weight:600;letter-spacing:-.025em;margin:0 0 14px;}
 .tools-card p{font-size:14px;line-height:1.8;color:var(--text-dim);margin:0 0 20px;}
 .tools-variables{border-top:1px solid var(--line);padding-top:18px;margin-top:auto;}
 .tools-variables span{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);}
 .tools-variables ul{list-style:none;display:flex;flex-wrap:wrap;gap:7px;padding:0;margin:12px 0 0;}
 .tools-variables li{font-size:11px;line-height:1.4;padding:5px 8px;border:1px solid var(--line);border-radius:3px;color:var(--text-dim);}
-.tools-card-wide{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:40px;background:var(--panel-2);}
-.tools-card-wide .tools-variables{margin-top:0;align-self:center;}
+.tools-families{display:flex;flex-direction:column;}
+.tools-family{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:48px;padding:48px 0;border-top:1px solid var(--line);}
+.tools-family:last-child{padding-bottom:0;}
+.tools-family h3{font-size:clamp(24px,2.6vw,30px);font-weight:600;letter-spacing:-.03em;line-height:1.2;margin:0 0 14px;}
+.tools-family-head p{font-size:14px;line-height:1.8;color:var(--text-dim);margin:0 0 18px;}
+.tools-family-head .tools-variables{margin-top:22px;}
+.tools-method{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.04em;color:var(--accent);margin:0;}
+.tools-examples{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-content:start;}
+.tools-examples .tools-card{padding:34px 28px 26px;}
+.tools-examples .tools-card-top{margin-bottom:20px;}
+.tools-examples .tools-card h4{font-size:21px;}
+.tools-examples .tools-card p:last-child{margin-bottom:0;}
 .tools-path{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:8px;overflow:hidden;}
 .tools-path article{padding:30px;}
 .tools-path article+article{border-left:1px solid var(--line);}
@@ -249,9 +262,9 @@ footer a:focus-visible{outline-color:var(--gold);}
 .tools-close p{max-width:620px;margin:0 auto 20px;font-size:15px;line-height:1.8;color:var(--text-dim);}
 .tools-close .btn{margin-top:12px;min-height:44px;}
 a:focus-visible{outline:2px solid var(--accent);outline-offset:5px;}
-@media(max-width:900px){.tools-hero-grid{grid-template-columns:1fr;gap:42px;}.tools-hero h1{max-width:15ch;}.tools-preview{max-width:580px;width:100%;}.tools-capabilities,.tools-steps{grid-template-columns:repeat(2,1fr);}.tools-split{gap:36px;}.nav-inner{flex-wrap:wrap;gap:16px;}.nav-links{flex-wrap:wrap;}}
-@media(max-width:640px){.tools-hero{padding:52px 0;}.tools-section{padding:52px 0;}.tools-grid,.tools-split,.tools-path,.tools-card-wide{grid-template-columns:1fr;}.tools-card-wide{gap:8px;}.tools-card{padding:30px 24px 24px;}.tools-path article+article{border-left:0;border-top:1px solid var(--line);}.tools-close{padding:60px 0;}.tools-quote{font-size:26px;}.tools-section{scroll-margin-top:150px;}.footer-links{flex-wrap:wrap;}.tools-table th,.tools-table td{padding:12px 8px;}}
-@media(max-width:400px){.tools-capabilities,.tools-steps{grid-template-columns:1fr;}.wrap{padding-left:20px;padding-right:20px;}.tools-hero h1{font-size:43px;}.tools-preview-top{font-size:9px;padding:16px;}}
+@media(max-width:900px){.tools-hero-grid{grid-template-columns:1fr;gap:42px;}.tools-hero h1{max-width:16ch;}.tools-family{grid-template-columns:1fr;gap:28px;padding:40px 0;}.tools-family:last-child{padding-bottom:0;}.tools-preview{max-width:580px;width:100%;}.tools-capabilities,.tools-steps{grid-template-columns:repeat(2,1fr);}.tools-split{gap:36px;}.nav-inner{flex-wrap:wrap;gap:16px;}.nav-links{flex-wrap:wrap;}}
+@media(max-width:640px){.tools-hero{padding:52px 0;}.tools-section{padding:52px 0;}.tools-split,.tools-path{grid-template-columns:1fr;}.tools-card,.tools-examples .tools-card{padding:30px 24px 24px;}.tools-family{padding:32px 0;}.tools-family:last-child{padding-bottom:0;}.tools-path article+article{border-left:0;border-top:1px solid var(--line);}.tools-close{padding:60px 0;}.tools-quote{font-size:26px;}.tools-section{scroll-margin-top:150px;}.footer-links{flex-wrap:wrap;}.tools-table th,.tools-table td{padding:12px 8px;}}
+@media(max-width:400px){.tools-capabilities,.tools-steps{grid-template-columns:1fr;}.wrap{padding-left:20px;padding-right:20px;}.tools-hero h1{font-size:40px;}.tools-preview-top{font-size:9px;padding:16px;}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*,*::before,*::after{transition:none!important;}}
 
 </style>
@@ -278,10 +291,10 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:5px;}
  <div class="wrap tools-hero-grid">
   <div>
    <div class="hero-eyebrow">Herramientas · Construir</div>
-   <h1>Tecnología para <span>decidir mejor.</span></h1>
-   <div class="tools-copy"><p>Vivimos rodeados de información, pero tener más información no siempre hace más fácil tomar una decisión.</p><p>En Kairos creemos que la tecnología debe estar al servicio de las personas, no al revés. Por eso estamos construyendo herramientas para acompañarte cuando necesitas evaluar una inversión, comenzar un proyecto, organizar tus finanzas o tomar una decisión importante.</p></div>
+   <h1>Del conocimiento a <span>la práctica.</span></h1>
+   <div class="tools-copy"><p>Vivimos rodeados de información, pero tener más información no siempre hace más fácil tomar una decisión.</p><p>Herramientas es la capa aplicada de Kairos: el lugar donde lo que observamos, probamos y examinamos se convierte en recursos que puedes usar para decidir, aprender, analizar o construir. Pueden ser una calculadora, un simulador, un modelo, una aplicación o un curso. Todas buscan lo mismo: acompañarte mientras construyes tu propio criterio.</p></div>
    <p class="tools-promise">No podemos eliminar la incertidumbre.<br>Podemos ayudarte a entenderla.</p>
-   <div class="tools-actions"><a class="btn btn-primary" href="#en-desarrollo">Conocer lo que estamos construyendo ↓</a><a class="btn btn-secondary" href="#proceso">De datos a decisiones</a></div>
+   <div class="tools-actions"><a class="btn btn-primary" href="#en-desarrollo">Conocer las cuatro familias ↓</a><a class="btn btn-secondary" href="#proceso">De datos a decisiones</a></div>
   </div>
   <figure class="tools-preview">
    <div class="tools-preview-top"><span>KAIROS / DECISIONES</span><span>VISTA CONCEPTUAL · NO INTERACTIVA</span></div>
@@ -291,8 +304,18 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:5px;}
   </figure>
  </div>
 </header>
+<section class="tools-section tools-eco"><div class="wrap">
+ <div class="tools-section-head"><div class="tools-kicker">01 / Ecosistema</div><h2>El conocimiento llega de todo Kairos</h2><p>Herramientas no parte de cero. Recibe lo que el resto de Kairos observa, prueba y examina, y lo convierte en recursos que una persona puede utilizar.</p></div>
+ <div class="tools-capabilities">
+  <article class="tools-capability"><span class="tools-eco-label">Economía · Observar</span><h3>Ayuda a observar y comprender</h3></article>
+  <article class="tools-capability"><span class="tools-eco-label">Laboratorio · Experimentar</span><h3>Prueba modelos, mecanismos y escenarios</h3></article>
+  <article class="tools-capability"><span class="tools-eco-label">Pensamiento · Reflexionar</span><h3>Examina ideas y decisiones</h3></article>
+  <article class="tools-capability"><span class="tools-eco-label">Herramientas · Construir</span><h3>Convierte ese conocimiento en recursos utilizables</h3></article>
+ </div>
+ <p class="tools-eco-line">Herramientas convierte conocimiento en utilidad.</p>
+</div></section>
 <section class="tools-section"><div class="wrap">
- <div class="tools-section-head"><div class="tools-kicker">01 / Perspectiva</div><h2>Más claridad para actuar</h2><p>Diseñamos herramientas para explorar escenarios, identificar riesgos y entender cómo una decisión puede comportarse cuando las condiciones cambian. El objetivo es transformar problemas complejos en alternativas que puedas comprender y comparar.</p></div>
+ <div class="tools-section-head"><div class="tools-kicker">02 / Perspectiva</div><h2>Más claridad para actuar</h2><p>Diseñamos herramientas para explorar escenarios, identificar riesgos y entender cómo una decisión puede comportarse cuando las condiciones cambian. El objetivo es convertir problemas complejos en alternativas que puedas comprender y comparar.</p></div>
  <p class="tools-kicker">Lo que buscamos hacer posible</p>
  <div class="tools-capabilities">
   <article class="tools-capability"><h3>Comparar alternativas</h3><p>Entender costos, beneficios y lo que se sacrifica al elegir una opción frente a otra.</p></article>
@@ -302,7 +325,7 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:5px;}
  </div>
 </div></section>
 <section class="tools-section tools-process" id="proceso"><div class="wrap">
- <div class="tools-section-head"><div class="tools-kicker">02 / El proceso</div><h2>De datos a decisiones</h2><p>Este es el recorrido que guía el diseño de nuestras herramientas.</p></div>
+ <div class="tools-section-head"><div class="tools-kicker">03 / El proceso</div><h2>De datos a decisiones</h2><p>Este es el recorrido que guía el diseño de nuestras herramientas.</p></div>
  <ol class="tools-steps">
   <li><h3>Cuéntanos qué quieres decidir</h3><p>El punto de partida son tus objetivos, condiciones, restricciones y la información relevante para el problema.</p></li>
   <li><h3>Exploramos los escenarios</h3><p>Los modelos, las simulaciones y el análisis permitirían explorar futuros posibles a partir de esos datos y supuestos.</p></li>
@@ -311,21 +334,66 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:5px;}
  </ol>
 </div></section>
 <section class="tools-section"><div class="wrap tools-split">
- <div><div class="tools-kicker">03 / Nuestro criterio</div><h2>Entender por qué cambia una decisión</h2><div class="tools-copy"><p>Una respuesta aislada no cuenta toda la historia. Queremos que puedas entender cuánto cuesta cada alternativa, durante cuánto tiempo y bajo qué condiciones cambia el resultado.</p><p>Una herramienta útil debería mostrar el punto de equilibrio, los riesgos y la sensibilidad a sus supuestos. Cuando el modelo permita estimar probabilidades, también debería explicar de dónde salen y cuáles son sus límites.</p></div></div>
+ <div><div class="tools-kicker">04 / Nuestro criterio</div><h2>Entender por qué cambia una decisión</h2><div class="tools-copy"><p>Una respuesta aislada no cuenta toda la historia. Queremos que puedas entender cuánto cuesta cada alternativa, durante cuánto tiempo y bajo qué condiciones cambia el resultado.</p><p>Una herramienta útil debería mostrar el punto de equilibrio, los riesgos y la sensibilidad a sus supuestos. Cuando el modelo permita estimar probabilidades, también debería explicar de dónde salen y cuáles son sus límites.</p></div></div>
  <blockquote class="tools-quote">No decidir por ti.<br>Darte mejores condiciones para decidir.</blockquote>
 </div></section>
 <section class="tools-section" id="en-desarrollo"><div class="wrap">
- <div class="tools-section-head"><div class="tools-kicker">04 / Lo que estamos construyendo</div><h2>En desarrollo</h2><p>Estas son las líneas que queremos convertir en herramientas de Kairos. Aún no están disponibles como productos públicos; sus funciones y alcance pueden cambiar durante el desarrollo.</p></div>
- <div class="tools-grid">
-<article class="tools-card"><div><div class="tools-card-top"><span class="tools-number">LÍNEA 01</span><span class="tools-status">En desarrollo</span></div><h3>Comprar vs. alquilar</h3><p>Una herramienta para comparar el costo económico completo de ambas decisiones y explorar bajo qué condiciones cambia el resultado.</p></div><div class="tools-variables"><span>PODRÍA CONSIDERAR</span><ul><li>Precio</li><li>Alquiler</li><li>Financiamiento</li><li>Tasas</li><li>Mantenimiento</li><li>Horizonte temporal</li><li>Costo de oportunidad</li><li>Apreciación</li><li>Inflación</li></ul></div></article>
-<article class="tools-card"><div><div class="tools-card-top"><span class="tools-number">LÍNEA 02</span><span class="tools-status">En desarrollo</span></div><h3>Costo real de una deuda</h3><p>Una herramienta para entender cuánto podría costar realmente una obligación financiera, más allá de la tasa anunciada.</p></div><div class="tools-variables"><span>PODRÍA CONSIDERAR</span><ul><li>Tasa nominal</li><li>Tasa efectiva</li><li>Comisiones</li><li>Seguros</li><li>Plazo</li><li>Inflación</li><li>Costo total</li></ul></div></article>
-<article class="tools-card"><div><div class="tools-card-top"><span class="tools-number">LÍNEA 03</span><span class="tools-status">En desarrollo</span></div><h3>Retiro bajo incertidumbre</h3><p>Una herramienta para explorar distintos futuros posibles del ahorro y los retiros, incluyendo escenarios menos favorables.</p></div><div class="tools-variables"><span>PODRÍA CONSIDERAR</span><ul><li>Ahorro</li><li>Rendimiento</li><li>Inflación</li><li>Horizonte</li><li>Retiros</li><li>Monte Carlo</li><li>Escenarios adversos</li></ul></div></article>
-<article class="tools-card"><div><div class="tools-card-top"><span class="tools-number">LÍNEA 04</span><span class="tools-status">En desarrollo</span></div><h3>Kairos Agriculture: Precio de cosecha</h3><p>Una primera idea dentro de Kairos Agriculture: evaluar cómo costos, rendimiento y precio podrían afectar el margen de una cosecha y su punto de equilibrio.</p><p>Kairos Agriculture se plantea como una familia de herramientas especializadas para acompañar decisiones de productores y otros actores del sector agrícola.</p></div><div class="tools-variables"><span>PODRÍA CONSIDERAR</span><ul><li>Costos</li><li>Rendimiento</li><li>Precio</li><li>Margen</li><li>Punto de equilibrio</li><li>Escenarios de mercado</li><li>Riesgo productivo y económico</li></ul></div></article>
-<article class="tools-card tools-card-wide"><div><div class="tools-card-top"><span class="tools-number">LÍNEA 05</span><span class="tools-status">En desarrollo</span></div><h3>Economic Stress Test</h3><p>Una posible evolución hacia producto del trabajo experimental iniciado en Apple Lab, orientada a explorar escenarios, sensibilidad y riesgo en decisiones bajo incertidumbre.</p></div><div class="tools-variables"><span>PODRÍA EXPLORAR</span><ul><li>Simulación</li><li>Pruebas de estrés</li><li>Sensibilidad</li><li>Condiciones que cambian el resultado</li></ul></div></article>
+ <div class="tools-section-head"><div class="tools-kicker">05 / Lo que estamos construyendo</div><h2>Cuatro familias de herramientas</h2><p>Una herramienta puede ser una aplicación, una calculadora, un simulador, un modelo, una experiencia interactiva o un curso. Las organizamos en cuatro familias permanentes. Aún no están disponibles como productos públicos; sus funciones y alcance pueden cambiar durante el desarrollo.</p></div>
+ <div class="tools-families">
+
+  <article class="tools-family" aria-labelledby="fam-personales">
+   <div class="tools-family-head">
+    <div class="tools-card-top"><span class="tools-number">FAMILIA 01</span><span class="tools-status">En desarrollo</span></div>
+    <h3 id="fam-personales">Decisiones personales</h3>
+    <p>Herramientas para las decisiones económicas de individuos y hogares. Con el tiempo, la familia podría abarcar otras decisiones personales además de las que aparecen aquí.</p>
+    <div class="tools-variables"><span>PODRÍA ABARCAR</span><ul><li>Ahorro</li><li>Inversión</li><li>Educación</li><li>Migración</li><li>Vivienda</li></ul></div>
+   </div>
+   <div class="tools-examples">
+    <article class="tools-card"><div><div class="tools-card-top"><span class="tools-number">EJEMPLO 01</span><span class="tools-status">En desarrollo</span></div><h4>Comprar vs. alquilar</h4><p>Una herramienta para comparar el costo económico completo de ambas decisiones y explorar bajo qué condiciones cambia el resultado.</p></div><div class="tools-variables"><span>PODRÍA CONSIDERAR</span><ul><li>Precio</li><li>Alquiler</li><li>Financiamiento</li><li>Tasas</li><li>Mantenimiento</li><li>Horizonte temporal</li><li>Costo de oportunidad</li><li>Apreciación</li><li>Inflación</li></ul></div></article>
+    <article class="tools-card"><div><div class="tools-card-top"><span class="tools-number">EJEMPLO 02</span><span class="tools-status">En desarrollo</span></div><h4>Costo real de una deuda</h4><p>Una herramienta para entender cuánto podría costar realmente una obligación financiera, más allá de la tasa anunciada.</p></div><div class="tools-variables"><span>PODRÍA CONSIDERAR</span><ul><li>Tasa nominal</li><li>Tasa efectiva</li><li>Comisiones</li><li>Seguros</li><li>Plazo</li><li>Inflación</li><li>Costo total</li></ul></div></article>
+    <article class="tools-card"><div><div class="tools-card-top"><span class="tools-number">EJEMPLO 03</span><span class="tools-status">En desarrollo</span></div><h4>Retiro bajo incertidumbre</h4><p>Una herramienta para explorar distintos futuros posibles del ahorro y los retiros, incluyendo escenarios menos favorables.</p></div><div class="tools-variables"><span>PODRÍA CONSIDERAR</span><ul><li>Ahorro</li><li>Rendimiento</li><li>Inflación</li><li>Horizonte</li><li>Retiros</li><li>Monte Carlo</li><li>Escenarios adversos</li></ul></div></article>
+   </div>
+  </article>
+
+  <article class="tools-family" aria-labelledby="fam-agriculture">
+   <div class="tools-family-head">
+    <div class="tools-card-top"><span class="tools-number">FAMILIA 02</span><span class="tools-status">En desarrollo</span></div>
+    <h3 id="fam-agriculture">Kairos Agriculture</h3>
+    <p>Herramientas especializadas para acompañar las decisiones de productores y otros actores del sector agrícola.</p>
+   </div>
+   <div class="tools-examples">
+    <article class="tools-card"><div><div class="tools-card-top"><span class="tools-number">PRIMERA IDEA</span><span class="tools-status">En desarrollo</span></div><h4>Kairos Agriculture: Precio de cosecha</h4><p>Una herramienta para evaluar cómo costos, rendimiento y precio podrían afectar el margen de una cosecha y su punto de equilibrio.</p></div><div class="tools-variables"><span>PODRÍA CONSIDERAR</span><ul><li>Costos</li><li>Rendimiento</li><li>Precios</li><li>Márgenes</li><li>Punto de equilibrio</li><li>Riesgo productivo</li><li>Riesgo económico</li><li>Escenarios de mercado</li></ul></div></article>
+   </div>
+  </article>
+
+  <article class="tools-family" aria-labelledby="fam-business">
+   <div class="tools-family-head">
+    <div class="tools-card-top"><span class="tools-number">FAMILIA 03</span><span class="tools-status">Línea futura</span></div>
+    <h3 id="fam-business">Kairos Business</h3>
+    <p>Herramientas para empresas, proyectos y emprendimientos. Todavía no hay una herramienta concreta lista: es una línea futura de desarrollo.</p>
+    <div class="tools-variables"><span>PODRÍA ABARCAR</span><ul><li>Decisiones de inversión</li><li>Punto de equilibrio</li><li>Pricing</li><li>Contratar vs. automatizar</li><li>Escenarios de demanda</li><li>Riesgo financiero</li><li>Expansión</li><li>Simulaciones empresariales</li></ul></div>
+   </div>
+   <div class="tools-examples">
+    <article class="tools-card"><div><div class="tools-card-top"><span class="tools-number">POSIBLE RELACIÓN</span><span class="tools-status">En desarrollo</span></div><h4>Economic Stress Test</h4><p>Una posible evolución hacia producto del trabajo experimental iniciado en Apple Lab, orientada a explorar escenarios, sensibilidad y riesgo en decisiones bajo incertidumbre.</p><p>Por su enfoque en simulación, sensibilidad y riesgo, podría ubicarse dentro de esta familia. Su lugar definitivo aún se está evaluando.</p></div><div class="tools-variables"><span>PODRÍA EXPLORAR</span><ul><li>Simulación</li><li>Pruebas de estrés</li><li>Sensibilidad</li><li>Condiciones que cambian el resultado</li></ul></div></article>
+   </div>
+  </article>
+
+  <article class="tools-family" aria-labelledby="fam-aprender">
+   <div class="tools-family-head">
+    <div class="tools-card-top"><span class="tools-number">FAMILIA 04</span><span class="tools-status">Próximamente</span></div>
+    <h3 id="fam-aprender">Aprender con Kairos</h3>
+    <p>La familia educativa de Herramientas. Un curso también es una herramienta: en lugar de entregar un cálculo o una simulación, ayuda a desarrollar una capacidad.</p>
+    <p class="tools-method">Entender → Experimentar → Construir</p>
+   </div>
+   <div class="tools-examples">
+    <article class="tools-card"><div><div class="tools-card-top"><span class="tools-number">PRIMER PRODUCTO FUTURO</span><span class="tools-status">Próximamente</span></div><h4>Cómo ser economista sin serlo</h4><p>Una experiencia para aprender a utilizar herramientas fundamentales del pensamiento económico para comprender problemas, analizar alternativas y construir criterio propio, sin necesidad de estudiar una carrera completa de Economía.</p><p>Todavía no es un producto público. Su formato y alcance se definirán durante el desarrollo.</p></div></article>
+   </div>
+  </article>
+
  </div>
 </div></section>
 <section class="tools-section"><div class="wrap">
- <div class="tools-section-head"><div class="tools-kicker">05 / Una visión que crece</div><h2>Distintas formas de profundizar</h2><p>Imaginamos una familia de soluciones que pueda crecer con la complejidad de cada decisión.</p></div>
+ <div class="tools-section-head"><div class="tools-kicker">06 / Una visión que crece</div><h2>Distintas formas de profundizar</h2><p>Imaginamos distintos niveles de profundidad que puedan crecer con la complejidad de cada decisión y aplicarse a cada una de las cuatro familias.</p></div>
  <div class="tools-path">
   <article><span class="tools-number">01 / EXPLORAR</span><h3>Herramientas abiertas</h3><p>Modelos y herramientas accesibles para explorar decisiones concretas.</p></article>
   <article><span class="tools-number">02 / PROFUNDIZAR</span><h3>Herramientas avanzadas</h3><p>Mayor profundidad analítica mediante escenarios, simulaciones, reportes u otras capacidades que podamos desarrollar.</p></article>
@@ -333,16 +401,16 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:5px;}
  </div><p class="tools-note">Una dirección de desarrollo, no una oferta comercial disponible.</p>
 </div></section>
 <section class="tools-section tools-advisory"><div class="wrap tools-split">
- <div><div class="tools-kicker">06 / Análisis especializado</div><h2>Algunas decisiones necesitan algo más que una herramienta.</h2></div>
+ <div><div class="tools-kicker">07 / Análisis especializado</div><h2>Algunas decisiones necesitan algo más que una herramienta.</h2></div>
  <div class="tools-copy"><p>Algunos problemas necesitan un modelo adaptado a sus propias condiciones. Queremos desarrollar una línea de análisis especializado para estudiar esos casos, construir modelos y poner escenarios a prueba.</p><p>Podría acompañar decisiones sobre inversiones, empresas, proyectos, agricultura, organizaciones y otros problemas económicos, cuantitativos o estratégicos.</p><p>El propósito sería producir herramientas y evidencia útil para actuar: modelar, medir, simular y entender qué cambia el resultado.</p>
  <!-- PENDIENTE: CTA futuro «Solicitar análisis». Habilitar únicamente cuando exista un canal comercial y una URL confirmados. -->
  <span class="tools-contact">Canal de solicitudes aún no habilitado.</span></div>
 </div></section>
 <section class="tools-section tools-close"><div class="wrap">
- <div class="tools-kicker">Tecnología al servicio de las personas</div>
+ <div class="tools-kicker">Herramientas al servicio de las personas</div>
  <h2>El futuro es incierto.<br>Puedes decidir con más claridad.</h2>
- <p>Kairos no promete conocer el futuro. Te ayuda a estar preparado para más de uno.</p><p>Estamos construyendo herramientas para entender las alternativas, reconocer los límites y decidir con más información.</p>
- <a href="#en-desarrollo" class="btn btn-primary">Ver líneas en desarrollo ↑</a>
+ <p>Kairos no promete conocer el futuro. Te ayuda a estar preparado para más de uno.</p><p>Estamos construyendo herramientas, y también formas de aprender, para entender las alternativas, reconocer los límites y decidir con más información.</p>
+ <a href="#en-desarrollo" class="btn btn-primary">Ver las cuatro familias ↑</a>
 </div></section>
 </main>
 
